@@ -1,0 +1,7 @@
+{
+    "booking/delete": {
+        "title": "Usuń rezerwację",
+        "abortText": "Anuluj",
+        "confirmText": "Usuń"
+    }
+}

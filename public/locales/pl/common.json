@@ -1,0 +1,34 @@
+{
+    "solution-name": "Timerise",
+    "footer": {
+        "copyright": "Timerise © 2022",
+        "Terms & Conditions": "Regulamin",
+        "Privacy Policy": "Polityka Prywatności",
+        "powered by": "powered by"
+    },
+    "validation": {
+        "required": "Wymagane",
+        "minLength": "Minimalna liczba znaków to {{length}}",
+        "email": "Błędny format adresu e-mail",
+        "slots-quantity": "Ilość miejsc musi być większa niż 0"
+    },
+    "loadingInfo": "Liczymy wstecz od nieskończoności",
+    "theme": {
+        "light": "Tryb jasny",
+        "dark": "Tryb ciemny"
+    },
+    "details": {
+        "Duration": "Czas trwania",
+        "Payment": "Cena",
+        "Location": "Miejsce",
+        "Hosted by": "Hosted by"
+    },
+    "Select date and time": "Wybierz datę i czas",
+    "Time zone": "Strefa czasowa",
+    "Language": "Język",
+    "No time slots available in this date range": "Brak dostępnych miejsc w wybranym okresie",
+    "Show more": "Pokaż więcej",
+    "Show less": "Pokaż mniej",
+    "available": "dostępne",
+    "Timezone": "Strefa czasowa"
+  }

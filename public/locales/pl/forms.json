@@ -1,0 +1,13 @@
+{
+    "fullNameField": "Imię i nazwisko",
+    "phoneField": "Telefon",
+    "messageField": "Wiadomość",
+    "bookFreeServiceButton": "Rezerwuj teraz",
+    "bookServiceButton": "Rezerwuj i zapłać",
+    "optionalSuffix": " (opcjonalnie)",
+    "headers": {
+        "Leave your details": "Uzupełnij szczegóły"
+    },
+    "Slot already booked": "Przepraszamy, ale wybrany przedział czasowy został właśnie zarezerwowany. Wybierz inny przedział czasowy.",
+    "maxSlots": "Możesz zarezerwować do {{maxValue}} miejsc."
+}

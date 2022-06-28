@@ -1,0 +1,34 @@
+{
+    "solution-name": "Timerise",
+    "footer": {
+        "copyright": "Timerise © 2022",
+        "Terms & Conditions": "Умови та положення",
+        "Privacy Policy": "Політика конфіденційності",
+        "powered by": "powered by"
+    },
+    "validation": {
+        "required": "Необхідно",
+        "minLength": "Мінімальна довжина {{length}} символів",
+        "email": "Неправильний формат електронної пошти",
+        "slots-quantity": "Кількість слотів має бути більше 0"
+    },
+    "loadingInfo": "Відліковуємо назад від нескінченності",
+    "theme": {
+        "light": "Світлий режим",
+        "dark": "Темний режим"
+    },
+    "details": {
+        "Duration": "Тривалість",
+        "Payment": "оплата",
+        "Location": "Розташування",
+        "Hosted by": "Організовано"
+    },
+    "Select date and time": "Виберіть дату та час",
+    "Time zone": "Часовий пояс",
+    "Language": "Мову",
+    "No time slots available in this date range": "У цьому діапазоні дат немає доступних проміжків часу",
+    "Show more": "Показати більше",
+    "Show less": "Показати менше",
+    "available": "доступно",
+    "Timezone": "Часовий пояс"
+  }
