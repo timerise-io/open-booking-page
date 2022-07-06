@@ -1,0 +1,30 @@
+{
+  "projects": {
+    "default": "timerise-dev",
+    "sandbox": "timerise-sandbox",
+    "production": "timerise-prod"
+  },
+  "targets": {
+    "timerise-dev": {
+      "hosting": {
+        "service-app": [
+          "booking-timerise-dev"
+        ]
+      }
+    },
+    "timerise-sandbox": {
+      "hosting": {
+        "service-app": [
+          "booking-timerise-sandbox"
+        ]
+      }
+    },
+    "timerise-prod": {
+      "hosting": {
+        "service-app": [
+          "booking-timerise-prod"
+        ]
+      }
+    }
+  }
+}
