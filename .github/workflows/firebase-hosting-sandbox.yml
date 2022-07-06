@@ -1,4 +1,4 @@
-name: Deploy to development environment
+name: Deploy to sandbox environment
 on: [workflow_dispatch]
 
 jobs:
@@ -6,13 +6,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GENERATE_SOURCEMAP: false
-      REACT_APP_TIMERISE_API: "${{ secrets.DEV_REACT_APP_TIMERISE_API }}"
+      REACT_APP_TIMERISE_API: "${{ secrets.SANDBOX_REACT_APP_TIMERISE_API }}"
     steps:
       - uses: actions/checkout@v2
       - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_DEV }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_SANDBOX }}"
           channelId: live
-          projectId: timerise-dev
+          projectId: timerise-sandbox
