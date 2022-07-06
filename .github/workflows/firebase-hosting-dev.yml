@@ -2,10 +2,14 @@
 # https://github.com/firebase/firebase-tools
 
 name: Deploy to development environment
+"on": workflow_dispatch
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    env:
+      GENERATE_SOURCEMAP: false
+      REACT_APP_TIMERISE_API: "${{ secrets.DEV_REACT_APP_TIMERISE_API }}"
     steps:
       - uses: actions/checkout@v2
       - run: npm ci && npm run build
