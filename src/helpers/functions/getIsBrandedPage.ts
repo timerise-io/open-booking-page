@@ -8,7 +8,7 @@ const BRANDED_PAGERS = Object.values([
 ]);
 
 export const getIsBandedPage = (path: string) => {
-  return !!BRANDED_PAGERS.map((pagePath) => !!matchPath(path, pagePath)).filter(
+  return !!BRANDED_PAGERS.map((pagePath) => !!matchPath(pagePath, path)).filter(
     Boolean
   ).length;
 };
