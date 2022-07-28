@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { themeSelector } from "state/selectors/theme";
 import { userPreferenceAtom } from "state/atoms/userPreference";
+import { useLocation } from "react-router-dom";
 
 const Wrapper = styled(Row)`
   width: 100%;
@@ -88,10 +89,35 @@ const footerLogo: Record<"light" | "dark", string> = {
   light: "https://cdn.timerise.io/app/timerise-logo.png",
 };
 
+const ErrorFooterWrapper = styled.div`
+  margin-bottom: 12px;
+`;
+
+const ErrorFooter = () => {
+  const { t } = useTranslation();
+  return (
+    <ErrorFooterWrapper>
+      <Typography
+        typographyType="label"
+        color="darkGrey"
+        as="div"
+        style={{ whiteSpace: "nowrap", marginTop: "8px" }}
+      >
+        {t("footer.copyright")}
+      </Typography>
+    </ErrorFooterWrapper>
+  );
+};
+
 const Footer = () => {
+  const location = useLocation();
   const { t } = useTranslation();
   const themeType = useRecoilValue(themeSelector);
   const setUserPreference = useSetRecoilState(userPreferenceAtom);
+
+  if (location.pathname === "/") {
+    return <ErrorFooter />;
+  }
 
   return (
     <Wrapper mb={1.5} mt={5} jc="space-between">
