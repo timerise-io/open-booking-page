@@ -62,4 +62,4 @@ root folder
 
 
 # See how Timerise works
-[![Vimeo](https://cdn.timerise.io/landing-page/video-placeholder.png)](https://vimeo.com/703918323)
+[![Vimeo](https://cdn.timerise.io/landing-page/video-placeholder.png?w=2048)](https://vimeo.com/703918323)
