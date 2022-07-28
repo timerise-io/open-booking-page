@@ -4,6 +4,12 @@ We are pleased to provide our booking page in open-source. We hope it will be us
 
 Timerise open source booking page was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+## Make it yours
+Adjust the appearance and content of the booking pages to your brand and services.
+
+![image](https://cdn.timerise.io/landing-page/section-make-it-yours.png)
+
 ## Installation
 
 Run following script in the root directory:
@@ -53,3 +59,7 @@ root folder
 ├── pages
 └── state
 ```
+
+
+# See how Timerise works
+[![Vimeo](https://cdn.timerise.io/landing-page/video-placeholder.png)](https://vimeo.com/703918323)
