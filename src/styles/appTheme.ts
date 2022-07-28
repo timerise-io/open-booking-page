@@ -35,7 +35,7 @@ const appTheme: DefaultTheme = {
     button: {
       primary: {
         background: "#333333",
-        backgroundActive: "#141414",
+        backgroundActive: "#1a1a1a",
         backgroundDisabled: "#808080",
         text: WHITE,
       },
