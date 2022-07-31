@@ -1,9 +1,13 @@
 import { Column } from "components/layout/Column";
-import { DetailsTextWrapper } from "components/layout/ContentWithDetails";
+import {
+  DetailsTextWrapper,
+  SliderWrapper,
+} from "components/layout/ContentWithDetails";
 import { Row } from "components/layout/Row";
 import { SkeletonBox } from "components/layout/SkeletonBox";
 import { Typography } from "components/Typography";
 import ServiceDetails from "features/service/components/Service/ServiceDetails";
+import ServiceImageCarousel from "features/service/components/Service/ServiceImageCarousel";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
@@ -64,6 +68,9 @@ const FullDetailsWrapper = styled(Column)`
 
 const fullDetails = (
   <FullDetailsWrapper ai="stretch">
+    <SliderWrapper>
+      <ServiceImageCarousel />
+    </SliderWrapper>
     <DetailsTextWrapper className="text-details">
       <ServiceDetails />
     </DetailsTextWrapper>
