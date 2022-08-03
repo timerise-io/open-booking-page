@@ -1,4 +1,4 @@
-![GitHub](https://img.shields.io/github/license/timerise-io/open-booking-page)
+[![GitHub](https://img.shields.io/github/license/timerise-io/open-booking-page)](https://github.com/timerise-io/open-booking-page/blob/main/LICENSE.md)
 
 
 [![Product Hunt](https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=349830&theme=light)](https://www.producthunt.com/posts/timerise)
