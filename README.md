@@ -1,3 +1,6 @@
+![GitHub](https://img.shields.io/github/license/timerise-io/open-booking-page)
+
+
 [![Product Hunt](https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=349830&theme=light)](https://www.producthunt.com/posts/timerise)
 
 # Timerise open source booking page
