@@ -32,6 +32,10 @@ const PageSwitcher: React.FC<PageSwitcherProps> = ({ children }) => {
             path={PAGES.BOOKING_CONFIRMATION}
             element={<BookingConfirmationPage />}
           />
+          <Route
+            path={`${PAGES.BOOKING_CONFIRMATION}/:token`}
+            element={<BookingConfirmationPage />}
+          />
           <Route path={PAGES.TERMS} element={<TermsPage />} />
           <Route path={PAGES.PRIVACY} element={<PrivacyPage />} />
           <Route path="/*" element={<ErrorPage />} />
