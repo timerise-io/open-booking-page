@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { loaderAtom, LOADERS } from "state/atoms/loader";
 import { serviceAtom } from "state/atoms/service";
 import { serviceSlotsAtom } from "state/atoms/serviceSlots";
@@ -109,6 +109,7 @@ export const useServiceState = (serviceId: string) => {
   const setTimeZone = useSetRecoilState(timeZoneAtom);
   const setService = useSetRecoilState(serviceAtom);
   const setServiceLoader = useSetRecoilState(loaderAtom(LOADERS.SERVICE));
+  const [slotsFilter, setSlotsFilter] = useRecoilState(slotsFiltersAtom);
 
   useEffect(() => {
     if (data && data.service) {
@@ -147,8 +148,13 @@ export const useServiceState = (serviceId: string) => {
           },
         },
       });
+      setSlotsFilter({
+        ...slotsFilter,
+        fetchDate: service.dateTimeFrom,
+      });
     }
-  }, [data, setService, setTimeZone]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, setService, setTimeZone, setSlotsFilter]);
 
   useEffect(() => {
     if (error || data?.service === null) navigate("/");
