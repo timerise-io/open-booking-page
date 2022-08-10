@@ -50,6 +50,10 @@ const ServiceCalendarActionRow = () => {
       new Date(serviceFilters.firstDayDate),
       new Date(service.dateTimeFrom)
     ) ||
+    isSameDay(
+      new Date(serviceFilters.firstDayDate),
+      new Date(service.dateTimeFrom)
+    ) ||
     isSameDay(new Date(), new Date(serviceFilters.firstDayDate)) ||
     isAfter(new Date(), new Date(serviceFilters.firstDayDate));
 
