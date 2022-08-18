@@ -102,12 +102,7 @@ const getSubmitButtonText = (
     | undefined,
   t: TFunction<"forms"[]>
 ) => {
-  const textBase =
-    servicePriceValue && servicePriceValue.price > 0
-      ? `${t("bookServiceButton")} ${servicePriceValue.price.toFixed(2)} ${
-          servicePriceValue.currency
-        }`
-      : t("bookFreeServiceButton");
+  const textBase = t("bookFreeServiceButton");
 
   if (selectedSlotValue === "") return textBase;
 

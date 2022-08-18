@@ -18,6 +18,9 @@ import { slotsViewConfiguration } from "state/selectors/slotsViewConfiguration";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { TIMERISE_LOGO_URL } from "helpers/constans";
 import addDays from "date-fns/addDays";
+import { getDateInTimezone } from "helpers/timeFormat";
+import { isAfter } from "date-fns";
+import { format } from "date-fns-tz";
 
 export const useServiceSlotsState = (serviceId: string) => {
   const isServiceLoaded = !!useRecoilValue(serviceAtom);
@@ -148,9 +151,21 @@ export const useServiceState = (serviceId: string) => {
           },
         },
       });
+
+      const now = new Date();
+      const dateTimeFrom = getDateInTimezone(service.dateTimeFrom);
+
+      const newFetchDate = isAfter(now, dateTimeFrom) ? now : dateTimeFrom;
+
+      const fetchDate = format(newFetchDate, "yyyy-MM-dd'T'HH:mm:00'Z'", {
+        timeZone: "UTC",
+      });
+
+      console.log(fetchDate);
+
       setSlotsFilter({
         ...slotsFilter,
-        fetchDate: service.dateTimeFrom,
+        fetchDate: fetchDate,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
