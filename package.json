@@ -3,19 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.3.21",
-    "@tabler/icons": "^1.41.2",
+    "@apollo/client": "^3.6.9",
+    "@tabler/icons": "^1.84.0",
     "countries-and-timezones": "^3.3.0",
     "date-fns": "^2.28.0",
     "date-fns-tz": "^1.3.5",
     "formik": "^2.2.9",
     "graphql": "^15.5.1",
+    "graphql-ws": "^5.10.0",
     "i18next": "^20.3.5",
     "i18next-http-backend": "^1.4.1",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-cool-dimensions": "^2.0.7",
-    "react-country-flag": "^2.3.1",
+    "react-country-flag": "^3.0.2",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^1.3.0",
     "react-i18next": "^11.17.2",
@@ -61,7 +62,7 @@
     "@types/react-helmet": "^6.1.5",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.11",
-    "react-scripts": "^5.0.1",
-    "env-cmd": "^10.1.0"
+    "env-cmd": "^10.1.0",
+    "react-scripts": "^5.0.1"
   }
 }

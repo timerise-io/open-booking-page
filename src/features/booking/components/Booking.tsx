@@ -4,7 +4,7 @@ import {
   ContentSection,
 } from "components/layout/ContentWithDetails";
 import React from "react";
-import { useBooking } from "../hooks/useBooking";
+import { useBooking } from "../hooks/useBookingSubscription";
 import BookingCard from "./BookingCard/BookingCard";
 import ServiceDetailsForBookingWrapper from "./ServiceDetailsForBookingWrapper";
 
