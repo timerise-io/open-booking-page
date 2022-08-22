@@ -15,9 +15,7 @@ const httpLink = new HttpLink({
 const wsLink = new GraphQLWsLink(
   createClient({
     url: process.env.REACT_APP_TIMERISE_WS!,
-    connectionParams: {
-      authentication: "",
-    },
+    connectionParams: {},
   })
 );
 

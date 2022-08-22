@@ -11,7 +11,6 @@ import {
   BookingQueryResult,
   BookingQueryVariables,
 } from "../api/queries/models";
-import { GET_BOOKING } from "../api/queries/queries";
 import { BOOKING_SUBSCRIPTION } from "../api/subscriptions/booking";
 
 export const useBookingSubscription = (bookingId: string) => {
@@ -38,12 +37,11 @@ export const useBookingSubscription = (bookingId: string) => {
     }
   }, [data, setBooking]);
 
-  // useEffect(() => {
-  //   if (error || data?.booking === null) {
-  //     stopPolling();
-  //     navigate("/");
-  //   }
-  // }, [error, navigate, data, stopPolling]);
+  useEffect(() => {
+    if (error || data?.booking === null) {
+      navigate("/");
+    }
+  }, [error, navigate, data]);
 
   useEffect(() => {
     setServiceLoader(loading);
