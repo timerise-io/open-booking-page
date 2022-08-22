@@ -161,8 +161,6 @@ export const useServiceState = (serviceId: string) => {
         timeZone: "UTC",
       });
 
-      console.log(fetchDate);
-
       setSlotsFilter({
         ...slotsFilter,
         fetchDate: fetchDate,

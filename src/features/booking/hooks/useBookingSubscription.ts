@@ -28,8 +28,6 @@ export const useBookingSubscription = (bookingId: string) => {
     },
   });
 
-  console.log(loading, data, error);
-
   useEffect(() => {
     if (data && data.booking) {
       const { booking } = data;
