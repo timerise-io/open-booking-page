@@ -1,4 +1,4 @@
-import { useQuery, useSubscription } from "@apollo/client";
+import { useSubscription } from "@apollo/client";
 import { useProjectState } from "features/project/hooks/useProject";
 import { useServiceState } from "features/service/hooks/useService";
 import { useEffect } from "react";
