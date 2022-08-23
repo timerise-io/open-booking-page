@@ -38,7 +38,22 @@ export const useServiceSlotsState = (serviceId: string) => {
   );
   const setSlotsFilter = useSetRecoilState(slotsFiltersAtom);
 
-  const fetchTo = addDays(new Date(fetchFrom), maxDaysPerPage).toISOString();
+  // const serviceMinDate =
+  //   useRecoilValue(serviceAtom)?.dateTimeFrom ?? new Date().toISOString();
+
+  // const tomorrowMin = addDays(new Date(serviceMinDate), 1).toISOString();
+
+  // console.log([
+  //   // "Bedzie pobranie",
+  //   isServiceLoaded,
+  //   serviceMinDate,
+  //   tomorrowMin,
+  //   isAfter(new Date(tomorrowMin), new Date(fetchFrom)),
+  // ]);
+
+  const fetchTo = `${
+    addDays(new Date(fetchFrom), maxDaysPerPage).toISOString().split("T")[0]
+  }T23:59:59Z`;
 
   const {
     loading: slotsLoading,
@@ -152,18 +167,9 @@ export const useServiceState = (serviceId: string) => {
         },
       });
 
-      const now = new Date();
-      const dateTimeFrom = getDateInTimezone(service.dateTimeFrom);
-
-      const newFetchDate = isAfter(now, dateTimeFrom) ? now : dateTimeFrom;
-
-      const fetchDate = format(newFetchDate, "yyyy-MM-dd'T'HH:mm:00'Z'", {
-        timeZone: "UTC",
-      });
-
       setSlotsFilter({
         ...slotsFilter,
-        fetchDate: fetchDate,
+        fetchDate: service.dateTimeFrom,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
