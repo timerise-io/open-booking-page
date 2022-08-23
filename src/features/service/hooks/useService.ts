@@ -18,9 +18,6 @@ import { slotsViewConfiguration } from "state/selectors/slotsViewConfiguration";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { TIMERISE_LOGO_URL } from "helpers/constans";
 import addDays from "date-fns/addDays";
-import { getDateInTimezone } from "helpers/timeFormat";
-import { isAfter } from "date-fns";
-import { format } from "date-fns-tz";
 
 export const useServiceSlotsState = (serviceId: string) => {
   const isServiceLoaded = !!useRecoilValue(serviceAtom);
@@ -37,19 +34,6 @@ export const useServiceSlotsState = (serviceId: string) => {
     loaderAtom(LOADERS.SERVICE_SLOTS)
   );
   const setSlotsFilter = useSetRecoilState(slotsFiltersAtom);
-
-  // const serviceMinDate =
-  //   useRecoilValue(serviceAtom)?.dateTimeFrom ?? new Date().toISOString();
-
-  // const tomorrowMin = addDays(new Date(serviceMinDate), 1).toISOString();
-
-  // console.log([
-  //   // "Bedzie pobranie",
-  //   isServiceLoaded,
-  //   serviceMinDate,
-  //   tomorrowMin,
-  //   isAfter(new Date(tomorrowMin), new Date(fetchFrom)),
-  // ]);
 
   const fetchTo = `${
     addDays(new Date(fetchFrom), maxDaysPerPage).toISOString().split("T")[0]

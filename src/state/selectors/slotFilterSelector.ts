@@ -1,7 +1,7 @@
 import { addDays, isAfter } from "date-fns";
 import { format } from "date-fns-tz";
 import { getDateInTimezone } from "helpers/timeFormat";
-import { selector, useRecoilValue } from "recoil";
+import { selector } from "recoil";
 import { serviceAtom } from "state/atoms/service";
 import { slotsFiltersAtom, SlotsFiltersAtom } from "state/atoms/slotsFilters";
 
