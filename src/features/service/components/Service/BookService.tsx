@@ -138,6 +138,7 @@ interface BookServiceSlotFormProps {
   message: string;
   requireAgreement: boolean;
   quantity: number;
+  code: string;
 }
 
 const initialValues: BookServiceSlotFormProps = {
@@ -147,6 +148,7 @@ const initialValues: BookServiceSlotFormProps = {
   message: "",
   requireAgreement: false,
   quantity: 1,
+  code: "",
 };
 
 const BookService = () => {
@@ -175,6 +177,7 @@ const BookService = () => {
     const message = _.find(formFields, { fieldType: "SYSTEM_MESSAGE" });
     const email = _.find(formFields, { fieldType: "SYSTEM_EMAIL_ADDRESS" });
     const phone = _.find(formFields, { fieldType: "SYSTEM_PHONE_NUMBER" });
+    const code = _.find(formFields, { fieldType: "SYSTEM_ALLOWLIST_CODE" });
 
     const json = JSON.stringify({
       ...(fullName && { [fullName.fieldId]: value.fullName }),
@@ -182,6 +185,7 @@ const BookService = () => {
       ...(message && { [message.fieldId]: value.message }),
       ...(email && { [email.fieldId]: value.email }),
       ...(phone && { [phone.fieldId]: value.phone }),
+      ...(code && { [code.fieldId]: value.code }),
     });
 
     bookSlotMutation({

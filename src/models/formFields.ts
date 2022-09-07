@@ -3,7 +3,8 @@ export type FormFieldType =
   | "SYSTEM_EMAIL_ADDRESS"
   | "SYSTEM_PHONE_NUMBER"
   | "SYSTEM_MESSAGE"
-  | "SYSTEM_SLOT_QUANTITY";
+  | "SYSTEM_SLOT_QUANTITY"
+  | "SYSTEM_ALLOWLIST_CODE";
 
 export const FormFieldTypeDefaults: Record<FormFieldType, FormField> = {
   SYSTEM_FULL_NAME: {
@@ -52,6 +53,15 @@ export const FormFieldTypeDefaults: Record<FormFieldType, FormField> = {
     width: 100,
     maxValue: 10,
   },
+  SYSTEM_ALLOWLIST_CODE: {
+    fieldId: "",
+    required: false,
+    label: "",
+    order: 0,
+    fieldType: "SYSTEM_ALLOWLIST_CODE",
+    width: 100,
+    placeholder: "",
+  },
 };
 
 export interface BaseFormField {
@@ -63,6 +73,12 @@ export interface BaseFormField {
 
 export type FormFieldSystemFullName = BaseFormField & {
   fieldType: "SYSTEM_FULL_NAME";
+  width: number;
+  placeholder: string;
+};
+
+export type FormFieldSystemAllowlistCode = BaseFormField & {
+  fieldType: "SYSTEM_ALLOWLIST_CODE";
   width: number;
   placeholder: string;
 };
@@ -98,4 +114,5 @@ export type FormField =
   | FormFieldSystemPhoneNumber
   | FormFieldSystemMessage
   | FormFieldSystemMessage
-  | FormFieldSystemSlotQuantity;
+  | FormFieldSystemSlotQuantity
+  | FormFieldSystemAllowlistCode;
