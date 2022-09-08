@@ -79,6 +79,15 @@ export const GET_SERVICE = gql`
           width
           maxValue
         }
+        ... on FormFieldSystemAllowlistCode {
+          fieldId
+          fieldType
+          required
+          label
+          order
+          width
+          placeholder
+        }
       }
     }
   }

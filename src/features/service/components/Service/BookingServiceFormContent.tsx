@@ -62,6 +62,15 @@ const getFieldByTypename = (
         />
       );
     }
+    case "SYSTEM_ALLOWLIST_CODE": {
+      return (
+        <TextField
+          key={`booking-form-field-SYSTEM_ALLOWLIST_CODE`}
+          name="code"
+          label={label}
+        />
+      );
+    }
     case "SYSTEM_PHONE_NUMBER": {
       return (
         <PhoneSelect
