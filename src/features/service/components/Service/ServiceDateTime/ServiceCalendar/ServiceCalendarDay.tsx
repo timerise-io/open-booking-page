@@ -15,6 +15,10 @@ const ServiceCalendarDayWrapper = styled(Column)`
   margin: 0 8px;
 `;
 
+const DateTypography = styled(Typography)`
+  max-width: 60px;
+`;
+
 interface ServiceCalendarDayProps {
   day: string;
 }
@@ -33,11 +37,16 @@ const ServiceCalendarDay: React.FC<ServiceCalendarDayProps> = ({ day }) => {
             locale: locale,
           }).replace(/[.]$/, "")}
         </Typography>
-        <Typography typographyType="body" as="div" align="center">
+        <DateTypography
+          className="date-text"
+          typographyType="body"
+          as="div"
+          align="center"
+        >
           {formatInTimeZone(day, "UTC", "dd MMM", {
             locale: locale,
           })}
-        </Typography>
+        </DateTypography>
       </Box>
 
       {pattern.map((item) => {
