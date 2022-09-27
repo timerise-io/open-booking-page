@@ -17,6 +17,7 @@ const ServiceCalendarDayWrapper = styled(Column)`
 
 const DateTypography = styled(Typography)`
   max-width: 60px;
+  min-height: 40px;
 `;
 
 interface ServiceCalendarDayProps {
