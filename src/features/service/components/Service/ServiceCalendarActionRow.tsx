@@ -7,7 +7,7 @@ import { serviceAtom } from "state/atoms/service";
 import { SkeletonBox } from "components/layout/SkeletonBox";
 import { slotsFiltersAtom } from "state/atoms/slotsFilters";
 import TimezoneInfo from "./TimezoneInfo";
-import { addDays, isAfter, isSameDay } from "date-fns/esm";
+import { addDays, addMinutes, isAfter, isSameDay, set } from "date-fns/esm";
 import isBefore from "date-fns/isBefore";
 
 const Wrapper = styled.div`
@@ -45,6 +45,15 @@ const ServiceCalendarActionRow = () => {
     serviceFilters.pageSize
   );
 
+  const pageEndToCompare = addMinutes(
+    set(new Date(serviceFilters.firstDayDate), {
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    }),
+    serviceFilters.pageSize * 24 * 60 - 1
+  );
+
   const isPrevDisabled =
     isBefore(
       new Date(serviceFilters.firstDayDate),
@@ -58,8 +67,8 @@ const ServiceCalendarActionRow = () => {
     isAfter(new Date(), new Date(serviceFilters.firstDayDate));
 
   const isNextDisabled =
-    isSameDay(pageEnd, new Date(service.dateTimeTo)) ||
-    isAfter(pageEnd, new Date(service.dateTimeTo));
+    isSameDay(pageEndToCompare, new Date(service.dateTimeTo)) ||
+    isAfter(pageEndToCompare, new Date(service.dateTimeTo));
 
   const handlePrevClick = () => {
     const firstDayDate = addDays(
