@@ -22,6 +22,8 @@ import { LinkButton } from "components/LinkButton";
 import { Box } from "components/layout/Box";
 import formatInTimeZone from "date-fns-tz/formatInTimeZone";
 import { useLocale } from "helpers/hooks/useLocale";
+import { useLangParam } from "features/i18n/useLangParam";
+import { createSearchParams } from "react-router-dom";
 
 const StyledColumn = styled(Column)`
   margin-top: 26px;
@@ -79,6 +81,7 @@ const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({
   const { t } = useTranslation(["booking"]);
   const navigate = useNavigate();
   const booking = useRecoilValue(bookingAtom);
+  const lang = useLangParam();
 
   return (
     <StyledColumn mb={status === "CANCELED" ? 5 : 10}>
@@ -135,7 +138,12 @@ const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({
             colorType="primary"
             onClick={() =>
               navigate(
-                generatePath(PAGES.SERVICE, { id: booking.service.serviceId })
+                generatePath(`${PAGES.SERVICE}:query`, {
+                  id: booking.service.serviceId,
+                  query: lang
+                    ? `?${createSearchParams({ lang }).toString()}`
+                    : "",
+                })
               )
             }
           >

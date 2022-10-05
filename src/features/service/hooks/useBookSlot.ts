@@ -1,7 +1,11 @@
 import { useMutation } from "@apollo/client";
 import { PAGES } from "pages/constans";
 import { useEffect } from "react";
-import { generatePath, useNavigate } from "react-router-dom";
+import {
+  createSearchParams,
+  generatePath,
+  useNavigate,
+} from "react-router-dom";
 import {
   BookSlotMutationRespons,
   BookSlotMutationVariables,
@@ -10,11 +14,13 @@ import { BOOK_SLOT } from "../api/mutations/mutations";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { slotsFiltersAtom } from "state/atoms/slotsFilters";
 import { selectedSlot } from "state/atoms/selectedSlot";
+import { useLangParam } from "features/i18n/useLangParam";
 
 export const useBookSlot = () => {
   const [filters, setFilters] = useRecoilState(slotsFiltersAtom);
   const setSelectedSlot = useSetRecoilState(selectedSlot);
   const navigate = useNavigate();
+  const lang = useLangParam();
 
   const [bookSlotMutation, { data, loading, error }] = useMutation<
     BookSlotMutationRespons,
@@ -24,7 +30,10 @@ export const useBookSlot = () => {
   useEffect(() => {
     if (data?.bookingCreate.bookingId) {
       navigate(
-        generatePath(PAGES.BOOKING, { id: data.bookingCreate.bookingId })
+        generatePath(`${PAGES.BOOKING}:query`, {
+          id: data.bookingCreate.bookingId,
+          query: lang ? `?${createSearchParams({ lang }).toString()}` : "",
+        })
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
