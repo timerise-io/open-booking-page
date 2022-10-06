@@ -27,7 +27,6 @@ interface ServiceCalendarDayProps {
 const ServiceCalendarDay: React.FC<ServiceCalendarDayProps> = ({ day }) => {
   const locale = useLocale();
   const dayPart = day.split("T")[0];
-
   const pattern = useRecoilValue(slotsDayPattern);
 
   return (
