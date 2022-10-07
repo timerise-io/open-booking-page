@@ -19,6 +19,7 @@ import { Box } from "components/layout/Box";
 import useOnClickOutside from "helpers/hooks/useOnClickOutside";
 import { defaultPhonePrefixSelector } from "state/selectors/defaultPhonePrefix";
 import { useRecoilValue } from "recoil";
+import { useLangParam } from "features/i18n/useLangParam";
 
 const countryList = Object.entries(COUNTRY_PHONE_PREFIXES).sort(
   ([aKey], [bKey]) => (aKey < bKey ? -1 : 1)
@@ -127,7 +128,12 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({
   name = "phone-number-select",
   label,
 }) => {
-  const defaultCountryCode = useRecoilValue(defaultPhonePrefixSelector);
+  const paramLang = useLangParam();
+  const serviceDefaultCountryCode = useRecoilValue(defaultPhonePrefixSelector);
+  const defaultCountryCode =
+    paramLang !== null && paramLang.split("-").length > 1
+      ? paramLang.split("-")[1]
+      : serviceDefaultCountryCode;
   const [focused, setFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [, meta, helpers] = useField(name);

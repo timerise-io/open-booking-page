@@ -1,4 +1,5 @@
 import { useSubscription } from "@apollo/client";
+import { useLangParam } from "features/i18n/useLangParam";
 import { useProjectState } from "features/project/hooks/useProject";
 import { useServiceState } from "features/service/hooks/useService";
 import { useEffect } from "react";
@@ -48,9 +49,10 @@ export const useBookingSubscription = (bookingId: string) => {
 
 export const useBooking = () => {
   const { id } = useParams<{ id: string }>();
+  const lang = useLangParam();
   useBookingSubscription(id!);
   const bookingValue = useRecoilValue(bookingAtom);
   const serviceValue = useRecoilValue(serviceAtom);
-  useServiceState(bookingValue?.service.serviceId ?? "");
+  useServiceState(bookingValue?.service.serviceId ?? "", lang);
   useProjectState(serviceValue?.project.projectId ?? "");
 };

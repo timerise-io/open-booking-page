@@ -3,11 +3,16 @@ import { Row } from "components/layout/Row";
 import { Typography } from "components/Typography";
 import { useDeleteBooking } from "features/booking/hooks/useDeleteBooking";
 import useConfirmation from "features/confirmation/hooks/useConfirmation";
+import { useLangParam } from "features/i18n/useLangParam";
 import { BookingStatus } from "models/booking";
 import { PAGES } from "pages/constans";
 import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import { generatePath, useNavigate } from "react-router-dom";
+import {
+  createSearchParams,
+  generatePath,
+  useNavigate,
+} from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
 import styled from "styled-components";
@@ -21,6 +26,7 @@ const CanceledBookingCardBottom = () => {
   const { t } = useTranslation(["booking"]);
   const navigate = useNavigate();
   const bookingValue = useRecoilValue(bookingAtom);
+  const lang = useLangParam();
 
   if (bookingValue === undefined) return null;
 
@@ -29,8 +35,9 @@ const CanceledBookingCardBottom = () => {
       colorType="primary"
       onClick={() => {
         navigate(
-          generatePath(PAGES.SERVICE, {
+          generatePath(`${PAGES.SERVICE}:query`, {
             id: bookingValue.service.serviceId,
+            query: lang ? `?${createSearchParams({ lang }).toString()}` : "",
           })
         );
       }}
@@ -53,6 +60,7 @@ const AcceptedBookingCardBottom = () => {
   const deleteBooking = useDeleteBooking();
   const navigate = useNavigate();
   const bookingValue = useRecoilValue(bookingAtom);
+  const lang = useLangParam();
 
   const showConfirmation = useConfirmation({
     type: "booking/delete",
@@ -72,7 +80,10 @@ const AcceptedBookingCardBottom = () => {
         colorType="primary"
         onClick={() => {
           navigate(
-            generatePath(PAGES.SERVICE, { id: bookingValue.service.serviceId })
+            generatePath(`${PAGES.SERVICE}:query`, {
+              id: bookingValue.service.serviceId,
+              query: lang ? `?${createSearchParams({ lang }).toString()}` : "",
+            })
           );
         }}
       >

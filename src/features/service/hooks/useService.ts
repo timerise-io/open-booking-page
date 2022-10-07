@@ -18,6 +18,7 @@ import { slotsViewConfiguration } from "state/selectors/slotsViewConfiguration";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { TIMERISE_LOGO_URL } from "helpers/constans";
 import addDays from "date-fns/addDays";
+import { useLangParam } from "features/i18n/useLangParam";
 
 export const useServiceSlotsState = (serviceId: string) => {
   const isServiceLoaded = !!useRecoilValue(serviceAtom);
@@ -94,13 +95,20 @@ export const useServiceSlotsState = (serviceId: string) => {
   ]);
 };
 
-export const useServiceState = (serviceId: string) => {
+export const useServiceState = (serviceId: string, lang: string | null) => {
   const navigate = useNavigate();
 
   const { loading, data, error } = useQuery<
     { service?: ServiceQueryResult },
     ServiceQueryVariables
   >(GET_SERVICE, {
+    ...(lang && {
+      context: {
+        headers: {
+          "Accept-Language": lang,
+        },
+      },
+    }),
     fetchPolicy: "no-cache",
     variables: {
       serviceId: serviceId,
@@ -170,6 +178,7 @@ export const useServiceState = (serviceId: string) => {
 
 export const useService = () => {
   const { id } = useParams<{ id: string }>();
-  useServiceState(id!);
+  const lang = useLangParam();
+  useServiceState(id!, lang);
   useServiceSlotsState(id!);
 };
