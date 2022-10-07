@@ -9,5 +9,5 @@ function useQuery() {
 
 export const useLangParam = () => {
   const query = useQuery();
-  return query.get("lang");
+  return query.get("locale");
 };
