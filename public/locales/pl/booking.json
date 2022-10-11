@@ -1,7 +1,7 @@
 {
        "status" : {
-           "new": "Oczekiwanie na potwierdzenie",
-           "renewed": "Oczekiwanie na potwierdzenie",
+           "new": "Sprawdź skrzynkę",
+           "renewed": "Sprawdź skrzynkę",
            "confirmed": "Rezerwacja potwierdzona!",
            "accepted": "Rezerwacja potwierdzona!",
            "canceled": "Rezerwacja anulowana"

@@ -1,7 +1,7 @@
 {
        "status" : {
-           "new": "Waiting for confirmation",
-           "renewed": "Waiting for confirmation",
+           "new": "Check your inbox",
+           "renewed": "Check your inbox",
            "confirmed": "Booking confirmed!",
            "accepted": "Booking confirmed!",
            "canceled": "Booking canceled"

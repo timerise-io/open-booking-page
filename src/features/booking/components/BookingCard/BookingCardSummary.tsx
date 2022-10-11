@@ -1,10 +1,10 @@
 import { Column } from "components/layout/Column";
 import React, { ReactNode } from "react";
 import {
-  IconClock,
   IconCalendarEvent,
   IconCircleCheck,
   IconCircleX,
+  IconMailForward,
 } from "@tabler/icons";
 import { useTranslation } from "react-i18next";
 import { Typography } from "components/Typography";
@@ -66,8 +66,8 @@ interface BookingCardSummaryProps {
 }
 
 const icons: Record<BookingStatus, ReactNode> = {
-  NEW: <IconClock className="icon-draft" />,
-  RENEWED: <IconClock className="icon-draft" />,
+  NEW: <IconMailForward className="icon-draft" />,
+  RENEWED: <IconMailForward className="icon-draft" />,
   ACCEPTED: <IconCircleCheck className="icon-accepted" />,
   CONFIRMED: <IconCircleCheck className="icon-accepted" />,
   CANCELED: <IconCircleX className="icon-deleted" />,
