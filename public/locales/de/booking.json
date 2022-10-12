@@ -1,7 +1,7 @@
 {
        "status" : {
-           "new": "Auf Bestätigung warten",
-           "renewed": "Auf Bestätigung warten",
+           "new": "Überprüfe deinen Posteingang",
+           "renewed": "Überprüfe deinen Posteingang",
            "confirmed": "Buchung bestätigt!",
            "accepted": "Buchung bestätigt!",
            "canceled": "Buchung storniert"
