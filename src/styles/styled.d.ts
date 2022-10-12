@@ -27,6 +27,7 @@ declare module "styled-components" {
     colors: Record<ThemeColors, string>;
 
     colorSchemas: {
+      separator: string;
       button: Record<ButtonType, ButtonColorSchema>;
       iconButton: Record<IconButtonType, IconButtonColorSchema>;
       background: Record<BackgroundType, BackgroundColorSchema>;

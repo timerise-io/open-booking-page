@@ -32,6 +32,7 @@ const appTheme: DefaultTheme = {
   },
 
   colorSchemas: {
+    separator: "#e5e5e5",
     button: {
       primary: {
         background: "#333333",
@@ -159,6 +160,7 @@ const darkTheme: DefaultTheme = {
   },
 
   colorSchemas: {
+    separator: "#333333",
     button: {
       primary: {
         background: "#EAEAEA",
