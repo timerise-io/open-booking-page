@@ -1,14 +1,18 @@
-import styled from "styled-components";
-import { IconButton } from "components/IconButton";
-import { IconChevronRight, IconChevronLeft } from "@tabler/icons";
+import styled, { css } from "styled-components";
+import {
+  IconChevronRight,
+  IconChevronLeft,
+  IconChevronsLeft,
+  IconChevronsRight,
+} from "@tabler/icons";
 import { Row } from "components/layout/Row";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { serviceAtom } from "state/atoms/service";
-import { SkeletonBox } from "components/layout/SkeletonBox";
 import { slotsFiltersAtom } from "state/atoms/slotsFilters";
-import TimezoneInfo from "./TimezoneInfo";
 import { addDays, addMinutes, isAfter, isSameDay, set } from "date-fns/esm";
 import isBefore from "date-fns/isBefore";
+import { ContextButton } from "components/ContextButton";
+import { addMonths } from "date-fns";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -16,21 +20,27 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 8px;
+  margin-top: 12px;
 `;
 
-const Loader = (
-  <Wrapper>
-    <SkeletonBox h="20px" w="100%" />
-    <Row>
-      <IconButton disabled>
-        <IconChevronLeft />
-      </IconButton>
-      <IconButton disabled>
-        <IconChevronRight />
-      </IconButton>
-    </Row>
-  </Wrapper>
-);
+const PaginationButton = styled(ContextButton)`
+  padding: 0;
+  height: 36px;
+  width: 36px;
+  display: grid;
+  & > * {
+    margin: auto;
+    ${({ theme, disabled }) => {
+      if (!disabled) return "";
+
+      return css`
+        color: ${theme.colorSchemas.contextButton.disabledText};
+      `;
+    }}
+  }
+`;
+
+const Loader = <Wrapper></Wrapper>;
 
 const ServiceCalendarActionRow = () => {
   const service = useRecoilValue(serviceAtom);
@@ -66,9 +76,13 @@ const ServiceCalendarActionRow = () => {
     isSameDay(new Date(), new Date(serviceFilters.firstDayDate)) ||
     isAfter(new Date(), new Date(serviceFilters.firstDayDate));
 
+  const isPrevMonthDisabled = isPrevDisabled;
+
   const isNextDisabled =
     isSameDay(pageEndToCompare, new Date(service.dateTimeTo)) ||
     isAfter(pageEndToCompare, new Date(service.dateTimeTo));
+
+  const isNextMonthDisabled = isNextDisabled;
 
   const handlePrevClick = () => {
     const firstDayDate = addDays(
@@ -82,21 +96,75 @@ const ServiceCalendarActionRow = () => {
     });
   };
 
+  const handlePrevMonthClick = () => {
+    const prevMonth = addMonths(
+      set(new Date(serviceFilters.firstDayDate), { date: 1 }),
+      -1
+    );
+    const firstDayDate = isBefore(prevMonth, new Date(service.dateTimeFrom))
+      ? new Date(service.dateTimeFrom)
+      : prevMonth;
+
+    setServiceFilters({
+      ...serviceFilters,
+      fetchDate: firstDayDate.toISOString(),
+    });
+  };
+
   const handleNextClick = () => {
     setServiceFilters({ ...serviceFilters, fetchDate: pageEnd.toISOString() });
   };
 
+  const handleNextMonthClick = () => {
+    const nextMonth = addMonths(
+      set(new Date(serviceFilters.firstDayDate), { date: 1 }),
+      1
+    );
+
+    const firstDayDate = isAfter(nextMonth, new Date(service.dateTimeTo))
+      ? new Date(service.dateTimeTo)
+      : nextMonth;
+
+    setServiceFilters({
+      ...serviceFilters,
+      fetchDate: firstDayDate.toISOString(),
+    });
+  };
+
   return (
     <Wrapper>
-      <Row>
-        <IconButton disabled={isPrevDisabled} onClick={handlePrevClick}>
+      <Row gap="8px">
+        <PaginationButton
+          colorType="primary"
+          onClick={handlePrevMonthClick}
+          disabled={isPrevMonthDisabled}
+        >
+          <IconChevronsLeft />
+        </PaginationButton>
+        <PaginationButton
+          colorType="primary"
+          onClick={handlePrevClick}
+          disabled={isPrevDisabled}
+        >
           <IconChevronLeft />
-        </IconButton>
-        <IconButton disabled={isNextDisabled} onClick={handleNextClick}>
-          <IconChevronRight />
-        </IconButton>
+        </PaginationButton>
       </Row>
-      <TimezoneInfo />
+      <Row gap="8px">
+        <PaginationButton
+          colorType="primary"
+          onClick={handleNextClick}
+          disabled={isNextDisabled}
+        >
+          <IconChevronRight />
+        </PaginationButton>
+        <PaginationButton
+          colorType="primary"
+          onClick={handleNextMonthClick}
+          disabled={isNextMonthDisabled}
+        >
+          <IconChevronsRight />
+        </PaginationButton>
+      </Row>
     </Wrapper>
   );
 };

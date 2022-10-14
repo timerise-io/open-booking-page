@@ -26,8 +26,8 @@ export const Box = styled.div<BoxProps>`
     })`};
   padding: ${({ theme, pt, pr, pb, pl, p = 0 }) =>
     `calc(${theme.spacing} * ${pt ?? p}) calc(${theme.spacing} * ${
-      p ?? pr
-    }) calc(${theme.spacing} * ${p ?? pb}) calc(${theme.spacing} * ${
-      p ?? pl
+      pr ?? p
+    }) calc(${theme.spacing} * ${pb ?? p}) calc(${theme.spacing} * ${
+      pl ?? p
     })`};
 `;

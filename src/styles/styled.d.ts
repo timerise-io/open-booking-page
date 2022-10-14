@@ -28,6 +28,9 @@ declare module "styled-components" {
 
     colorSchemas: {
       separator: string;
+      contextButton: {
+        disabledText: string;
+      };
       button: Record<ButtonType, ButtonColorSchema>;
       iconButton: Record<IconButtonType, IconButtonColorSchema>;
       background: Record<BackgroundType, BackgroundColorSchema>;

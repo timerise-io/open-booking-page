@@ -2,6 +2,7 @@ import { Card, CardProps } from "components/Card";
 import { ContextButton } from "components/ContextButton";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
+import { Row } from "components/layout/Row";
 import { Typography } from "components/Typography";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -9,6 +10,7 @@ import { useRecoilValue } from "recoil";
 import { slotsDayPattern } from "state/selectors/slotsDayPattern";
 import styled, { css } from "styled-components";
 import ServiceCalendarActionRow from "../ServiceCalendarActionRow";
+import TimezoneInfo from "../TimezoneInfo";
 import ServiceCalendar from "./ServiceCalendar/ServiceCalendar";
 
 const WrapperCard = styled(Card)<{ fullHeight: boolean } & CardProps>`
@@ -47,6 +49,14 @@ const ShowMoreWrapper = styled.div`
   }}
 `;
 
+const TimezoneStyledRow = styled(Row)`
+  flex-wrap: wrap;
+  gap: 10px;
+  & > h3 {
+    white-space: nowrap;
+  }
+`;
+
 const FULL_HEIGHT_COUNT = 10;
 
 const ServiceDateTime = () => {
@@ -63,11 +73,12 @@ const ServiceDateTime = () => {
   return (
     <WrapperCard padding="20px 12px" fullHeight={isFullHeight}>
       <Column ai="flex-start">
-        <Box mb={2.5} ml={1} mr={1}>
+        <TimezoneStyledRow mb={2.5} ml={1} mr={1} w="100%" pr={2}>
           <Typography typographyType="h3" as="h3" displayType="contents">
             {t(`Select date and time`)}
           </Typography>
-        </Box>
+          <TimezoneInfo />
+        </TimezoneStyledRow>
         <ServiceCalendarActionRow />
         <ServiceCalendar />
       </Column>
