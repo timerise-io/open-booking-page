@@ -32,6 +32,10 @@ const appTheme: DefaultTheme = {
   },
 
   colorSchemas: {
+    separator: "#e5e5e5",
+    contextButton: {
+      disabledText: DARK_GRAY,
+    },
     button: {
       primary: {
         background: "#333333",
@@ -71,14 +75,14 @@ const appTheme: DefaultTheme = {
     input: {
       background: WHITE,
       border: "#D9D9D9",
-      borderHover: "#BFBFBF",
+      borderHover: DARK_GRAY,
     },
     timeSlotButton: {
       available: {
         background: "none",
         backgroundActive: WHITE,
         border: "#D9D9D9",
-        borderActive: "#333333",
+        borderActive: DARK_GRAY,
         text: DARK,
       },
       unavailable: {
@@ -159,6 +163,10 @@ const darkTheme: DefaultTheme = {
   },
 
   colorSchemas: {
+    separator: "#333333",
+    contextButton: {
+      disabledText: "#535353",
+    },
     button: {
       primary: {
         background: "#EAEAEA",

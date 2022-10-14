@@ -31,13 +31,16 @@ export const useServiceSlotsState = (serviceId: string) => {
   } = useRecoilValue(slotsFilterSelector);
 
   const { maxDaysPerPage } = useRecoilValue(slotsViewConfiguration);
+
   const setServiceSlotsLoader = useSetRecoilState(
     loaderAtom(LOADERS.SERVICE_SLOTS)
   );
   const setSlotsFilter = useSetRecoilState(slotsFiltersAtom);
 
   const fetchTo = `${
-    addDays(new Date(fetchFrom), maxDaysPerPage).toISOString().split("T")[0]
+    addDays(new Date(fetchFrom), maxDaysPerPage - 1)
+      .toISOString()
+      .split("T")[0]
   }T23:59:59Z`;
 
   const {

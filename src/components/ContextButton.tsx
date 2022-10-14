@@ -5,24 +5,25 @@ export const ContextButton = styled.button<{ colorType: "primary" | "danger" }>`
   box-sizing: border-box;
   border-radius: 4px;
   padding: 7px 12px;
-  cursor: pointer;
 
-  ${({ theme, colorType }) => {
+  ${({ theme, colorType, disabled }) => {
     const color =
       colorType === "danger" ? theme.colors.error : theme.colors.primary;
     const borderColor =
       colorType === "danger"
         ? theme.colors.error
-        : theme.colorSchemas.input.borderHover;
+        : theme.colorSchemas.timeSlotButton.available.border;
     const borderColorHover =
-      colorType === "danger" ? theme.colors.error : theme.colors.primary;
+      colorType === "danger" ? theme.colors.error : theme.colors.darkGrey;
 
     return css`
       color: ${color};
       border: 1px solid ${borderColor};
       &:hover {
-        border: 1px solid ${borderColorHover};
+        border: 1px solid ${disabled ? borderColor : borderColorHover};
       }
+
+      cursor: ${disabled ? "unset" : "pointer"};
     `;
   }}
 `;
