@@ -15,6 +15,11 @@ export const useConfirmBooking = (bookingId: string) => {
     ConfirmBookingMutationResult,
     ConfirmBookingMutationVariables
   >(CONFIRM_BOOKING, {
+    context: {
+      headers: {
+        "x-api-client-name": "booking-page",
+      },
+    },
     variables: {
       bookingId,
     },

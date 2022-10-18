@@ -51,6 +51,11 @@ export const useServiceSlotsState = (serviceId: string) => {
   } = useQuery<ServiceSlotsQueryResult, ServiceSlotsQueryVariables>(
     GET_SERVICE_SLOTS,
     {
+      context: {
+        headers: {
+          "x-api-client-name": "booking-page",
+        },
+      },
       fetchPolicy: "no-cache",
       variables: {
         serviceId: serviceId,
@@ -105,13 +110,12 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
     { service?: ServiceQueryResult },
     ServiceQueryVariables
   >(GET_SERVICE, {
-    ...(lang && {
-      context: {
-        headers: {
-          "Accept-Language": lang,
-        },
+    context: {
+      headers: {
+        ...(lang && { "Accept-Language": lang }),
+        "x-api-client-name": "booking-page",
       },
-    }),
+    },
     fetchPolicy: "no-cache",
     variables: {
       serviceId: serviceId,

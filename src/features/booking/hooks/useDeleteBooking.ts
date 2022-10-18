@@ -11,7 +11,13 @@ export const useDeleteBooking = () => {
   const [bookSlotMutation] = useMutation<
     CancelBookingMutationResult,
     CancelBookingMutationVariables
-  >(CANCEL_BOOKING);
+  >(CANCEL_BOOKING, {
+    context: {
+      headers: {
+        "x-api-client-name": "booking-page",
+      },
+    },
+  });
 
   const deleteBooking = () =>
     id && bookSlotMutation({ variables: { bookingId: id } });
