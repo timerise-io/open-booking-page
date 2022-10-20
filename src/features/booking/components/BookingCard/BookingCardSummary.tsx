@@ -16,7 +16,6 @@ import { PAGES } from "pages/constans";
 import { useRecoilValue } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
 import { ContextButton } from "components/ContextButton";
-import InfoBox from "components/InfoBox";
 import Space from "./Space";
 import { LinkButton } from "components/LinkButton";
 import { Box } from "components/layout/Box";
