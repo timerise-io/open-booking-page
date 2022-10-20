@@ -112,9 +112,6 @@ const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({
           })}
         </Typography>
       </StyledRow>
-      {status === "NEW" && booking && (
-        <InfoBox>{t("WaitingInfo.both")}</InfoBox>
-      )}
       {(status === "CONFIRMED" || status === "ACCEPTED") && booking && (
         <Column w="100%">
           <Row>
