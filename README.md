@@ -1,4 +1,4 @@
-[![GitHub](https://img.shields.io/github/license/timerise-io/open-booking-page)](https://github.com/timerise-io/open-booking-page/blob/main/LICENSE.md)
+[![GitHub](https://img.shields.io/github/license/timerise-io/open-booking-page)](https://github.com/timerise-io/open-booking-page/blob/main/LICENSE.md) [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/gugo.svg)](https://betteruptime.com/?utm_source=status_badge)
 
 
 [![Product Hunt](https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=349830&theme=light)](https://www.producthunt.com/posts/timerise)
