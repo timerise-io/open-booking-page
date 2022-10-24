@@ -25,7 +25,13 @@ export const useBookSlot = () => {
   const [bookSlotMutation, { data, loading, error }] = useMutation<
     BookSlotMutationRespons,
     BookSlotMutationVariables
-  >(BOOK_SLOT);
+  >(BOOK_SLOT, {
+    context: {
+      headers: {
+        "x-api-client-name": "booking-page",
+      },
+    },
+  });
 
   useEffect(() => {
     if (data?.bookingCreate.bookingId) {

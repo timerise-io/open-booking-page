@@ -24,6 +24,11 @@ export const useBookingState = (bookingId: string) => {
     BookingQueryVariables
   >(GET_BOOKING, {
     fetchPolicy: "no-cache",
+    context: {
+      headers: {
+        "x-api-client-name": "booking-page",
+      },
+    },
     variables: {
       bookingId,
     },

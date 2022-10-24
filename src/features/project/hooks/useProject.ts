@@ -13,6 +13,11 @@ export const useProjectState = (projectId: string) => {
   const { loading, data } = useQuery<{ project: Project }, ProjectVariables>(
     GET_PROJECT,
     {
+      context: {
+        headers: {
+          "x-api-client-name": "booking-page",
+        },
+      },
       variables: {
         projectId: projectId ?? "",
       },

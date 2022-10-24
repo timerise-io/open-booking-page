@@ -16,7 +16,6 @@ import { PAGES } from "pages/constans";
 import { useRecoilValue } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
 import { ContextButton } from "components/ContextButton";
-import InfoBox from "components/InfoBox";
 import Space from "./Space";
 import { LinkButton } from "components/LinkButton";
 import { Box } from "components/layout/Box";
@@ -26,7 +25,7 @@ import { useLangParam } from "features/i18n/useLangParam";
 import { createSearchParams } from "react-router-dom";
 
 const StyledColumn = styled(Column)`
-  margin-top: 26px;
+  margin-top: 40px;
 
   .icon-draft {
     color: #fd842e;
@@ -41,8 +40,16 @@ const StyledColumn = styled(Column)`
   }
 
   & > svg {
-    width: 36px;
-    height: 36px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .status-info {
+    margin-top: 10px;
+    margin-bottom: 7px;
+  }
+
+  .status-description {
     margin-bottom: 10px;
   }
 `;
@@ -53,11 +60,6 @@ const StyledRow = styled(Row)`
     width: 16px;
     height: 16px;
   }
-`;
-
-const StyledDateTimeTypography = styled(Typography)`
-  margin-left: 6px;
-  margin-right: 6px;
 `;
 
 interface BookingCardSummaryProps {
@@ -84,28 +86,31 @@ const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({
   const lang = useLangParam();
 
   return (
-    <StyledColumn mb={status === "CANCELED" ? 5 : 10}>
+    <StyledColumn mb={5}>
       {icons[status]}
-      <Typography typographyType="h2" as="h2">
+      <Typography typographyType="h2" as="h2" className="status-info">
         {t(`status.${status.toLocaleLowerCase()}`)}
       </Typography>
-      <Typography typographyType="body" align="center">
+      <Typography
+        typographyType="body"
+        align="center"
+        className="status-description"
+      >
         {t(`description.${status.toLocaleLowerCase()}.${"both"}`)}
       </Typography>
-      <StyledRow jc="center">
+      <StyledRow jc="center" gap="6px">
         <IconCalendarEvent />
-        <StyledDateTimeTypography typographyType="body" align="center">
-          {t(`dateTime.${status.toLocaleLowerCase()}`)}
-        </StyledDateTimeTypography>
-        <Typography typographyType="body" align="center" weight="700">
+        <Typography
+          typographyType="body"
+          align="center"
+          weight="700"
+          displayType="contents"
+        >
           {formatInTimeZone(dateTimeFrom, "UTC", "iiii dd MMM yyyy, H:mm", {
             locale,
           })}
         </Typography>
       </StyledRow>
-      {status === "NEW" && booking && (
-        <InfoBox>{t("WaitingInfo.both")}</InfoBox>
-      )}
       {(status === "CONFIRMED" || status === "ACCEPTED") && booking && (
         <Column w="100%">
           <Row>
