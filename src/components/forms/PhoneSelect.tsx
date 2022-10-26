@@ -94,6 +94,16 @@ const ChooseCountryButton = styled(OpenListButton)`
   }
 `;
 
+const ScrollWrapper = styled.div`
+  position: absolute;
+  top: 100%;
+  width: 150px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+`;
+
 const ListWrapper = styled.div`
   z-index: 1000;
   display: flex;
@@ -102,14 +112,11 @@ const ListWrapper = styled.div`
   align-items: flex-start;
   position: absolute;
   overflow-x: hidden;
-  top: 100%;
+  top: 0;
   width: 150px;
   height: 200px;
-  border-width: 1px;
-  border-style: solid;
   ${({ theme }) => css`
     background-color: ${theme.colorSchemas.input.background};
-    border-color: ${theme.colorSchemas.input.border};
     border-radius: ${theme.borderRadius};
     font-size: ${theme.typography.body.size};
     padding: calc(0.5 * ${theme.spacing}) 0;
@@ -182,24 +189,26 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({
           <IconChevronDown className="chevron" />
         </OpenListButton>
         <div className={isMenuOpen ? "" : "hidden"} ref={ref}>
-          <ListWrapper />
-          <ListWrapper>
-            {countryList.map(([countryCode, prefix]) => (
-              <ChooseCountryButton
-                key={countryCode}
-                onClick={() => handleCountryCodeChange(countryCode)}
-              >
-                <ReactCountryFlag
-                  className="flag"
-                  svg
-                  countryCode={countryCode}
-                />
-                <Typography typographyType="body" as="span">
-                  {`${countryCode} ${prefix ? `+${prefix}` : ``}`}{" "}
-                </Typography>
-              </ChooseCountryButton>
-            ))}
-          </ListWrapper>
+          <ScrollWrapper>
+            <ListWrapper />
+            <ListWrapper>
+              {countryList.map(([countryCode, prefix]) => (
+                <ChooseCountryButton
+                  key={countryCode}
+                  onClick={() => handleCountryCodeChange(countryCode)}
+                >
+                  <ReactCountryFlag
+                    className="flag"
+                    svg
+                    countryCode={countryCode}
+                  />
+                  <Typography typographyType="body" as="span">
+                    {`${countryCode} ${prefix ? `+${prefix}` : ``}`}{" "}
+                  </Typography>
+                </ChooseCountryButton>
+              ))}
+            </ListWrapper>
+          </ScrollWrapper>
         </div>
         <StyledInput
           value={value}
