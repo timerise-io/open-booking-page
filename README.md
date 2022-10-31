@@ -45,6 +45,8 @@ We encourage you to create your own services on the sandbox environment via [use
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
+Please remember that build command requires `.env` file in root directory.
+
 The build is minified and the filenames include the hashes.\
 For more information click [here](https://create-react-app.dev/docs/production-build/).
 
