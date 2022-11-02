@@ -18,7 +18,7 @@ const ShortInput = styled(StyledInput)`
 interface QuantityFieldProps {
   label?: string;
   name: string;
-  maxQuantity?: number;
+  maxQuantity?: number | null;
 }
 
 const QuantityField: React.FC<QuantityFieldProps> = ({
@@ -36,9 +36,9 @@ const QuantityField: React.FC<QuantityFieldProps> = ({
   const { setValue, setTouched } = helpers;
 
   const maxValue =
-    selectedSlot !== undefined && maxQuantity > selectedSlot.quantity
+    selectedSlot !== undefined && (maxQuantity ?? 1) > selectedSlot.quantity
       ? selectedSlot.quantity
-      : maxQuantity;
+      : maxQuantity ?? 1;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
