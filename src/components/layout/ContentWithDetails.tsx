@@ -44,16 +44,15 @@ export const ContentSection = styled.section`
 
 export const SliderWrapper = styled.div`
   position: relative;
-  min-height: 240px;
-  max-height: 240px;
+  aspect-ratio: 90/67;
   min-width: 320px;
   width: -webkit-fill-available;
-  background-color: white;
   border-radius: ${({ theme }) => theme.borderRadius};
   display: flex;
   flex-direction: column;
   padding: 0;
   overflow: hidden;
+  background-color: transparent;
 
   ${({ theme }) => theme.mediaBelow(theme.breakpoints.sm)} {
     border-radius: 0;
