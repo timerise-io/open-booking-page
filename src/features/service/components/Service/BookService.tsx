@@ -90,6 +90,7 @@ const generateValidationSchema = (
         if (item.fieldType === "NUMBER" && item.maxValue !== null)
           return {
             [item.fieldId]: Yup.number()
+              .required(t("common:validation.required"))
               .min(0, t("common:validation.minValue", { minValue: 0 }))
               .max(
                 item.maxValue,
@@ -98,10 +99,9 @@ const generateValidationSchema = (
           };
         if (item.fieldType === "NUMBER" && item.maxValue === null)
           return {
-            [item.fieldId]: Yup.number().min(
-              0,
-              t("common:validation.minValue", { minValue: 0 })
-            ),
+            [item.fieldId]: Yup.number()
+              .required(t("common:validation.required"))
+              .min(0, t("common:validation.minValue", { minValue: 0 })),
           };
         if (item.fieldType === "SELECT")
           return {
