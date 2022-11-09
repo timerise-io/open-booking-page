@@ -27,7 +27,7 @@ const StyledH2 = styled.h2`
   font-weight: 700;
   font-size: 28px;
   line-height: 34px;
-  display: contents;
+  margin: 0;
 
   text-align: center;
 `;

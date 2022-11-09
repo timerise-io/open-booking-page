@@ -112,7 +112,7 @@ const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({
         </Typography>
       </StyledRow>
       {(status === "CONFIRMED" || status === "ACCEPTED") && booking && (
-        <Column w="100%">
+        <Column w="100%" mt={2.5}>
           <Row>
             <LinkButton href={booking.iCalUrl} download>
               Download .ics
