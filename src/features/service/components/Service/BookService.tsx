@@ -18,7 +18,7 @@ import { serviceAtom } from "state/atoms/service";
 import styled from "styled-components";
 import { IconInfoCircle } from "@tabler/icons";
 import { slotsFiltersAtom } from "state/atoms/slotsFilters";
-import { FormField } from "models/formFields";
+import { filterFormFields, FormField } from "models/formFields";
 import { uploadAttachmentsAtom } from "state/atoms/uploadAttachments";
 import _ from "lodash";
 import { useLocale } from "helpers/hooks/useLocale";
@@ -70,10 +70,50 @@ const generateValidationSchema = (
     (item) => item.fieldType === "SYSTEM_SLOT_QUANTITY"
   );
   const systemAllowListCode = formFields.find(
-    (item) => item.fieldType === "SYSTEM_ALLOWLIST_CODE"
+    (item) => item.fieldType === "SYSTEM_ALLOWLIST_CODE" && item.required
+  );
+
+  const requiredCustomFormFields = filterFormFields(formFields, false).filter(
+    (item) => item.required
   );
 
   return Yup.object({
+    ...Object.assign(
+      {},
+      ...requiredCustomFormFields.map((item) => {
+        if (item.fieldType === "CHECKBOX")
+          return {
+            [item.fieldId]: Yup.boolean().isTrue(
+              t("common:validation.required")
+            ),
+          };
+        if (item.fieldType === "NUMBER" && item.maxValue !== null)
+          return {
+            [item.fieldId]: Yup.number()
+              .required(t("common:validation.required"))
+              .min(0, t("common:validation.minValue", { minValue: 0 }))
+              .max(
+                item.maxValue,
+                t("common:validation.maxValue", { maxValue: item.maxValue })
+              ),
+          };
+        if (item.fieldType === "NUMBER" && item.maxValue === null)
+          return {
+            [item.fieldId]: Yup.number()
+              .required(t("common:validation.required"))
+              .min(0, t("common:validation.minValue", { minValue: 0 })),
+          };
+        if (item.fieldType === "SELECT")
+          return {
+            [item.fieldId]: Yup.array().min(1, t("common:validation.required")),
+          };
+        return {
+          [item.fieldId]: Yup.string().required(
+            t("common:validation.required")
+          ),
+        };
+      })
+    ),
     ...(systemFullName && {
       fullName: getStringFieldValidation(t, systemFullName.required),
     }),
@@ -157,13 +197,31 @@ const initialValues: BookServiceSlotFormProps = {
   code: "",
 };
 
+const getInitialValues = (formFields: Array<FormField>) => {
+  const customFormFields = filterFormFields(formFields, false);
+  return {
+    ...initialValues,
+    ...Object.assign(
+      {},
+      ...customFormFields.map((item) => {
+        if (item.fieldType === "CHECKBOX") return { [item.fieldId]: false };
+        if (item.fieldType === "NUMBER") return { [item.fieldId]: 1 };
+        if (item.fieldType === "SELECT") return { [item.fieldId]: [] };
+        return { [item.fieldId]: "" };
+      })
+    ),
+  };
+};
+
 const BookService = () => {
   const locale = useLocale();
   const { t } = useTranslation(["forms"]);
   const selectedSlotValue = useRecoilValue(selectedSlot);
   const servicePriceValue = useRecoilValue(servicePrice);
   const service = useRecoilValue(serviceAtom);
-  const { formFields } = service ?? {};
+  const { formFields }: { formFields: Array<FormField> } = service ?? {
+    formFields: [],
+  };
   const showWarning = useRecoilValue(slotsFiltersAtom).triggerId !== 0;
   const slot = useRecoilValue(selectedSlotSelector);
   const { bookSlotMutation, loading } = useBookSlot();
@@ -175,7 +233,7 @@ const BookService = () => {
     formatInTimeZone(selectedSlotValue, "UTC", "iii dd MMM, H:mm", {
       locale,
     });
-  const handleSubmit = (value: BookServiceSlotFormProps) => {
+  const handleSubmit = (value: Record<string, any>) => {
     if (slot === undefined) return;
 
     const fullName = _.find(formFields, { fieldType: "SYSTEM_FULL_NAME" });
@@ -185,6 +243,12 @@ const BookService = () => {
     const phone = _.find(formFields, { fieldType: "SYSTEM_PHONE_NUMBER" });
     const code = _.find(formFields, { fieldType: "SYSTEM_ALLOWLIST_CODE" });
 
+    const customFormFields = filterFormFields(formFields, false).map((item) => {
+      return {
+        [item.fieldId]: value[item.fieldId] as any,
+      };
+    });
+
     const json = JSON.stringify({
       ...(fullName && { [fullName.fieldId]: value.fullName }),
       ...(quantity && { [quantity.fieldId]: value.quantity }),
@@ -192,6 +256,7 @@ const BookService = () => {
       ...(email && { [email.fieldId]: value.email }),
       ...(phone && { [phone.fieldId]: value.phone }),
       ...(code && { [code.fieldId]: value.code }),
+      ...Object.assign({}, ...customFormFields),
     });
 
     bookSlotMutation({
@@ -214,10 +279,7 @@ const BookService = () => {
           </Typography>
         </Box>
         <Formik
-          initialValues={{
-            ...initialValues,
-            quantity: 1,
-          }}
+          initialValues={getInitialValues(formFields)}
           validationSchema={generateValidationSchema(t, formFields, false)}
           onSubmit={handleSubmit}
         >

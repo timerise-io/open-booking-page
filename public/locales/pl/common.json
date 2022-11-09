@@ -10,7 +10,9 @@
         "required": "Wymagane",
         "minLength": "Minimalna liczba znaków to {{length}}",
         "email": "Błędny format adresu e-mail",
-        "slots-quantity": "Ilość miejsc musi być większa niż 0"
+        "slots-quantity": "Ilość miejsc musi być większa niż 0",
+        "minValue": "Minimalna wartość to {{minValue}}.",
+        "maxValue": "Maksymalna wartość to {{maxValue}}."
     },
     "loadingInfo": "Liczymy wstecz od nieskończoności",
     "theme": {

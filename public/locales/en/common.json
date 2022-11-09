@@ -10,7 +10,9 @@
         "required": "Required",
         "minLength": "Minimum length is {{length}} characters",
         "email": "Incorrect e-mail format",
-        "slots-quantity": "Slots quantity must be greater than 0"
+        "slots-quantity": "Slots quantity must be greater than 0",
+        "minValue": "The minimum value is {{minValue}}.",
+        "maxValue": "The maximum value is {{maxValue}}."
     },
     "loadingInfo": "Counting backwards from Infinity",
     "theme": {

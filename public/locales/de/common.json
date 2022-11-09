@@ -10,7 +10,9 @@
         "required": "Erforderlich",
         "minLength": "Die Mindestlänge beträgt {{length}} Zeichen",
         "email": "Falsches E-Mail-Format",
-        "slots-quantity": "Die Anzahl der Slots muss größer als 0 sein"
+        "slots-quantity": "Die Anzahl der Slots muss größer als 0 sein",
+        "minValue": "Der Mindestwert ist {{minValue}}.",
+        "maxValue": "Der Maximalwert ist {{maxValue}}."
     },
     "loadingInfo": "Von Unendlich rückwärts zählen",
     "theme": {

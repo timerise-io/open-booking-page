@@ -66,7 +66,7 @@ const Select: React.FC<PropsWithChildren<SelectProps>> = ({
 }) => {
   return (
     <WrapperDiv>
-      <IconChevronDown onClick={() => console.log("ico cio ")} />
+      <IconChevronDown />
       <SelectBase
         onChange={(e) => {
           onChange(e.target.value);
