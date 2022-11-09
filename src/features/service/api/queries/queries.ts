@@ -113,6 +113,7 @@ export const GET_SERVICE = gql`
           required
           label
           order
+          width
         }
         ... on FormFieldSelect {
           fieldId
@@ -121,6 +122,7 @@ export const GET_SERVICE = gql`
           values
           label
           order
+          width
         }
       }
     }

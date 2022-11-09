@@ -66,24 +66,12 @@ const CheckboxLabel = styled(Typography)`
   line-height: 0.8125rem;
 `;
 
-const StyledLink = styled.a`
-  ${({ theme }) => {
-    const color = theme.colors.primary;
-    return css`
-      color: ${color};
-      &:visited {
-        color: ${color};
-      }
-    `;
-  }}
-`;
-
 interface CheckBoxProps {
   name: string;
-  privacyPolicyUrl: string;
+  label: string;
 }
 
-const CheckBox: React.FC<CheckBoxProps> = ({ name, privacyPolicyUrl }) => {
+const CheckBox: React.FC<CheckBoxProps> = ({ name, label }) => {
   const [, meta, helpers] = useField({ name });
   const { value } = meta;
   const { setValue } = helpers;
@@ -109,17 +97,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({ name, privacyPolicyUrl }) => {
             setValue(!value);
           }}
         >
-          Oświadczam, że zapoznałem(-am) się z treścią{" "}
-          <StyledLink
-            href={privacyPolicyUrl}
-            target="_blank"
-            rel="noreferrer"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            klauzuli RODO.
-          </StyledLink>
+          {label}
         </CheckboxLabel>
       </CheckboxWrapper>
       <Box h="13px" mt={0.5} mb={1}>

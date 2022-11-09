@@ -8,6 +8,8 @@ import PhoneSelect from "components/forms/PhoneSelect";
 import { useTranslation } from "react-i18next";
 import QuantityField from "components/forms/QuantityField";
 import { FormField } from "models/formFields";
+import CheckBox from "components/forms/CheckBox";
+import NumberField from "components/forms/NumberField";
 
 const FormRow = styled(Row)`
   gap: 0 10px;
@@ -32,11 +34,11 @@ const splitFormConfigIntoRows = (fields: Array<FormField>) => {
     const currentRow = result[result.length - 1];
 
     const currentRowWidth = currentRow.reduce(
-      (acc, rowItem) => acc + rowItem.width,
+      (acc, rowItem) => acc + (rowItem.width ?? 100),
       0
     );
 
-    if (currentRowWidth + item.width > 100) {
+    if (currentRowWidth + (item.width ?? 100) > 100) {
       result.push([{ ...item }]);
     } else {
       currentRow.push({ ...item });
@@ -59,6 +61,33 @@ const getFieldByTypename = (
           key={`booking-form-field-SYSTEM_FULL_NAME`}
           name="fullName"
           label={label}
+        />
+      );
+    }
+    case "TEXT": {
+      return (
+        <TextField
+          key={`booking-form-field-${config.fieldId}`}
+          name={config.fieldId}
+          label={config.label}
+        />
+      );
+    }
+    case "NUMBER": {
+      return (
+        <NumberField
+          key={`booking-form-field-${config.fieldId}`}
+          name={config.fieldId}
+          label={config.label}
+        />
+      );
+    }
+    case "CHECKBOX": {
+      return (
+        <CheckBox
+          key={`booking-form-field-${config.fieldId}`}
+          name={config.fieldId}
+          label={config.label}
         />
       );
     }
@@ -130,6 +159,8 @@ export const BookingServiceFormContent = () => {
   );
 
   const formRows = splitFormConfigIntoRows(enabledFields);
+
+  // console.log(formRows);
 
   return (
     <>

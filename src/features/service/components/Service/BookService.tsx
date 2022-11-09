@@ -18,7 +18,7 @@ import { serviceAtom } from "state/atoms/service";
 import styled from "styled-components";
 import { IconInfoCircle } from "@tabler/icons";
 import { slotsFiltersAtom } from "state/atoms/slotsFilters";
-import { FormField } from "models/formFields";
+import { filterFormFields, FormField } from "models/formFields";
 import { uploadAttachmentsAtom } from "state/atoms/uploadAttachments";
 import _ from "lodash";
 import { useLocale } from "helpers/hooks/useLocale";
@@ -73,7 +73,43 @@ const generateValidationSchema = (
     (item) => item.fieldType === "SYSTEM_ALLOWLIST_CODE"
   );
 
+  const requiredCustomFormFields = filterFormFields(formFields, false).filter(
+    (item) => item.required
+  );
+
   return Yup.object({
+    // ...Object.assign(
+    //   {},
+    //   ...requiredCustomFormFields.map((item) => {
+    //     if (item.fieldType === "CHECKBOX")
+    //       return {
+    //         [item.fieldId]: Yup.boolean().isTrue(
+    //           t("common:validation.required")
+    //         ),
+    //       };
+    //     if (item.fieldType === "NUMBER" && item.maxValue !== null)
+    //       return {
+    //         [item.fieldId]: Yup.number()
+    //           .min(0, t("common:validation.minValue", { minValue: 0 }))
+    //           .max(
+    //             item.maxValue,
+    //             t("common:validation.maxValue", { maxValue: item.maxValue })
+    //           ),
+    //       };
+    //     if (item.fieldType === "NUMBER" && item.maxValue === null)
+    //       return {
+    //         [item.fieldId]: Yup.number().min(
+    //           0,
+    //           t("common:validation.minValue", { minValue: 0 })
+    //         ),
+    //       };
+    //     return {
+    //       [item.fieldId]: Yup.string().required(
+    //         t("common:validation.required")
+    //       ),
+    //     };
+    //   })
+    // ),
     ...(systemFullName && {
       fullName: getStringFieldValidation(t, systemFullName.required),
     }),
@@ -157,13 +193,30 @@ const initialValues: BookServiceSlotFormProps = {
   code: "",
 };
 
+const getInitialValues = (formFields: Array<FormField>) => {
+  const customFormFields = filterFormFields(formFields, false);
+  return {
+    ...initialValues,
+    ...Object.assign(
+      {},
+      ...customFormFields.map((item) => {
+        if (item.fieldType === "CHECKBOX") return { [item.fieldId]: false };
+        if (item.fieldType === "NUMBER") return { [item.fieldId]: 0 };
+        return { [item.fieldId]: "" };
+      })
+    ),
+  };
+};
+
 const BookService = () => {
   const locale = useLocale();
   const { t } = useTranslation(["forms"]);
   const selectedSlotValue = useRecoilValue(selectedSlot);
   const servicePriceValue = useRecoilValue(servicePrice);
   const service = useRecoilValue(serviceAtom);
-  const { formFields } = service ?? {};
+  const { formFields }: { formFields: Array<FormField> } = service ?? {
+    formFields: [],
+  };
   const showWarning = useRecoilValue(slotsFiltersAtom).triggerId !== 0;
   const slot = useRecoilValue(selectedSlotSelector);
   const { bookSlotMutation, loading } = useBookSlot();
@@ -194,16 +247,20 @@ const BookService = () => {
       ...(code && { [code.fieldId]: value.code }),
     });
 
-    bookSlotMutation({
-      variables: {
-        serviceId: id!,
-        slotId: slot.slotId,
-        formFields: json,
-      },
-    });
+    console.log(value);
+
+    // bookSlotMutation({
+    //   variables: {
+    //     serviceId: id!,
+    //     slotId: slot.slotId,
+    //     formFields: json,
+    //   },
+    // });
   };
 
   if (formFields === undefined || formFields.length === 0) return null;
+
+  // console.log(getInitialValues(formFields));
 
   return (
     <Box mt={1.125}>
@@ -214,10 +271,7 @@ const BookService = () => {
           </Typography>
         </Box>
         <Formik
-          initialValues={{
-            ...initialValues,
-            quantity: 1,
-          }}
+          initialValues={getInitialValues(formFields)}
           validationSchema={generateValidationSchema(t, formFields, false)}
           onSubmit={handleSubmit}
         >
