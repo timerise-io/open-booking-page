@@ -8,14 +8,14 @@
         },
         "description": {
            "new": {
-                "both" : "Wysłaliśmy wiadomość na podany adres email/numer telefonu. Użyj zawartego w niej linka by potwierdzić rezerwację usługi. Link wygaśnie po 10 minutach.",
-                "sms" : "Wysłaliśmy wiadomość na podany numer telefonu. Użyj zawartego w niej linka by potwierdzić rezerwację usługi. Link wygaśnie po 10 minutach.",
-                "email": "Wysłaliśmy wiadomość na podany adres email. Użyj zawartego w niej linka by potwierdzić rezerwację usługi. Link wygaśnie po 10 minutach."
+                "both" : "Potwierdzenie rejestracji wysłaliśmy na podany adres email/numer telefonu. Znajdziesz tam informacje o kolejnych krokach.",
+                "sms" : "Potwierdzenie rejestracji wysłaliśmy na podany adres numer telefonu. Znajdziesz tam informacje o kolejnych krokach.",
+                "email": "Potwierdzenie rejestracji wysłaliśmy na podany adres email. Znajdziesz tam informacje o kolejnych krokach."
             },
             "renewed": {
-                "both" : "Wysłaliśmy wiadomość na podany adres email/numer telefonu. Użyj zawartego w niej linka by potwierdzić rezerwację usługi. Link wygaśnie po 10 minutach.",
-                "sms" : "Wysłaliśmy wiadomość na podany numer telefonu. Użyj zawartego w niej linka by potwierdzić rezerwację usługi. Link wygaśnie po 10 minutach.",
-                "email": "Wysłaliśmy wiadomość na podany adres email. Użyj zawartego w niej linka by potwierdzić rezerwację usługi. Link wygaśnie po 10 minutach."
+                "both" : "Potwierdzenie rejestracji wysłaliśmy na podany adres email/numer telefonu. Znajdziesz tam informacje o kolejnych krokach.",
+                "sms" : "Potwierdzenie rejestracji wysłaliśmy na podany adres numer telefonu. Znajdziesz tam informacje o kolejnych krokach.",
+                "email": "Potwierdzenie rejestracji wysłaliśmy na podany adres email. Znajdziesz tam informacje o kolejnych krokach."
             },
             "accepted": {
                 "both" : "Dziękujemy za rezerwację usługi. Wysłaliśmy wiadomość z potwierdzeniem na podany adres email/numer telefonu. Znajdziesz w niej wszystkie szczegóły rezerwacji.",
