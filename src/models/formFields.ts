@@ -108,6 +108,29 @@ export type FormFieldSystemSlotQuantity = BaseFormField & {
   maxValue: number;
 };
 
+export type FormFieldText = BaseFormField & {
+  fieldType: "TEXT";
+  width: number;
+  placeholder: string;
+};
+
+export type FormFieldNumber = BaseFormField & {
+  fieldType: "NUMBER";
+  width: number;
+  placeholder: string;
+  maxValue: number | null;
+};
+
+export type FormFieldCheckbox = BaseFormField & {
+  fieldType: "CHECKBOX";
+};
+
+export type FormFieldSelect = BaseFormField & {
+  fieldType: "SELECT";
+  placeholder: string;
+  values: Array<string>;
+};
+
 export type FormField =
   | FormFieldSystemFullName
   | FormFieldSystemEmailAddress
@@ -115,4 +138,8 @@ export type FormField =
   | FormFieldSystemMessage
   | FormFieldSystemMessage
   | FormFieldSystemSlotQuantity
-  | FormFieldSystemAllowlistCode;
+  | FormFieldSystemAllowlistCode
+  | FormFieldText
+  | FormFieldNumber
+  | FormFieldCheckbox
+  | FormFieldSelect;

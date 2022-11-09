@@ -88,6 +88,40 @@ export const GET_SERVICE = gql`
           width
           placeholder
         }
+        ... on FormFieldText {
+          fieldId
+          fieldType
+          required
+          label
+          order
+          width
+          placeholder
+        }
+        ... on FormFieldNumber {
+          fieldId
+          fieldType
+          required
+          label
+          order
+          width
+          placeholder
+          maxValue
+        }
+        ... on FormFieldCheckbox {
+          fieldId
+          fieldType
+          required
+          label
+          order
+        }
+        ... on FormFieldSelect {
+          fieldId
+          fieldType
+          required
+          values
+          label
+          order
+        }
       }
     }
   }
