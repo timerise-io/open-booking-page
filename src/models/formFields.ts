@@ -32,64 +32,6 @@ export const filterFormFields = (
   return formFields.filter((item) => isSystemField(item) === system);
 };
 
-// export const FormFieldTypeDefaults: Record<FormFieldSystemType, FormField> = {
-//   SYSTEM_FULL_NAME: {
-//     fieldId: "",
-//     required: false,
-//     label: "",
-//     order: 0,
-//     fieldType: "SYSTEM_FULL_NAME",
-//     width: 100,
-//     placeholder: "",
-//   },
-//   SYSTEM_EMAIL_ADDRESS: {
-//     fieldId: "",
-//     required: false,
-//     label: "",
-//     order: 0,
-//     fieldType: "SYSTEM_EMAIL_ADDRESS",
-//     width: 100,
-//     placeholder: "",
-//   },
-//   SYSTEM_PHONE_NUMBER: {
-//     fieldId: "",
-//     required: false,
-//     label: "",
-//     order: 0,
-//     fieldType: "SYSTEM_PHONE_NUMBER",
-//     width: 100,
-//     placeholder: "",
-//   },
-//   SYSTEM_MESSAGE: {
-//     fieldId: "",
-//     required: false,
-//     label: "",
-//     order: 0,
-//     fieldType: "SYSTEM_MESSAGE",
-//     width: 100,
-//     placeholder: "",
-//     height: 3,
-//   },
-//   SYSTEM_SLOT_QUANTITY: {
-//     fieldId: "",
-//     required: false,
-//     label: "",
-//     order: 0,
-//     fieldType: "SYSTEM_SLOT_QUANTITY",
-//     width: 100,
-//     maxValue: 10,
-//   },
-//   SYSTEM_ALLOWLIST_CODE: {
-//     fieldId: "",
-//     required: false,
-//     label: "",
-//     order: 0,
-//     fieldType: "SYSTEM_ALLOWLIST_CODE",
-//     width: 100,
-//     placeholder: "",
-//   },
-// };
-
 export interface BaseFormField {
   fieldId: string;
   required: boolean;

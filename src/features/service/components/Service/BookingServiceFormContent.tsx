@@ -10,6 +10,7 @@ import QuantityField from "components/forms/QuantityField";
 import { FormField } from "models/formFields";
 import CheckBox from "components/forms/CheckBox";
 import NumberField from "components/forms/NumberField";
+import SelectField from "components/forms/SelectField";
 
 const FormRow = styled(Row)`
   gap: 0 10px;
@@ -70,6 +71,18 @@ const getFieldByTypename = (
           key={`booking-form-field-${config.fieldId}`}
           name={config.fieldId}
           label={config.label}
+        />
+      );
+    }
+    case "SELECT": {
+      return (
+        <SelectField
+          key={`booking-form-field-${config.fieldId}`}
+          name={config.fieldId}
+          label={config.label}
+          options={config.values.reduce((acc, item) => {
+            return { ...acc, [item]: item };
+          }, {})}
         />
       );
     }
@@ -159,8 +172,6 @@ export const BookingServiceFormContent = () => {
   );
 
   const formRows = splitFormConfigIntoRows(enabledFields);
-
-  // console.log(formRows);
 
   return (
     <>

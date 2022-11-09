@@ -78,38 +78,42 @@ const generateValidationSchema = (
   );
 
   return Yup.object({
-    // ...Object.assign(
-    //   {},
-    //   ...requiredCustomFormFields.map((item) => {
-    //     if (item.fieldType === "CHECKBOX")
-    //       return {
-    //         [item.fieldId]: Yup.boolean().isTrue(
-    //           t("common:validation.required")
-    //         ),
-    //       };
-    //     if (item.fieldType === "NUMBER" && item.maxValue !== null)
-    //       return {
-    //         [item.fieldId]: Yup.number()
-    //           .min(0, t("common:validation.minValue", { minValue: 0 }))
-    //           .max(
-    //             item.maxValue,
-    //             t("common:validation.maxValue", { maxValue: item.maxValue })
-    //           ),
-    //       };
-    //     if (item.fieldType === "NUMBER" && item.maxValue === null)
-    //       return {
-    //         [item.fieldId]: Yup.number().min(
-    //           0,
-    //           t("common:validation.minValue", { minValue: 0 })
-    //         ),
-    //       };
-    //     return {
-    //       [item.fieldId]: Yup.string().required(
-    //         t("common:validation.required")
-    //       ),
-    //     };
-    //   })
-    // ),
+    ...Object.assign(
+      {},
+      ...requiredCustomFormFields.map((item) => {
+        if (item.fieldType === "CHECKBOX")
+          return {
+            [item.fieldId]: Yup.boolean().isTrue(
+              t("common:validation.required")
+            ),
+          };
+        if (item.fieldType === "NUMBER" && item.maxValue !== null)
+          return {
+            [item.fieldId]: Yup.number()
+              .min(0, t("common:validation.minValue", { minValue: 0 }))
+              .max(
+                item.maxValue,
+                t("common:validation.maxValue", { maxValue: item.maxValue })
+              ),
+          };
+        if (item.fieldType === "NUMBER" && item.maxValue === null)
+          return {
+            [item.fieldId]: Yup.number().min(
+              0,
+              t("common:validation.minValue", { minValue: 0 })
+            ),
+          };
+        if (item.fieldType === "SELECT")
+          return {
+            [item.fieldId]: Yup.array().min(1, t("common:validation.required")),
+          };
+        return {
+          [item.fieldId]: Yup.string().required(
+            t("common:validation.required")
+          ),
+        };
+      })
+    ),
     ...(systemFullName && {
       fullName: getStringFieldValidation(t, systemFullName.required),
     }),
@@ -201,7 +205,8 @@ const getInitialValues = (formFields: Array<FormField>) => {
       {},
       ...customFormFields.map((item) => {
         if (item.fieldType === "CHECKBOX") return { [item.fieldId]: false };
-        if (item.fieldType === "NUMBER") return { [item.fieldId]: 0 };
+        if (item.fieldType === "NUMBER") return { [item.fieldId]: 1 };
+        if (item.fieldType === "SELECT") return { [item.fieldId]: [] };
         return { [item.fieldId]: "" };
       })
     ),
@@ -228,7 +233,7 @@ const BookService = () => {
     formatInTimeZone(selectedSlotValue, "UTC", "iii dd MMM, H:mm", {
       locale,
     });
-  const handleSubmit = (value: BookServiceSlotFormProps) => {
+  const handleSubmit = (value: Record<string, any>) => {
     if (slot === undefined) return;
 
     const fullName = _.find(formFields, { fieldType: "SYSTEM_FULL_NAME" });
@@ -238,6 +243,12 @@ const BookService = () => {
     const phone = _.find(formFields, { fieldType: "SYSTEM_PHONE_NUMBER" });
     const code = _.find(formFields, { fieldType: "SYSTEM_ALLOWLIST_CODE" });
 
+    const customFormFields = filterFormFields(formFields, false).map((item) => {
+      return {
+        [item.fieldId]: value[item.fieldId] as any,
+      };
+    });
+
     const json = JSON.stringify({
       ...(fullName && { [fullName.fieldId]: value.fullName }),
       ...(quantity && { [quantity.fieldId]: value.quantity }),
@@ -245,22 +256,19 @@ const BookService = () => {
       ...(email && { [email.fieldId]: value.email }),
       ...(phone && { [phone.fieldId]: value.phone }),
       ...(code && { [code.fieldId]: value.code }),
+      ...Object.assign({}, ...customFormFields),
     });
 
-    console.log(value);
-
-    // bookSlotMutation({
-    //   variables: {
-    //     serviceId: id!,
-    //     slotId: slot.slotId,
-    //     formFields: json,
-    //   },
-    // });
+    bookSlotMutation({
+      variables: {
+        serviceId: id!,
+        slotId: slot.slotId,
+        formFields: json,
+      },
+    });
   };
 
   if (formFields === undefined || formFields.length === 0) return null;
-
-  // console.log(getInitialValues(formFields));
 
   return (
     <Box mt={1.125}>
