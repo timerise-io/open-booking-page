@@ -70,7 +70,7 @@ const generateValidationSchema = (
     (item) => item.fieldType === "SYSTEM_SLOT_QUANTITY"
   );
   const systemAllowListCode = formFields.find(
-    (item) => item.fieldType === "SYSTEM_ALLOWLIST_CODE"
+    (item) => item.fieldType === "SYSTEM_ALLOWLIST_CODE" && item.required
   );
 
   const requiredCustomFormFields = filterFormFields(formFields, false).filter(

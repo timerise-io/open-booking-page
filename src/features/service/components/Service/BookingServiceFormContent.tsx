@@ -70,7 +70,7 @@ const getFieldByTypename = (
         <TextField
           key={`booking-form-field-${config.fieldId}`}
           name={config.fieldId}
-          label={config.label}
+          label={label}
         />
       );
     }
@@ -79,7 +79,7 @@ const getFieldByTypename = (
         <SelectField
           key={`booking-form-field-${config.fieldId}`}
           name={config.fieldId}
-          label={config.label}
+          label={label}
           options={config.values.reduce((acc, item) => {
             return { ...acc, [item]: item };
           }, {})}
@@ -91,7 +91,7 @@ const getFieldByTypename = (
         <NumberField
           key={`booking-form-field-${config.fieldId}`}
           name={config.fieldId}
-          label={config.label}
+          label={label}
         />
       );
     }
@@ -100,7 +100,7 @@ const getFieldByTypename = (
         <CheckBox
           key={`booking-form-field-${config.fieldId}`}
           name={config.fieldId}
-          label={config.label}
+          label={label}
         />
       );
     }
