@@ -20,7 +20,6 @@ const CheckboxInput = styled.input`
 
 const CheckboxWrapper = styled(Row)`
   position: relative;
-  height: 18px;
 
   & > label::before {
     top: -2px;
@@ -53,7 +52,7 @@ const CheckboxWrapper = styled(Row)`
   & > .icon-check {
     position: absolute;
     left: 2px;
-    top: 2px;
+    top: 0px;
   }
 `;
 
