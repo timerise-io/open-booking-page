@@ -166,7 +166,11 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({
     const prefix = COUNTRY_PHONE_PREFIXES?.[countryCode] ?? "";
     if (isNaN(+newValue) || isNaN(parseInt(newValue)) || newValue.length > 15)
       return;
-    setValue(newValue.length < prefix.length ? prefix : newValue);
+    setValue(
+      newValue.length < prefix.length
+        ? prefix
+        : newValue.replaceAll(/\D+/gm, "")
+    );
   };
 
   useEffect(() => {
