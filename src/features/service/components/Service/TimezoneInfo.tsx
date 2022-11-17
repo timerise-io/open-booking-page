@@ -10,6 +10,7 @@ import styled from "styled-components";
 
 const Wrapper = styled(Row)`
   color: #999999;
+  gap: 4px;
   .timezone-info {
     white-space: nowrap;
   }
@@ -22,13 +23,21 @@ const TimezoneInfo = () => {
   return (
     <Wrapper>
       <IconWorld size={16} />
-      <Box w="4px" />
       <Typography
         className="timezone-info"
         typographyType="label"
         color="inherit"
         as="span"
-      >{`${t("Timezone")}: ${timeZone.replace("_", " ")}`}</Typography>
+      >{`${t("Timezone")}:`}</Typography>
+      <Typography
+        className="timezone-info"
+        typographyType="label"
+        color="inherit"
+        as="span"
+        weight="700"
+      >
+        {timeZone.replace("_", " ")}
+      </Typography>
     </Wrapper>
   );
 };

@@ -23,6 +23,7 @@ import formatInTimeZone from "date-fns-tz/formatInTimeZone";
 import { useLocale } from "helpers/hooks/useLocale";
 import { useLangParam } from "features/i18n/useLangParam";
 import { createSearchParams } from "react-router-dom";
+import { timeZoneAtom } from "state/atoms/timeZone";
 
 const StyledColumn = styled(Column)`
   margin-top: 40px;
@@ -84,6 +85,7 @@ const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({
   const navigate = useNavigate();
   const booking = useRecoilValue(bookingAtom);
   const lang = useLangParam();
+  const timeZone = useRecoilValue(timeZoneAtom);
 
   return (
     <StyledColumn mb={5}>
@@ -106,23 +108,23 @@ const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({
           weight="700"
           displayType="contents"
         >
-          {formatInTimeZone(dateTimeFrom, "UTC", "iiii dd MMM yyyy, H:mm", {
+          {`${formatInTimeZone(dateTimeFrom, "UTC", "iiii dd MMM yyyy, H:mm", {
             locale,
-          })}
+          })} (${timeZone.replace("_", " ")})`}
         </Typography>
       </StyledRow>
       {(status === "CONFIRMED" || status === "ACCEPTED") && booking && (
         <Column w="100%" mt={2.5}>
           <Row>
             <LinkButton href={booking.iCalUrl} download>
-              Download .ics
+              {t("Add to your calendar")}
             </LinkButton>
             <LinkButton
               href={booking.qrUrl}
               download="booking_qr.png"
               target="_blank"
             >
-              QR code
+              {t("Download QR code")}
             </LinkButton>
           </Row>
           {booking.service?.spaces && (
