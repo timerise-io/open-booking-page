@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { IconWorld } from "@tabler/icons";
-import { Box } from "components/layout/Box";
 import styled from "styled-components";
 
 const Wrapper = styled(Row)`
