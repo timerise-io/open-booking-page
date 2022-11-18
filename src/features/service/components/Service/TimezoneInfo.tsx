@@ -8,7 +8,7 @@ import { IconWorld } from "@tabler/icons";
 import styled from "styled-components";
 
 const Wrapper = styled(Row)`
-  color: #999999;
+  /* color: #999999; */
   gap: 4px;
   .timezone-info {
     white-space: nowrap;
