@@ -1,63 +1,65 @@
 {
-       "status" : {
-           "new": "Überprüfe deinen Posteingang",
-           "renewed": "Überprüfe deinen Posteingang",
-           "confirmed": "Buchung bestätigt!",
-           "accepted": "Buchung bestätigt!",
-           "canceled": "Buchung storniert"
-        },
-        "description": {
-           "new": {
-               "both" : "Wir haben eine Nachricht an die angegebene E-Mail-Adresse/Telefonnummer gesendet. Verwenden Sie den darin enthaltenen Link, um die Buchung des Dienstes zu bestätigen. Der Link ist 10 Minuten lang gültig.",
-               "sms" : "Wir haben eine Nachricht an die angegebene Telefonnummer gesendet. Verwenden Sie den darin enthaltenen Link, um die Buchung des Dienstes zu bestätigen. Der Link ist 10 Minuten lang gültig.",
-               "email": "Wir haben eine Nachricht an die angegebene E-Mail-Adresse gesendet. Verwenden Sie den darin enthaltenen Link, um die Buchung des Dienstes zu bestätigen. Der Link ist 10 Minuten lang gültig."
-           },
-           "renewed": {
-               "both": "Wir haben eine Nachricht an die angegebene E-Mail-Adresse/Telefonnummer gesendet. Verwenden Sie den darin enthaltenen Link, um die Buchung des Dienstes zu bestätigen. Der Link ist 10 Minuten lang gültig.",
-                "sms" : "Wir haben eine Nachricht an die angegebene Telefonnummer gesendet. Verwenden Sie den darin enthaltenen Link, um die Buchung des Dienstes zu bestätigen. Der Link ist 10 Minuten lang gültig.",
-                "email": "Wir haben eine Nachricht an die angegebene E-Mail-Adresse gesendet. Verwenden Sie den darin enthaltenen Link, um die Buchung des Dienstes zu bestätigen. Der Link ist 10 Minuten lang gültig."
-            },
-           "accepted": {
-                "both": "Vielen Dank, dass Sie unseren Service gebucht haben. Wir haben eine Bestätigungsnachricht an die angegebene E-Mail-Adresse/Telefonnummer gesendet. Dort finden Sie alle notwendigen Buchungsdetails.",
-                "sms" : "Vielen Dank, dass Sie unseren Service gebucht haben. Wir haben eine Bestätigungsnachricht an die angegebene Telefonnummer gesendet. Dort finden Sie alle notwendigen Buchungsdetails.",
-                "email": "Vielen Dank, dass Sie unseren Service gebucht haben. Wir haben eine Bestätigungsnachricht an die angegebene E-Mail-Adresse gesendet. Dort finden Sie alle notwendigen Buchungsdetails."
-            },
-           "confirmed": {
-                "both": "Vielen Dank, dass Sie unseren Service gebucht haben. Wir haben eine Bestätigungsnachricht an die angegebene E-Mail-Adresse/Telefonnummer gesendet. Dort finden Sie alle notwendigen Buchungsdetails.",
-                "sms" : "Vielen Dank, dass Sie unseren Service gebucht haben. Wir haben eine Bestätigungsnachricht an die angegebene Telefonnummer gesendet. Dort finden Sie alle notwendigen Buchungsdetails.",
-                "email": "Vielen Dank, dass Sie unseren Service gebucht haben. Wir haben eine Bestätigungsnachricht an die angegebene E-Mail-Adresse gesendet. Dort finden Sie alle notwendigen Buchungsdetails."
-            },
-           "canceled": {
-                "both": "Die Buchung für diesen Service wurde storniert. Wir haben eine Bestätigung dieses Vorgangs an die von Ihnen angegebene E-Mail-Adresse/Telefonnummer gesendet.",
-                "sms" : "Die Buchung für diesen Service wurde storniert. Wir haben eine Bestätigung dieses Vorgangs an die von Ihnen angegebene Telefonnummer gesendet.",
-                "email": "Die Buchung für diesen Service wurde storniert. Wir haben eine Bestätigung dieses Vorgangs an die angegebene E-Mail-Adresse gesendet."
-            }
-       },
-       "dateTime": {
-           "new": "Vorgebuchtes Datum und Uhrzeit:",
-           "renewed": "Vorgebuchtes Datum und Uhrzeit:",
-           "accepted": "Datum und Uhrzeit:",
-           "confirmed": "Datum und Uhrzeit",
-           "canceled": "Gelöschtes Zeitfenster:"
-       },
-       "If you didn't get the message please": "Wenn Sie die Nachricht nicht erhalten haben, kontaktieren Sie uns bitte ",
-       "If your plans have changed": "Wenn sich Ihre Pläne geändert haben, können Sie das tun ",
-       "delete": "löschen",
-       "the booking": " die Buchung.",
-       "here": "hier",
-       "Show service details": "Servicedetails anzeigen",
-       "Hide service details": "Dienstdetails ausblenden",
-       "Are you sure you want to delete this booking?": "Möchten Sie diese Buchung wirklich <strong>löschen</strong>?",
-       "Use the button below to return to booking this service.": "Verwenden Sie die Schaltfläche unten, um zur Buchung dieses Service zurückzukehren.",
-       "Book now": "Buchen Sie jetzt",
-       "Want to book another date?": "Möchten Sie einen anderen Termin buchen?",
-       "Back to booking page": "Zurück zur Buchungsseite",
-       "Go back to booking": "Zurück zur Buchung",
-       "SMSInfo": "Bitte beachten Sie, dass in einer Situation, in der mehrere Personen dasselbe Datum und dieselbe Uhrzeit gewählt haben, die Buchungsbestätigung von der Person erhalten wird, die nach Erhalt der SMS zuerst auf den Bestätigungslink klickt.",
-       "Cancel booking": "Buchung stornieren",
-       "WaitingInfo": {
-           "both": "Bitte beachten Sie, dass in einer Situation, in der mehrere Personen dasselbe Datum und dieselbe Uhrzeit gewählt haben, die Buchungsbestätigung von der Person erhalten wird, die nach Erhalt der E-Mail-Nachricht/SMS zuerst auf den Bestätigungslink klickt.",
-           "sms" : "Bitte beachten Sie, dass in einer Situation, in der mehrere Personen dasselbe Datum und dieselbe Uhrzeit gewählt haben, die Buchungsbestätigung von der Person erhalten wird, die nach Erhalt der SMS zuerst auf den Bestätigungslink klickt.",
-           "email": "Bitte beachten Sie, dass in einer Situation, in der mehrere Personen dasselbe Datum und dieselbe Uhrzeit gewählt haben, die Buchungsbestätigung von der Person erhalten wird, die nach Erhalt der E-Mail-Nachricht zuerst auf den Bestätigungslink klickt."
-       }
-}   
+  "status": {
+    "new": "Überprüfe deinen Posteingang",
+    "renewed": "Überprüfe deinen Posteingang",
+    "confirmed": "Buchung bestätigt!",
+    "accepted": "Buchung bestätigt!",
+    "canceled": "Buchung storniert"
+  },
+  "description": {
+    "new": {
+      "both": "Wir haben eine Nachricht an die angegebene E-Mail-Adresse/Telefonnummer gesendet. Verwenden Sie den darin enthaltenen Link, um die Buchung des Dienstes zu bestätigen. Der Link ist 10 Minuten lang gültig.",
+      "sms": "Wir haben eine Nachricht an die angegebene Telefonnummer gesendet. Verwenden Sie den darin enthaltenen Link, um die Buchung des Dienstes zu bestätigen. Der Link ist 10 Minuten lang gültig.",
+      "email": "Wir haben eine Nachricht an die angegebene E-Mail-Adresse gesendet. Verwenden Sie den darin enthaltenen Link, um die Buchung des Dienstes zu bestätigen. Der Link ist 10 Minuten lang gültig."
+    },
+    "renewed": {
+      "both": "Wir haben eine Nachricht an die angegebene E-Mail-Adresse/Telefonnummer gesendet. Verwenden Sie den darin enthaltenen Link, um die Buchung des Dienstes zu bestätigen. Der Link ist 10 Minuten lang gültig.",
+      "sms": "Wir haben eine Nachricht an die angegebene Telefonnummer gesendet. Verwenden Sie den darin enthaltenen Link, um die Buchung des Dienstes zu bestätigen. Der Link ist 10 Minuten lang gültig.",
+      "email": "Wir haben eine Nachricht an die angegebene E-Mail-Adresse gesendet. Verwenden Sie den darin enthaltenen Link, um die Buchung des Dienstes zu bestätigen. Der Link ist 10 Minuten lang gültig."
+    },
+    "accepted": {
+      "both": "Vielen Dank, dass Sie unseren Service gebucht haben. Wir haben eine Bestätigungsnachricht an die angegebene E-Mail-Adresse/Telefonnummer gesendet. Dort finden Sie alle notwendigen Buchungsdetails.",
+      "sms": "Vielen Dank, dass Sie unseren Service gebucht haben. Wir haben eine Bestätigungsnachricht an die angegebene Telefonnummer gesendet. Dort finden Sie alle notwendigen Buchungsdetails.",
+      "email": "Vielen Dank, dass Sie unseren Service gebucht haben. Wir haben eine Bestätigungsnachricht an die angegebene E-Mail-Adresse gesendet. Dort finden Sie alle notwendigen Buchungsdetails."
+    },
+    "confirmed": {
+      "both": "Vielen Dank, dass Sie unseren Service gebucht haben. Wir haben eine Bestätigungsnachricht an die angegebene E-Mail-Adresse/Telefonnummer gesendet. Dort finden Sie alle notwendigen Buchungsdetails.",
+      "sms": "Vielen Dank, dass Sie unseren Service gebucht haben. Wir haben eine Bestätigungsnachricht an die angegebene Telefonnummer gesendet. Dort finden Sie alle notwendigen Buchungsdetails.",
+      "email": "Vielen Dank, dass Sie unseren Service gebucht haben. Wir haben eine Bestätigungsnachricht an die angegebene E-Mail-Adresse gesendet. Dort finden Sie alle notwendigen Buchungsdetails."
+    },
+    "canceled": {
+      "both": "Die Buchung für diesen Service wurde storniert. Wir haben eine Bestätigung dieses Vorgangs an die von Ihnen angegebene E-Mail-Adresse/Telefonnummer gesendet.",
+      "sms": "Die Buchung für diesen Service wurde storniert. Wir haben eine Bestätigung dieses Vorgangs an die von Ihnen angegebene Telefonnummer gesendet.",
+      "email": "Die Buchung für diesen Service wurde storniert. Wir haben eine Bestätigung dieses Vorgangs an die angegebene E-Mail-Adresse gesendet."
+    }
+  },
+  "dateTime": {
+    "new": "Vorgebuchtes Datum und Uhrzeit:",
+    "renewed": "Vorgebuchtes Datum und Uhrzeit:",
+    "accepted": "Datum und Uhrzeit:",
+    "confirmed": "Datum und Uhrzeit",
+    "canceled": "Gelöschtes Zeitfenster:"
+  },
+  "If you didn't get the message please": "Wenn Sie die Nachricht nicht erhalten haben, kontaktieren Sie uns bitte ",
+  "If your plans have changed": "Wenn sich Ihre Pläne geändert haben, können Sie das tun ",
+  "delete": "löschen",
+  "the booking": " die Buchung.",
+  "here": "hier",
+  "Show service details": "Servicedetails anzeigen",
+  "Hide service details": "Dienstdetails ausblenden",
+  "Are you sure you want to delete this booking?": "Möchten Sie diese Buchung wirklich <strong>löschen</strong>?",
+  "Use the button below to return to booking this service.": "Verwenden Sie die Schaltfläche unten, um zur Buchung dieses Service zurückzukehren.",
+  "Book now": "Buchen Sie jetzt",
+  "Want to book another date?": "Möchten Sie einen anderen Termin buchen?",
+  "Back to booking page": "Zurück zur Buchungsseite",
+  "Go back to booking": "Zurück zur Buchung",
+  "SMSInfo": "Bitte beachten Sie, dass in einer Situation, in der mehrere Personen dasselbe Datum und dieselbe Uhrzeit gewählt haben, die Buchungsbestätigung von der Person erhalten wird, die nach Erhalt der SMS zuerst auf den Bestätigungslink klickt.",
+  "Cancel booking": "Buchung stornieren",
+  "WaitingInfo": {
+    "both": "Bitte beachten Sie, dass in einer Situation, in der mehrere Personen dasselbe Datum und dieselbe Uhrzeit gewählt haben, die Buchungsbestätigung von der Person erhalten wird, die nach Erhalt der E-Mail-Nachricht/SMS zuerst auf den Bestätigungslink klickt.",
+    "sms": "Bitte beachten Sie, dass in einer Situation, in der mehrere Personen dasselbe Datum und dieselbe Uhrzeit gewählt haben, die Buchungsbestätigung von der Person erhalten wird, die nach Erhalt der SMS zuerst auf den Bestätigungslink klickt.",
+    "email": "Bitte beachten Sie, dass in einer Situation, in der mehrere Personen dasselbe Datum und dieselbe Uhrzeit gewählt haben, die Buchungsbestätigung von der Person erhalten wird, die nach Erhalt der E-Mail-Nachricht zuerst auf den Bestätigungslink klickt."
+  },
+  "Add to your calendar": "Zu Ihrem Kalender hinzufügen",
+  "Download QR code": "QR-Code herunterladen"
+}

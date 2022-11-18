@@ -59,5 +59,7 @@
            "both": "Please be advised that in a situation where several people have chosen the same date and time, the booking confirmation will be received by the person who clicks the confirmation link first after receiving the email message/SMS.",
            "sms" : "Please be advised that in a situation where several people have chosen the same date and time, the booking confirmation will be received by the person who clicks the confirmation link first after receiving the SMS.",
            "email": "Please be advised that in a situation where several people have chosen the same date and time, the booking confirmation will be received by the person who clicks the confirmation link first after receiving the email message."
-       }
+       },
+       "Add to your calendar": "Add to your calendar",
+       "Download QR code": "Download QR code"
 }   

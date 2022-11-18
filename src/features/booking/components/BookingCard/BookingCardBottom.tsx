@@ -18,7 +18,7 @@ import { bookingAtom } from "state/atoms/booking";
 import styled from "styled-components";
 
 const Wrapper = styled(Row)`
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid ${({ theme }) => theme.colorSchemas.separator};
   padding-top: 20px;
 `;
 
