@@ -85,7 +85,6 @@ export type FormFieldText = BaseFormField & {
 export type FormFieldNumber = BaseFormField & {
   fieldType: "NUMBER";
   width: number | null;
-  placeholder: string;
   maxValue: number | null;
 };
 

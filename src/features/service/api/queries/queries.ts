@@ -104,7 +104,6 @@ export const GET_SERVICE = gql`
           label
           order
           width
-          placeholder
           maxValue
         }
         ... on FormFieldCheckbox {
