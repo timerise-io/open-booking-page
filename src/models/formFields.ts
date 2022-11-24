@@ -80,6 +80,7 @@ export type FormFieldText = BaseFormField & {
   fieldType: "TEXT";
   width: number | null;
   placeholder: string;
+  validationRegex: string | null;
 };
 
 export type FormFieldNumber = BaseFormField & {
