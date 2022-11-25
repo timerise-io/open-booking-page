@@ -8,12 +8,11 @@ import { useRecoilValue } from "recoil";
 import { selectedSlot } from "state/atoms/selectedSlot";
 import { servicePrice } from "state/selectors/servicePrice";
 import { Formik, Form } from "formik";
-import * as Yup from "yup";
 import { TFunction, useTranslation } from "react-i18next";
 import { useBookSlot } from "features/service/hooks/useBookSlot";
 import { useParams } from "react-router-dom";
 import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
-import { BookingServiceFormContent } from "./BookingServiceFormContent";
+import { BookingServiceFormContent } from "../BookingServiceFormContent";
 import { serviceAtom } from "state/atoms/service";
 import styled from "styled-components";
 import { IconInfoCircle } from "@tabler/icons";
@@ -23,120 +22,7 @@ import { uploadAttachmentsAtom } from "state/atoms/uploadAttachments";
 import _ from "lodash";
 import { useLocale } from "helpers/hooks/useLocale";
 import { formatInTimeZone } from "date-fns-tz";
-
-const getStringFieldValidation = (t: TFunction<"forms"[]>, required: boolean) =>
-  required
-    ? Yup.string().required(t("common:validation.required"))
-    : Yup.string();
-
-const getPhoneFieldValidation = (t: TFunction<"forms"[]>, required: boolean) =>
-  required
-    ? Yup.string()
-        .required(t("common:validation.required"))
-        .min(8, t("common:validation.minLength", { length: 8 }))
-    : Yup.string().test({
-        message: t("common:validation.minLength", { length: 8 }),
-        test: (item) =>
-          item === undefined || item.length < 3 || item.length > 7,
-      });
-
-const getEmailFieldValidation = (t: TFunction<"forms"[]>, required: boolean) =>
-  required
-    ? Yup.string()
-        .email(t("common:validation.email"))
-        .required(t("common:validation.required"))
-    : Yup.string().email(t("common:validation.email"));
-
-const generateValidationSchema = (
-  t: TFunction<"forms"[]>,
-  formFields: Array<FormField>,
-  isAcceptRequired: boolean
-) => {
-  if (formFields.length === 0) return Yup.object({});
-
-  const systemFullName = formFields.find(
-    (item) => item.fieldType === "SYSTEM_FULL_NAME"
-  );
-  const systemPhoneNumber = formFields.find(
-    (item) => item.fieldType === "SYSTEM_PHONE_NUMBER"
-  );
-  const systemEmailAddress = formFields.find(
-    (item) => item.fieldType === "SYSTEM_EMAIL_ADDRESS"
-  );
-  const systemMessage = formFields.find(
-    (item) => item.fieldType === "SYSTEM_MESSAGE"
-  );
-  const systemSlotQuantity = formFields.find(
-    (item) => item.fieldType === "SYSTEM_SLOT_QUANTITY"
-  );
-  const systemAllowListCode = formFields.find(
-    (item) => item.fieldType === "SYSTEM_ALLOWLIST_CODE" && item.required
-  );
-
-  const requiredCustomFormFields = filterFormFields(formFields, false).filter(
-    (item) => item.required
-  );
-
-  return Yup.object({
-    ...Object.assign(
-      {},
-      ...requiredCustomFormFields.map((item) => {
-        if (item.fieldType === "CHECKBOX")
-          return {
-            [item.fieldId]: Yup.boolean().isTrue(
-              t("common:validation.required")
-            ),
-          };
-        if (item.fieldType === "NUMBER" && item.maxValue !== null)
-          return {
-            [item.fieldId]: Yup.number()
-              .required(t("common:validation.required"))
-              .min(0, t("common:validation.minValue", { minValue: 0 }))
-              .max(
-                item.maxValue,
-                t("common:validation.maxValue", { maxValue: item.maxValue })
-              ),
-          };
-        if (item.fieldType === "NUMBER" && item.maxValue === null)
-          return {
-            [item.fieldId]: Yup.number()
-              .required(t("common:validation.required"))
-              .min(0, t("common:validation.minValue", { minValue: 0 })),
-          };
-        if (item.fieldType === "SELECT")
-          return {
-            [item.fieldId]: Yup.array().min(1, t("common:validation.required")),
-          };
-        return {
-          [item.fieldId]: Yup.string().required(
-            t("common:validation.required")
-          ),
-        };
-      })
-    ),
-    ...(systemFullName && {
-      fullName: getStringFieldValidation(t, systemFullName.required),
-    }),
-    ...(systemPhoneNumber && {
-      phone: getPhoneFieldValidation(t, systemPhoneNumber.required),
-    }),
-    ...(systemEmailAddress && {
-      email: getEmailFieldValidation(t, systemEmailAddress.required),
-    }),
-    ...(systemMessage && {
-      message: getStringFieldValidation(t, systemMessage.required),
-    }),
-    ...(systemSlotQuantity && {
-      quantity: Yup.number().min(1, t("common:validation.slots-quantity")),
-    }),
-    ...(isAcceptRequired && {
-      requireAgreement: Yup.boolean().isTrue(t("common:validation.required")),
-    }),
-    ...(systemAllowListCode && {
-      code: Yup.string().required(t("common:validation.required")),
-    }),
-  });
-};
+import { generateValidationSchema } from "./validators";
 
 const getSubmitButtonText = (
   selectedSlotValue: string,

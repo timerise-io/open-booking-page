@@ -1,36 +1,37 @@
 {
-    "solution-name": "Timerise",
-    "footer": {
-        "copyright": "Timerise © 2022",
-        "Terms & Conditions": "Terms & Conditions",
-        "Privacy Policy": "Privacy Policy",
-        "powered by": "powered by"
-    },
-    "validation": {
-        "required": "Required",
-        "minLength": "Minimum length is {{length}} characters",
-        "email": "Incorrect e-mail format",
-        "slots-quantity": "Slots quantity must be greater than 0",
-        "minValue": "The minimum value is {{minValue}}.",
-        "maxValue": "The maximum value is {{maxValue}}."
-    },
-    "loadingInfo": "Counting backwards from Infinity",
-    "theme": {
-        "light": "Light mode",
-        "dark": "Dark mode"
-    },
-    "details": {
-        "Duration": "Duration",
-        "Payment": "Payment",
-        "Location": "Location",
-        "Hosted by": "Hosted by"
-    },
-    "Select date and time": "Select date and time",
-    "Time zone": "Time zone",
-    "Language": "Language",
-    "No time slots available in this date range": "No time slots available in this date range",
-    "Show more": "Show more",
-    "Show less": "Show less",
-    "available": "available",
-    "Timezone": "Timezone"
-  }
+  "solution-name": "Timerise",
+  "footer": {
+    "copyright": "Timerise © 2022",
+    "Terms & Conditions": "Terms & Conditions",
+    "Privacy Policy": "Privacy Policy",
+    "powered by": "powered by"
+  },
+  "validation": {
+    "required": "Required",
+    "minLength": "Minimum length is {{length}} characters",
+    "email": "Incorrect e-mail format",
+    "slots-quantity": "Slots quantity must be greater than 0",
+    "minValue": "The minimum value is {{minValue}}.",
+    "maxValue": "The maximum value is {{maxValue}}.",
+    "incorrect-format": "Incorrect format"
+  },
+  "loadingInfo": "Counting backwards from Infinity",
+  "theme": {
+    "light": "Light mode",
+    "dark": "Dark mode"
+  },
+  "details": {
+    "Duration": "Duration",
+    "Payment": "Payment",
+    "Location": "Location",
+    "Hosted by": "Hosted by"
+  },
+  "Select date and time": "Select date and time",
+  "Time zone": "Time zone",
+  "Language": "Language",
+  "No time slots available in this date range": "No time slots available in this date range",
+  "Show more": "Show more",
+  "Show less": "Show less",
+  "available": "available",
+  "Timezone": "Timezone"
+}

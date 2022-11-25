@@ -6,7 +6,7 @@ import {
   SliderWrapper,
 } from "components/layout/ContentWithDetails";
 import ServiceDateTime from "./ServiceDateTime/ServiceDateTime";
-import BookService from "./BookService";
+import BookService from "./BookService/BookService";
 import { useService } from "features/service/hooks/useService";
 import ServiceDetails from "./ServiceDetails";
 import ServiceImageCarousel from "./ServiceImageCarousel";

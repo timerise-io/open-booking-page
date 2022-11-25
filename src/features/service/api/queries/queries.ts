@@ -69,6 +69,7 @@ export const GET_SERVICE = gql`
           order
           width
           height
+          placeholder
         }
         ... on FormFieldSystemSlotQuantity {
           fieldId
@@ -96,6 +97,7 @@ export const GET_SERVICE = gql`
           order
           width
           placeholder
+          validationRegex
         }
         ... on FormFieldNumber {
           fieldId
