@@ -12,7 +12,7 @@ import { TFunction, useTranslation } from "react-i18next";
 import { useBookSlot } from "features/service/hooks/useBookSlot";
 import { useParams } from "react-router-dom";
 import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
-import { BookingServiceFormContent } from "../BookingServiceFormContent";
+import { BookingServiceFormContent } from "../BookingServiceFormContent/BookingServiceFormContent";
 import { serviceAtom } from "state/atoms/service";
 import styled from "styled-components";
 import { IconInfoCircle } from "@tabler/icons";
@@ -114,6 +114,9 @@ const BookService = () => {
   const { id } = useParams<{ id: string }>();
   const uploadState = useRecoilValue(uploadAttachmentsAtom);
 
+  const isUploading =
+    Object.values(uploadState).filter((item) => item.isLoading).length > 0;
+
   const formattedDate =
     selectedSlotValue &&
     formatInTimeZone(selectedSlotValue, "UTC", "iii dd MMM, H:mm", {
@@ -189,11 +192,7 @@ const BookService = () => {
                 <Button
                   type="submit"
                   buttonType="primary"
-                  disabled={
-                    selectedSlotValue === "" ||
-                    loading ||
-                    uploadState.state === "inProgress"
-                  }
+                  disabled={selectedSlotValue === "" || loading || isUploading}
                   data-cy="book-now-button"
                 >
                   {getSubmitButtonText(formattedDate, servicePriceValue, t)}

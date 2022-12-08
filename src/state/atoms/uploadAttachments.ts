@@ -1,9 +1,8 @@
 import { atom } from "recoil";
 
-export const uploadAttachmentsAtom = atom<{
-  state: "inProgress" | "done";
-  fileCount: number;
-}>({
+export const uploadAttachmentsAtom = atom<
+  Record<string, { isLoading: boolean }>
+>({
   key: "uploadAttachmentsAtom",
-  default: { state: "done", fileCount: 0 },
+  default: {},
 });

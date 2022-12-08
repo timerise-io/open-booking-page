@@ -1,58 +1,23 @@
-import { Row } from "components/layout/Row";
-import React from "react";
-import { useRecoilValue } from "recoil";
-import { serviceAtom } from "state/atoms/service";
-import styled from "styled-components";
-import TextField from "components/forms/TextField";
-import PhoneSelect from "components/forms/PhoneSelect";
-import { useTranslation } from "react-i18next";
-import QuantityField from "components/forms/QuantityField";
-import { FormField } from "models/formFields";
 import CheckBox from "components/forms/CheckBox";
+import FileUpload from "components/forms/FileUpload";
 import NumberField from "components/forms/NumberField";
+import PhoneSelect from "components/forms/PhoneSelect";
+import QuantityField from "components/forms/QuantityField";
 import SelectField from "components/forms/SelectField";
+import TextField from "components/forms/TextField";
+import { FormField } from "models/formFields";
+import React from "react";
+import { useTranslation } from "react-i18next";
 
-const FormRow = styled(Row)`
-  gap: 0 10px;
-  flex-wrap: wrap;
+interface FormComponentProps {
+  config: FormField;
+}
 
-  & > * {
-    flex: 1;
-    width: unset;
-    min-width: 210px;
-  }
-`;
+const FormComponent = ({ config }: FormComponentProps) => {
+  const { t } = useTranslation(["forms"]);
 
-const splitFormConfigIntoRows = (fields: Array<FormField>) => {
-  const result: Array<Array<FormField>> = [];
+  const optionalSuffix = t("optionalSuffix");
 
-  fields.forEach((item) => {
-    if (result.length === 0) {
-      result.push([{ ...item }]);
-      return;
-    }
-
-    const currentRow = result[result.length - 1];
-
-    const currentRowWidth = currentRow.reduce(
-      (acc, rowItem) => acc + (rowItem.width ?? 100),
-      0
-    );
-
-    if (currentRowWidth + (item.width ?? 100) > 100) {
-      result.push([{ ...item }]);
-    } else {
-      currentRow.push({ ...item });
-    }
-  });
-
-  return result;
-};
-
-const getFieldByTypename = (
-  config: FormField,
-  optionalSuffix: string
-): React.ReactNode => {
   const label = `${config.label}${config.required ? "" : optionalSuffix}`;
 
   switch (config.fieldType) {
@@ -151,41 +116,19 @@ const getFieldByTypename = (
         />
       );
     }
+    case "FILE_UPLOAD": {
+      return (
+        <FileUpload
+          key={`booking-form-field-FILE_UPLOAD-${config.fieldId}`}
+          {...config}
+          label={label}
+        />
+      );
+    }
     default: {
       return null;
     }
   }
 };
 
-export const BookingServiceFormContent = () => {
-  const { t } = useTranslation(["forms"]);
-
-  const optionalSuffix = t("optionalSuffix");
-
-  const service = useRecoilValue(serviceAtom);
-  const { formFields } = service ?? {};
-
-  if (formFields === undefined || formFields?.length === 0) return null;
-
-  const enabledFields = [...formFields].sort(
-    (item, nextItem) => item.order - nextItem.order
-  );
-
-  const formRows = splitFormConfigIntoRows(enabledFields);
-
-  return (
-    <>
-      {formRows.map((row, index) => {
-        if (row.length === 1) {
-          return getFieldByTypename(row[0], optionalSuffix);
-        }
-
-        return (
-          <FormRow key={`booking-form-row-${index}`}>
-            {row.map((item) => getFieldByTypename(item, optionalSuffix))}
-          </FormRow>
-        );
-      })}
-    </>
-  );
-};
+export default FormComponent;
