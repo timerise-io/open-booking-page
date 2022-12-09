@@ -12,5 +12,6 @@
   "maxSlots": "Sie können bis zu {{maxValue}} Slots buchen.",
   "Upload file": "Datei hochladen",
   "Uploading": "Hochladen...",
-  "Cancel": "Absagen"
+  "Cancel": "Absagen",
+  "Delete": "Löschen"
 }

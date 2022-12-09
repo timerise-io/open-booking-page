@@ -12,5 +12,6 @@
   "maxSlots": "You can book up to {{maxValue}} slots.",
   "Upload file": "Upload file",
   "Uploading": "Uploading...",
-  "Cancel": "Cancel"
+  "Cancel": "Cancel",
+  "Delete": "Delete"
 }

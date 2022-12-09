@@ -12,5 +12,6 @@
   "maxSlots": "Możesz zarezerwować do {{maxValue}} miejsc.",
   "Upload file": "Prześlij plik",
   "Uploading": "Przesyłanie...",
-  "Cancel": "Anuluj"
+  "Cancel": "Anuluj",
+  "Delete": "Usuń"
 }

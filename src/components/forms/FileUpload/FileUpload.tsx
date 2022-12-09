@@ -8,7 +8,8 @@ import { Row } from "components/layout/Row";
 import styled, { css } from "styled-components";
 import { useUploadFile } from "helpers/hooks/useUploadFile";
 import { useField } from "formik";
-import { useTranslation } from "react-i18next";
+import NoFileFileUploadContent from "./NoFileFileUploadContent";
+import FileUploadContent from "./FileUploadContent";
 
 const StyledRow = styled(Row)`
   border-radius: 4px;
@@ -25,16 +26,6 @@ const StyledRow = styled(Row)`
   }}
 `;
 
-const StyledButton = styled.button`
-  all: unset;
-  box-sizing: border-box;
-  padding: 8px 12px;
-  cursor: pointer;
-  & > .button-text {
-    text-decoration: underline;
-  }
-`;
-
 const UploadInput = styled.input`
   display: none;
 `;
@@ -46,7 +37,6 @@ const FileUpload = ({ label, accept, fieldId }: FormFieldFileUpload) => {
   const [fileName, setFileName] = useState("");
   const [, meta, helpers] = useField({ name: fieldId });
   const { setValue } = helpers;
-  const { t } = useTranslation("forms");
 
   const uploadLogo = (file: File) => {
     setFileName(file.name);
@@ -69,36 +59,22 @@ const FileUpload = ({ label, accept, fieldId }: FormFieldFileUpload) => {
   }, [filePath]);
 
   const noFileContent = (
-    <StyledButton
-      type="button"
+    <NoFileFileUploadContent
       onClick={() => {
         document.getElementById(uploadInputId)?.click();
       }}
-    >
-      <Typography className="button-text" typographyType="body" as="span">
-        {t("Upload file")}
-      </Typography>
-    </StyledButton>
+    />
   );
 
   const fileContent = (
-    <>
-      <Typography className="file-name" typographyType="body" as="span">
-        {fileName} {isLoading && ` - ${t("Uploading")}`}
-      </Typography>
-      <StyledButton
-        type="button"
-        onClick={() => {
-          setFileName("");
-          setValue("");
-        }}
-        disabled={isLoading}
-      >
-        <Typography className="button-text" typographyType="body" as="span">
-          {t("Cancel")}
-        </Typography>
-      </StyledButton>
-    </>
+    <FileUploadContent
+      isLoading={isLoading}
+      fileName={fileName}
+      onClick={() => {
+        setFileName("");
+        setValue("");
+      }}
+    />
   );
 
   return (

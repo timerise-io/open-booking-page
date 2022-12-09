@@ -1,5 +1,5 @@
 import CheckBox from "components/forms/CheckBox";
-import FileUpload from "components/forms/FileUpload";
+import FileUpload from "components/forms/FileUpload/FileUpload";
 import NumberField from "components/forms/NumberField";
 import PhoneSelect from "components/forms/PhoneSelect";
 import QuantityField from "components/forms/QuantityField";
