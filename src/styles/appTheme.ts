@@ -100,6 +100,9 @@ const appTheme: DefaultTheme = {
         text: DARK,
       },
     },
+    fileUpload: {
+      backgroundColor: "#F2F2F2",
+    },
   },
 
   breakpoints: {
@@ -231,6 +234,9 @@ const darkTheme: DefaultTheme = {
         borderActive: "#EAEAEA",
         text: WHITE,
       },
+    },
+    fileUpload: {
+      backgroundColor: "#1F1F1F",
     },
   },
 

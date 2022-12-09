@@ -6,7 +6,12 @@ export type FormFieldSystemType =
   | "SYSTEM_SLOT_QUANTITY"
   | "SYSTEM_ALLOWLIST_CODE";
 
-export type FormFieldCustomType = "TEXT" | "NUMBER" | "SELECT" | "CHECKBOX";
+export type FormFieldCustomType =
+  | "TEXT"
+  | "NUMBER"
+  | "SELECT"
+  | "CHECKBOX"
+  | "FILE_UPLOAD";
 
 export type FormFieldType = FormFieldSystemType | FormFieldCustomType;
 
@@ -101,6 +106,14 @@ export type FormFieldSelect = BaseFormField & {
   width: number | null;
 };
 
+export type FormFieldFileUpload = BaseFormField & {
+  fieldType: "FILE_UPLOAD";
+  accept: string | null;
+  buttonText: string | null;
+  capture: boolean | null;
+  multiple: boolean | null;
+};
+
 export type FormField =
   | FormFieldSystemFullName
   | FormFieldSystemEmailAddress
@@ -112,4 +125,5 @@ export type FormField =
   | FormFieldText
   | FormFieldNumber
   | FormFieldCheckbox
-  | FormFieldSelect;
+  | FormFieldSelect
+  | FormFieldFileUpload;

@@ -1,4 +1,9 @@
-import { FormField, FormFieldNumber, FormFieldText } from "models/formFields";
+import {
+  FormField,
+  FormFieldFileUpload,
+  FormFieldNumber,
+  FormFieldText,
+} from "models/formFields";
 import { TFunction } from "react-i18next";
 import * as Yup from "yup";
 
@@ -13,7 +18,23 @@ export const getCustomFieldsValidation = (
   if (item.fieldType === "SELECT")
     return getSelectCustomFieldsValidation(item, t);
   if (item.fieldType === "TEXT") return getTextCustomFieldsValidation(item, t);
+  if (item.fieldType === "FILE_UPLOAD") return getFileUploadValidation(item, t);
   return {};
+};
+
+const getFileUploadValidation = (
+  item: FormFieldFileUpload,
+  t: TFunction<"forms"[]>
+) => {
+  let schema = Yup.string();
+
+  if (item.required) {
+    schema = schema.required(t("common:validation.required"));
+  }
+
+  return {
+    [item.fieldId]: schema,
+  };
 };
 
 const getCheckBoxCustomFieldsValidation = (

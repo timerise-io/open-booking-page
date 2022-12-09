@@ -1,13 +1,17 @@
 {
-    "fullNameField": "Vollständiger Name",
-    "phoneField": "Telefon",
-    "messageField": "Nachricht",
-    "bookFreeServiceButton": "Buchen Sie jetzt",
-    "bookServiceButton": "Buchen & bezahlen",
-    "optionalSuffix": " (Optional)",
-    "headers": {
-        "Leave your details": "Hinterlassen Sie Ihre Daten"
-    },
-    "Slot already booked": "Es tut uns leid, aber das ausgewählte Zeitfenster wurde gerade gebucht. Bitte wählen Sie ein anderes Zeitfenster.",
-    "maxSlots": "Sie können bis zu {{maxValue}} Slots buchen."
+  "fullNameField": "Vollständiger Name",
+  "phoneField": "Telefon",
+  "messageField": "Nachricht",
+  "bookFreeServiceButton": "Buchen Sie jetzt",
+  "bookServiceButton": "Buchen & bezahlen",
+  "optionalSuffix": " (Optional)",
+  "headers": {
+    "Leave your details": "Hinterlassen Sie Ihre Daten"
+  },
+  "Slot already booked": "Es tut uns leid, aber das ausgewählte Zeitfenster wurde gerade gebucht. Bitte wählen Sie ein anderes Zeitfenster.",
+  "maxSlots": "Sie können bis zu {{maxValue}} Slots buchen.",
+  "Upload file": "Datei hochladen",
+  "Uploading": "Hochladen...",
+  "Cancel": "Absagen",
+  "Delete": "Löschen"
 }

@@ -40,6 +40,9 @@ declare module "styled-components" {
         border: string;
         borderHover: string;
       };
+      fileUpload: {
+        backgroundColor: string;
+      };
     };
 
     breakpoints: {

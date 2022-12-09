@@ -1,13 +1,17 @@
 {
-    "fullNameField": "Full name",
-    "phoneField": "Phone",
-    "messageField": "Message",
-    "bookFreeServiceButton": "Book now",
-    "bookServiceButton": "Book & pay",
-    "optionalSuffix": " (optional)",
-    "headers": {
-        "Leave your details": "Leave your details"
-    },
-    "Slot already booked": "We are sorry, but the selected time slot has just been booked. Please choose a different time slot.",
-    "maxSlots": "You can book up to {{maxValue}} slots."
+  "fullNameField": "Full name",
+  "phoneField": "Phone",
+  "messageField": "Message",
+  "bookFreeServiceButton": "Book now",
+  "bookServiceButton": "Book & pay",
+  "optionalSuffix": " (optional)",
+  "headers": {
+    "Leave your details": "Leave your details"
+  },
+  "Slot already booked": "We are sorry, but the selected time slot has just been booked. Please choose a different time slot.",
+  "maxSlots": "You can book up to {{maxValue}} slots.",
+  "Upload file": "Upload file",
+  "Uploading": "Uploading...",
+  "Cancel": "Cancel",
+  "Delete": "Delete"
 }

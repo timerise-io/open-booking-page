@@ -125,6 +125,17 @@ export const GET_SERVICE = gql`
           order
           width
         }
+        ... on FormFieldFileUpload {
+          accept
+          buttonText
+          capture
+          fieldId
+          fieldType
+          label
+          multiple
+          order
+          required
+        }
       }
     }
   }
