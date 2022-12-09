@@ -1,13 +1,16 @@
 {
-    "fullNameField": "Повне ім'я",
-    "phoneField": "Телефон",
-    "messageField": "Повідомлення",
-    "bookFreeServiceButton": "Резервувати зараз",
-    "bookServiceButton": "Резервувати та оплатити",
-    "optionalSuffix": " (необов'язково)",
-    "headers": {
-        "Leave your details": "Заповніть деталі"
-    },
-    "Slot already booked": "Вибачте, але вибраний часовий інтервал щойно заброньовано. Будь ласка, виберіть інший часовий інтервал.",
-    "maxSlots": "Ви можете забронювати до {{maxValue}} слотів."
+  "fullNameField": "Повне ім'я",
+  "phoneField": "Телефон",
+  "messageField": "Повідомлення",
+  "bookFreeServiceButton": "Резервувати зараз",
+  "bookServiceButton": "Резервувати та оплатити",
+  "optionalSuffix": " (необов'язково)",
+  "headers": {
+    "Leave your details": "Заповніть деталі"
+  },
+  "Slot already booked": "Вибачте, але вибраний часовий інтервал щойно заброньовано. Будь ласка, виберіть інший часовий інтервал.",
+  "maxSlots": "Ви можете забронювати до {{maxValue}} слотів.",
+  "Upload file": "Завантажити файл",
+  "Uploading": "Завантаження...",
+  "Cancel": "Скасувати"
 }

@@ -8,6 +8,7 @@ import { Row } from "components/layout/Row";
 import styled, { css } from "styled-components";
 import { useUploadFile } from "helpers/hooks/useUploadFile";
 import { useField } from "formik";
+import { useTranslation } from "react-i18next";
 
 const StyledRow = styled(Row)`
   border-radius: 4px;
@@ -45,6 +46,7 @@ const FileUpload = ({ label, accept, fieldId }: FormFieldFileUpload) => {
   const [fileName, setFileName] = useState("");
   const [, meta, helpers] = useField({ name: fieldId });
   const { setValue } = helpers;
+  const { t } = useTranslation("forms");
 
   const uploadLogo = (file: File) => {
     setFileName(file.name);
@@ -74,7 +76,7 @@ const FileUpload = ({ label, accept, fieldId }: FormFieldFileUpload) => {
       }}
     >
       <Typography className="button-text" typographyType="body" as="span">
-        Upload file
+        {t("Upload file")}
       </Typography>
     </StyledButton>
   );
@@ -82,7 +84,7 @@ const FileUpload = ({ label, accept, fieldId }: FormFieldFileUpload) => {
   const fileContent = (
     <>
       <Typography className="file-name" typographyType="body" as="span">
-        {fileName} {isLoading && " - Uploading"}
+        {fileName} {isLoading && ` - ${t("Uploading")}`}
       </Typography>
       <StyledButton
         type="button"
@@ -93,7 +95,7 @@ const FileUpload = ({ label, accept, fieldId }: FormFieldFileUpload) => {
         disabled={isLoading}
       >
         <Typography className="button-text" typographyType="body" as="span">
-          Cancel
+          {t("Cancel")}
         </Typography>
       </StyledButton>
     </>
