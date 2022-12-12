@@ -1,12 +1,4 @@
-import React, { ReactNode } from "react";
-import {
-  IconCalendarEvent,
-  IconCircleCheck,
-  IconCircleX,
-  IconMailForward,
-} from "@tabler/icons";
-import { useTranslation } from "react-i18next";
-import { Typography } from "components/Typography";
+import React from "react";
 import { BookingStatus } from "models/booking";
 import { useRecoilValue } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
