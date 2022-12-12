@@ -4,7 +4,8 @@
     "renewed": "Sprawdź skrzynkę",
     "confirmed": "Rezerwacja potwierdzona!",
     "accepted": "Rezerwacja potwierdzona!",
-    "canceled": "Rezerwacja anulowana"
+    "canceled": "Rezerwacja anulowana",
+    "payment": "Oczekiwanie na płatność"
   },
   "description": {
     "new": {
@@ -31,6 +32,11 @@
       "both": "Rezerwacja tej usługi została anulowana. Wysłaliśmy potwierdzenie na podany adres email/numer telefonu.",
       "sms": "Rezerwacja tej usługi została anulowana. Wysłaliśmy potwierdzenie na podany numer telefonu.",
       "email": "Rezerwacja tej usługi została anulowana. Wysłaliśmy potwierdzenie na podany adres email"
+    },
+    "payment": {
+      "both": "Prosimy o dokonanie płatności w ciągu 24 godzin. Brak wpłaty spowoduje anulowanie rezerwacji.",
+      "sms": "Prosimy o dokonanie płatności w ciągu 24 godzin. Brak wpłaty spowoduje anulowanie rezerwacji.",
+      "email": "Prosimy o dokonanie płatności w ciągu 24 godzin. Brak wpłaty spowoduje anulowanie rezerwacji."
     }
   },
   "dateTime": {
@@ -61,5 +67,6 @@
     "email": "Informujemy, że w sytuacji, gdy kilka osób wybrało tę samą datę i godzinę, potwierdzenie rezerwacji otrzyma osoba, która po otrzymaniu email-a jako pierwsza kliknie w link potwierdzający."
   },
   "Add to your calendar": "Dodaj do kalendarza",
-  "Download QR code": "Pobierz kod QR"
+  "Download QR code": "Pobierz kod QR",
+  "Go to payment": "Przejdź do płatności"
 }

@@ -20,6 +20,8 @@ export const BOOKING_SUBSCRIPTION = gql`
       createdAt
       qrUrl
       iCalUrl
+      paymentLink
+      paymentStatus
     }
   }
 `;

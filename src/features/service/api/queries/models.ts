@@ -1,4 +1,5 @@
 import { FormField } from "models/formFields";
+import { PaymentType } from "models/service";
 import { Slot } from "models/slots";
 
 export interface ServiceQueryResult {
@@ -30,6 +31,7 @@ export interface ServiceQueryResult {
     };
   };
   formFields: Array<FormField>;
+  paymentProviders: Array<PaymentType> | null;
 }
 
 export interface ServiceQueryVariables {

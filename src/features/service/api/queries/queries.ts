@@ -34,6 +34,7 @@ export const GET_SERVICE = gql`
           quantity
         }
       }
+      paymentProviders
       formFields {
         ... on FormFieldSystemFullName {
           fieldId

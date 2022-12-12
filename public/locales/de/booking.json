@@ -4,7 +4,8 @@
     "renewed": "Überprüfe deinen Posteingang",
     "confirmed": "Buchung bestätigt!",
     "accepted": "Buchung bestätigt!",
-    "canceled": "Buchung storniert"
+    "canceled": "Buchung storniert",
+    "payment": "Warten auf Zahlung"
   },
   "description": {
     "new": {
@@ -31,6 +32,11 @@
       "both": "Die Buchung für diesen Service wurde storniert. Wir haben eine Bestätigung dieses Vorgangs an die von Ihnen angegebene E-Mail-Adresse/Telefonnummer gesendet.",
       "sms": "Die Buchung für diesen Service wurde storniert. Wir haben eine Bestätigung dieses Vorgangs an die von Ihnen angegebene Telefonnummer gesendet.",
       "email": "Die Buchung für diesen Service wurde storniert. Wir haben eine Bestätigung dieses Vorgangs an die angegebene E-Mail-Adresse gesendet."
+    },
+    "payment": {
+      "both": "Bitte leisten Sie die Zahlung innerhalb von 24 Stunden. Keine Zahlung führt zur Stornierung der Reservierung.",
+      "sms": "Bitte leisten Sie die Zahlung innerhalb von 24 Stunden. Keine Zahlung führt zur Stornierung der Reservierung.",
+      "email": "Bitte leisten Sie die Zahlung innerhalb von 24 Stunden. Keine Zahlung führt zur Stornierung der Reservierung."
     }
   },
   "dateTime": {
@@ -61,5 +67,6 @@
     "email": "Bitte beachten Sie, dass in einer Situation, in der mehrere Personen dasselbe Datum und dieselbe Uhrzeit gewählt haben, die Buchungsbestätigung von der Person erhalten wird, die nach Erhalt der E-Mail-Nachricht zuerst auf den Bestätigungslink klickt."
   },
   "Add to your calendar": "Zu Ihrem Kalender hinzufügen",
-  "Download QR code": "QR-Code herunterladen"
+  "Download QR code": "QR-Code herunterladen",
+  "Go to payment": "Gehen Sie zur Zahlung"
 }
