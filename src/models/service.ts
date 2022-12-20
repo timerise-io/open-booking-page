@@ -25,6 +25,8 @@ export interface QuantityConfig {
   __typename: string;
 }
 
+export type PaymentType = "OFFLINE" | "STRIPE";
+
 export interface Service {
   serviceId: string;
   project: {
@@ -52,4 +54,5 @@ export interface Service {
       quantity: boolean;
     };
   };
+  paymentProviders: Array<PaymentType>;
 }

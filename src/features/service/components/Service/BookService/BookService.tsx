@@ -153,6 +153,9 @@ const BookService = () => {
         serviceId: id!,
         slotId: slot.slotId,
         formFields: json,
+        ...(service?.paymentProviders.length && {
+          paymentProvider: service.paymentProviders[0],
+        }),
       },
     });
   };

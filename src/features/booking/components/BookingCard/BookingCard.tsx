@@ -6,7 +6,7 @@ import React from "react";
 import { useRecoilValue } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
 import BookingCardBottom from "./BookingCardBottom";
-import BookingCardSummary from "./BookingCardSummary";
+import BookingCardSummary from "./BookingCardSummary/BookingCardSummary";
 import ShortId from "./ShortId";
 
 const BookingCardLoader = (

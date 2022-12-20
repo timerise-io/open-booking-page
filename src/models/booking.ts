@@ -26,6 +26,16 @@ export type BookingStatus =
   | "ACCEPTED"
   | "CONFIRMED"
   | "CANCELED";
+
+export type PaymentStatus =
+  | "NEW"
+  | "REQUIRES_PAYMENT_METHOD"
+  | "REQUIRES_CONFIRMATION"
+  | "REQUIRES_ACTION"
+  | "PROCESSING"
+  | "SUCCEEDED"
+  | "CANCELED";
+
 export interface Booking {
   bookingId: string;
   shortId: string;
@@ -38,4 +48,6 @@ export interface Booking {
   createdAt: string;
   qrUrl: string;
   iCalUrl: string;
+  paymentLink: string | null;
+  paymentStatus: PaymentStatus | null;
 }

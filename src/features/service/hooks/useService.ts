@@ -164,6 +164,7 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
             quantity: service.viewConfig.slot?.quantity ?? false,
           },
         },
+        paymentProviders: [...(service.paymentProviders ?? [])],
       });
 
       setSlotsFilter({
