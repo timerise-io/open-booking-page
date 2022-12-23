@@ -124,7 +124,7 @@ const contentPerStatus: Record<BookingStatus, ReactNode> = {
     </Wrapper>
   ),
   NEW: <div></div>,
-  RENEWED: <div></div>,
+  REBOOKED: <div></div>,
   CANCELED: (
     <Wrapper jc="space-around">
       <CanceledBookingCardBottom />

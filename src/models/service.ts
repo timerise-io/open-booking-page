@@ -1,3 +1,4 @@
+import { BookingStatus, PaymentStatus } from "./booking";
 import { FormField } from "./formFields";
 
 export interface FormInputConfigObject {
@@ -27,6 +28,41 @@ export interface QuantityConfig {
 
 export type PaymentType = "OFFLINE" | "STRIPE";
 
+interface StatusConfig {
+  description: string;
+  details: boolean;
+  iconUrl: string;
+  title: string;
+}
+
+type BookingStatusConfigActions =
+  | "calendar"
+  | "cancel"
+  | "hide"
+  | "pay"
+  | "qr"
+  | "service";
+
+interface BookingStatusConfig extends StatusConfig {
+  actions: Record<BookingStatusConfigActions, boolean> | null;
+}
+
+type PaymentStatusConfigActions = BookingStatusConfigActions | "service";
+
+interface PaymentStatusConfig extends StatusConfig {
+  actions: Record<PaymentStatusConfigActions, boolean> | null;
+}
+
+export type BookingStatusesConfigView = Record<
+  BookingStatus,
+  BookingStatusConfig
+>;
+
+export type PaymentStatusesConfigView = Record<
+  PaymentStatus,
+  PaymentStatusConfig
+>;
+
 export interface Service {
   serviceId: string;
   project: {
@@ -53,6 +89,8 @@ export interface Service {
       duration: boolean;
       quantity: boolean;
     };
+    bookingStatus: BookingStatusesConfigView;
+    paymentStatus: PaymentStatusesConfigView;
   };
   paymentProviders: Array<PaymentType>;
 }

@@ -163,6 +163,8 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
             duration: service.viewConfig.slot?.duration ?? false,
             quantity: service.viewConfig.slot?.quantity ?? false,
           },
+          bookingStatus: { ...service.viewConfig.bookingStatus },
+          paymentStatus: { ...service.viewConfig.paymentStatus },
         },
         paymentProviders: [...(service.paymentProviders ?? [])],
       });

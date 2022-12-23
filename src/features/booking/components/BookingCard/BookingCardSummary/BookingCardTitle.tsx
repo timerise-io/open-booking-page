@@ -28,7 +28,7 @@ function getInfoStatus(
 
 const icons: Record<BookingStatus | "PAYMENT", ReactNode> = {
   NEW: <IconMailForward className="icon-draft" />,
-  RENEWED: <IconMailForward className="icon-draft" />,
+  REBOOKED: <IconMailForward className="icon-draft" />,
   ACCEPTED: <IconCircleCheck className="icon-accepted" />,
   CONFIRMED: <IconCircleCheck className="icon-accepted" />,
   CANCELED: <IconCircleX className="icon-deleted" />,
