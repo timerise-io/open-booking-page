@@ -17,7 +17,8 @@ export const bookingCardViewConfig = selector({
     } = service.viewConfig;
 
     const usePaymentFlow = !!(
-      paymentStatus !== null && paymentStatusConfig[paymentStatus].actions?.hide
+      paymentStatus !== null &&
+      !paymentStatusConfig[paymentStatus].actions?.hide
     );
 
     if (usePaymentFlow && !!paymentStatus) {
