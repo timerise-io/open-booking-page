@@ -33,6 +33,192 @@ export const GET_SERVICE = gql`
           duration
           quantity
         }
+        bookingStatus {
+          ACCEPTED {
+            actions {
+              calendar
+              cancel
+              hide
+              pay
+              qr
+              service
+            }
+            description
+            details
+            iconUrl
+            title
+          }
+          CANCELED {
+            actions {
+              cancel
+              calendar
+              hide
+              pay
+              qr
+              service
+            }
+            description
+            details
+            iconUrl
+            title
+          }
+          CONFIRMED {
+            actions {
+              calendar
+              cancel
+              hide
+              pay
+              qr
+              service
+            }
+            description
+            details
+            iconUrl
+            title
+          }
+          NEW {
+            actions {
+              calendar
+              cancel
+              hide
+              pay
+              qr
+              service
+            }
+            description
+            details
+            iconUrl
+            title
+          }
+          REBOOKED {
+            actions {
+              cancel
+              calendar
+              hide
+              pay
+              qr
+              service
+            }
+            description
+            details
+            iconUrl
+            title
+          }
+          REJECTED {
+            actions {
+              calendar
+              cancel
+              hide
+              pay
+              qr
+              service
+            }
+            description
+            details
+            iconUrl
+            title
+          }
+        }
+        paymentStatus {
+          CANCELED {
+            actions {
+              calendar
+              cancel
+              hide
+              pay
+              qr
+              service
+            }
+            description
+            details
+            iconUrl
+            title
+          }
+          NEW {
+            actions {
+              calendar
+              cancel
+              hide
+              pay
+              qr
+              service
+            }
+            description
+            details
+            iconUrl
+            title
+          }
+          PROCESSING {
+            actions {
+              calendar
+              cancel
+              hide
+              pay
+              qr
+              service
+            }
+            description
+            details
+            iconUrl
+            title
+          }
+          REQUIRES_ACTION {
+            actions {
+              calendar
+              cancel
+              hide
+              pay
+              qr
+              service
+            }
+            description
+            details
+            iconUrl
+            title
+          }
+          REQUIRES_CONFIRMATION {
+            actions {
+              calendar
+              cancel
+              hide
+              pay
+              qr
+              service
+            }
+            description
+            details
+            iconUrl
+            title
+          }
+          REQUIRES_PAYMENT_METHOD {
+            actions {
+              calendar
+              cancel
+              hide
+              pay
+              qr
+              service
+            }
+            description
+            details
+            iconUrl
+            title
+          }
+          SUCCEEDED {
+            actions {
+              calendar
+              cancel
+              hide
+              pay
+              qr
+              service
+            }
+            description
+            details
+            iconUrl
+            title
+          }
+        }
       }
       paymentProviders
       formFields {

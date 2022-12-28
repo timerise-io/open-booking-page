@@ -5,7 +5,7 @@ import { SkeletonBox } from "components/layout/SkeletonBox";
 import React from "react";
 import { useRecoilValue } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
-import BookingCardBottom from "./BookingCardBottom";
+import BookingCardBottom from "./BookingCardBottom/BookingCardBottom";
 import BookingCardSummary from "./BookingCardSummary/BookingCardSummary";
 import ShortId from "./ShortId";
 
@@ -40,7 +40,7 @@ const BookingCard = () => {
         status={bookingValue.status}
         dateTimeFrom={bookingValue.dateTimeFrom}
       />
-      <BookingCardBottom status={bookingValue.status} />
+      <BookingCardBottom />
     </Card>
   );
 };

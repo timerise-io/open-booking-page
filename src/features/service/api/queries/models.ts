@@ -1,5 +1,9 @@
 import { FormField } from "models/formFields";
-import { PaymentType } from "models/service";
+import {
+  BookingStatusesConfigView,
+  PaymentStatusesConfigView,
+  PaymentType,
+} from "models/service";
 import { Slot } from "models/slots";
 
 export interface ServiceQueryResult {
@@ -29,6 +33,8 @@ export interface ServiceQueryResult {
       duration: boolean;
       quantity: boolean;
     };
+    bookingStatus: BookingStatusesConfigView;
+    paymentStatus: PaymentStatusesConfigView;
   };
   formFields: Array<FormField>;
   paymentProviders: Array<PaymentType> | null;
