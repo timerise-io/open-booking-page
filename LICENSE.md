@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2022 Timerise sp. z o.o. (ltd.)
+Copyright (c) 2022-2023 Timerise sp. z o.o. (ltd.)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
