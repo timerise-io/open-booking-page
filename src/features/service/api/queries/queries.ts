@@ -42,6 +42,7 @@ export const GET_SERVICE = gql`
               pay
               qr
               service
+              spaces
             }
             description
             details
@@ -56,6 +57,7 @@ export const GET_SERVICE = gql`
               pay
               qr
               service
+              spaces
             }
             description
             details
@@ -70,6 +72,7 @@ export const GET_SERVICE = gql`
               pay
               qr
               service
+              spaces
             }
             description
             details
@@ -84,6 +87,7 @@ export const GET_SERVICE = gql`
               pay
               qr
               service
+              spaces
             }
             description
             details
@@ -98,6 +102,7 @@ export const GET_SERVICE = gql`
               pay
               qr
               service
+              spaces
             }
             description
             details
@@ -112,6 +117,7 @@ export const GET_SERVICE = gql`
               pay
               qr
               service
+              spaces
             }
             description
             details
