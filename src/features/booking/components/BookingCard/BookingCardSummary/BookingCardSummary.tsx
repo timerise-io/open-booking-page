@@ -6,6 +6,8 @@ import { StyledColumn } from "./BookingCardSummary.styled";
 import BookingCardTitle from "./BookingCardTitle";
 import { bookingCardViewConfig } from "state/selectors/bookingCardViewConfig";
 import BookingCardContent from "./BookingCardContent";
+import { Box } from "components/layout/Box";
+import Space from "../Space";
 
 interface BookingCardSummaryProps {
   status: BookingStatus;
@@ -18,7 +20,6 @@ const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({
 }) => {
   const cardConfig = useRecoilValue(bookingCardViewConfig);
   const booking = useRecoilValue(bookingAtom);
-  console.log(cardConfig);
 
   if (!cardConfig || !booking) return null;
 
@@ -33,6 +34,13 @@ const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({
         title={cardConfig.title}
         showPayButton={!!cardConfig.actions?.pay}
       />
+      {!!cardConfig.actions?.spaces && booking.service.spaces && booking.service.spaces.length > 0 && (
+      <Box mt={5} w="100%">
+        {booking.service.spaces.map((item) => (
+        <Space key={item.spaceId} space={item} />
+        ))}
+      </Box>
+      )}
       <BookingCardContent
         iCalUrl={booking.iCalUrl}
         qrUrl={booking.qrUrl}

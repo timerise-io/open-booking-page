@@ -2,10 +2,9 @@ import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
 import { LinkButton } from "components/LinkButton";
 import { Booking } from "models/booking";
-import React from "react";
 import { useTranslation } from "react-i18next";
 
-type BookingCardContentProps = Pick<Booking, "iCalUrl" | "qrUrl"> & {
+type BookingCardContentProps = Pick<Booking, "iCalUrl" | "qrUrl"> & { 
   showCalendarButton: boolean;
   showQRButton: boolean;
 };

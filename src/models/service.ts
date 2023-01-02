@@ -41,7 +41,8 @@ type BookingStatusConfigActions =
   | "hide"
   | "pay"
   | "qr"
-  | "service";
+  | "service"
+  | "spaces";
 
 interface BookingStatusConfig extends StatusConfig {
   actions: Record<BookingStatusConfigActions, boolean> | null;
