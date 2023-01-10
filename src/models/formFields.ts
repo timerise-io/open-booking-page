@@ -4,7 +4,8 @@ export type FormFieldSystemType =
   | "SYSTEM_PHONE_NUMBER"
   | "SYSTEM_MESSAGE"
   | "SYSTEM_SLOT_QUANTITY"
-  | "SYSTEM_ALLOWLIST_CODE";
+  | "SYSTEM_ALLOWLIST_CODE"
+  | "SYSTEM_PROMO_CODE";
 
 export type FormFieldCustomType =
   | "TEXT"
@@ -22,6 +23,7 @@ const systemFieldsList: Array<FormFieldSystemType> = [
   "SYSTEM_MESSAGE",
   "SYSTEM_SLOT_QUANTITY",
   "SYSTEM_ALLOWLIST_CODE",
+  "SYSTEM_PROMO_CODE",
 ];
 
 export const isSystemField = (formField: FormField) => {
@@ -52,6 +54,12 @@ export type FormFieldSystemFullName = BaseFormField & {
 
 export type FormFieldSystemAllowlistCode = BaseFormField & {
   fieldType: "SYSTEM_ALLOWLIST_CODE";
+  width: number;
+  placeholder: string;
+};
+
+export type FormFieldSystemPromoCode = BaseFormField & {
+  fieldType: "SYSTEM_PROMO_CODE";
   width: number;
   placeholder: string;
 };
@@ -122,6 +130,7 @@ export type FormField =
   | FormFieldSystemMessage
   | FormFieldSystemSlotQuantity
   | FormFieldSystemAllowlistCode
+  | FormFieldSystemPromoCode
   | FormFieldText
   | FormFieldNumber
   | FormFieldCheckbox

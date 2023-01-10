@@ -131,6 +131,7 @@ const BookService = () => {
     const email = _.find(formFields, { fieldType: "SYSTEM_EMAIL_ADDRESS" });
     const phone = _.find(formFields, { fieldType: "SYSTEM_PHONE_NUMBER" });
     const code = _.find(formFields, { fieldType: "SYSTEM_ALLOWLIST_CODE" });
+    const promoCode = _.find(formFields, { fieldType: "SYSTEM_PROMO_CODE" });
 
     const customFormFields = filterFormFields(formFields, false).map((item) => {
       return {
@@ -145,6 +146,7 @@ const BookService = () => {
       ...(email && { [email.fieldId]: value.email }),
       ...(phone && { [phone.fieldId]: value.phone }),
       ...(code && { [code.fieldId]: value.code }),
+      ...(promoCode && { [promoCode.fieldId]: value.promoCode }),
       ...Object.assign({}, ...customFormFields),
     });
 

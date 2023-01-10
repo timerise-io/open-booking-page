@@ -30,50 +30,20 @@ const FormComponent = ({ config }: FormComponentProps) => {
         />
       );
     }
-    case "TEXT": {
-      return (
-        <TextField
-          key={`booking-form-field-${config.fieldId}`}
-          name={config.fieldId}
-          label={label}
-        />
-      );
-    }
-    case "SELECT": {
-      return (
-        <SelectField
-          key={`booking-form-field-${config.fieldId}`}
-          name={config.fieldId}
-          label={label}
-          options={config.values.reduce((acc, item) => {
-            return { ...acc, [item]: item };
-          }, {})}
-        />
-      );
-    }
-    case "NUMBER": {
-      return (
-        <NumberField
-          key={`booking-form-field-${config.fieldId}`}
-          name={config.fieldId}
-          label={label}
-        />
-      );
-    }
-    case "CHECKBOX": {
-      return (
-        <CheckBox
-          key={`booking-form-field-${config.fieldId}`}
-          name={config.fieldId}
-          label={label}
-        />
-      );
-    }
     case "SYSTEM_ALLOWLIST_CODE": {
       return (
         <TextField
           key={`booking-form-field-SYSTEM_ALLOWLIST_CODE`}
           name="code"
+          label={label}
+        />
+      );
+    }
+    case "SYSTEM_PROMO_CODE": {
+      return (
+        <TextField
+          key={`booking-form-field-SYSTEM_PROMO_CODE`}
+          name="promoCode"
           label={label}
         />
       );
@@ -113,6 +83,45 @@ const FormComponent = ({ config }: FormComponentProps) => {
           name="quantity"
           label={label}
           maxQuantity={config.maxValue}
+        />
+      );
+    }
+    case "TEXT": {
+      return (
+        <TextField
+          key={`booking-form-field-${config.fieldId}`}
+          name={config.fieldId}
+          label={label}
+        />
+      );
+    }
+    case "SELECT": {
+      return (
+        <SelectField
+          key={`booking-form-field-${config.fieldId}`}
+          name={config.fieldId}
+          label={label}
+          options={config.values.reduce((acc, item) => {
+            return { ...acc, [item]: item };
+          }, {})}
+        />
+      );
+    }
+    case "NUMBER": {
+      return (
+        <NumberField
+          key={`booking-form-field-${config.fieldId}`}
+          name={config.fieldId}
+          label={label}
+        />
+      );
+    }
+    case "CHECKBOX": {
+      return (
+        <CheckBox
+          key={`booking-form-field-${config.fieldId}`}
+          name={config.fieldId}
+          label={label}
         />
       );
     }

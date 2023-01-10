@@ -282,6 +282,15 @@ export const GET_SERVICE = gql`
           width
           placeholder
         }
+        ... on FormFieldSystemPromoCode {
+          fieldId
+          fieldType
+          required
+          label
+          order
+          width
+          placeholder
+        }
         ... on FormFieldText {
           fieldId
           fieldType
