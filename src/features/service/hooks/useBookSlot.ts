@@ -61,7 +61,7 @@ export const useBookSlot = () => {
         'code-is-not-allowed', 
         'promo-code-is-not-valid', 
       ];
-      if(formErrors.indexOf(error?.message) === -1) {
+      if(!formErrors.includes(error?.message || 'unknown-booking-create-error')) {
         setFilters({ ...filters, triggerId: new Date().getTime() });
         setSelectedSlot("");
       }
