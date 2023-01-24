@@ -110,7 +110,7 @@ const BookService = () => {
   };
   const showWarning = useRecoilValue(slotsFiltersAtom).triggerId !== 0;
   const slot = useRecoilValue(selectedSlotSelector);
-  const { bookSlotMutation, loading } = useBookSlot();
+  const { bookSlotMutation, loading, error } = useBookSlot();
   const { id } = useParams<{ id: string }>();
   const uploadState = useRecoilValue(uploadAttachmentsAtom);
 
@@ -181,7 +181,7 @@ const BookService = () => {
             <Form>
               <Column ai="stretch">
                 <BookingServiceFormContent />
-                {showWarning && (
+                {(showWarning || error) && (
                   <StyledWarning>
                     <IconInfoCircle size={20} color="#EA4335" />
                     <Typography
@@ -190,7 +190,8 @@ const BookService = () => {
                       as="span"
                       color="inherit"
                     >
-                      {t("Slot already booked")}
+                      {error && t(error)}
+                      {!error && t("Slot already booked")}
                     </Typography>
                   </StyledWarning>
                 )}

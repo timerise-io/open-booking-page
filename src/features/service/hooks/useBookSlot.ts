@@ -47,11 +47,27 @@ export const useBookSlot = () => {
 
   useEffect(() => {
     if (error) {
-      setFilters({ ...filters, triggerId: new Date().getTime() });
-      setSelectedSlot("");
+      const formErrors: string[] = [
+        'booking-already-exists', 
+        'phone-number-is-not-valid', 
+        'phone-number-is-not-possible', 
+        'phone-number-is-too-short', 
+        'phone-number-is-null', 
+        'phone-number-in-not-allowed', 
+        'phone-number-is-blocked', 
+        'email-address-is-not-valid', 
+        'email-address-in-not-allowed', 
+        'email-address-is-blocked', 
+        'code-is-not-allowed', 
+        'promo-code-is-not-valid', 
+      ];
+      if(formErrors.indexOf(error?.message) === -1) {
+        setFilters({ ...filters, triggerId: new Date().getTime() });
+        setSelectedSlot("");
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
+  }, [error?.message]);
 
-  return { bookSlotMutation, loading: loading };
+  return { bookSlotMutation, loading: loading, error: error?.message };
 };
