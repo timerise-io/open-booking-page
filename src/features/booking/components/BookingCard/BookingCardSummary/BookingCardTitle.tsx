@@ -74,7 +74,7 @@ const BookingCardTitle = ({
       )}
       {showPayButton && paymentLink && (
         <Box mt={3.5}>
-          <LinkButton href={paymentLink}>{t("Go to payment")}</LinkButton>
+          <LinkButton href={paymentLink} target="_blank">{t("Go to payment")}</LinkButton>
         </Box>
       )}
     </>
