@@ -29,5 +29,6 @@
   "Upload file": "Upload file",
   "Uploading": "Uploading...",
   "Cancel": "Cancel",
-  "Delete": "Delete"
+  "Delete": "Delete",
+  "outOf": "out of {{maxValue}}"
 }
