@@ -27,6 +27,7 @@ const FormComponent = ({ config }: FormComponentProps) => {
           key={`booking-form-field-SYSTEM_FULL_NAME`}
           name="fullName"
           label={label}
+          placeholder={config.placeholder}
         />
       );
     }
@@ -36,6 +37,7 @@ const FormComponent = ({ config }: FormComponentProps) => {
           key={`booking-form-field-SYSTEM_ALLOWLIST_CODE`}
           name="code"
           label={label}
+          placeholder={config.placeholder}
         />
       );
     }
@@ -45,6 +47,7 @@ const FormComponent = ({ config }: FormComponentProps) => {
           key={`booking-form-field-SYSTEM_PROMO_CODE`}
           name="promoCode"
           label={label}
+          placeholder={config.placeholder}
         />
       );
     }
@@ -63,6 +66,7 @@ const FormComponent = ({ config }: FormComponentProps) => {
           key={`booking-form-field-SYSTEM_EMAIL_ADDRESS`}
           name="email"
           label={label}
+          placeholder={config.placeholder}
         />
       );
     }
@@ -73,6 +77,7 @@ const FormComponent = ({ config }: FormComponentProps) => {
           name="message"
           label={label}
           multiline
+          placeholder={config.placeholder}
         />
       );
     }
@@ -92,6 +97,7 @@ const FormComponent = ({ config }: FormComponentProps) => {
           key={`booking-form-field-${config.fieldId}`}
           name={config.fieldId}
           label={label}
+          placeholder={config.placeholder}
         />
       );
     }

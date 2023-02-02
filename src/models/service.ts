@@ -8,6 +8,7 @@ export interface FormInputConfigObject {
   order: number;
   width: number;
   defaultValue: string;
+  placeholder: string;
   __typename: string;
 }
 
