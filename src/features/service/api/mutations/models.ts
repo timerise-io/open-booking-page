@@ -2,7 +2,7 @@ import { PaymentType } from "models/service";
 
 export interface BookSlotMutationVariables {
   serviceId: string;
-  slotId: string;
+  slots: Array<string>;
   formFields: string;
   paymentProvider?: PaymentType;
 }

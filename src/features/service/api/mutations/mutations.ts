@@ -3,13 +3,13 @@ import { gql } from "@apollo/client";
 export const BOOK_SLOT = gql`
   mutation BookSlot(
     $serviceId: ID!
-    $slotId: ID!
+    $slots: [ID!]
     $formFields: JSON
     $paymentProvider: PaymentProvider
   ) {
     bookingCreate(
       serviceId: $serviceId
-      slotId: $slotId
+      slots: $slots
       formFields: $formFields
       paymentProvider: $paymentProvider
     ) {

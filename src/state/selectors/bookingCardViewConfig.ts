@@ -7,7 +7,8 @@ export const bookingCardViewConfig = selector({
   get: ({ get }) => {
     const booking = get(bookingAtom);
     const service = get(serviceAtom);
-
+console.log(booking)
+console.log(service)
     if (!booking || !service) return null;
 
     const { status, paymentStatus } = booking;

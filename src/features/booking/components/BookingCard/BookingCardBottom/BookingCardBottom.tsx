@@ -4,15 +4,21 @@ import { bookingCardViewConfig } from "state/selectors/bookingCardViewConfig";
 import styled from "styled-components";
 import BackToServiceButton from "./BackToServiceButton";
 import CancelBookingButton from "./CancelBookingButton";
+import { RescheduleBookingButton } from "./RescheduleBookingButton";
 
 const Wrapper = styled(Row)`
   border-top: 1px solid ${({ theme }) => theme.colorSchemas.separator};
   padding-top: 20px;
 `;
 
+const StyledDualButtonWrapper = styled.div`
+  gap: 8px;
+  display: flex;
+`
+
 const BookingCardBottom = () => {
   const cardConfig = useRecoilValue(bookingCardViewConfig);
-
+console.log(cardConfig)
   const { cancel: showCancelButton, service: showBackToServiceButton } = {
     ...cardConfig?.actions,
   };
@@ -21,14 +27,14 @@ const BookingCardBottom = () => {
 
   return (
     <Wrapper
-      jc={
-        !!showBackToServiceButton && !!showCancelButton
-          ? "space-between"
-          : "space-around"
-      }
+      jc={ "space-between" }
     >
       {!!showBackToServiceButton && <BackToServiceButton />}
-      {!!showCancelButton && <CancelBookingButton />}
+      <StyledDualButtonWrapper>
+        <RescheduleBookingButton />
+        <CancelBookingButton />
+        {/* {!!showCancelButton && <CancelBookingButton />} */}
+      </StyledDualButtonWrapper>
     </Wrapper>
   );
 };
