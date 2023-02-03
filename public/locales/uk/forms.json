@@ -29,5 +29,6 @@
   "Upload file": "Завантажити файл",
   "Uploading": "Завантаження...",
   "Cancel": "Скасувати",
-  "Delete": "Видалити"
+  "Delete": "Видалити",
+  "outOf": "з {{maxValue}}"
 }

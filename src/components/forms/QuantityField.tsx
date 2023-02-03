@@ -1,6 +1,5 @@
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
-import { Row } from "components/layout/Row";
 import StyledInput from "components/StyledInput";
 import StyledLabel from "components/StyledLabel";
 import { Typography } from "components/Typography";
@@ -11,8 +10,14 @@ import { useRecoilValue } from "recoil";
 import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
 import styled from "styled-components";
 
-const ShortInput = styled(StyledInput)`
-  max-width: 76px;
+const StyledColumn = styled(Column)`
+  position: relative;
+`;
+
+const StyledHint = styled(Typography)`
+  position: absolute;
+  top: 25px;
+  right: 8px;
 `;
 
 interface QuantityFieldProps {
@@ -72,27 +77,21 @@ const QuantityField: React.FC<QuantityFieldProps> = ({
   }, [maxValue, selectedSlot?.quantity]);
 
   return (
-    <Column ai="stretch">
-      <Row jc="flex-start">
-        <Column w="100px" ai="flex-start">
-          <StyledLabel htmlFor={name}>{labelToDisplay}</StyledLabel>
-          <ShortInput
-            id={name}
-            value={value < 1 ? "" : value}
-            onChange={handleChange}
-            onBlur={() => {
-              setTouched(true);
-            }}
-          />
-        </Column>
-        {selectedSlot !== undefined && (
-          <Box mt={2.25} ml={1}>
-            <Typography typographyType="body" as="span">
-              {t("maxSlots", { maxValue })}
-            </Typography>
-          </Box>
-        )}
-      </Row>
+    <StyledColumn ai="stretch">
+      <StyledLabel htmlFor={name}>{labelToDisplay}</StyledLabel>
+      <StyledInput
+        id={name}
+        value={value < 1 ? "" : value}
+        onChange={handleChange}
+        onBlur={() => {
+          setTouched(true);
+        }}
+      />
+
+      {selectedSlot !== undefined && (
+        <StyledHint typographyType="body" as="span">{t("outOf", { maxValue })}</StyledHint>
+      )}
+
       <Box h="13px" mt={0.5} mb={1}>
         {meta.error && meta.touched && (
           <Typography typographyType="label" as="span" color="error">
@@ -100,7 +99,7 @@ const QuantityField: React.FC<QuantityFieldProps> = ({
           </Typography>
         )}
       </Box>
-    </Column>
+    </StyledColumn>
   );
 };
 

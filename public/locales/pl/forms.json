@@ -29,5 +29,6 @@
   "Upload file": "Prześlij plik",
   "Uploading": "Przesyłanie...",
   "Cancel": "Anuluj",
-  "Delete": "Usuń"
+  "Delete": "Usuń",
+  "outOf": "z {{maxValue}}"
 }
