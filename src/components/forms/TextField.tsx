@@ -12,6 +12,9 @@ const StyledTextArea = styled.textarea`
   all: unset;
   border-width: 1px;
   border-style: solid;
+  &::placeholder {
+    color: #666;
+  }
   ${({ theme }) => css`
     background-color: ${theme.colorSchemas.input.background};
     border-color: ${theme.colorSchemas.input.border};
