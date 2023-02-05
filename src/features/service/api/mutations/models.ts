@@ -12,3 +12,14 @@ export interface BookSlotMutationRespons {
     bookingId: string;
   };
 }
+
+export interface RescheduleBookingVariables {
+  bookingId: string;
+  slots: Array<string>;
+}
+
+export interface RescheduleBookingResponse {
+  bookingReschedule: {
+    bookingId: string;
+  };
+}

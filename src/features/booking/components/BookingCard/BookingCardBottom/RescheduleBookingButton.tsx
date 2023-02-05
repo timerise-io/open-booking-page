@@ -1,30 +1,36 @@
 import { ContextButton } from "components/ContextButton";
 import { Typography } from "components/Typography";
-import { useDeleteBooking } from "features/booking/hooks/useDeleteBooking";
-import useConfirmation from "features/confirmation/hooks/useConfirmation";
+import { useLangParam } from "features/i18n/useLangParam";
+import { PAGES } from "pages/constans";
 import { useTranslation } from "react-i18next";
+import {
+  useNavigate,
+  generatePath,
+  createSearchParams,
+} from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
 
 export const RescheduleBookingButton = () => {
   const { t } = useTranslation(["booking"]);
-  const deleteBooking = useDeleteBooking();
+  const navigate = useNavigate();
   const bookingValue = useRecoilValue(bookingAtom);
-
-  const showConfirmation = useConfirmation({
-    type: "booking/delete",
-    confirmButtonType: "danger",
-    onConfirm: () => {
-      deleteBooking();
-    },
-  });
-
-  const handleDelete = () => showConfirmation();
+  const lang = useLangParam();
 
   if (bookingValue === undefined) return null;
 
   return (
-    <ContextButton colorType="primary" onClick={handleDelete}>
+    <ContextButton
+      colorType="primary"
+      onClick={() => {
+        navigate(
+          generatePath(`${PAGES.RESCHEDULE}:query`, {
+            id: bookingValue.bookingId,
+            query: lang ? `?${createSearchParams({ lang }).toString()}` : "",
+          })
+        );
+      }}
+    >
       <Typography
         typographyType="body"
         align="center"

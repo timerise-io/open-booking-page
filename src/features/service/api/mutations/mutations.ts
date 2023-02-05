@@ -17,3 +17,17 @@ export const BOOK_SLOT = gql`
     }
   }
 `;
+
+export const RESCHEDULE_BOOKING = gql`
+  mutation BookingReschedule(
+    $bookingId: ID!
+    $slots: [ID!]
+  ) {
+    bookingReschedule(
+      bookingId: $bookingId
+      slots: $slots
+    ) {
+      bookingId
+    }
+  }
+`;

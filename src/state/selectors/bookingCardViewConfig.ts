@@ -7,8 +7,7 @@ export const bookingCardViewConfig = selector({
   get: ({ get }) => {
     const booking = get(bookingAtom);
     const service = get(serviceAtom);
-console.log(booking)
-console.log(service)
+
     if (!booking || !service) return null;
 
     const { status, paymentStatus } = booking;
@@ -19,7 +18,7 @@ console.log(service)
 
     const usePaymentFlow = !!(
       paymentStatus !== null &&
-      !paymentStatusConfig[paymentStatus].actions?.hide
+      !paymentStatusConfig[paymentStatus]?.actions?.hide
     );
 
     if (usePaymentFlow && !!paymentStatus) {

@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useLangParam } from "features/i18n/useLangParam";
 import { useProjectState } from "features/project/hooks/useProject";
-import { useServiceState } from "features/service/hooks/useService";
+import { useServiceState, useServiceSlotsState } from "features/service/hooks/useService";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -65,5 +65,6 @@ export const useBooking = () => {
   const bookingValue = useRecoilValue(bookingAtom);
   const serviceValue = useRecoilValue(serviceAtom);
   useServiceState(bookingValue?.service.serviceId ?? "", lang);
+  useServiceSlotsState(serviceValue?.serviceId! ?? "");
   useProjectState(serviceValue?.project.projectId ?? "");
 };

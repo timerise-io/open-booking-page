@@ -6,7 +6,8 @@
   "bookServiceButton": "Buchen & bezahlen",
   "optionalSuffix": " (Optional)",
   "headers": {
-    "Leave your details": "Hinterlassen Sie Ihre Daten"
+    "Leave your details": "Hinterlassen Sie Ihre Daten",
+    "Reschedule booking": "Buchung verschieben"
   },
   "Slot already booked": "Es tut uns leid, aber das ausgewählte Zeitfenster wurde gerade gebucht. Bitte wählen Sie ein anderes Zeitfenster.",
   "unknown-booking-create-error": "Unknown booking error.", 
@@ -29,5 +30,9 @@
   "Upload file": "Datei hochladen",
   "Uploading": "Hochladen...",
   "Cancel": "Abbrechen",
-  "Delete": "Löschen"
+  "Delete": "Löschen",
+  "Back": "Zurück",
+  "rescheduleServiceButton": "Umplanen auf",
+  "From": "Aus",
+  "To": "Zu"
 }

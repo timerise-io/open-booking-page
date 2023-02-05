@@ -6,7 +6,8 @@
   "bookServiceButton": "Rezerwuj i zapłać",
   "optionalSuffix": " (opcjonalnie)",
   "headers": {
-    "Leave your details": "Uzupełnij szczegóły"
+    "Leave your details": "Uzupełnij szczegóły",
+    "Reschedule booking": "Zmień termin rezerwacji"
   },
   "Slot already booked": "Przepraszamy, ale wybrany przedział czasowy został właśnie zarezerwowany. Wybierz inny przedział czasowy.",
   "unknown-booking-create-error": "Unknown booking error.", 
@@ -29,5 +30,9 @@
   "Upload file": "Prześlij plik",
   "Uploading": "Przesyłanie...",
   "Cancel": "Anuluj",
-  "Delete": "Usuń"
+  "Delete": "Usuń",
+  "Back": "Cofnij",
+  "rescheduleServiceButton": "Zmień termin na",
+  "From": "Z",
+  "To": "Na"
 }

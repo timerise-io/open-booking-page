@@ -1,7 +1,7 @@
 import { Row } from "components/layout/Row";
 import { useRecoilValue } from "recoil";
 import { bookingCardViewConfig } from "state/selectors/bookingCardViewConfig";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import BackToServiceButton from "./BackToServiceButton";
 import CancelBookingButton from "./CancelBookingButton";
 import { RescheduleBookingButton } from "./RescheduleBookingButton";
@@ -11,29 +11,39 @@ const Wrapper = styled(Row)`
   padding-top: 20px;
 `;
 
-const StyledDualButtonWrapper = styled.div`
+const StyledDualButtonWrapper = styled.div<{showRescheduleButton?: boolean, showCancelButton?: boolean,}>`
   gap: 8px;
-  display: flex;
-`
+  ${({ showRescheduleButton, showCancelButton }) => {
+    return css`
+      display: ${!!showRescheduleButton || !!showCancelButton ? "flex" : "none"};
+    `;
+  }}
+`;
 
 const BookingCardBottom = () => {
   const cardConfig = useRecoilValue(bookingCardViewConfig);
-console.log(cardConfig)
-  const { cancel: showCancelButton, service: showBackToServiceButton } = {
+
+  const { cancel: showCancelButton, service: showBackToServiceButton, reschedule: showRescheduleButton } = {
     ...cardConfig?.actions,
   };
 
-  if (!showBackToServiceButton && !showCancelButton) return null;
+  if (!showBackToServiceButton && !showCancelButton && !showRescheduleButton) return null;
 
   return (
     <Wrapper
-      jc={ "space-between" }
+      jc={
+        !!showBackToServiceButton && (!!showCancelButton || !!showRescheduleButton)
+          ? "space-between"
+          : "space-around"
+      }
     >
       {!!showBackToServiceButton && <BackToServiceButton />}
-      <StyledDualButtonWrapper>
-        <RescheduleBookingButton />
-        <CancelBookingButton />
-        {/* {!!showCancelButton && <CancelBookingButton />} */}
+      <StyledDualButtonWrapper
+        showRescheduleButton={showRescheduleButton}
+        showCancelButton={showCancelButton}
+      >
+        {!!showRescheduleButton && <RescheduleBookingButton />}
+        {!!showCancelButton && <CancelBookingButton />}
       </StyledDualButtonWrapper>
     </Wrapper>
   );

@@ -5,4 +5,5 @@ export const PAGES = {
   BOOKING_CONFIRMATION: "/booking/:id/confirmation",
   TERMS: "/terms",
   PRIVACY: "/privacy",
+  RESCHEDULE: "/reschedule/:id",
 };

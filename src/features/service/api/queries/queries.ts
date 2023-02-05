@@ -41,6 +41,7 @@ export const GET_SERVICE = gql`
               hide
               pay
               qr
+              reschedule
               service
               spaces
             }
@@ -56,6 +57,7 @@ export const GET_SERVICE = gql`
               hide
               pay
               qr
+              reschedule
               service
               spaces
             }
@@ -71,6 +73,7 @@ export const GET_SERVICE = gql`
               hide
               pay
               qr
+              reschedule
               service
               spaces
             }
@@ -86,6 +89,7 @@ export const GET_SERVICE = gql`
               hide
               pay
               qr
+              reschedule
               service
               spaces
             }
@@ -101,6 +105,7 @@ export const GET_SERVICE = gql`
               hide
               pay
               qr
+              reschedule
               service
               spaces
             }
@@ -116,6 +121,7 @@ export const GET_SERVICE = gql`
               hide
               pay
               qr
+              reschedule
               service
               spaces
             }
