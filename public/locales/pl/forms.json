@@ -34,5 +34,6 @@
   "Back": "Cofnij",
   "rescheduleServiceButton": "Zmień termin na",
   "From": "Z",
-  "To": "Na"
+  "To": "Na",
+  "outOf": "z {{maxValue}}"
 }

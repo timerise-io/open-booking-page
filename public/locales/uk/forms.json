@@ -34,5 +34,6 @@
   "Back": "Назад",
   "rescheduleServiceButton": "Перенести на",
   "From": "Від",
-  "To": "до"
+  "To": "до",
+  "outOf": "з {{maxValue}}"
 }

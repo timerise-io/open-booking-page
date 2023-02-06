@@ -34,5 +34,6 @@
   "Back": "Zurück",
   "rescheduleServiceButton": "Umplanen auf",
   "From": "Aus",
-  "To": "Zu"
+  "To": "Zu",
+  "outOf": "von {{maxValue}}"
 }

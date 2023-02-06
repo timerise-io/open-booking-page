@@ -34,5 +34,6 @@
   "Back": "Back",
   "rescheduleServiceButton": "Reschedule to",
   "From": "From",
-  "To": "To"
+  "To": "To",
+  "outOf": "out of {{maxValue}}"
 }

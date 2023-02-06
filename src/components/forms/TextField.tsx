@@ -12,6 +12,9 @@ const StyledTextArea = styled.textarea`
   all: unset;
   border-width: 1px;
   border-style: solid;
+  &::placeholder {
+    color: #666;
+  }
   ${({ theme }) => css`
     background-color: ${theme.colorSchemas.input.background};
     border-color: ${theme.colorSchemas.input.border};
@@ -33,12 +36,14 @@ interface TextFieldProps {
   label?: string;
   name: string;
   multiline?: boolean;
+  placeholder?: string;
 }
 
 const TextField: React.FC<TextFieldProps> = ({
   label,
   name,
   multiline = false,
+  placeholder,
 }) => {
   const { t } = useTranslation(["forms"]);
   const labelToDisplay = label === undefined ? t(`${name}Field`) : label;
@@ -46,9 +51,9 @@ const TextField: React.FC<TextFieldProps> = ({
   const [field, meta] = useField({ name });
 
   const input = multiline ? (
-    <StyledTextArea id={name} rows={2} {...field} />
+    <StyledTextArea id={name} placeholder={placeholder} rows={2} {...field} />
   ) : (
-    <StyledInput id={name} {...field} />
+    <StyledInput id={name} placeholder={placeholder} {...field} />
   );
 
   return (
