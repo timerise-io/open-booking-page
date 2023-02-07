@@ -98,22 +98,6 @@ export const GET_SERVICE = gql`
             iconUrl
             title
           }
-          REBOOKED {
-            actions {
-              cancel
-              calendar
-              hide
-              pay
-              qr
-              reschedule
-              service
-              spaces
-            }
-            description
-            details
-            iconUrl
-            title
-          }
           REJECTED {
             actions {
               calendar
