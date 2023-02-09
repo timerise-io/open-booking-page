@@ -5,6 +5,7 @@ const BRANDED_PAGERS = Object.values([
   PAGES.SERVICE,
   PAGES.SERVICES,
   PAGES.BOOKING,
+  PAGES.RESCHEDULE,
 ]);
 
 export const getIsBandedPage = (path: string) => {

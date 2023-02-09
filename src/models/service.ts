@@ -42,6 +42,7 @@ type BookingStatusConfigActions =
   | "hide"
   | "pay"
   | "qr"
+  | "reschedule"
   | "service"
   | "spaces";
 

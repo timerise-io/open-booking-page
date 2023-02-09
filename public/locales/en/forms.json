@@ -6,7 +6,8 @@
   "bookServiceButton": "Book & pay",
   "optionalSuffix": " (optional)",
   "headers": {
-    "Leave your details": "Leave your details"
+    "Leave your details": "Leave your details",
+    "Reschedule booking": "Reschedule booking"
   },
   "Slot already booked": "We are sorry, but the selected time slot has just been booked. Please choose a different time slot.",
   "unknown-booking-create-error": "Unknown booking error.", 
@@ -30,5 +31,9 @@
   "Uploading": "Uploading...",
   "Cancel": "Cancel",
   "Delete": "Delete",
+  "Back": "Back",
+  "rescheduleServiceButton": "Reschedule to",
+  "From": "From",
+  "To": "To",
   "outOf": "out of {{maxValue}}"
 }

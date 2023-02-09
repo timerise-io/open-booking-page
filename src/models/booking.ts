@@ -22,7 +22,6 @@ export interface Space {
 
 export type BookingStatus =
   | "NEW"
-  | "REBOOKED"
   | "ACCEPTED"
   | "CONFIRMED"
   | "CANCELED";

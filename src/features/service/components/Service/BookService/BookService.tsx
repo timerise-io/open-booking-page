@@ -153,7 +153,7 @@ const BookService = () => {
     bookSlotMutation({
       variables: {
         serviceId: id!,
-        slotId: slot.slotId,
+        slots: [slot.slotId],
         formFields: json,
         ...(service?.paymentProviders.length && {
           paymentProvider: service.paymentProviders[0],

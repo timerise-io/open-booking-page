@@ -12,6 +12,7 @@ const BookingConfirmationPage = React.lazy(
 const TermsPage = React.lazy(() => import("./TermsPage"));
 const PrivacyPage = React.lazy(() => import("./PrivacyPage"));
 const ErrorPage = React.lazy(() => import("./ErrorPage"));
+const ReschedulePage = React.lazy(() => import("./ReschedulePage"));
 
 interface PageSwitcherProps {
   children?: React.ReactNode;
@@ -28,6 +29,7 @@ const PageSwitcher: React.FC<PageSwitcherProps> = ({ children }) => {
           <Route path={PAGES.SERVICE} element={<ServicePage />} />
           <Route path={PAGES.SERVICES} element={<ServicesPage />} />
           <Route path={PAGES.BOOKING} element={<BookingPage />} />
+          <Route path={PAGES.RESCHEDULE} element={<ReschedulePage />} />
           <Route
             path={PAGES.BOOKING_CONFIRMATION}
             element={<BookingConfirmationPage />}

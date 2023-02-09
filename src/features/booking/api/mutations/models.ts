@@ -15,6 +15,7 @@ export interface CancelBookingMutationVariables {
 export interface CancelBookingMutationResult {
   bookingDelete: string;
 }
+
 export interface PublishBookingMutationVariables {
   bookingId: string;
 }
