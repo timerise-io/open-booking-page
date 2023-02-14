@@ -3,6 +3,7 @@ import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
 import { Typography } from "components/Typography";
+import { getUrlFromString } from "helpers/functions";
 import { useField } from "formik";
 import React from "react";
 import styled, { css } from "styled-components";
@@ -96,7 +97,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({ name, label }) => {
             setValue(!value);
           }}
         >
-          {label}
+          {getUrlFromString(label)}
         </CheckboxLabel>
       </CheckboxWrapper>
       <Box h="13px" mt={0.5} mb={1}>
