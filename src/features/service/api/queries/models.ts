@@ -3,6 +3,7 @@ import {
   BookingStatusesConfigView,
   PaymentStatusesConfigView,
   PaymentType,
+  BookingFormTypes,
 } from "models/service";
 import { Slot } from "models/slots";
 
@@ -35,6 +36,7 @@ export interface ServiceQueryResult {
     };
     bookingStatus: BookingStatusesConfigView;
     paymentStatus: PaymentStatusesConfigView;
+    dateTimeFormType: BookingFormTypes;
   };
   formFields: Array<FormField>;
   paymentProviders: Array<PaymentType> | null;

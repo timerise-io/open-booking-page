@@ -215,6 +215,7 @@ export const GET_SERVICE = gql`
             title
           }
         }
+        dateTimeFormType
       }
       paymentProviders
       formFields {
