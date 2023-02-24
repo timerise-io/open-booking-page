@@ -33,6 +33,10 @@ export const GET_SERVICE = gql`
           duration
           quantity
         }
+        range {
+          quantity
+          maxRange
+        }
         bookingStatus {
           ACCEPTED {
             actions {

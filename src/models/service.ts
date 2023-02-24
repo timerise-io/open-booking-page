@@ -102,6 +102,10 @@ export interface Service {
     bookingStatus: BookingStatusesConfigView;
     paymentStatus: PaymentStatusesConfigView;
     dateTimeFormType: BookingFormTypes;
+    range: {
+      quantity: boolean;
+      maxRange: string | null;
+    }
   };
   paymentProviders: Array<PaymentType>;
 }

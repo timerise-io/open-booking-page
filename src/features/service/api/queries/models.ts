@@ -37,6 +37,10 @@ export interface ServiceQueryResult {
     bookingStatus: BookingStatusesConfigView;
     paymentStatus: PaymentStatusesConfigView;
     dateTimeFormType: BookingFormTypes;
+    range: {
+      quantity: boolean;
+      maxRange: string | null;
+    };
   };
   formFields: Array<FormField>;
   paymentProviders: Array<PaymentType> | null;

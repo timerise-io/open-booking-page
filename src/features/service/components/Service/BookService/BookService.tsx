@@ -176,9 +176,6 @@ const BookService = () => {
         },
       });
     } else if (serviceType === BOOKING_FORM_TYPES.RANGE && selectedDateRangeValue.dateTimeFrom !== null && selectedDateRangeValue.dateTimeTo !== null) {
-      console.log(id)
-      console.log(json)
-      console.log(selectedDateRangeValue)
       bookDateRangeMutation({
         variables: {
           serviceId: id!,
