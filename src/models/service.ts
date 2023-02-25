@@ -66,6 +66,13 @@ export type PaymentStatusesConfigView = Record<
   PaymentStatusConfig
 >;
 
+export enum BOOKING_FORM_TYPES {
+  SLOT = "SLOT",
+  RANGE = "RANGE",
+}
+
+export type BookingFormTypes = keyof typeof BOOKING_FORM_TYPES;
+
 export interface Service {
   serviceId: string;
   project: {
@@ -94,6 +101,11 @@ export interface Service {
     };
     bookingStatus: BookingStatusesConfigView;
     paymentStatus: PaymentStatusesConfigView;
+    dateTimeFormType: BookingFormTypes;
+    range: {
+      quantity: boolean;
+      maxRange: string | null;
+    }
   };
   paymentProviders: Array<PaymentType>;
 }

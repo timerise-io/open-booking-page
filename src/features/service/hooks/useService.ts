@@ -165,6 +165,11 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
           },
           bookingStatus: { ...service.viewConfig.bookingStatus },
           paymentStatus: { ...service.viewConfig.paymentStatus },
+          dateTimeFormType: service.viewConfig.dateTimeFormType,
+          range: {
+            quantity: service.viewConfig.range.quantity,
+            maxRange: service.viewConfig.range.maxRange,
+          },
         },
         paymentProviders: [...(service.paymentProviders ?? [])],
       });

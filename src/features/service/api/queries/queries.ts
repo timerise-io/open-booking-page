@@ -33,6 +33,10 @@ export const GET_SERVICE = gql`
           duration
           quantity
         }
+        range {
+          quantity
+          maxRange
+        }
         bookingStatus {
           ACCEPTED {
             actions {
@@ -215,6 +219,7 @@ export const GET_SERVICE = gql`
             title
           }
         }
+        dateTimeFormType
       }
       paymentProviders
       formFields {
