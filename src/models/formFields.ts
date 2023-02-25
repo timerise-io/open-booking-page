@@ -4,6 +4,7 @@ export type FormFieldSystemType =
   | "SYSTEM_PHONE_NUMBER"
   | "SYSTEM_MESSAGE"
   | "SYSTEM_SLOT_QUANTITY"
+  | "SYSTEM_GUESTS_LIST"
   | "SYSTEM_ALLOWLIST_CODE"
   | "SYSTEM_PROMO_CODE";
 
@@ -23,6 +24,7 @@ const systemFieldsList: Array<FormFieldSystemType> = [
   "SYSTEM_MESSAGE",
   "SYSTEM_SLOT_QUANTITY",
   "SYSTEM_ALLOWLIST_CODE",
+  "SYSTEM_GUESTS_LIST",
   "SYSTEM_PROMO_CODE",
 ];
 
@@ -89,6 +91,14 @@ export type FormFieldSystemSlotQuantity = BaseFormField & {
   maxValue: number;
 };
 
+export type FormFieldSystemGuestsList = BaseFormField & {
+  fieldType: "SYSTEM_GUESTS_LIST";
+  width: number;
+  minGuests: number;
+  maxGuests?: number;
+};
+
+
 export type FormFieldText = BaseFormField & {
   fieldType: "TEXT";
   width: number | null;
@@ -129,6 +139,7 @@ export type FormField =
   | FormFieldSystemMessage
   | FormFieldSystemMessage
   | FormFieldSystemSlotQuantity
+  | FormFieldSystemGuestsList
   | FormFieldSystemAllowlistCode
   | FormFieldSystemPromoCode
   | FormFieldText

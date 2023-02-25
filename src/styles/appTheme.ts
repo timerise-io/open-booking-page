@@ -56,6 +56,13 @@ const appTheme: DefaultTheme = {
         backgroundDisabled: "#99534e",
         text: WHITE,
       },
+      text: {
+        background: "unset",
+        backgroundActive: "unset",
+        backgroundDisabled: SECONDARY_DARK,
+        text: DARK,
+        border: "none",
+      },
     },
     iconButton: {
       primary: {
@@ -190,6 +197,13 @@ const darkTheme: DefaultTheme = {
         backgroundActive: "#d12a1c",
         backgroundDisabled: "#99534e",
         text: WHITE,
+      },
+      text: {
+        background: "unset",
+        backgroundActive: "unset",
+        backgroundDisabled: SECONDARY_DARK,
+        text: WHITE,
+        border: "none",
       },
     },
     iconButton: {
