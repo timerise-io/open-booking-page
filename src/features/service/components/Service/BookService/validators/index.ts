@@ -61,6 +61,7 @@ export const generateValidationSchema = (
     ...(systemSlotQuantity && {
       quantity: Yup.number().min(1, t("common:validation.slots-quantity")),
     }),
+    // ...(systemGuestsList),
     ...(isAcceptRequired && {
       requireAgreement: Yup.boolean().isTrue(t("common:validation.required")),
     }),

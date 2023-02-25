@@ -36,7 +36,7 @@ interface GuestsListFieldProps {
   maxGuests?: number | null;
 }
 
-const GuestsListField: React.FC<GuestsListFieldProps> = ({
+const GuestsList: React.FC<GuestsListFieldProps> = ({
   name,
   label,
   minGuests = 1,
@@ -79,6 +79,7 @@ const GuestsListField: React.FC<GuestsListFieldProps> = ({
           {label}
         </Typography>
       </Box>
+      <input id={name} type="hidden"></input>
       {guests.map((guest, index) => (
       <Row ai="stretch" key={"guest" + index} gap="10px">
         <StyledColumn ai="stretch" style={{ width: "100%", marginBottom: "10px" }}>
@@ -87,7 +88,7 @@ const GuestsListField: React.FC<GuestsListFieldProps> = ({
             data-index={index}
             data-field="fullName"
             id={name + 'FullName' + index}
-            defaultValue={guests[index]['fullName']}
+            defaultValue={guest.fullName}
             onBlur={() => {
               setTouched(true);
             }}
@@ -100,7 +101,7 @@ const GuestsListField: React.FC<GuestsListFieldProps> = ({
             data-index={index}
             data-field="emailAddress"
             id={name + "EmailAddress" + index}
-            defaultValue={guests[index]['emailAddress']}
+            defaultValue={guest.emailAddress}
             onBlur={() => {
               setTouched(true);
             }}
@@ -138,4 +139,4 @@ const GuestsListField: React.FC<GuestsListFieldProps> = ({
   );
 };
 
-export default GuestsListField;
+export default GuestsList;

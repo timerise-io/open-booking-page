@@ -154,6 +154,8 @@ const BookService = () => {
       };
     });
 
+    console.log(customFormFields);
+
     const json = JSON.stringify({
       ...(fullName && { [fullName.fieldId]: value.fullName }),
       ...(quantity && { [quantity.fieldId]: value.quantity }),

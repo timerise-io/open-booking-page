@@ -137,7 +137,6 @@ export type FormField =
   | FormFieldSystemEmailAddress
   | FormFieldSystemPhoneNumber
   | FormFieldSystemMessage
-  | FormFieldSystemMessage
   | FormFieldSystemSlotQuantity
   | FormFieldSystemGuestsList
   | FormFieldSystemAllowlistCode
