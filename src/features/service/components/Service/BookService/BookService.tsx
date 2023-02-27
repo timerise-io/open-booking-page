@@ -146,12 +146,15 @@ const BookService = () => {
     const phone = _.find(formFields, { fieldType: "SYSTEM_PHONE_NUMBER" });
     const code = _.find(formFields, { fieldType: "SYSTEM_ALLOWLIST_CODE" });
     const promoCode = _.find(formFields, { fieldType: "SYSTEM_PROMO_CODE" });
+    const guestsList = _.find(formFields, { fieldType: "SYSTEM_GUESTS_LIST" });
 
     const customFormFields = filterFormFields(formFields, false).map((item) => {
       return {
         [item.fieldId]: value[item.fieldId] as any,
       };
     });
+
+    console.log(customFormFields);
 
     const json = JSON.stringify({
       ...(fullName && { [fullName.fieldId]: value.fullName }),
@@ -161,6 +164,7 @@ const BookService = () => {
       ...(phone && { [phone.fieldId]: value.phone }),
       ...(code && { [code.fieldId]: value.code }),
       ...(promoCode && { [promoCode.fieldId]: value.promoCode }),
+      ...(guestsList && { [guestsList.fieldId]: value.guestsList }),
       ...Object.assign({}, ...customFormFields),
     });
 

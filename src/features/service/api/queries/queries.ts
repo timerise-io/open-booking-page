@@ -268,6 +268,15 @@ export const GET_SERVICE = gql`
           width
           maxValue
         }
+        ... on FormFieldSystemGuestsList {
+          fieldId
+          fieldType
+          required
+          label
+          order
+          minGuests
+          maxGuests
+        }
         ... on FormFieldSystemAllowlistCode {
           fieldId
           fieldType

@@ -3,6 +3,7 @@ import FileUpload from "components/forms/FileUpload/FileUpload";
 import NumberField from "components/forms/NumberField";
 import PhoneSelect from "components/forms/PhoneSelect";
 import QuantityField from "components/forms/QuantityField";
+import GuestsList from "components/forms/GuestsList";
 import SelectField from "components/forms/SelectField";
 import TextField from "components/forms/TextField";
 import { FormField } from "models/formFields";
@@ -88,6 +89,17 @@ const FormComponent = ({ config }: FormComponentProps) => {
           name="quantity"
           label={label}
           maxQuantity={config.maxValue}
+        />
+      );
+    }
+    case "SYSTEM_GUESTS_LIST": {
+      return (
+        <GuestsList
+          key={`booking-form-field-SYSTEM_GUESTS_LIST`}
+          name="guestsList"
+          label={label}
+          minGuests={config.minGuests}
+          maxGuests={config.maxGuests}
         />
       );
     }

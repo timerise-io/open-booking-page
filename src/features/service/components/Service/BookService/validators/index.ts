@@ -30,6 +30,9 @@ export const generateValidationSchema = (
   const systemSlotQuantity = formFields.find(
     (item) => item.fieldType === "SYSTEM_SLOT_QUANTITY"
   );
+  // const systemGuestsList = formFields.find(
+  //   (item) => item.fieldType === "SYSTEM_GUESTS_LIST"
+  // );
   const systemAllowListCode = formFields.find(
     (item) => item.fieldType === "SYSTEM_ALLOWLIST_CODE" && item.required
   );
@@ -58,6 +61,7 @@ export const generateValidationSchema = (
     ...(systemSlotQuantity && {
       quantity: Yup.number().min(1, t("common:validation.slots-quantity")),
     }),
+    // ...(systemGuestsList),
     ...(isAcceptRequired && {
       requireAgreement: Yup.boolean().isTrue(t("common:validation.required")),
     }),
