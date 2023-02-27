@@ -154,8 +154,8 @@ const Wrapper = styled.div`
     border: 0;
     ${({ theme }) => {
       return css`
-        background: ${theme.colors.primary};
-        color: ${theme.colors.white};
+        background: ${theme.colors.primary} !important;
+        color: ${theme.colors.white} !important;
       `;
     }}
 
@@ -371,7 +371,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
   const [dateTimeTo, setDateTimeTo] = useState<any | null>(null);
   const [focusedInput, setFocusedInput] = useState<any | null>(null);
   const duration = additionalData.service.viewConfig.range.maxRange ? parse(additionalData.service.viewConfig.range.maxRange).days : null;
-console.log(additionalData?.slots)
+
   const handleChangeDate = ({ dateTimeFrom, dateTimeTo }: { dateTimeFrom: any, dateTimeTo: any }) => {
     dateTimeFrom && setDateTimeFrom(dateTimeFrom);
     dateTimeTo && setDateTimeTo(dateTimeTo);
@@ -383,18 +383,18 @@ console.log(additionalData?.slots)
   }
 
   const handleFocusedInput = (focusedInput: any) => {
-    setFocusedInput(focusedInput)
-  }
+    setFocusedInput(focusedInput);
+  };
 
   const handleCloseCalendar = () => {
     setFocusedInput(null);
-  }
+  };
 
   const handleDiscardCalendar = () => {
     setDateTimeFrom(null);
     setDateTimeTo(null);
     handleCloseCalendar();
-  }
+  };
 
   const renderDayContents = (day: any) => {
     let quantity;
@@ -406,8 +406,8 @@ console.log(additionalData?.slots)
       return isSameDay;
     });
 
-    return <StyledDay>{ day.format("D") }<span>{ `avl. ${quantity ?? 0}` }</span></StyledDay>
-  }
+    return <StyledDay>{ day.format("D") }<span>{ `avl. ${quantity ?? 0}` }</span></StyledDay>;
+  };
 
   const isDayBlocked = (day: any) => {
     let isSameDay, quantity;
@@ -421,7 +421,11 @@ console.log(additionalData?.slots)
     });
 
     return !hasSlot;
-  }
+  };
+
+  const isOutsideRange = (day: { isBefore: (arg0: any) => any; isAfter: (arg0: any) => any; }) => (
+    dateTimeFrom && duration && focusedInput === "endDate" && (day.isBefore(dateTimeFrom) || day.isAfter(dateTimeFrom.clone().add(duration - 1, 'days')))
+  );
 
   const PrevIcon = () => (
     <StyledPrevIcon>
@@ -461,6 +465,7 @@ console.log(additionalData?.slots)
           daySize={daySize}
           transitionDuration={transitionDuration}
           regular={regular}
+          isOutsideRange={isOutsideRange}
           
           renderDayContents={renderDayContents}
           isDayBlocked={isDayBlocked}
