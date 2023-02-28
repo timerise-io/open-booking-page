@@ -47,7 +47,7 @@ const GuestsList: React.FC<GuestsListFieldProps> = ({
 
   const guestsLimit: number = maxGuests ? (maxGuests - 1) : 0;
 
-  const guest: {fullName: string, emailAddress: string} = { fullName: "DEV",  emailAddress: "dev@timerise.io" };
+  const guest: {fullName: string, emailAddress: string} = { fullName: "",  emailAddress: "" };
   const [guests, setGuests] = useState([guest]);
 
   const [, meta, helpers] = useField({ name });
