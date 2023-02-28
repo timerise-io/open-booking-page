@@ -69,5 +69,13 @@
   "Add to your calendar": "Add to your calendar",
   "Download QR code": "Download QR code",
   "Go to payment": "Go to payment",
-  "Reschedule": "Reschedule"
+  "Reschedule": "Reschedule",
+  "Select dates": "Select dates",
+  "Select date": "Select date",
+  "avl.": "avl.",
+  "Discard": "Discard",
+  "Done": "Done",
+  "Select date range up to": "Select date range up to {{duration}} days",
+  "Start date": "Start date",
+  "End date": "End date"
 }

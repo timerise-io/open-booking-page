@@ -1,17 +1,19 @@
-import { Button } from "components/Button";
-import { Column } from "components/layout/Column";
-import React, { useState } from "react";
-//import { useTranslation } from "react-i18next";
+import React, { useState, useEffect } from "react";
+import { useMedia } from "helpers/hooks";
+import { useTranslation } from "react-i18next";
+import { parse } from "iso8601-duration";
+import moment from "moment";
 import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons";
 import styled, { css } from "styled-components";
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { DateRangePicker } from "react-dates";
-import { Typography } from "components/Typography";
-import { parse } from "iso8601-duration";
-import moment from "moment";
+import { DateRangeFooter } from "./components";
+import 'moment/locale/pl';
+import 'moment/locale/de';
+import 'moment/locale/uk';
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div<{translations: any}>`
   position: relative;
   width: 100%;
 
@@ -22,21 +24,51 @@ const Wrapper = styled.div`
   .DayPicker {
     width: 600px !important;
 
+    ${({ theme }) => theme.mediaBelow(theme.breakpoints.lg)} {
+      width: 100% !important;
+    }
+
     & > div > div {
       width: 600px !important;
+
+      ${({ theme }) => theme.mediaBelow(theme.breakpoints.lg)} {
+        width: 100% !important;
+      }
     }
   }
 
   .DayPicker_transitionContainer {
     width: 600px !important;
+
+    ${({ theme }) => theme.mediaBelow(theme.breakpoints.lg)} {
+      width: 100% !important;
+    }
   }
 
   .CalendarMonthGrid__horizontal {
     left 0;
   }
 
+  .CalendarMonthGrid__vertical {
+
+  }
+
   .CalendarMonth {
     padding: 0 16px 0 8px !important;
+
+    ${({ theme }) => {
+      return css`
+        background: ${theme.colorSchemas.background.primary.color};
+      `;
+    }}
+  }
+
+  .CalendarMonthGrid {
+    ${({ theme }) => {
+      return css`
+        background: ${theme.colorSchemas.background.primary.color};
+      `;
+    }}
   }
 
   .DayPicker_weekHeaders {
@@ -62,6 +94,14 @@ const Wrapper = styled.div`
         background-color: ${theme.colorSchemas.background.primary.color};
       `;
     }}
+
+    ${({ theme }) => theme.mediaBelow(theme.breakpoints.lg)} {
+      left: 0 !important;
+    }
+
+    ${({ theme }) => theme.mediaBelow(theme.breakpoints.sm)} {
+      top: 115px !important;
+    }
   }
 
   .DateRangePickerInput {
@@ -85,11 +125,11 @@ const Wrapper = styled.div`
         max-width: 100%;
         width: 0;
         min-width: 100%;
-        content: "End date";
+        content: "${props => props.translations(`End date`)}";
       }
       &:first-child {
         &:before {
-          content: "Start date";
+          content: "${props => props.translations(`Start date`)}";
         }
       }
     }
@@ -145,8 +185,22 @@ const Wrapper = styled.div`
   }
 
   .CalendarDay__default {
+    ${({ theme }) => {
+      return css`
+        background: ${theme.colorSchemas.background.primary.color};
+        color: ${theme.colors.primary};
+      `;
+    }}
+
     &:hover {
       border: 0;
+
+      ${({ theme }) => {
+        return css`
+          background: ${theme.colors.primary};
+          color: ${theme.colors.white};
+        `;
+      }}
     }
   }
 
@@ -237,10 +291,6 @@ const Wrapper = styled.div`
     }
   }
 
-  .CalendarMonth {
-    //padding: 0 !important;
-  }
-
   .CalendarMonth_caption {
     font-weight: 700;
     font-size: 13px;
@@ -260,7 +310,6 @@ const Wrapper = styled.div`
 
   .DayPicker_weekHeader {
     top: 50px;
-    //padding: 0 !important;
   }
 
   .DayPicker_weekHeader_ul {
@@ -301,23 +350,6 @@ const StyledNextIcon = styled.div`
   justify-content: center;
 `;
 
-const StyledCalendarFooter = styled(Column)`
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 8px;
-  ${({ theme }) => {
-    return css`
-      background-color: ${theme.colorSchemas.background.secondary.color};
-    `;
-  }}
-`;
-
-const StyledButtons = styled.div`
-  display: flex;
-  justify-content: end;
-  gap: 8px;
-`;
-
 const StyledDay = styled.div`
   display: flex;
   flex-direction: column;
@@ -327,7 +359,7 @@ const StyledDay = styled.div`
     font-weight: 400;
     line-height: 12px;
   }
-`
+`;
 
 interface Props {
   numberOfMonths?: number;
@@ -365,12 +397,16 @@ export const DateRangeWrapper: React.FC<Props> = ({
   handlers,
   additionalData,
 }) => {
-  //const { t } = useTranslation();
-
+  const { t, i18n } = useTranslation(["booking"]);
+  const isMobile = useMedia('(max-width: 1200px)');
   const [dateTimeFrom, setDateTimeFrom] = useState<any | null>(null);
   const [dateTimeTo, setDateTimeTo] = useState<any | null>(null);
   const [focusedInput, setFocusedInput] = useState<any | null>(null);
   const duration = additionalData.service.viewConfig.range.maxRange ? parse(additionalData.service.viewConfig.range.maxRange).days : null;
+
+  useEffect(() => {
+    moment.locale(i18n.language);
+  }, [i18n.language]);
 
   const handleChangeDate = ({ dateTimeFrom, dateTimeTo }: { dateTimeFrom: any, dateTimeTo: any }) => {
     dateTimeFrom && setDateTimeFrom(dateTimeFrom);
@@ -379,8 +415,8 @@ export const DateRangeWrapper: React.FC<Props> = ({
     handlers.setSelectedDateRange({
       dateTimeFrom: dateTimeFrom ? dateTimeFrom.toISOString() : null,
       dateTimeTo: dateTimeTo ? dateTimeTo.toISOString() : null,
-    })
-  }
+    });
+  };
 
   const handleFocusedInput = (focusedInput: any) => {
     setFocusedInput(focusedInput);
@@ -406,7 +442,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
       return isSameDay;
     });
 
-    return <StyledDay>{ day.format("D") }<span>{ `avl. ${quantity ?? 0}` }</span></StyledDay>;
+    return <StyledDay>{ day.format("D") }<span>{ `${t(`avl.`)} ${quantity ?? 0}` }</span></StyledDay>;
   };
 
   const isDayBlocked = (day: any) => {
@@ -440,7 +476,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
   );
 
   return (
-    <Wrapper>
+    <StyledWrapper translations={t}>
       <DateRangePicker
           startDate={dateTimeFrom}
           startDateId={`startDate-${id}`}
@@ -466,38 +502,21 @@ export const DateRangeWrapper: React.FC<Props> = ({
           transitionDuration={transitionDuration}
           regular={regular}
           isOutsideRange={isOutsideRange}
+          orientation={ isMobile ? "vertical" : "horizontal" }
+          //withFullScreenPortal
           
           renderDayContents={renderDayContents}
           isDayBlocked={isDayBlocked}
           renderCalendarInfo={() => (
-            <StyledCalendarFooter ai="center" w="100%" p={2.5}>
-              <Typography typographyType="body" displayType="contents">
-                { duration && `Select date range up to ${duration} days` }
-              </Typography>
-              <StyledButtons>
-                <Button
-                  type="submit"
-                  buttonType="secondary"
-                  data-cy="111"
-                  onClick={handleDiscardCalendar}
-                  style={{width: "auto", background: "#fff", boxShadow: "none"}}
-                >
-                  Discard
-                </Button>
-                <Button
-                  type="submit"
-                  buttonType="primary"
-                  data-cy="222"
-                  disabled={!dateTimeFrom || !dateTimeTo}
-                  onClick={handleCloseCalendar}
-                  style={{width: "auto", boxShadow: "none"}}
-                >
-                  Done
-                </Button>
-              </StyledButtons>
-            </StyledCalendarFooter>
+            <DateRangeFooter
+              duration={duration}
+              handleDiscardCalendar={handleDiscardCalendar}
+              handleCloseCalendar={handleCloseCalendar}
+              dateTimeFrom={dateTimeFrom}
+              dateTimeTo={dateTimeTo}
+            />
           )}
         />
-    </Wrapper>
+    </StyledWrapper>
   );
 };

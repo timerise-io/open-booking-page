@@ -32,7 +32,7 @@ const TimezoneStyledRow = styled(Row)`
 `;
 
 export const ServiceDateRange = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["booking"]);
   const service = useRecoilValue(serviceAtom);
   const slots = useRecoilValue(serviceSlotsAtom);
   const [, setSelectedDateRange] = useRecoilState(selectedDateRange);
@@ -53,8 +53,8 @@ export const ServiceDateRange = () => {
         <DateRangeWrapper
           id={"ServiceDateRange"}
           handlers={handlers}
-          startDatePlaceholderText={"Select date"}
-          endDatePlaceholderText={"Select date"}
+          startDatePlaceholderText={t(`Select date`)}
+          endDatePlaceholderText={t(`Select date`)}
           additionalData={{service, slots}}
         />
 
