@@ -38,7 +38,7 @@ export const RescheduleBookingButton = () => {
         color="inherit"
         weight="700"
       >
-        {t("Reschedule")}
+        {t("reschedule")}
       </Typography>
     </ContextButton>
   );

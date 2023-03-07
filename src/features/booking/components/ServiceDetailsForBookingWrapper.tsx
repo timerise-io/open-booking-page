@@ -90,8 +90,8 @@ const SmallDetails = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const buttonText = isOpen
-    ? t("Hide service details")
-    : t("Show service details");
+    ? t("hide-service-details")
+    : t("show-service-details");
 
   const smallServiceData = serviceData ? (
     <SmallDetailsRow jc="flex-start">

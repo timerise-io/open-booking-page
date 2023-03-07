@@ -32,7 +32,7 @@ const CancelBookingButton = () => {
         color="inherit"
         weight="700"
       >
-        {t("Cancel booking")}
+        {t("cancel-booking")}
       </Typography>
     </ContextButton>
   );

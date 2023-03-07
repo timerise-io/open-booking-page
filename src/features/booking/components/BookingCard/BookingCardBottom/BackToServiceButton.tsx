@@ -38,7 +38,7 @@ const BackToServiceButton = () => {
         color="inherit"
         weight="700"
       >
-        {t("Go back to booking")}
+        {t("go-back")}
       </Typography>
     </ContextButton>
   );

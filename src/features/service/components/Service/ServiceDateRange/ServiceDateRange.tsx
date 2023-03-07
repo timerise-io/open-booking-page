@@ -45,7 +45,7 @@ export const ServiceDateRange = () => {
       <Column ai="flex-start">
         <TimezoneStyledRow mb={2.5} mr={1} w="100%" pr={2}>
           <Typography typographyType="h3" as="h3" displayType="contents">
-            {t(`Select dates`)}
+            {t(`select-dates`)}
           </Typography>
           <TimezoneInfo />
         </TimezoneStyledRow>
@@ -53,8 +53,8 @@ export const ServiceDateRange = () => {
         <DateRangeWrapper
           id={"ServiceDateRange"}
           handlers={handlers}
-          startDatePlaceholderText={t(`Select date`)}
-          endDatePlaceholderText={t(`Select date`)}
+          startDatePlaceholderText={t(`select-date`)}
+          endDatePlaceholderText={t(`select-date`)}
           additionalData={{service, slots}}
         />
 

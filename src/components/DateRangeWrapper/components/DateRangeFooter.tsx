@@ -68,7 +68,7 @@ export const DateRangeFooter: React.FC<Props> = ({
   return (
     <StyledCalendarFooter ai="center" w="100%" p={2.5}>
       <Typography typographyType="body" displayType="contents">
-        { duration && t("Select date range up to", { duration }) }
+        { duration && t("select-date-range-up-to", { duration }) }
       </Typography>
       <StyledButtons>
         <StyledDiscardButton
@@ -77,7 +77,7 @@ export const DateRangeFooter: React.FC<Props> = ({
           data-cy="111"
           onClick={() => handleDiscardCalendar()}
         >
-          { t(`Discard`) }
+          { t(`discard`) }
         </StyledDiscardButton>
         <StyledDoneButton
           type="submit"
@@ -86,7 +86,7 @@ export const DateRangeFooter: React.FC<Props> = ({
           disabled={!dateTimeFrom || !dateTimeTo}
           onClick={() => handleCloseCalendar()}
         >
-          { t(`Done`) }
+          { t(`done`) }
         </StyledDoneButton>
       </StyledButtons>
     </StyledCalendarFooter>

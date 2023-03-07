@@ -29,7 +29,7 @@ const DeleteBooking = () => {
         typographyType="body"
         displayType="contents"
         dangerouslySetInnerHTML={{
-          __html: t("Are you sure you want to delete this booking?"),
+          __html: t("want-to-delete"),
         }}
       ></StyledTypography>
       <Box mt={2.5}>
@@ -38,7 +38,7 @@ const DeleteBooking = () => {
         </Typography>
       </Box>
       <Row>
-        <Typography typographyType="body">{t("dateTime.accepted")}</Typography>
+        <Typography typographyType="body">{t("date-and-time")}</Typography>
         <Box ml={0.5}>
           <Typography typographyType="body" weight="700">
             {" "}

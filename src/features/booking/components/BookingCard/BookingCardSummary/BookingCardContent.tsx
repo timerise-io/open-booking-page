@@ -24,12 +24,12 @@ const BookingCardContent = ({
       <Row>
         {showCalendarButton && (
           <LinkButton href={iCalUrl} download>
-            {t("Add to your calendar")}
+            {t("add-to-calendar")}
           </LinkButton>
         )}
         {showQRButton && (
           <LinkButton href={qrUrl} download="booking_qr.png" target="_blank">
-            {t("Download QR code")}
+            {t("download-qr")}
           </LinkButton>
         )}
       </Row>

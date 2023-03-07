@@ -125,11 +125,11 @@ const StyledWrapper = styled.div<{translations: any}>`
         max-width: 100%;
         width: 0;
         min-width: 100%;
-        content: "${props => props.translations(`End date`)}";
+        content: "${props => props.translations(`end-date`)}";
       }
       &:first-child {
         &:before {
-          content: "${props => props.translations(`Start date`)}";
+          content: "${props => props.translations(`start-date`)}";
         }
       }
     }
@@ -442,7 +442,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
       return isSameDay;
     });
 
-    return <StyledDay>{ day.format("D") }<span>{ `${t(`avl.`)} ${quantity ?? 0}` }</span></StyledDay>;
+    return <StyledDay>{ day.format("D") }<span>{ `${t(`avl`)} ${quantity ?? 0}` }</span></StyledDay>;
   };
 
   const isDayBlocked = (day: any) => {

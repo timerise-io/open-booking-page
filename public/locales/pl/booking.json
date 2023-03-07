@@ -1,81 +1,23 @@
 {
-  "status": {
-    "new": "Sprawdź skrzynkę",
-    "renewed": "Sprawdź skrzynkę",
-    "confirmed": "Rezerwacja potwierdzona!",
-    "accepted": "Rezerwacja potwierdzona!",
-    "canceled": "Rezerwacja anulowana",
-    "payment": "Oczekiwanie na płatność"
-  },
-  "description": {
-    "new": {
-      "both": "Potwierdzenie rejestracji wysłaliśmy na podany adres email/numer telefonu. Znajdziesz tam informacje o kolejnych krokach.",
-      "sms": "Potwierdzenie rejestracji wysłaliśmy na podany adres numer telefonu. Znajdziesz tam informacje o kolejnych krokach.",
-      "email": "Potwierdzenie rejestracji wysłaliśmy na podany adres email. Znajdziesz tam informacje o kolejnych krokach."
-    },
-    "renewed": {
-      "both": "Potwierdzenie rejestracji wysłaliśmy na podany adres email/numer telefonu. Znajdziesz tam informacje o kolejnych krokach.",
-      "sms": "Potwierdzenie rejestracji wysłaliśmy na podany adres numer telefonu. Znajdziesz tam informacje o kolejnych krokach.",
-      "email": "Potwierdzenie rejestracji wysłaliśmy na podany adres email. Znajdziesz tam informacje o kolejnych krokach."
-    },
-    "accepted": {
-      "both": "Dziękujemy za rezerwację usługi. Wysłaliśmy wiadomość z potwierdzeniem na podany adres email/numer telefonu. Znajdziesz w niej wszystkie szczegóły rezerwacji.",
-      "sms": "Dziękujemy za rezerwację usługi. Wysłaliśmy wiadomość z potwierdzeniem na podany numer telefonu. Znajdziesz w niej wszystkie szczegóły rezerwacji.",
-      "email": "Dziękujemy za rezerwację usługi. Wysłaliśmy wiadomość z potwierdzeniem na podany adres email. Znajdziesz w niej wszystkie szczegóły rezerwacji."
-    },
-    "confirmed": {
-      "both": "Dziękujemy za rezerwację usługi. Wysłaliśmy wiadomość z potwierdzeniem na podany adres email/numer telefonu. Znajdziesz w niej wszystkie szczegóły rezerwacji.",
-      "sms": "Dziękujemy za rezerwację usługi. Wysłaliśmy wiadomość z potwierdzeniem na podany numer telefonu. Znajdziesz w niej wszystkie szczegóły rezerwacji.",
-      "email": "Dziękujemy za rezerwację usługi. Wysłaliśmy wiadomość z potwierdzeniem na podany adres email. Znajdziesz w niej wszystkie szczegóły rezerwacji."
-    },
-    "canceled": {
-      "both": "Rezerwacja tej usługi została anulowana. Wysłaliśmy potwierdzenie na podany adres email/numer telefonu.",
-      "sms": "Rezerwacja tej usługi została anulowana. Wysłaliśmy potwierdzenie na podany numer telefonu.",
-      "email": "Rezerwacja tej usługi została anulowana. Wysłaliśmy potwierdzenie na podany adres email"
-    },
-    "payment": {
-      "both": "Prosimy o dokonanie płatności w ciągu 24 godzin. Brak wpłaty spowoduje anulowanie rezerwacji.",
-      "sms": "Prosimy o dokonanie płatności w ciągu 24 godzin. Brak wpłaty spowoduje anulowanie rezerwacji.",
-      "email": "Prosimy o dokonanie płatności w ciągu 24 godzin. Brak wpłaty spowoduje anulowanie rezerwacji."
-    }
-  },
-  "dateTime": {
-    "new": "Data i czas wstępnej rezerwacji:",
-    "renewed": "Data i czas wstępnej rezerwacji:",
-    "accepted": "Data i czas:",
-    "confirmed": "Data i czas:",
-    "canceled": "Anulowany przedział czasowy:"
-  },
-  "If you didn't get the message please": "Jeśli wiadomość do Ciebie nie dotarła, skontaktuj się z nami ",
-  "If your plans have changed": "Jeśli Twoje plany się zmieniły, możesz ",
+  "date-and-time": "Data i czas:",
   "delete": "usunąć",
-  "the booking": " rezerwację.",
+  "the-booking": " rezerwację.",
   "here": "tutaj",
-  "Show service details": "Pokaż szczegóły usługi",
-  "Hide service details": "Ukryj szczegóły usługi",
-  "Are you sure you want to delete this booking?": "Czy na pewno chcesz <strong>usunąć</strong> rezerwację?",
-  "Use the button below to return to booking this service.": "Użyj poniższego przycisku aby powrócić do rezerwacji usługi.",
-  "Book now": "Rezerwuj teraz",
-  "Want to book another date?": "Chcesz zarezerwować kolejną datę?",
-  "Back to booking page": "Powrót do strony rezerwacji",
-  "Go back to booking": "Powrót do usługi",
-  "SMSInfo": "Informujemy, że w sytuacji, gdy kilka osób wybrało tę samą datę i godzinę, potwierdzenie rezerwacji otrzyma osoba, która po otrzymaniu SMS-a jako pierwsza kliknie w link potwierdzający.",
-  "Cancel booking": "Anuluj rezerwację",
-  "WaitingInfo": {
-    "both": "Informujemy, że w sytuacji, gdy kilka osób wybrało tę samą datę i godzinę, potwierdzenie rezerwacji otrzyma osoba, która po otrzymaniu email-a/SMS-a jako pierwsza kliknie w link potwierdzający.",
-    "sms": "Informujemy, że w sytuacji, gdy kilka osób wybrało tę samą datę i godzinę, potwierdzenie rezerwacji otrzyma osoba, która po otrzymaniu SMS-a jako pierwsza kliknie w link potwierdzający.",
-    "email": "Informujemy, że w sytuacji, gdy kilka osób wybrało tę samą datę i godzinę, potwierdzenie rezerwacji otrzyma osoba, która po otrzymaniu email-a jako pierwsza kliknie w link potwierdzający."
-  },
-  "Add to your calendar": "Dodaj do kalendarza",
-  "Download QR code": "Pobierz kod QR",
-  "Go to payment": "Przejdź do płatności",
-  "Reschedule": "Zmień termin",
-  "Select dates": "Wybierz daty",
-  "Select date": "Wybierz datę",
-  "avl.": "dost.",
-  "Discard": "Anuluj",
-  "Done": "Zatwierdź",
-  "Select date range up to": "Wybierz zakres dat do {{duration}} dni",
-  "Start date": "Data od",
-  "End date": "Data do"
+  "show-service-details": "Pokaż szczegóły usługi",
+  "hide-service-details": "Ukryj szczegóły usługi",
+  "want-to-delete": "Czy na pewno chcesz <strong>usunąć</strong> rezerwację?",
+  "go-back": "Powrót do usługi",
+  "cancel-booking": "Anuluj rezerwację",
+  "add-to-calendar": "Dodaj do kalendarza",
+  "download-qr": "Pobierz kod QR",
+  "pay": "Przejdź do płatności",
+  "reschedule": "Zmień termin",
+  "select-dates": "Wybierz daty",
+  "select-date": "Wybierz datę",
+  "avl": "dost.",
+  "discard": "Anuluj",
+  "done": "Zatwierdź",
+  "select-date-range-up-to": "Wybierz zakres dat do {{duration}} dni",
+  "start-date": "Data od",
+  "end-date": "Data do"
 }
