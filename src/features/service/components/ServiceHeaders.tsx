@@ -15,6 +15,7 @@ const ServiceHeaders = () => {
       <Helmet>
         <title>{service.title}</title>
         <meta name="description" content={service.description} />
+        <meta property="og:title" content={`${service.title} | Booking page | Timerise`}/>
         {icon && <link rel="icon" type="image" href={icon} />}
       </Helmet>
     </HelmetProvider>
