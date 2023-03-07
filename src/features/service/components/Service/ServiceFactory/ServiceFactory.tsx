@@ -15,7 +15,7 @@ export const ServiceFactory = () => {
     <Helmet>
       <title>{`${service?.title} | ${service?.project.title} | Booking page | Timerise`}</title>
       <meta property="og:description" content={`${service?.title} | ${service?.project.title} | Booking page | Timerise`}></meta>
-      <meta property="og:image" content={`${service?.images.length ? service.images[0] : ''}`}></meta>
+      <meta property="og:image" content={`${service?.images.length ? service.images[0] : 'https://cdn.timerise.io/landing-page/og-image.png'}`}></meta>
     </Helmet>
   );
 
