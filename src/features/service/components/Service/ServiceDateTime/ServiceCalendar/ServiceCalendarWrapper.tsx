@@ -57,7 +57,7 @@ const ServiceCalendarWrapper = () => {
         })}
       </DaysRow>
       {noTimeSlots && (
-        <InfoBox>{t("No time slots available in this date range")}</InfoBox>
+        <InfoBox>{t("no-time-slots-available")}</InfoBox>
       )}
     </Wrapper>
   );

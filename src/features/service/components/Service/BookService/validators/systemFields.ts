@@ -16,9 +16,9 @@ export const getPhoneFieldValidation = (
   required
     ? Yup.string()
         .required(t("common:validation.required"))
-        .min(8, t("common:validation.minLength", { length: 8 }))
+        .min(8, t("common:validation.min-length", { length: 8 }))
     : Yup.string().test({
-        message: t("common:validation.minLength", { length: 8 }),
+        message: t("common:validation.min-length", { length: 8 }),
         test: (item) =>
           item === undefined || item.length < 3 || item.length > 7,
       });

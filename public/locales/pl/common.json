@@ -2,36 +2,36 @@
   "solution-name": "Timerise",
   "footer": {
     "copyright": "Timerise © 2023",
-    "Terms & Conditions": "Regulamin",
-    "Privacy Policy": "Polityka Prywatności",
-    "powered by": "powered by"
+    "terms-and-conditions": "Regulamin",
+    "privacy-policy": "Polityka Prywatności",
+    "powered-by": "powered by"
   },
   "validation": {
     "required": "Wymagane",
-    "minLength": "Minimalna liczba znaków to {{length}}",
+    "min-length": "Minimalna liczba znaków to {{length}}",
     "email": "Błędny format adresu e-mail",
     "slots-quantity": "Ilość miejsc musi być większa niż 0",
-    "minValue": "Minimalna wartość to {{minValue}}.",
-    "maxValue": "Maksymalna wartość to {{maxValue}}.",
+    "min-value": "Minimalna wartość to {{minValue}}.",
+    "max-value": "Maksymalna wartość to {{maxValue}}.",
     "incorrect-format": "Nieprawidłowy format"
   },
-  "loadingInfo": "Liczymy wstecz od nieskończoności",
+  "loading-info": "Liczymy wstecz od nieskończoności",
   "theme": {
     "light": "Tryb jasny",
     "dark": "Tryb ciemny"
   },
   "details": {
-    "Duration": "Czas trwania",
-    "Payment": "Cena",
-    "Location": "Miejsce",
-    "Hosted by": "Hosted by"
+    "duration": "Czas trwania",
+    "payment": "Cena",
+    "location": "Miejsce",
+    "hosted-by": "Hosted by"
   },
-  "Select date and time": "Wybierz datę i czas",
-  "Time zone": "Strefa czasowa",
-  "Language": "Język",
-  "No time slots available in this date range": "Brak dostępnych miejsc w wybranym okresie",
-  "Show more": "Pokaż więcej",
-  "Show less": "Pokaż mniej",
+  "select-date-and-time": "Wybierz datę i czas",
+  "time-zone": "Strefa czasowa",
+  "language": "Język",
+  "no-time-slots-available": "Brak dostępnych miejsc w wybranym okresie",
+  "show-more": "Pokaż więcej",
+  "show-less": "Pokaż mniej",
   "available": "dostępne",
-  "Timezone": "Strefa czasowa"
+  "timezone": "Strefa czasowa"
 }

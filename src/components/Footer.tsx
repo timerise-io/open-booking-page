@@ -143,7 +143,7 @@ const Footer = () => {
       </Row>
       <Row ai="flex-start" style={{ marginTop: "8px" }}>
         <Typography typographyType="label" as="div" color="darkGrey">
-          {t("footer.powered by")}
+          {t("footer.powered-by")}
         </Typography>
         <StyledLink href="https://timerise.io/" target="_blank">
           <TimeRiseLogo

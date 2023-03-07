@@ -98,13 +98,13 @@ const getNumberCustomFieldsValidation = (
   if (item.required) {
     schema = schema
       .required(t("common:validation.required"))
-      .min(0, t("common:validation.minValue", { minValue: 0 }));
+      .min(0, t("common:validation.min-value", { minValue: 0 }));
   }
 
   if (item.maxValue !== null) {
     schema = schema.max(
       item.maxValue,
-      t("common:validation.maxValue", { maxValue: item.maxValue })
+      t("common:validation.max-value", { maxValue: item.maxValue })
     );
   }
 

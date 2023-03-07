@@ -27,7 +27,7 @@ const TimezoneInfo = () => {
         typographyType="label"
         color="inherit"
         as="span"
-      >{`${t("Timezone")}:`}</Typography>
+      >{`${t("timezone")}:`}</Typography>
       <Typography
         className="timezone-info"
         typographyType="label"

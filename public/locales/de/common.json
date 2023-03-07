@@ -2,36 +2,36 @@
   "solution-name": "Timerise",
   "footer": {
     "copyright": "Timerise © 2023",
-    "Terms & Conditions": "Geschäftsbedingungen",
-    "Privacy Policy": "Datenschutz-Bestimmungen",
-    "powered by": "powered by"
+    "terms-and-conditions": "Geschäftsbedingungen",
+    "privacy-policy": "Datenschutz-Bestimmungen",
+    "powered-by": "powered by"
   },
   "validation": {
     "required": "Erforderlich",
-    "minLength": "Die Mindestlänge beträgt {{length}} Zeichen",
+    "min-length": "Die Mindestlänge beträgt {{length}} Zeichen",
     "email": "Falsches E-Mail-Format",
     "slots-quantity": "Die Anzahl der Slots muss größer als 0 sein",
-    "minValue": "Der Mindestwert ist {{minValue}}.",
-    "maxValue": "Der Maximalwert ist {{maxValue}}.",
+    "min-value": "Der Mindestwert ist {{minValue}}.",
+    "max-value": "Der Maximalwert ist {{maxValue}}.",
     "incorrect-format": "Falsches Format"
   },
-  "loadingInfo": "Von Unendlich rückwärts zählen",
+  "loading-info": "Von Unendlich rückwärts zählen",
   "theme": {
     "light": "Lichtmodus",
     "dark": "Dunkler Modus"
   },
   "details": {
-    "Duration": "Dauer",
-    "Payment": "Zahlung",
-    "Location": "Ort",
-    "Hosted by": "Veranstaltet von"
+    "duration": "Dauer",
+    "payment": "Zahlung",
+    "location": "Ort",
+    "hosted-by": "Veranstaltet von"
   },
-  "Select date and time": "Datum und Uhrzeit auswählen",
-  "Time zone": "Zeitzone",
-  "Language": "Sprache",
-  "No time slots available in this date range": "In diesem Datumsbereich sind keine Zeitfenster verfügbar",
-  "Show more": "Zeig mehr",
-  "Show less": "Zeige weniger",
+  "select-date-and-time": "Datum und Uhrzeit auswählen",
+  "time-zone": "Zeitzone",
+  "language": "Sprache",
+  "no-time-slots-available": "In diesem Datumsbereich sind keine Zeitfenster verfügbar",
+  "show-more": "Zeig mehr",
+  "show-less": "Zeige weniger",
   "available": "verfügbar",
-  "Timezone": "Zeitzone"
+  "timezone": "Zeitzone"
 }

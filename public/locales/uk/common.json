@@ -2,36 +2,36 @@
   "solution-name": "Timerise",
   "footer": {
     "copyright": "Timerise © 2023",
-    "Terms & Conditions": "Умови та положення",
-    "Privacy Policy": "Політика конфіденційності",
-    "powered by": "powered by"
+    "terms-and-conditions": "Умови та положення",
+    "privacy-policy": "Політика конфіденційності",
+    "powered-by": "powered by"
   },
   "validation": {
     "required": "Необхідно",
-    "minLength": "Мінімальна довжина {{length}} символів",
+    "min-length": "Мінімальна довжина {{length}} символів",
     "email": "Неправильний формат електронної пошти",
     "slots-quantity": "Кількість слотів має бути більше 0",
-    "minValue": "Мінімальне значення становить {{minValue}}.",
-    "maxValue": "Максимальне значення становить {{maxValue}}.",
+    "min-value": "Мінімальне значення становить {{minValue}}.",
+    "max-value": "Максимальне значення становить {{maxValue}}.",
     "incorrect-format": "Неправильний формат"
   },
-  "loadingInfo": "Відліковуємо назад від нескінченності",
+  "loading-info": "Відліковуємо назад від нескінченності",
   "theme": {
     "light": "Світлий режим",
     "dark": "Темний режим"
   },
   "details": {
-    "Duration": "Тривалість",
-    "Payment": "оплата",
-    "Location": "Розташування",
-    "Hosted by": "Організовано"
+    "duration": "Тривалість",
+    "payment": "оплата",
+    "location": "Розташування",
+    "hosted-by": "Організовано"
   },
-  "Select date and time": "Виберіть дату та час",
-  "Time zone": "Часовий пояс",
-  "Language": "Мову",
-  "No time slots available in this date range": "У цьому діапазоні дат немає доступних проміжків часу",
-  "Show more": "Показати більше",
-  "Show less": "Показати менше",
+  "select-date-and-time": "Виберіть дату та час",
+  "time-zone": "Часовий пояс",
+  "language": "Мову",
+  "no-time-slots-available": "У цьому діапазоні дат немає доступних проміжків часу",
+  "show-more": "Показати більше",
+  "show-less": "Показати менше",
   "available": "доступно",
-  "Timezone": "Часовий пояс"
+  "timezone": "Часовий пояс"
 }

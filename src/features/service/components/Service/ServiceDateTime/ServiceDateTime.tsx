@@ -75,7 +75,7 @@ const ServiceDateTime = () => {
       <Column ai="flex-start">
         <TimezoneStyledRow mb={2.5} ml={1} mr={1} w="100%" pr={2}>
           <Typography typographyType="h3" as="h3" displayType="contents">
-            {t(`Select date and time`)}
+            {t(`select-date-and-time`)}
           </Typography>
           <TimezoneInfo />
         </TimezoneStyledRow>
@@ -98,7 +98,7 @@ const ServiceDateTime = () => {
               color="inherit"
               weight="700"
             >
-              {t(isFullHeight === false ? "Show more" : "Show less")}
+              {t(isFullHeight === false ? "show-more" : "show-less")}
             </Typography>
           </ContextButton>
         </ShowMoreWrapper>
