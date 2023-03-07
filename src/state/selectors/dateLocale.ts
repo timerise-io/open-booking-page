@@ -2,12 +2,20 @@ import { selector } from "recoil";
 import { langAtom } from "state/atoms/langAtom";
 
 const KEY_TO_LOCALE: Record<string, string> = {
+  cs: "cs",
+  nl: "nl",
   en: "en-gb",
-  pl: "pl",
-  uk: "uk",
-  de: "de",
-  es: "es",
+  fi: "fi",
   fr: "fr",
+  de: "de",
+  hu: "hu",
+  it: "it",
+  pl: "pl",
+  pt: "pt",
+  es: "es",
+  sk: "sk",
+  sv: "sv",
+  uk: "uk",
 };
 
 export const dateLocaleSelector = selector({
