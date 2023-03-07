@@ -1,7 +1,7 @@
 {
     "booking/delete": {
         "title": "Видалити резервування",
-        "abortText": "Відмінити",
-        "confirmText": "Видалити"
+        "abort-text": "Відмінити",
+        "confirm-text": "Видалити"
     }
 }

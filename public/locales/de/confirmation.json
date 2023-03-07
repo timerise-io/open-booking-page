@@ -1,7 +1,7 @@
 {
     "booking/delete": {
         "title": "Buchung löschen",
-        "abortText": "Abbrechen",
-        "confirmText": "Löschen"
+        "abort-text": "Abbrechen",
+        "confirm-text": "Löschen"
     }
 }

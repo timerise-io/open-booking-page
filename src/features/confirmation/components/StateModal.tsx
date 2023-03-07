@@ -26,8 +26,8 @@ const StateModal = () => {
       onClose={() => setConfirmation({ ...confirmation, state: "aborted" })}
       onAbort={() => setConfirmation({ ...confirmation, state: "aborted" })}
       onConfirm={() => setConfirmation({ ...confirmation, state: "confirmed" })}
-      confirmText={t(`${confirmation.type}.confirmText`)}
-      abortText={t(`${confirmation.type}.abortText`)}
+      confirmText={t(`${confirmation.type}.confirm-text`)}
+      abortText={t(`${confirmation.type}.abort-text`)}
       confirmButtonType={confirmation.confirmButtonType}
     >
       {getContent(confirmation.type)}
