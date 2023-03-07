@@ -4,7 +4,7 @@ import { serviceAtom } from "state/atoms/service";
 import { BOOKING_FORM_TYPES } from "models/service";
 import ServiceDateTime from "../ServiceDateTime/ServiceDateTime";
 import { ServiceDateRange } from "../ServiceDateRange";
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 
 export const ServiceFactory = () => {
   const service = useRecoilValue(serviceAtom);
