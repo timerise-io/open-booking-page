@@ -6,6 +6,8 @@ const KEY_TO_LOCALE: Record<string, string> = {
   pl: "pl",
   uk: "uk",
   de: "de",
+  es: "es",
+  fr: "fr",
 };
 
 export const dateLocaleSelector = selector({
