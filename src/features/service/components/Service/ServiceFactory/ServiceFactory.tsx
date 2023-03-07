@@ -13,6 +13,7 @@ export const ServiceFactory = () => {
 
   const metaTags = (
     <Helmet>
+      <title>{`${service?.title} | ${service?.project.title} | Booking page | Timerise`}</title>
       <meta property="og:description" content={`${service?.title} | ${service?.project.title} | Booking page | Timerise`}></meta>
       <meta property="og:image" content={`${service?.images.length ? service.images[0] : ''}`}></meta>
     </Helmet>
