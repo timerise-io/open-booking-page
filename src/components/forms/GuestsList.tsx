@@ -125,7 +125,7 @@ const GuestsList: React.FC<GuestsListFieldProps> = ({
       )}
 
       {selectedSlot !== undefined && (
-        <StyledHint typographyType="body" as="span">{t("outOf", { maxGuests })}</StyledHint>
+        <StyledHint typographyType="body" as="span">{t("out-of", { maxGuests })}</StyledHint>
       )}
 
       <Box h="13px" mt={0.5} mb={1}>

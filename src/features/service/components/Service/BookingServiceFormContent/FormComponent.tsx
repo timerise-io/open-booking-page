@@ -17,7 +17,7 @@ interface FormComponentProps {
 const FormComponent = ({ config }: FormComponentProps) => {
   const { t } = useTranslation(["forms"]);
 
-  const optionalSuffix = t("optionalSuffix");
+  const optionalSuffix = t("optional-suffix");
 
   const label = `${config.label}${config.required ? "" : optionalSuffix}`;
 

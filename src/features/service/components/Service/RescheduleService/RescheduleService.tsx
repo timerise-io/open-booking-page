@@ -25,7 +25,7 @@ const getSubmitButtonText = (
   selectedSlotValue: string,
   t: TFunction<"forms"[]>
 ) => {
-  const textBase = t("rescheduleServiceButton");
+  const textBase = t("reschedule-button");
 
   if (selectedSlotValue === "") return textBase;
 
@@ -91,13 +91,13 @@ const RescheduleService = () => {
       <WrapperCard>
         <Box mb={2.5}>
           <Typography typographyType="h3" as="h3" displayType="contents">
-            {t("headers.Reschedule booking")}
+            {t("headers.reschedule-booking")}
           </Typography>
         </Box>
 
         <Box>
           <Typography typographyType="label" displayType="contents">
-            {t("From")}:
+            {t("from")}:
           </Typography>
           <StyledDateValue typographyType="label" weight="700" displayType="contents">
             {formattedDateFrom}
@@ -107,7 +107,7 @@ const RescheduleService = () => {
           slot && (
             <Box mt={0.5}>
               <Typography typographyType="label" displayType="contents">
-                {t("To")}:
+                {t("to")}:
               </Typography>
               <StyledDateValue typographyType="label" weight="700" displayType="contents">
                 {formattedDateTo}
@@ -140,7 +140,7 @@ const RescheduleService = () => {
               );
             }}
           >
-            {t("Back")}
+            {t("back")}
           </Button>
         </StyledButtonsWrapper>
 

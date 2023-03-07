@@ -37,7 +37,7 @@ const getSubmitButtonText = (
     | undefined,
   t: TFunction<"forms"[]>
 ) => {
-  const textBase = t("bookFreeServiceButton");
+  const textBase = t("book-free-button");
 
   if (selectedSlotValue === "") return textBase;
 
@@ -198,7 +198,7 @@ const BookService = () => {
       <WrapperCard>
         <Box mb={2.5}>
           <Typography typographyType="h3" as="h3" displayType="contents">
-            {t("headers.Leave your details")}
+            {t("headers.leave-details")}
           </Typography>
         </Box>
         <Formik
@@ -221,7 +221,7 @@ const BookService = () => {
                     >
                       {error && t(error)}
                       {errorDateRange && t(errorDateRange)}
-                      {!error && t("Slot already booked")}
+                      {!error && t("slot-already-booked")}
                     </Typography>
                   </StyledWarning>
                 )}

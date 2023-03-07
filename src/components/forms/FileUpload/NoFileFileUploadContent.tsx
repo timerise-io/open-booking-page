@@ -18,7 +18,7 @@ const NoFileFileUploadContent = ({ onClick }: NoFileFileUploadContentProps) => {
       }}
     >
       <Typography className="button-text" typographyType="body" as="span">
-        {t("Upload file")}
+        {t("upload-file")}
       </Typography>
     </FileUploadStyledButton>
   );

@@ -153,7 +153,7 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({
   const memoizedCallback = useCallback(() => setIsMenuOpen(false), []);
   useOnClickOutside(ref, memoizedCallback);
 
-  const labelToDisplay = label === undefined ? t("phoneField") : label;
+  const labelToDisplay = label === undefined ? t("phone-field") : label;
 
   const handleCountryCodeChange = (newCountryCode: string) => {
     setCountryCode(newCountryCode);

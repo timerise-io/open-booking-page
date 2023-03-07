@@ -89,7 +89,7 @@ const QuantityField: React.FC<QuantityFieldProps> = ({
       />
 
       {selectedSlot !== undefined && (
-        <StyledHint typographyType="body" as="span">{t("outOf", { maxValue })}</StyledHint>
+        <StyledHint typographyType="body" as="span">{t("out-of", { maxValue })}</StyledHint>
       )}
 
       <Box h="13px" mt={0.5} mb={1}>

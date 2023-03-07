@@ -18,7 +18,7 @@ const FileUploadContent = ({
   return (
     <>
       <Typography className="file-name" typographyType="body" as="span">
-        {fileName} {isLoading && ` - ${t("Uploading")}`}
+        {fileName} {isLoading && ` - ${t("uploading")}`}
       </Typography>
       <FileUploadStyledButton
         type="button"
@@ -28,7 +28,7 @@ const FileUploadContent = ({
         disabled={isLoading}
       >
         <Typography className="button-text" typographyType="body" as="span">
-          {t(isLoading ? "Cancel" : "Delete")}
+          {t(isLoading ? "cancel" : "delete")}
         </Typography>
       </FileUploadStyledButton>
     </>
