@@ -1,5 +1,6 @@
 import { selector } from "recoil";
 import { serviceAtom } from "state/atoms/service";
+import { BOOKING_FORM_TYPES } from "models/service";
 
 interface SlotViewConfiguration {
   showDuration: boolean;
@@ -12,12 +13,15 @@ interface SlotViewConfiguration {
 export const slotsViewConfiguration = selector<SlotViewConfiguration>({
   key: "slotsViewConfigurationSelection",
   get: ({ get }) => {
-    const { duration, quantity } = get(serviceAtom)?.viewConfig?.slot ?? {
+    const service = get(serviceAtom);
+    const { duration, quantity } = service?.viewConfig?.slot ?? {
       duration: false,
       quantity: false,
     };
+    const serviceType = service?.viewConfig.dateTimeFormType;
+    const isDateRange = serviceType === BOOKING_FORM_TYPES.RANGE;
 
-    const maxDaysPerPage = duration || quantity ? 5 : 7;
+    const maxDaysPerPage = isDateRange ? 365 : duration || quantity ? 5 : 7;
     const minDaysPerPage = duration || quantity ? 2 : 4;
     const slotsColumnWidth = duration || quantity ? 106 : 76;
 

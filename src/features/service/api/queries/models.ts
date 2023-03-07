@@ -3,6 +3,7 @@ import {
   BookingStatusesConfigView,
   PaymentStatusesConfigView,
   PaymentType,
+  BookingFormTypes,
 } from "models/service";
 import { Slot } from "models/slots";
 
@@ -35,6 +36,11 @@ export interface ServiceQueryResult {
     };
     bookingStatus: BookingStatusesConfigView;
     paymentStatus: PaymentStatusesConfigView;
+    dateTimeFormType: BookingFormTypes;
+    range: {
+      quantity: boolean;
+      maxRange: string | null;
+    };
   };
   formFields: Array<FormField>;
   paymentProviders: Array<PaymentType> | null;

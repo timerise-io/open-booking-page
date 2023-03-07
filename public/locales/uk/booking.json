@@ -69,5 +69,13 @@
   "Add to your calendar": "Додайте до свого календаря",
   "Download QR code": "Завантажте QR-код",
   "Go to payment": "Перейти до оплати",
-  "Reschedule": "Reschedule"
+  "Reschedule": "Reschedule",
+  "Select dates": "Виберіть дати",
+  "Select date": "Виберіть дату",
+  "avl.": "avl.",
+  "Discard": "Відхилити",
+  "Done": "OK",
+  "Select date range up to": "Виберіть діапазон дат до {{duration}} днів",
+  "Start date": "Дані о",
+  "End date": "Дані роблять"
 }

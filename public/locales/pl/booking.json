@@ -69,5 +69,13 @@
   "Add to your calendar": "Dodaj do kalendarza",
   "Download QR code": "Pobierz kod QR",
   "Go to payment": "Przejdź do płatności",
-  "Reschedule": "Zmień termin"
+  "Reschedule": "Zmień termin",
+  "Select dates": "Wybierz daty",
+  "Select date": "Wybierz datę",
+  "avl.": "dost.",
+  "Discard": "Anuluj",
+  "Done": "Zatwierdź",
+  "Select date range up to": "Wybierz zakres dat do {{duration}} dni",
+  "Start date": "Data od",
+  "End date": "Data do"
 }

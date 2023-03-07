@@ -33,6 +33,10 @@ export const GET_SERVICE = gql`
           duration
           quantity
         }
+        range {
+          quantity
+          maxRange
+        }
         bookingStatus {
           ACCEPTED {
             actions {
@@ -215,6 +219,7 @@ export const GET_SERVICE = gql`
             title
           }
         }
+        dateTimeFormType
       }
       paymentProviders
       formFields {
@@ -262,6 +267,15 @@ export const GET_SERVICE = gql`
           order
           width
           maxValue
+        }
+        ... on FormFieldSystemGuestsList {
+          fieldId
+          fieldType
+          required
+          label
+          order
+          minGuests
+          maxGuests
         }
         ... on FormFieldSystemAllowlistCode {
           fieldId

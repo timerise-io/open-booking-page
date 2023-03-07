@@ -46,7 +46,7 @@ export interface BackgroundColorSchema {
 
 export type TimeSlotButtonType = "available" | "unavailable" | "selected";
 
-export type ButtonType = "primary" | "secondary" | "danger";
+export type ButtonType = "primary" | "secondary" | "danger" | "text";
 
 export type IconButtonType = "primary";
 
