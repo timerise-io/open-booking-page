@@ -1,0 +1,23 @@
+{
+    "date-and-time": "Datum en tijd:",
+    "delete": "verwijder",
+    "the-booking": " de boeking.",
+    "show-service-details": "Toon dienst details",
+    "hide-service-details": "Verberg service details",
+    "want-to-delete": "Weet u zeker dat u deze boeking wilt <strong>annuleren<\/strong>?",
+    "go-back": "Ga terug naar boeking",
+    "cancel-booking": "Boeking annuleren",
+    "add-to-calendar": "Toevoegen aan uw agenda",
+    "download-qr": "QR-code downloaden",
+    "pay": "Ga naar betaling",
+    "reschedule": "Herschikking",
+    "select-dates": "Kies data",
+    "select-date": "Kies een datum",
+    "avl": "avl.",
+    "discard": "Gooi",
+    "done": "Gedaan",
+    "select-date-range-up-to": "Selecteer een datumbereik tot {{duur}} dagen",
+    "start-date": "Startdatum",
+    "end-date": "Einddatum",
+    "here": "hier"
+}

@@ -1,0 +1,23 @@
+{
+    "date-and-time": "Datum och tid:",
+    "delete": "ta bort",
+    "the-booking": " bokningen.",
+    "show-service-details": "Visa information om tjänsten",
+    "hide-service-details": "Dölja information om tjänsten",
+    "want-to-delete": "Är du säker på att du vill <strong>avbryta<\/strong> den här bokningen?",
+    "go-back": "Gå tillbaka till bokningen",
+    "cancel-booking": "Avbryt bokningen",
+    "add-to-calendar": "Lägg till i din kalender",
+    "download-qr": "Ladda ner QR-kod",
+    "pay": "Gå till betalning",
+    "reschedule": "Omplanera",
+    "select-dates": "Välj datum",
+    "select-date": "Välj datum",
+    "avl": "avl.",
+    "discard": "Kasta",
+    "done": "Klart",
+    "select-date-range-up-to": "Välj datumintervall upp till {{duration}} dagar",
+    "start-date": "Startdatum",
+    "end-date": "Slutdatum",
+    "here": "här"
+}

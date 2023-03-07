@@ -1,0 +1,7 @@
+{
+    "booking\/delete": {
+        "title": "Peruuta varaus",
+        "abort-text": "Peruuta",
+        "confirm-text": "Peruuta varaus"
+    }
+}

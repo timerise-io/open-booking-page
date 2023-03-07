@@ -1,37 +1,37 @@
 {
-  "solution-name": "Timerise",
-  "footer": {
-    "copyright": "Timerise © 2023",
-    "terms-and-conditions": "Terms & Conditions",
-    "privacy-policy": "Privacy Policy",
-    "powered-by": "powered by"
-  },
-  "validation": {
-    "required": "Required",
-    "min-length": "Minimum length is {{length}} characters",
-    "email": "Incorrect e-mail format",
-    "slots-quantity": "Slots quantity must be greater than 0",
-    "min-value": "The minimum value is {{minValue}}.",
-    "max-value": "The maximum value is {{maxValue}}.",
-    "incorrect-format": "Incorrect format"
-  },
-  "loading-info": "Counting backwards from Infinity",
-  "theme": {
-    "light": "Light mode",
-    "dark": "Dark mode"
-  },
-  "details": {
-    "duration": "Duration",
-    "payment": "Payment",
-    "location": "Location",
-    "hosted-by": "Hosted by"
-  },
-  "select-date-and-time": "Select date and time",
-  "time-zone": "Time zone",
-  "language": "Language",
-  "no-time-slots-available": "No time slots available in this date range",
-  "show-more": "Show more",
-  "show-less": "Show less",
-  "available": "available",
-  "timezone": "Timezone"
+    "solution-name": "Timerise",
+    "footer": {
+        "copyright": "Timerise © 2023",
+        "terms-and-conditions": "Conditions générales d'utilisation",
+        "privacy-policy": "Politique de confidentialité",
+        "powered-by": "alimenté par"
+    },
+    "validation": {
+        "required": "Exigée",
+        "min-length": "La longueur minimale est de {{longueur}} caractères",
+        "email": "Format de courrier électronique incorrect",
+        "slots-quantity": "La quantité de créneaux doit être supérieure à 0",
+        "min-value": "La valeur minimale est {{minValue}}.",
+        "max-value": "La valeur maximale est {{maxValeur}}.",
+        "incorrect-format": "Format incorrect"
+    },
+    "loading-info": "Compter à rebours à partir de l'infini",
+    "theme": {
+        "light": "Mode lumineux",
+        "dark": "Mode sombre"
+    },
+    "details": {
+        "duration": "Durée de l'accord",
+        "payment": "Paiement",
+        "location": "Localisation",
+        "hosted-by": "Accueillie par"
+    },
+    "select-date-and-time": "Sélectionner la date et l'heure",
+    "time-zone": "Fuseau horaire",
+    "language": "Langue",
+    "no-time-slots-available": "Aucun créneau horaire n'est disponible dans cette plage de dates",
+    "show-more": "Afficher plus",
+    "show-less": "Montrer moins",
+    "available": "disponible",
+    "timezone": "Fuseau horaire"
 }

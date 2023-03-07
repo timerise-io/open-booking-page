@@ -1,0 +1,7 @@
+{
+    "booking\/delete": {
+        "title": "Zrušenie rezervácie",
+        "abort-text": "Zrušiť",
+        "confirm-text": "Zrušenie rezervácie"
+    }
+}

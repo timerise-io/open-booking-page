@@ -1,0 +1,37 @@
+{
+    "solution-name": "Timerise",
+    "footer": {
+        "copyright": "Timerise © 2023",
+        "terms-and-conditions": "Villkor och bestämmelser",
+        "privacy-policy": "Integritetspolicy",
+        "powered-by": "drivs av"
+    },
+    "validation": {
+        "required": "Krävs",
+        "min-length": "Minsta längd är {{length}} tecken",
+        "email": "Felaktigt format för e-post",
+        "slots-quantity": "Antalet slots måste vara större än 0.",
+        "min-value": "Det minsta värdet är {{minValue}}.",
+        "max-value": "Det högsta värdet är {{maxValue}}.",
+        "incorrect-format": "Felaktigt format"
+    },
+    "loading-info": "Räkna bakåt från oändligheten",
+    "theme": {
+        "light": "Ljusläge",
+        "dark": "Mörkt läge"
+    },
+    "details": {
+        "duration": "Varaktighet",
+        "payment": "Betalning",
+        "location": "Plats",
+        "hosted-by": "Värdskap:"
+    },
+    "select-date-and-time": "Välj datum och tid",
+    "time-zone": "Tidszon",
+    "language": "Språk",
+    "no-time-slots-available": "Inga tider tillgängliga i detta datumintervall",
+    "show-more": "Visa mer",
+    "show-less": "Visa mindre",
+    "available": "tillgänglig",
+    "timezone": "Tidszon"
+}

@@ -1,0 +1,37 @@
+{
+    "solution-name": "Timerise",
+    "footer": {
+        "copyright": "Timerise © 2023",
+        "terms-and-conditions": "Feltételek és feltételek",
+        "privacy-policy": "Adatvédelmi irányelvek",
+        "powered-by": "powered by"
+    },
+    "validation": {
+        "required": "Kötelező",
+        "min-length": "A minimális hosszúság {{length}} karakterek",
+        "email": "Helytelen e-mail formátum",
+        "slots-quantity": "A rések mennyiségének nagyobbnak kell lennie 0-nál",
+        "min-value": "A minimális érték {{minValue}}.",
+        "max-value": "A maximális érték {{maxValue}}.",
+        "incorrect-format": "Helytelen formátum"
+    },
+    "loading-info": "Visszaszámolás a végtelentől visszafelé",
+    "theme": {
+        "light": "Fény üzemmód",
+        "dark": "Sötét üzemmód"
+    },
+    "details": {
+        "duration": "Időtartam",
+        "payment": "Fizetés",
+        "location": "Helyszín",
+        "hosted-by": "Házigazda:"
+    },
+    "select-date-and-time": "Válassza ki a dátumot és az időt",
+    "time-zone": "Időzóna",
+    "language": "Nyelv",
+    "no-time-slots-available": "Ebben a dátumtartományban nincsenek szabad időpontok",
+    "show-more": "Többet mutasson",
+    "show-less": "Kevesebb mutatása",
+    "available": "elérhető",
+    "timezone": "Időzóna"
+}

@@ -1,0 +1,7 @@
+{
+    "booking\/delete": {
+        "title": "Annullamento della prenotazione",
+        "abort-text": "Annullamento",
+        "confirm-text": "Annullamento della prenotazione"
+    }
+}

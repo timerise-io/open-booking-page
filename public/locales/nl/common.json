@@ -1,0 +1,37 @@
+{
+    "solution-name": "Timerise",
+    "footer": {
+        "copyright": "Timerise © 2023",
+        "terms-and-conditions": "Voorwaarden",
+        "privacy-policy": "Privacybeleid",
+        "powered-by": "aangedreven door"
+    },
+    "validation": {
+        "required": "Vereist",
+        "min-length": "De minimale lengte is {{lengte}} tekens.",
+        "email": "Onjuist e-mail formaat",
+        "slots-quantity": "De hoeveelheid slots moet groter zijn dan 0",
+        "min-value": "De minimumwaarde is {{minValue}}.",
+        "max-value": "De maximumwaarde is {{maxValue}}.",
+        "incorrect-format": "Verkeerd formaat"
+    },
+    "loading-info": "Terugtellen vanaf oneindig",
+    "theme": {
+        "light": "Licht modus",
+        "dark": "Donkere modus"
+    },
+    "details": {
+        "duration": "Duur",
+        "payment": "Betaling",
+        "location": "Locatie",
+        "hosted-by": "Gehost door"
+    },
+    "select-date-and-time": "Selecteer datum en tijd",
+    "time-zone": "Tijdzone",
+    "language": "Taal",
+    "no-time-slots-available": "Geen tijdslots beschikbaar in dit datumbereik",
+    "show-more": "Meer tonen",
+    "show-less": "Minder tonen",
+    "available": "beschikbaar",
+    "timezone": "Tijdzone"
+}

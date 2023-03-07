@@ -1,0 +1,37 @@
+{
+    "solution-name": "Timerise",
+    "footer": {
+        "copyright": "Timerise © 2023",
+        "terms-and-conditions": "Termini e condizioni",
+        "privacy-policy": "Informativa sulla privacy",
+        "powered-by": "alimentato da"
+    },
+    "validation": {
+        "required": "Richiesto",
+        "min-length": "La lunghezza minima è di {{length}} caratteri",
+        "email": "Formato e-mail non corretto",
+        "slots-quantity": "La quantità di slot deve essere maggiore di 0",
+        "min-value": "Il valore minimo è {{minValore}}.",
+        "max-value": "Il valore massimo è {{maxValue}}.",
+        "incorrect-format": "Formato non corretto"
+    },
+    "loading-info": "Conteggio all'indietro dall'infinito",
+    "theme": {
+        "light": "Modalità luce",
+        "dark": "Modalità scura"
+    },
+    "details": {
+        "duration": "Durata",
+        "payment": "Pagamento",
+        "location": "Posizione",
+        "hosted-by": "Ospitato da"
+    },
+    "select-date-and-time": "Selezionare data e ora",
+    "time-zone": "Fuso orario",
+    "language": "Lingua",
+    "no-time-slots-available": "Non ci sono fasce orarie disponibili in questo intervallo di date",
+    "show-more": "Mostra di più",
+    "show-less": "Mostra meno",
+    "available": "disponibile",
+    "timezone": "Fuso orario"
+}

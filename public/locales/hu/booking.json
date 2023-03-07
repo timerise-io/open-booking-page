@@ -1,0 +1,23 @@
+{
+    "date-and-time": "Időpont és időpont:",
+    "delete": "delete",
+    "the-booking": " a foglalás.",
+    "show-service-details": "Szolgáltatás részleteinek megjelenítése",
+    "hide-service-details": "Szolgáltatás részleteinek elrejtése",
+    "want-to-delete": "Biztos, hogy <strong>törölni<\/strong> szeretné ezt a foglalást?",
+    "go-back": "Vissza a foglaláshoz",
+    "cancel-booking": "Foglalás törlése",
+    "add-to-calendar": "Hozzáadás a naptárhoz",
+    "download-qr": "QR-kód letöltése",
+    "pay": "Menjen a fizetéshez",
+    "reschedule": "Átütemezés",
+    "select-dates": "Válassza ki a dátumokat",
+    "select-date": "Válassza ki a dátumot",
+    "avl": "avl.",
+    "discard": "Dobja el a",
+    "done": "Kész",
+    "select-date-range-up-to": "Dátumtartomány kiválasztása legfeljebb {{tartam}} napokig",
+    "start-date": "Kezdeti időpont",
+    "end-date": "Végdátum",
+    "here": "itt"
+}

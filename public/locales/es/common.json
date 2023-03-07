@@ -1,37 +1,37 @@
 {
-  "solution-name": "Timerise",
-  "footer": {
-    "copyright": "Timerise © 2023",
-    "terms-and-conditions": "Terms & Conditions",
-    "privacy-policy": "Privacy Policy",
-    "powered-by": "powered by"
-  },
-  "validation": {
-    "required": "Required",
-    "min-length": "Minimum length is {{length}} characters",
-    "email": "Incorrect e-mail format",
-    "slots-quantity": "Slots quantity must be greater than 0",
-    "min-value": "The minimum value is {{minValue}}.",
-    "max-value": "The maximum value is {{maxValue}}.",
-    "incorrect-format": "Incorrect format"
-  },
-  "loading-info": "Counting backwards from Infinity",
-  "theme": {
-    "light": "Light mode",
-    "dark": "Dark mode"
-  },
-  "details": {
-    "duration": "Duration",
-    "payment": "Payment",
-    "location": "Location",
-    "hosted-by": "Hosted by"
-  },
-  "select-date-and-time": "Select date and time",
-  "time-zone": "Time zone",
-  "language": "Language",
-  "no-time-slots-available": "No time slots available in this date range",
-  "show-more": "Show more",
-  "show-less": "Show less",
-  "available": "available",
-  "timezone": "Timezone"
+    "solution-name": "Timerise",
+    "footer": {
+        "copyright": "Timerise © 2023",
+        "terms-and-conditions": "Condiciones generales",
+        "privacy-policy": "Política de privacidad",
+        "powered-by": "accionado por"
+    },
+    "validation": {
+        "required": "Requerido",
+        "min-length": "La longitud mínima es de {{length}} caracteres",
+        "email": "Formato incorrecto del correo electrónico",
+        "slots-quantity": "La cantidad de ranuras debe ser superior a 0",
+        "min-value": "El valor mínimo es {{minValue}}.",
+        "max-value": "El valor máximo es {{maxValue}}.",
+        "incorrect-format": "Formato incorrecto"
+    },
+    "loading-info": "Contar hacia atrás desde el infinito",
+    "theme": {
+        "light": "Modo luz",
+        "dark": "Modo oscuro"
+    },
+    "details": {
+        "duration": "Duración",
+        "payment": "Pago",
+        "location": "Ubicación",
+        "hosted-by": "Organizado por"
+    },
+    "select-date-and-time": "Seleccionar fecha y hora",
+    "time-zone": "Huso horario",
+    "language": "Idioma",
+    "no-time-slots-available": "No hay franjas horarias disponibles en este intervalo de fechas",
+    "show-more": "Ver más",
+    "show-less": "Mostrar menos",
+    "available": "disponible",
+    "timezone": "Zona horaria"
 }

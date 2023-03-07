@@ -1,0 +1,23 @@
+{
+    "date-and-time": "Datum a čas:",
+    "delete": "smazat",
+    "the-booking": " rezervace.",
+    "show-service-details": "Zobrazit podrobnosti o službě",
+    "hide-service-details": "Skrýt podrobnosti o službě",
+    "want-to-delete": "Opravdu chcete tuto rezervaci <strong>zrušit<\/strong>?",
+    "go-back": "Zpět na rezervaci",
+    "cancel-booking": "Zrušit rezervaci",
+    "add-to-calendar": "Přidat do kalendáře",
+    "download-qr": "Stáhnout kód QR",
+    "pay": "Přejít na platbu",
+    "reschedule": "Změna harmonogramu",
+    "select-dates": "Zvolte data",
+    "select-date": "Zvolte datum",
+    "avl": "avl.",
+    "discard": "Vyřazení",
+    "done": "Hotovo",
+    "select-date-range-up-to": "Vyberte rozsah dat až do {{délka}} dnů",
+    "start-date": "Datum zahájení",
+    "end-date": "Datum ukončení",
+    "here": "zde"
+}

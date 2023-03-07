@@ -1,0 +1,7 @@
+{
+    "booking\/delete": {
+        "title": "Foglalás törlése",
+        "abort-text": "Törölje",
+        "confirm-text": "Foglalás törlése"
+    }
+}

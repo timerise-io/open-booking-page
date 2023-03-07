@@ -1,0 +1,37 @@
+{
+    "solution-name": "Časovač",
+    "footer": {
+        "copyright": "Timerise © 2023",
+        "terms-and-conditions": "Podmienky a pravidlá",
+        "privacy-policy": "Zásady ochrany osobných údajov",
+        "powered-by": "poháňané"
+    },
+    "validation": {
+        "required": "Požadované",
+        "min-length": "Minimálna dĺžka je {{dĺžka}} znakov",
+        "email": "Nesprávny formát e-mailu",
+        "slots-quantity": "Množstvo slotov musí byť väčšie ako 0",
+        "min-value": "Minimálna hodnota je {{minValue}}.",
+        "max-value": "Maximálna hodnota je {{maxValue}}.",
+        "incorrect-format": "Nesprávny formát"
+    },
+    "loading-info": "Spätné počítanie od nekonečna",
+    "theme": {
+        "light": "Svetelný režim",
+        "dark": "Tmavý režim"
+    },
+    "details": {
+        "duration": "Trvanie",
+        "payment": "Platba",
+        "location": "Umiestnenie",
+        "hosted-by": "Hosťuje"
+    },
+    "select-date-and-time": "Výber dátumu a času",
+    "time-zone": "Časové pásmo",
+    "language": "Jazyk",
+    "no-time-slots-available": "V tomto rozmedzí dátumov nie sú k dispozícii žiadne časové intervaly",
+    "show-more": "Zobraziť viac",
+    "show-less": "Zobraziť menej",
+    "available": "k dispozícii na",
+    "timezone": "Časové pásmo"
+}

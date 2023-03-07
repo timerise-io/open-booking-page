@@ -1,0 +1,23 @@
+{
+    "date-and-time": "Päivämäärä ja kellonaika:",
+    "delete": "poista",
+    "the-booking": " varaus.",
+    "show-service-details": "Näytä palvelun tiedot",
+    "hide-service-details": "Piilota palvelun tiedot",
+    "want-to-delete": "Haluatko varmasti <strong>peruuttaa<\/strong> tämän varauksen?",
+    "go-back": "Palaa takaisin varaukseen",
+    "cancel-booking": "Peruuta varaus",
+    "add-to-calendar": "Lisää kalenteriisi",
+    "download-qr": "Lataa QR-koodi",
+    "pay": "Siirry maksuun",
+    "reschedule": "Aikataulun muuttaminen",
+    "select-dates": "Valitse päivämäärät",
+    "select-date": "Valitse päivämäärä",
+    "avl": "avl.",
+    "discard": "Hävitä",
+    "done": "Valmis",
+    "select-date-range-up-to": "Valitse päivämäärän vaihteluväli enintään {{kesto}} päivää",
+    "start-date": "Aloituspäivä",
+    "end-date": "Loppupäivä",
+    "here": "täällä"
+}

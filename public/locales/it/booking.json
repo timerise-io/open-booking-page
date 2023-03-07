@@ -1,0 +1,23 @@
+{
+    "date-and-time": "Data e ora:",
+    "delete": "cancellare",
+    "the-booking": " la prenotazione.",
+    "show-service-details": "Mostra i dettagli del servizio",
+    "hide-service-details": "Nascondere i dettagli del servizio",
+    "want-to-delete": "È sicuro di voler <strong>cancellare<\/strong> questa prenotazione?",
+    "go-back": "Torna alla prenotazione",
+    "cancel-booking": "Annullamento della prenotazione",
+    "add-to-calendar": "Aggiungi al tuo calendario",
+    "download-qr": "Scarica il codice QR",
+    "pay": "Vai al pagamento",
+    "reschedule": "Riprogrammazione",
+    "select-dates": "Selezionare le date",
+    "select-date": "Selezionare la data",
+    "avl": "avl.",
+    "discard": "Scartare",
+    "done": "Fatto",
+    "select-date-range-up-to": "Selezionare un intervallo di date fino a {{durata}} giorni",
+    "start-date": "Data di inizio",
+    "end-date": "Data di fine",
+    "here": "qui"
+}
