@@ -67,11 +67,12 @@ export type PaymentStatusesConfigView = Record<
 >;
 
 export enum BOOKING_FORM_TYPES {
-  SLOT = "SLOT",
-  RANGE = "RANGE",
+  DAYS = "DAYS",
+  CALENDAR = "CALENDAR",
+  LIST = "LIST",
 }
 
-export type BookingFormTypes = keyof typeof BOOKING_FORM_TYPES;
+export type DisplayType = keyof typeof BOOKING_FORM_TYPES;
 
 export interface Service {
   serviceId: string;
@@ -95,17 +96,33 @@ export interface Service {
   images: Array<string>;
   formFields: Array<FormField>;
   viewConfig: {
-    slot: {
-      duration: boolean;
-      quantity: boolean;
-    };
     bookingStatus: BookingStatusesConfigView;
     paymentStatus: PaymentStatusesConfigView;
-    dateTimeFormType: BookingFormTypes;
-    range: {
+    displayType: DisplayType;
+    days: {
+      duration: boolean;
+      maxSelect: number | null;
+      minSelect: number | null;
+      multiSelect: boolean;
       quantity: boolean;
+    };
+    list: {
+      duration: boolean;
+      maxSelect: number | null;
+      minSelect: number | null;
+      multiSelect: boolean;
+      quantity: boolean;
+      showTime: boolean;
+    };
+    calendar: {
       maxRange: string | null;
-    }
+      maxSelect: number | null;
+      minRange: string | null;
+      minSelect: number | null;
+      multiSelect: boolean;
+      rangeSelect: boolean;
+      quantity: boolean;
+    };
   };
   paymentProviders: Array<PaymentType>;
 }
