@@ -29,30 +29,6 @@ export const GET_SERVICE = gql`
         fullName
       }
       viewConfig {
-        days {
-          duration
-          maxSelect
-          minSelect
-          multiSelect
-          quantity
-        }
-        list {
-          duration
-          maxSelect
-          minSelect
-          multiSelect
-          quantity
-          showTime
-        }
-        calendar {
-          maxRange
-          maxSelect
-          minRange
-          minSelect
-          multiSelect
-          rangeSelect
-          quantity
-        }
         bookingStatus {
           ACCEPTED {
             actions {
@@ -236,6 +212,30 @@ export const GET_SERVICE = gql`
           }
         }
         displayType
+        days {
+          duration
+          maxSelect
+          minSelect
+          multiSelect
+          quantity
+        }
+        list {
+          duration
+          maxSelect
+          minSelect
+          multiSelect
+          quantity
+          showTime
+        }
+        calendar {
+          maxRange
+          maxSelect
+          minRange
+          minSelect
+          multiSelect
+          rangeSelect
+          quantity
+        }
       }
       paymentProviders
       formFields {
