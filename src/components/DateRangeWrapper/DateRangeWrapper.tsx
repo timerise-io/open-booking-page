@@ -402,7 +402,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
   const [dateTimeFrom, setDateTimeFrom] = useState<any | null>(null);
   const [dateTimeTo, setDateTimeTo] = useState<any | null>(null);
   const [focusedInput, setFocusedInput] = useState<any | null>(null);
-  const duration = additionalData.service.viewConfig.range.maxRange ? parse(additionalData.service.viewConfig.range.maxRange).days : null;
+  const duration = additionalData.service.viewConfig.calendar.maxRange ? parse(additionalData.service.viewConfig.calendar.maxRange).days : null;
 
   useEffect(() => {
     moment.locale(i18n.language);
