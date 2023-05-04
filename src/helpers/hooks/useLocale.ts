@@ -1,4 +1,4 @@
-import { cs, nl, enGB, fi, fr, de, hu, it, pl, pt, es, sk, sv, uk } from "date-fns/esm/locale";
+import { cs, nl, enGB, fi, fr, de, el, hu, it, pl, pt, es, sk, sv, uk } from "date-fns/esm/locale";
 import { useRecoilValue } from "recoil";
 import { dateLocaleSelector } from "state/selectors/dateLocale";
 
@@ -17,6 +17,8 @@ export const useLocale = () => {
       return fr;
     case "de":
       return de;
+    case "el":
+      return el;
     case "hu":
       return hu;
     case "it":

@@ -8,6 +8,7 @@ const KEY_TO_LOCALE: Record<string, string> = {
   fi: "fi",
   fr: "fr",
   de: "de",
+  el: "el",
   hu: "hu",
   it: "it",
   pl: "pl",

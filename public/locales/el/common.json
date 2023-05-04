@@ -1,0 +1,37 @@
+{
+    "solution-name": "Timerise",
+    "footer": {
+        "copyright": "Timerise © 2023",
+        "terms-and-conditions": "Όροι & Προϋποθέσεις",
+        "privacy-policy": "Πολιτική απορρήτου",
+        "powered-by": "powered by"
+    },
+    "validation": {
+        "required": "Απαιτούμενο",
+        "min-length": "Το ελάχιστο μήκος είναι {{length}} χαρακτήρες",
+        "email": "Λανθασμένη μορφή e-mail",
+        "slots-quantity": "Η ποσότητα υποδοχών πρέπει να είναι μεγαλύτερη από 0",
+        "min-value": "Η ελάχιστη τιμή είναι {{minValue}}.",
+        "max-value": "Η μέγιστη τιμή είναι {{maxValue}}.",
+        "incorrect-format": "Λανθασμένη μορφή"
+    },
+    "loading-info": "Αντίστροφη μέτρηση από το Άπειρο",
+    "theme": {
+        "light": "Λειτουργία φωτός",
+        "dark": "Σκοτεινή λειτουργία"
+    },
+    "details": {
+        "duration": "Διάρκεια",
+        "payment": "Πληρωμή",
+        "location": "Τοποθεσία",
+        "hosted-by": "Με οικοδεσπότη τον"
+    },
+    "select-date-and-time": "Επιλέξτε ημερομηνία και ώρα",
+    "time-zone": "Ζώνη ώρας",
+    "language": "Γλώσσα",
+    "no-time-slots-available": "Δεν υπάρχουν διαθέσιμες χρονοθυρίδες σε αυτό το εύρος ημερομηνιών",
+    "show-more": "Εμφάνιση περισσότερων",
+    "show-less": "Εμφάνιση λιγότερων",
+    "available": "διαθέσιμο",
+    "timezone": "Χρονοζώνη"
+}
