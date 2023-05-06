@@ -403,6 +403,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
   const [dateTimeTo, setDateTimeTo] = useState<any | null>(null);
   const [focusedInput, setFocusedInput] = useState<any | null>(null);
   const duration = additionalData.service.viewConfig.calendar.maxRange ? parse(additionalData.service.viewConfig.calendar.maxRange).days : null;
+  const hasQuantity = additionalData.service.viewConfig.calendar.quantity;
 
   useEffect(() => {
     moment.locale(i18n.language);
@@ -442,7 +443,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
       return isSameDay;
     });
 
-    return <StyledDay>{ day.format("D") }<span>{ `${t(`avl`)} ${quantity ?? 0}` }</span></StyledDay>;
+    return <StyledDay>{ day.format("D") }{hasQuantity && <span>{ `${t(`avl`)} ${quantity ?? 0}` }</span>}</StyledDay>;
   };
 
   const isDayBlocked = (day: any) => {
