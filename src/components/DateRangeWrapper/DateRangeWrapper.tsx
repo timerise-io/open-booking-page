@@ -404,6 +404,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
   const [focusedInput, setFocusedInput] = useState<any | null>(null);
   const duration = additionalData.service.viewConfig.calendar.maxRange ? parse(additionalData.service.viewConfig.calendar.maxRange).days : null;
   const hasQuantity = additionalData.service.viewConfig.calendar.quantity;
+  const rangeSelect = additionalData.service.viewConfig.calendar.rangeSelect;
 
   useEffect(() => {
     moment.locale(i18n.language);
@@ -515,6 +516,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
               handleCloseCalendar={handleCloseCalendar}
               dateTimeFrom={dateTimeFrom}
               dateTimeTo={dateTimeTo}
+              rangeSelect={rangeSelect}
             />
           )}
         />

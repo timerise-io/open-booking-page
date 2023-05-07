@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { AlignItems, JustifyContent } from "models/commonProperties";
 import { Box, BoxProps } from "components/layout/Box";
 
-type ColumnProps = BoxProps & {
+export interface ColumnProps extends BoxProps {
   jc?: JustifyContent;
   ai?: AlignItems;
 };

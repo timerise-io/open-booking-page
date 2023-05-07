@@ -1,13 +1,18 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "components/Button";
-import { Column } from "components/layout/Column";
+import { Column, ColumnProps } from "components/layout/Column";
 import { Typography } from "components/Typography";
 import styled, { css } from "styled-components";
 
-const StyledCalendarFooter = styled(Column)`
+const StyledCalendarFooter = styled(Column)<{ hasDuration: boolean } & ColumnProps>`
   flex-direction: row;
-  justify-content: space-between;
+  
+  ${({ hasDuration }) => {
+    return css`
+      justify-content: ${hasDuration ? "space-between" : "flex-end"};
+    `;
+  }}
   gap: 8px;
   ${({ theme }) => {
     return css`
@@ -54,6 +59,7 @@ interface Props {
   handleCloseCalendar: Function;
   dateTimeFrom: any;
   dateTimeTo: any;
+  rangeSelect: boolean;
 }
 
 export const DateRangeFooter: React.FC<Props> = ({
@@ -62,13 +68,14 @@ export const DateRangeFooter: React.FC<Props> = ({
   handleCloseCalendar,
   dateTimeFrom,
   dateTimeTo,
+  rangeSelect,
 }) => {
   const { t } = useTranslation(["booking"]);
 
   return (
-    <StyledCalendarFooter ai="center" w="100%" p={2.5}>
+    <StyledCalendarFooter ai="center" w="100%" p={2.5} hasDuration={Boolean(duration && rangeSelect)}>
       <Typography typographyType="body" displayType="contents">
-        { duration && t("select-date-range-up-to", { duration }) }
+        { duration && rangeSelect && t("select-date-range-up-to", { duration }) }
       </Typography>
       <StyledButtons>
         <StyledDiscardButton
