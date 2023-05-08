@@ -462,7 +462,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
   };
 
   const isOutsideRange = (day: { isBefore: (arg0: any) => any; isAfter: (arg0: any) => any; }) => (
-    dateTimeFrom && duration && focusedInput === "endDate" && (day.isBefore(dateTimeFrom) || day.isAfter(dateTimeFrom.clone().add(duration - 1, 'days')))
+    dateTimeFrom && duration && rangeSelect && focusedInput === "endDate" && (day.isBefore(dateTimeFrom) || day.isAfter(dateTimeFrom.clone().add(duration - 1, 'days')))
   );
 
   const PrevIcon = () => (
