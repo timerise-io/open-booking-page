@@ -402,7 +402,9 @@ export const DateRangeWrapper: React.FC<Props> = ({
   const [dateTimeFrom, setDateTimeFrom] = useState<any | null>(null);
   const [dateTimeTo, setDateTimeTo] = useState<any | null>(null);
   const [focusedInput, setFocusedInput] = useState<any | null>(null);
-  const duration = additionalData.service.viewConfig.range.maxRange ? parse(additionalData.service.viewConfig.range.maxRange).days : null;
+  const duration = additionalData.service.viewConfig.calendar.maxRange ? parse(additionalData.service.viewConfig.calendar.maxRange).days : null;
+  const hasQuantity = additionalData.service.viewConfig.calendar.quantity;
+  const rangeSelect = additionalData.service.viewConfig.calendar.rangeSelect;
 
   useEffect(() => {
     moment.locale(i18n.language);
@@ -442,7 +444,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
       return isSameDay;
     });
 
-    return <StyledDay>{ day.format("D") }<span>{ `${t(`avl`)} ${quantity ?? 0}` }</span></StyledDay>;
+    return <StyledDay>{ day.format("D") }{hasQuantity && <span>{ `${t(`avl`)} ${quantity ?? 0}` }</span>}</StyledDay>;
   };
 
   const isDayBlocked = (day: any) => {
@@ -460,7 +462,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
   };
 
   const isOutsideRange = (day: { isBefore: (arg0: any) => any; isAfter: (arg0: any) => any; }) => (
-    dateTimeFrom && duration && focusedInput === "endDate" && (day.isBefore(dateTimeFrom) || day.isAfter(dateTimeFrom.clone().add(duration - 1, 'days')))
+    dateTimeFrom && duration && rangeSelect && focusedInput === "endDate" && (day.isBefore(dateTimeFrom) || day.isAfter(dateTimeFrom.clone().add(duration - 1, 'days')))
   );
 
   const PrevIcon = () => (
@@ -514,6 +516,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
               handleCloseCalendar={handleCloseCalendar}
               dateTimeFrom={dateTimeFrom}
               dateTimeTo={dateTimeTo}
+              rangeSelect={rangeSelect}
             />
           )}
         />

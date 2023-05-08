@@ -7,11 +7,11 @@ import { ServiceDateRange } from "../ServiceDateRange";
 
 export const ServiceFactory = () => {
   const service = useRecoilValue(serviceAtom);
-  const serviceType = service?.viewConfig.dateTimeFormType;
+  const serviceType = service?.viewConfig.displayType;
 
-  if (serviceType === BOOKING_FORM_TYPES.SLOT) {
+  if (serviceType === BOOKING_FORM_TYPES.DAYS) {
     return <ServiceDateTime/>;
-  } else if (serviceType === BOOKING_FORM_TYPES.RANGE) {
+  } else if (serviceType === BOOKING_FORM_TYPES.CALENDAR) {
     return  <ServiceDateRange/>;
   }
 

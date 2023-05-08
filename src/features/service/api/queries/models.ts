@@ -3,7 +3,7 @@ import {
   BookingStatusesConfigView,
   PaymentStatusesConfigView,
   PaymentType,
-  BookingFormTypes,
+  DisplayType,
 } from "models/service";
 import { Slot } from "models/slots";
 
@@ -30,16 +30,32 @@ export interface ServiceQueryResult {
   media: Array<{ url: string }>;
   hosts: Array<{ fullName: string }>;
   viewConfig: {
-    slot: {
-      duration: boolean;
-      quantity: boolean;
-    };
     bookingStatus: BookingStatusesConfigView;
     paymentStatus: PaymentStatusesConfigView;
-    dateTimeFormType: BookingFormTypes;
-    range: {
+    displayType: DisplayType;
+    days: {
+      duration: boolean;
+      maxSelect: number | null;
+      minSelect: number | null;
+      multiSelect: boolean;
       quantity: boolean;
+    };
+    list: {
+      duration: boolean;
+      maxSelect: number | null;
+      minSelect: number | null;
+      multiSelect: boolean;
+      quantity: boolean;
+      showTime: boolean;
+    };
+    calendar: {
       maxRange: string | null;
+      maxSelect: number | null;
+      minRange: string | null;
+      minSelect: number | null;
+      multiSelect: boolean;
+      rangeSelect: boolean;
+      quantity: boolean;
     };
   };
   formFields: Array<FormField>;

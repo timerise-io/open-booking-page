@@ -29,14 +29,6 @@ export const GET_SERVICE = gql`
         fullName
       }
       viewConfig {
-        slot {
-          duration
-          quantity
-        }
-        range {
-          quantity
-          maxRange
-        }
         bookingStatus {
           ACCEPTED {
             actions {
@@ -219,7 +211,31 @@ export const GET_SERVICE = gql`
             title
           }
         }
-        dateTimeFormType
+        displayType
+        days {
+          duration
+          maxSelect
+          minSelect
+          multiSelect
+          quantity
+        }
+        list {
+          duration
+          maxSelect
+          minSelect
+          multiSelect
+          quantity
+          showTime
+        }
+        calendar {
+          maxRange
+          maxSelect
+          minRange
+          minSelect
+          multiSelect
+          rangeSelect
+          quantity
+        }
       }
       paymentProviders
       formFields {

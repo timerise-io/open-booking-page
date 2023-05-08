@@ -14,12 +14,12 @@ export const slotsViewConfiguration = selector<SlotViewConfiguration>({
   key: "slotsViewConfigurationSelection",
   get: ({ get }) => {
     const service = get(serviceAtom);
-    const { duration, quantity } = service?.viewConfig?.slot ?? {
+    const { duration, quantity } = service?.viewConfig?.days ?? {
       duration: false,
       quantity: false,
     };
-    const serviceType = service?.viewConfig.dateTimeFormType;
-    const isDateRange = serviceType === BOOKING_FORM_TYPES.RANGE;
+    const serviceType = service?.viewConfig.displayType;
+    const isDateRange = serviceType === BOOKING_FORM_TYPES.CALENDAR;
 
     const maxDaysPerPage = isDateRange ? 365 : duration || quantity ? 5 : 7;
     const minDaysPerPage = duration || quantity ? 2 : 4;

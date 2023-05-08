@@ -109,7 +109,7 @@ const BookService = () => {
   const selectedDateRangeValue = useRecoilValue(selectedDateRange);
   const servicePriceValue = useRecoilValue(servicePrice);
   const service = useRecoilValue(serviceAtom);
-  const serviceType = service?.viewConfig.dateTimeFormType;
+  const serviceType = service?.viewConfig.displayType;
   const { formFields }: { formFields: Array<FormField> } = service ?? {
     formFields: [],
   };
@@ -132,8 +132,8 @@ const BookService = () => {
   const checkDisableButton = useCallback(() => {
     const disabledForSlot = selectedSlotValue === "" || loading || isUploading;
     const disabledForDateRange = selectedDateRangeValue.dateTimeFrom === null || selectedDateRangeValue.dateTimeTo === null || loadingDateRange || isUploading;
-    const isSlotType = serviceType === BOOKING_FORM_TYPES.SLOT;
-    const isDateRangeType = serviceType === BOOKING_FORM_TYPES.RANGE;
+    const isSlotType = serviceType === BOOKING_FORM_TYPES.DAYS;
+    const isDateRangeType = serviceType === BOOKING_FORM_TYPES.CALENDAR;
 
     return (isSlotType && disabledForSlot) || (isDateRangeType && disabledForDateRange);
   }, [selectedSlotValue, loading, isUploading, selectedDateRangeValue.dateTimeFrom, selectedDateRangeValue.dateTimeTo, loadingDateRange, serviceType]);
@@ -166,7 +166,7 @@ const BookService = () => {
       ...Object.assign({}, ...customFormFields),
     });
 
-    if (serviceType === BOOKING_FORM_TYPES.SLOT && slot !== undefined) {
+    if (serviceType === BOOKING_FORM_TYPES.DAYS && slot !== undefined) {
       bookSlotMutation({
         variables: {
           serviceId: id!,
@@ -177,7 +177,7 @@ const BookService = () => {
           }),
         },
       });
-    } else if (serviceType === BOOKING_FORM_TYPES.RANGE && selectedDateRangeValue.dateTimeFrom !== null && selectedDateRangeValue.dateTimeTo !== null) {
+    } else if (serviceType === BOOKING_FORM_TYPES.CALENDAR && selectedDateRangeValue.dateTimeFrom !== null && selectedDateRangeValue.dateTimeTo !== null) {
       bookDateRangeMutation({
         variables: {
           serviceId: id!,
