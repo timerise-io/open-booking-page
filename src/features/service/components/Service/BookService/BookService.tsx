@@ -78,12 +78,13 @@ const getInitialValues = (formFields: Array<FormField>, searchParams: URLSearchP
       requireAgreement: searchParams.get("requireAgreement") ?? false,
       quantity: searchParams.get("quantity") ?? 1,
       code: searchParams.get("code") ?? "",
+      promoCode: searchParams.get("promoCode") ?? "",
     },
     ...Object.assign(
       {},
       ...customFormFields.map((item) => {
         if (item.fieldType === "TEXT") return { [item.fieldId]: searchParams.get(item.fieldId) ?? "" };
-        if (item.fieldType === "CHECKBOX") return { [item.fieldId]: searchParams.get(item.fieldId) ?? false };
+        if (item.fieldType === "CHECKBOX") return { [item.fieldId]: false };
         if (item.fieldType === "NUMBER") return { [item.fieldId]: searchParams.get(item.fieldId) ?? 1 };
         if (item.fieldType === "SELECT") return { [item.fieldId]: [] };
         return { [item.fieldId]: "" };
