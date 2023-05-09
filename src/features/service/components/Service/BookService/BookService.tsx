@@ -1,3 +1,4 @@
+import { useSearchParams } from "react-router-dom";
 import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { Box } from "components/layout/Box";
@@ -66,35 +67,44 @@ const WrapperCard = styled(Card)`
   }
 `;
 
-interface BookServiceSlotFormProps {
-  fullName: string;
-  phone: string;
-  email: string;
-  message: string;
-  requireAgreement: boolean;
-  quantity: number;
-  code: string;
-}
+// interface BookServiceSlotFormProps {
+//   fullName: string;
+//   phone: string;
+//   email: string;
+//   message: string;
+//   requireAgreement: boolean;
+//   quantity: number;
+//   code: string;
+// }
 
-const initialValues: BookServiceSlotFormProps = {
-  fullName: "",
-  phone: "",
-  email: "",
-  message: "",
-  requireAgreement: false,
-  quantity: 1,
-  code: "",
-};
+// const initialValues: BookServiceSlotFormProps = {
+//   fullName: "",
+//   phone: "",
+//   email: "",
+//   message: "",
+//   requireAgreement: false,
+//   quantity: 1,
+//   code: "",
+// };
 
-const getInitialValues = (formFields: Array<FormField>) => {
+const getInitialValues = (formFields: Array<FormField>, searchParams: URLSearchParams) => {
   const customFormFields = filterFormFields(formFields, false);
   return {
-    ...initialValues,
+    ...{
+      fullName: searchParams.get("fullName") ?? "",
+      phone: "",
+      email: searchParams.get("email") ?? "",
+      message: searchParams.get("message") ?? "",
+      requireAgreement: searchParams.get("requireAgreement") ?? false,
+      quantity: searchParams.get("quantity") ?? 1,
+      code: searchParams.get("code") ?? "",
+    },
     ...Object.assign(
       {},
       ...customFormFields.map((item) => {
-        if (item.fieldType === "CHECKBOX") return { [item.fieldId]: false };
-        if (item.fieldType === "NUMBER") return { [item.fieldId]: 1 };
+        if (item.fieldType === "TEXT") return { [item.fieldId]: searchParams.get(item.fieldId) ?? "" };
+        if (item.fieldType === "CHECKBOX") return { [item.fieldId]: searchParams.get(item.fieldId) ?? false };
+        if (item.fieldType === "NUMBER") return { [item.fieldId]: searchParams.get(item.fieldId) ?? 1 };
         if (item.fieldType === "SELECT") return { [item.fieldId]: [] };
         return { [item.fieldId]: "" };
       })
@@ -103,6 +113,7 @@ const getInitialValues = (formFields: Array<FormField>) => {
 };
 
 const BookService = () => {
+  const [searchParams] = useSearchParams();
   const locale = useLocale();
   const { t } = useTranslation(["forms"]);
   const selectedSlotValue = useRecoilValue(selectedSlot);
@@ -202,7 +213,7 @@ const BookService = () => {
           </Typography>
         </Box>
         <Formik
-          initialValues={getInitialValues(formFields)}
+          initialValues={getInitialValues(formFields, searchParams)}
           validationSchema={generateValidationSchema(t, formFields, false)}
           onSubmit={handleSubmit}
         >

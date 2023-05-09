@@ -98,7 +98,6 @@ export type FormFieldSystemGuestsList = BaseFormField & {
   maxGuests?: number;
 };
 
-
 export type FormFieldText = BaseFormField & {
   fieldType: "TEXT";
   width: number | null;
