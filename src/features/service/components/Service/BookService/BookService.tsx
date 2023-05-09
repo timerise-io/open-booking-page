@@ -67,26 +67,6 @@ const WrapperCard = styled(Card)`
   }
 `;
 
-// interface BookServiceSlotFormProps {
-//   fullName: string;
-//   phone: string;
-//   email: string;
-//   message: string;
-//   requireAgreement: boolean;
-//   quantity: number;
-//   code: string;
-// }
-
-// const initialValues: BookServiceSlotFormProps = {
-//   fullName: "",
-//   phone: "",
-//   email: "",
-//   message: "",
-//   requireAgreement: false,
-//   quantity: 1,
-//   code: "",
-// };
-
 const getInitialValues = (formFields: Array<FormField>, searchParams: URLSearchParams) => {
   const customFormFields = filterFormFields(formFields, false);
   return {

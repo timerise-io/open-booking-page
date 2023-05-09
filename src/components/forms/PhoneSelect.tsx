@@ -188,6 +188,7 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({
       handlePhoneNumberChange({ target: { value: phoneNumber } } as any);
       setIsDefaultSetted(true);
     }
+    if (focused === false) return;
     inputRef.current.setSelectionRange(value.length, value.length, "none");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, focused, searchParams]);
