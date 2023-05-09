@@ -1,7 +1,7 @@
 import { Column } from "components/layout/Column";
 import React from "react";
 import styled, { css } from "styled-components";
-import { useField } from "formik";
+import { useField,  } from "formik";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { useTranslation } from "react-i18next";

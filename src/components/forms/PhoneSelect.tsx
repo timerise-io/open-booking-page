@@ -1,3 +1,4 @@
+import { useSearchParams } from "react-router-dom";
 import { Column } from "components/layout/Column";
 import BaseInput from "components/StyledInput";
 import StyledLabel from "components/StyledLabel";
@@ -27,7 +28,7 @@ const countryList = Object.entries(COUNTRY_PHONE_PREFIXES).sort(
 
 interface PhoneSelectProps {
   label?: string;
-  name?: string;
+  name: string;
 }
 
 const openListButtonWidth = 60;
@@ -132,9 +133,10 @@ const ListWrapper = styled.div`
 `;
 
 const PhoneSelect: React.FC<PhoneSelectProps> = ({
-  name = "phone-number-select",
+  name,
   label,
 }) => {
+  const [searchParams] = useSearchParams();
   const paramLang = useLangParam();
   const serviceDefaultCountryCode = useRecoilValue(defaultPhonePrefixSelector);
   const defaultCountryCode =
@@ -147,8 +149,10 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({
   const { value } = meta;
   const { setValue, setTouched } = helpers;
   const { t } = useTranslation(["forms"]);
-  const [countryCode, setCountryCode] = useState("PL");
+  const [countryCode, setCountryCode] = useState(defaultCountryCode);
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDefaultSetted, setIsDefaultSetted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const memoizedCallback = useCallback(() => setIsMenuOpen(false), []);
   useOnClickOutside(ref, memoizedCallback);
@@ -158,19 +162,16 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({
   const handleCountryCodeChange = (newCountryCode: string) => {
     setCountryCode(newCountryCode);
     setIsMenuOpen(false);
-    setValue(COUNTRY_PHONE_PREFIXES?.[newCountryCode]);
+    setValue(COUNTRY_PHONE_PREFIXES?.[newCountryCode] + phoneNumber);
   };
 
   const handlePhoneNumberChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
+    setPhoneNumber(newValue);
     const prefix = COUNTRY_PHONE_PREFIXES?.[countryCode] ?? "";
-    if (isNaN(+newValue) || isNaN(parseInt(newValue)) || newValue.length > 15)
-      return;
-    setValue(
-      newValue.length < prefix.length
-        ? prefix
-        : newValue.replaceAll(/\D+/gm, "")
-    );
+    if (isNaN(+newValue) || isNaN(parseInt(newValue)) || newValue.length > 15) return;
+    const phoneNumber = prefix + newValue.replaceAll(/\D+/gm, "");
+    setValue(phoneNumber);
   };
 
   useEffect(() => {
@@ -180,15 +181,23 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({
   }, [defaultCountryCode]);
 
   useEffect(() => {
-    if (inputRef.current === null || focused === false) return;
+    if (inputRef.current === null) return;
+    if (!isDefaultSetted) {
+      const phoneNumber = searchParams.get("phoneNumber") ?? "";
+      inputRef.current.value = phoneNumber;
+      handlePhoneNumberChange({ target: { value: phoneNumber } } as any);
+      setIsDefaultSetted(true);
+    }
+    if (focused === false) return;
     inputRef.current.setSelectionRange(value.length, value.length, "none");
-  }, [value, focused]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, focused, searchParams]);
 
   return (
     <StyledColumn ai="stretch">
       <StyledLabel htmlFor="phone-number-select">{labelToDisplay}</StyledLabel>
       <SelectWrapper ai="stretch">
-        <OpenListButton onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        <OpenListButton onClick={() => setIsMenuOpen(!isMenuOpen)} type="button">
           <ReactCountryFlag className="flag" svg countryCode={countryCode} />
           <IconChevronDown className="chevron" />
         </OpenListButton>
@@ -200,6 +209,7 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({
                 <ChooseCountryButton
                   key={countryCode}
                   onClick={() => handleCountryCodeChange(countryCode)}
+                  type="button"
                 >
                   <ReactCountryFlag
                     className="flag"
@@ -215,7 +225,6 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({
           </ScrollWrapper>
         </div>
         <StyledInput
-          value={value}
           onChange={handlePhoneNumberChange}
           onBlur={() => {
             setTouched(true);
@@ -225,6 +234,7 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({
           onFocus={() => {
             setFocused(true);
           }}
+          type="tel"
         />
       </SelectWrapper>
       <Box h="13px" mt={0.5} mb={1}>
