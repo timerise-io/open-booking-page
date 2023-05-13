@@ -4,6 +4,7 @@ import styled from "styled-components";
 const StyledLink = styled.a`
   all: unset;
   text-decoration: underline;
+  word-break: break-word;
 `;
 
 export const getUrlFromString = (text: any) => {
