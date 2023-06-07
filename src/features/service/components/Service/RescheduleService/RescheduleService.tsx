@@ -20,6 +20,7 @@ import { selectedSlot } from "state/atoms/selectedSlot";
 import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
 import { serviceAtom } from "state/atoms/service";
 import { bookingAtom } from "state/atoms/booking";
+import { timeZoneAtom } from "state/atoms/timeZone";
 
 const getSubmitButtonText = (
   selectedSlotValue: string,
@@ -60,16 +61,17 @@ const RescheduleService = () => {
   const service = useRecoilValue(serviceAtom);
   const slot = useRecoilValue(selectedSlotSelector);
   const { rescheduleBookingMutation, loading } = useRescheduleBooking();
+  const timeZone = useRecoilValue(timeZoneAtom);
   
   const formattedDateTo =
     selectedSlotValue &&
-    formatInTimeZone(selectedSlotValue, "UTC", "iii dd MMM, H:mm", {
+    formatInTimeZone(selectedSlotValue, timeZone, "iii dd MMM, H:mm", {
       locale,
     });
 
   const formattedDateFrom =
     bookingValue &&
-    formatInTimeZone(bookingValue.dateTimeFrom, "UTC", "iii dd MMM, H:mm", {
+    formatInTimeZone(bookingValue.dateTimeFrom, timeZone, "iii dd MMM, H:mm", {
       locale,
     });
 

@@ -27,6 +27,7 @@ import { useLocale } from "helpers/hooks/useLocale";
 import { formatInTimeZone } from "date-fns-tz";
 import { generateValidationSchema } from "./validators";
 import { BOOKING_FORM_TYPES } from "models/service";
+import { timeZoneAtom } from "state/atoms/timeZone";
 
 const getSubmitButtonText = (
   selectedSlotValue: string,
@@ -111,13 +112,14 @@ const BookService = () => {
   const { bookDateRangeMutation, loadingDateRange, errorDateRange } = useBookDateRange();
   const { id } = useParams<{ id: string }>();
   const uploadState = useRecoilValue(uploadAttachmentsAtom);
+  const timeZone = useRecoilValue(timeZoneAtom);
 
   const isUploading =
     Object.values(uploadState).filter((item) => item.isLoading).length > 0;
 
   const formattedDate =
     selectedSlotValue &&
-    formatInTimeZone(selectedSlotValue, "UTC", "iii dd MMM, H:mm", {
+    formatInTimeZone(selectedSlotValue, timeZone, "iii dd MMM, H:mm", {
       locale,
     });
 

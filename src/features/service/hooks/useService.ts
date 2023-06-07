@@ -133,7 +133,8 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
       const { service } = data;
 
       if (service.project.localTimeZone) {
-        setTimeZone(service.project.localTimeZone);
+        //setTimeZone(service.project.localTimeZone);
+        setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone)
       }
 
       setService({

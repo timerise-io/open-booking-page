@@ -8,6 +8,7 @@ import TimeSlot from "./TimeSlot";
 import { slotsDayPattern } from "state/selectors/slotsDayPattern";
 import { useLocale } from "helpers/hooks/useLocale";
 import { formatInTimeZone } from "date-fns-tz";
+import { timeZoneAtom } from "state/atoms/timeZone";
 
 const ServiceCalendarDayWrapper = styled(Column)`
   min-width: 56px;
@@ -28,12 +29,13 @@ const ServiceCalendarDay: React.FC<ServiceCalendarDayProps> = ({ day }) => {
   const locale = useLocale();
   const dayPart = day.split("T")[0];
   const pattern = useRecoilValue(slotsDayPattern);
+  const timeZone = useRecoilValue(timeZoneAtom);
 
   return (
     <ServiceCalendarDayWrapper>
       <Box mb={1.5}>
         <Typography typographyType="body" weight="bold" as="div" align="center">
-          {formatInTimeZone(day, "UTC", "iii", {
+          {formatInTimeZone(day, timeZone, "iii", {
             locale: locale,
           }).replace(/[.]$/, "")}
         </Typography>
@@ -43,7 +45,7 @@ const ServiceCalendarDay: React.FC<ServiceCalendarDayProps> = ({ day }) => {
           as="div"
           align="center"
         >
-          {formatInTimeZone(day, "UTC", "dd MMM", {
+          {formatInTimeZone(day, timeZone, "dd MMM", {
             locale: locale,
           })}
         </DateTypography>

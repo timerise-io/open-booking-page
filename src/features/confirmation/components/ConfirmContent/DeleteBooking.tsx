@@ -10,6 +10,7 @@ import { Box } from "components/layout/Box";
 import styled from "styled-components";
 import formatInTimeZone from "date-fns-tz/formatInTimeZone";
 import { useLocale } from "helpers/hooks/useLocale";
+import { timeZoneAtom } from "state/atoms/timeZone";
 
 const StyledTypography = styled(Typography)`
   & > strong {
@@ -22,6 +23,7 @@ const DeleteBooking = () => {
   const { t } = useTranslation(["booking"]);
   const booking = useRecoilValue(bookingAtom)!;
   const service = useRecoilValue(serviceAtom)!;
+  const timeZone = useRecoilValue(timeZoneAtom);
 
   return (
     <Column ai="flex-start">
@@ -44,7 +46,7 @@ const DeleteBooking = () => {
             {" "}
             {formatInTimeZone(
               booking.dateTimeFrom,
-              "UTC",
+              timeZone,
               "iiii dd MMM yyyy, H:mm",
               {
                 locale,

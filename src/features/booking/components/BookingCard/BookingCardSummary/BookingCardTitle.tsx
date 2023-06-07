@@ -63,7 +63,7 @@ const BookingCardTitle = ({
           >
             {`${formatInTimeZone(
               dateTimeFrom,
-              "UTC",
+              timeZone,
               "iiii dd MMM yyyy, H:mm",
               {
                 locale,

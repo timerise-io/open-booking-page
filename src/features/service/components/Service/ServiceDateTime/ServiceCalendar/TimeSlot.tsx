@@ -10,6 +10,7 @@ import { Slot } from "models/slots";
 import { slotsViewConfiguration } from "state/selectors/slotsViewConfiguration";
 import { TFunction, useTranslation } from "react-i18next";
 import formatInTimeZone from "date-fns-tz/formatInTimeZone";
+import { timeZoneAtom } from "state/atoms/timeZone";
 
 type TimeSlotButtonState = "available" | "unavailable" | "selected";
 
@@ -131,7 +132,7 @@ const getTimeSlotButtonState = (
   return "unavailable";
 };
 
-const getBaseSlotContent = (slot: Slot, date: string) => {
+const getBaseSlotContent = (slot: Slot, date: string, timeZone: string) => {
   return (
     <Typography
       typographyType="h3"
@@ -141,7 +142,7 @@ const getBaseSlotContent = (slot: Slot, date: string) => {
       className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
       color="inherit"
     >
-      {formatInTimeZone(date, "UTC", "H:mm")}
+      {formatInTimeZone(date, timeZone, "H:mm")}
     </Typography>
   );
 };
@@ -160,7 +161,8 @@ const DurationText = styled(Typography)`
 const getDurationQuantitySlotContent = (
   slot: Slot,
   date: string,
-  t: TFunction<"translation">
+  t: TFunction<"translation">,
+  timeZone: string,
 ) => {
   return (
     <Column>
@@ -172,9 +174,9 @@ const getDurationQuantitySlotContent = (
         className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
         color="inherit"
       >
-        {`${formatInTimeZone(date, "UTC", "H:mm")}-${formatInTimeZone(
+        {`${formatInTimeZone(date, timeZone, "H:mm")}-${formatInTimeZone(
           slot.dateTimeTo,
-          "UTC",
+          timeZone,
           "H:mm"
         )}`}
       </DurationText>
@@ -198,7 +200,8 @@ const getDurationQuantitySlotContent = (
 const getQuantitySlotContent = (
   slot: Slot,
   date: string,
-  t: TFunction<"translation">
+  t: TFunction<"translation">,
+  timeZone: string
 ) => {
   return (
     <Column>
@@ -210,7 +213,7 @@ const getQuantitySlotContent = (
         className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
         color="inherit"
       >
-        {formatInTimeZone(date, "UTC", "H:mm")}
+        {formatInTimeZone(date, timeZone, "H:mm")}
       </DurationText>
       {slot.quantity > 0 && (
         <>
@@ -233,7 +236,8 @@ const getQuantitySlotContent = (
 const getDurationSlotContent = (
   slot: Slot,
   date: string,
-  t: TFunction<"translation">
+  t: TFunction<"translation">,
+  timeZone: string
 ) => {
   return (
     <Column>
@@ -245,9 +249,9 @@ const getDurationSlotContent = (
         className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
         color="inherit"
       >
-        {`${formatInTimeZone(date, "UTC", "H:mm")}-${formatInTimeZone(
+        {`${formatInTimeZone(date, timeZone, "H:mm")}-${formatInTimeZone(
           slot.dateTimeTo,
-          "UTC",
+          timeZone,
           "H:mm"
         )}`}
       </DurationText>
@@ -260,6 +264,7 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, day }) => {
   const [selected, setSelectedSlot] = useRecoilState(selectedSlot);
   const { showDuration, showQuantity } = useRecoilValue(slotsViewConfiguration);
   const { t } = useTranslation();
+  const timeZone = useRecoilValue(timeZoneAtom);
 
   return (
     <Column mt={0.5} mb={0.5} w="100%">
@@ -277,14 +282,14 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, day }) => {
         >
           {showDuration &&
             showQuantity &&
-            getDurationQuantitySlotContent(slot, dateFrom, t)}
+            getDurationQuantitySlotContent(slot, dateFrom, t, timeZone)}
           {showDuration &&
             !showQuantity &&
-            getDurationSlotContent(slot, dateFrom, t)}
+            getDurationSlotContent(slot, dateFrom, t, timeZone)}
           {!showDuration &&
             showQuantity &&
-            getQuantitySlotContent(slot, dateFrom, t)}
-          {!showDuration && !showQuantity && getBaseSlotContent(slot, dateFrom)}
+            getQuantitySlotContent(slot, dateFrom, t, timeZone)}
+          {!showDuration && !showQuantity && getBaseSlotContent(slot, dateFrom, timeZone)}
         </TimeSlotButton>
       )}
     </Column>
