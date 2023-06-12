@@ -5,7 +5,6 @@ import {
   createSearchParams,
 } from "react-router-dom";
 import { TFunction, useTranslation } from "react-i18next";
-import { formatInTimeZone } from "date-fns-tz";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { Button } from "components/Button";
@@ -21,6 +20,7 @@ import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
 import { serviceAtom } from "state/atoms/service";
 import { bookingAtom } from "state/atoms/booking";
 import { timeZoneAtom } from "state/atoms/timeZone";
+import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 
 const getSubmitButtonText = (
   selectedSlotValue: string,
@@ -58,20 +58,28 @@ const RescheduleService = () => {
   const lang = useLangParam();
   const { t } = useTranslation(["forms"]);
   const selectedSlotValue = useRecoilValue(selectedSlot);
-  const service = useRecoilValue(serviceAtom);
+  const service = useRecoilValue(serviceAtom)!;
   const slot = useRecoilValue(selectedSlotSelector);
   const { rescheduleBookingMutation, loading } = useRescheduleBooking();
   const timeZone = useRecoilValue(timeZoneAtom);
   
   const formattedDateTo =
     selectedSlotValue &&
-    formatInTimeZone(selectedSlotValue, timeZone, "iii dd MMM, H:mm", {
+    convertSourceDateTimeToTargetDateTime({
+      date: selectedSlotValue,
+      targetTimeZone: timeZone,
+      sourceTimeZone: service.project.localTimeZone,
+      dateFormat: "iiii dd MMM, H:mm",
       locale,
     });
 
   const formattedDateFrom =
     bookingValue &&
-    formatInTimeZone(bookingValue.dateTimeFrom, timeZone, "iii dd MMM, H:mm", {
+    convertSourceDateTimeToTargetDateTime({
+      date: bookingValue.dateTimeFrom,
+      targetTimeZone: timeZone,
+      sourceTimeZone: service.project.localTimeZone,
+      dateFormat: "iiii dd MMM, H:mm",
       locale,
     });
 

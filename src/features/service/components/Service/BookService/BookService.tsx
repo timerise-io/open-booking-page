@@ -24,10 +24,10 @@ import { filterFormFields, FormField } from "models/formFields";
 import { uploadAttachmentsAtom } from "state/atoms/uploadAttachments";
 import _ from "lodash";
 import { useLocale } from "helpers/hooks/useLocale";
-import { formatInTimeZone } from "date-fns-tz";
 import { generateValidationSchema } from "./validators";
 import { BOOKING_FORM_TYPES } from "models/service";
 import { timeZoneAtom } from "state/atoms/timeZone";
+import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 
 const getSubmitButtonText = (
   selectedSlotValue: string,
@@ -101,7 +101,7 @@ const BookService = () => {
   const selectedSlotValue = useRecoilValue(selectedSlot);
   const selectedDateRangeValue = useRecoilValue(selectedDateRange);
   const servicePriceValue = useRecoilValue(servicePrice);
-  const service = useRecoilValue(serviceAtom);
+  const service = useRecoilValue(serviceAtom)!;
   const serviceType = service?.viewConfig.displayType;
   const { formFields }: { formFields: Array<FormField> } = service ?? {
     formFields: [],
@@ -119,7 +119,11 @@ const BookService = () => {
 
   const formattedDate =
     selectedSlotValue &&
-    formatInTimeZone(selectedSlotValue, timeZone, "iii dd MMM, H:mm", {
+    convertSourceDateTimeToTargetDateTime({
+      date: selectedSlotValue,
+      targetTimeZone: timeZone,
+      sourceTimeZone: service.project.localTimeZone,
+      dateFormat: "iiii dd MMM, H:mm",
       locale,
     });
 

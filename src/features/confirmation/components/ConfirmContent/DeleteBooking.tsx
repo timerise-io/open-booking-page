@@ -8,9 +8,9 @@ import { serviceAtom } from "state/atoms/service";
 import { Row } from "components/layout/Row";
 import { Box } from "components/layout/Box";
 import styled from "styled-components";
-import formatInTimeZone from "date-fns-tz/formatInTimeZone";
 import { useLocale } from "helpers/hooks/useLocale";
 import { timeZoneAtom } from "state/atoms/timeZone";
+import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 
 const StyledTypography = styled(Typography)`
   & > strong {
@@ -44,14 +44,13 @@ const DeleteBooking = () => {
         <Box ml={0.5}>
           <Typography typographyType="body" weight="700">
             {" "}
-            {formatInTimeZone(
-              booking.dateTimeFrom,
-              timeZone,
-              "iiii dd MMM yyyy, H:mm",
-              {
-                locale,
-              }
-            )}
+            {convertSourceDateTimeToTargetDateTime({
+              date: booking.dateTimeFrom,
+              targetTimeZone: timeZone,
+              sourceTimeZone: service.project.localTimeZone,
+              dateFormat: "iiii dd MMM yyyy, H:mm",
+              locale,
+            })}
           </Typography>
         </Box>
       </Row>

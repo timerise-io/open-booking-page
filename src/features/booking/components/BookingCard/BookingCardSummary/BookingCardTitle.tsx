@@ -1,5 +1,4 @@
 import { Typography } from "components/Typography";
-import { formatInTimeZone } from "date-fns-tz";
 import { useLocale } from "helpers/hooks/useLocale";
 import { Booking } from "models/booking";
 import React from "react";
@@ -11,6 +10,8 @@ import styled from "styled-components";
 import { Box } from "components/layout/Box";
 import { LinkButton } from "components/LinkButton";
 import { useTranslation } from "react-i18next";
+import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
+import { serviceAtom } from "state/atoms/service";
 
 const StyledImg = styled.img`
   width: 48px;
@@ -38,6 +39,7 @@ const BookingCardTitle = ({
   const locale = useLocale();
   const { t } = useTranslation(["booking"]);
   const timeZone = useRecoilValue(timeZoneAtom);
+  const service = useRecoilValue(serviceAtom)!;
 
   return (
     <>
@@ -61,14 +63,13 @@ const BookingCardTitle = ({
             weight="700"
             displayType="contents"
           >
-            {`${formatInTimeZone(
-              dateTimeFrom,
-              timeZone,
-              "iiii dd MMM yyyy, H:mm",
-              {
-                locale,
-              }
-            )} (${timeZone.replace("_", " ")})`}
+            {`${convertSourceDateTimeToTargetDateTime({
+              date: dateTimeFrom,
+              targetTimeZone: timeZone,
+              sourceTimeZone: service.project.localTimeZone,
+              dateFormat: "iiii dd MMM yyyy, H:mm",
+              locale,
+            })} (${timeZone.replace("_", " ")})`}
           </Typography>
         </StyledRow>
       )}
