@@ -166,6 +166,7 @@ const BookService = () => {
           serviceId: id!,
           slots: [slot.slotId],
           formFields: json,
+          timezone: timeZone,
           ...(service?.paymentProviders.length && {
             paymentProvider: service.paymentProviders[0],
           }),
@@ -176,6 +177,7 @@ const BookService = () => {
         variables: {
           serviceId: id!,
           formFields: json,
+          timezone: timeZone,
           ...selectedDateRangeValue,
           ...(service?.paymentProviders.length && {
             paymentProvider: service.paymentProviders[0],
