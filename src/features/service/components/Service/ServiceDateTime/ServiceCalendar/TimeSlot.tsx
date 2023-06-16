@@ -9,7 +9,10 @@ import { TimeSlotButtonType } from "models/theme";
 import { Slot } from "models/slots";
 import { slotsViewConfiguration } from "state/selectors/slotsViewConfiguration";
 import { TFunction, useTranslation } from "react-i18next";
-import formatInTimeZone from "date-fns-tz/formatInTimeZone";
+import { timeZoneAtom } from "state/atoms/timeZone";
+import { Service } from "models/service";
+import { serviceAtom } from "state/atoms/service";
+import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 
 type TimeSlotButtonState = "available" | "unavailable" | "selected";
 
@@ -131,7 +134,9 @@ const getTimeSlotButtonState = (
   return "unavailable";
 };
 
-const getBaseSlotContent = (slot: Slot, date: string) => {
+const getBaseSlotContent = (slot: Slot, date: string, timeZone: string, service?: Service) => {
+  if(!service?.project.localTimeZone) return;
+
   return (
     <Typography
       typographyType="h3"
@@ -141,7 +146,12 @@ const getBaseSlotContent = (slot: Slot, date: string) => {
       className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
       color="inherit"
     >
-      {formatInTimeZone(date, "UTC", "H:mm")}
+      {convertSourceDateTimeToTargetDateTime({
+        date,
+        targetTimeZone: timeZone,
+        sourceTimeZone: service.project.localTimeZone,
+        dateFormat: "H:mm",
+      })}
     </Typography>
   );
 };
@@ -160,8 +170,12 @@ const DurationText = styled(Typography)`
 const getDurationQuantitySlotContent = (
   slot: Slot,
   date: string,
-  t: TFunction<"translation">
+  t: TFunction<"translation">,
+  timeZone: string,
+  service?: Service,
 ) => {
+  if(!service?.project.localTimeZone) return;
+
   return (
     <Column>
       <DurationText
@@ -172,11 +186,17 @@ const getDurationQuantitySlotContent = (
         className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
         color="inherit"
       >
-        {`${formatInTimeZone(date, "UTC", "H:mm")}-${formatInTimeZone(
-          slot.dateTimeTo,
-          "UTC",
-          "H:mm"
-        )}`}
+        {`${convertSourceDateTimeToTargetDateTime({
+          date,
+          targetTimeZone: timeZone,
+          sourceTimeZone: service.project.localTimeZone,
+          dateFormat: "H:mm",
+        })}-${convertSourceDateTimeToTargetDateTime({
+          date: slot.dateTimeTo,
+          targetTimeZone: timeZone,
+          sourceTimeZone: service.project.localTimeZone,
+          dateFormat: "H:mm",
+        })}`}
       </DurationText>
       {slot.quantity > 0 && (
         <>
@@ -198,8 +218,12 @@ const getDurationQuantitySlotContent = (
 const getQuantitySlotContent = (
   slot: Slot,
   date: string,
-  t: TFunction<"translation">
+  t: TFunction<"translation">,
+  timeZone: string,
+  service?: Service,
 ) => {
+  if(!service?.project.localTimeZone) return;
+
   return (
     <Column>
       <DurationText
@@ -210,7 +234,12 @@ const getQuantitySlotContent = (
         className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
         color="inherit"
       >
-        {formatInTimeZone(date, "UTC", "H:mm")}
+        {convertSourceDateTimeToTargetDateTime({
+          date,
+          targetTimeZone: timeZone,
+          sourceTimeZone: service.project.localTimeZone,
+          dateFormat: "H:mm",
+        })}
       </DurationText>
       {slot.quantity > 0 && (
         <>
@@ -233,8 +262,12 @@ const getQuantitySlotContent = (
 const getDurationSlotContent = (
   slot: Slot,
   date: string,
-  t: TFunction<"translation">
+  t: TFunction<"translation">,
+  timeZone: string,
+  service?: Service,
 ) => {
+  if(!service?.project.localTimeZone) return;
+
   return (
     <Column>
       <DurationText
@@ -245,11 +278,17 @@ const getDurationSlotContent = (
         className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
         color="inherit"
       >
-        {`${formatInTimeZone(date, "UTC", "H:mm")}-${formatInTimeZone(
-          slot.dateTimeTo,
-          "UTC",
-          "H:mm"
-        )}`}
+        {`${convertSourceDateTimeToTargetDateTime({
+          date,
+          targetTimeZone: timeZone,
+          sourceTimeZone: service.project.localTimeZone,
+          dateFormat: "H:mm",
+        })}-${convertSourceDateTimeToTargetDateTime({
+          date: slot.dateTimeTo,
+          targetTimeZone: timeZone,
+          sourceTimeZone: service.project.localTimeZone,
+          dateFormat: "H:mm",
+        })}`}
       </DurationText>
     </Column>
   );
@@ -260,6 +299,8 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, day }) => {
   const [selected, setSelectedSlot] = useRecoilState(selectedSlot);
   const { showDuration, showQuantity } = useRecoilValue(slotsViewConfiguration);
   const { t } = useTranslation();
+  const timeZone = useRecoilValue(timeZoneAtom);
+  const service = useRecoilValue(serviceAtom);
 
   return (
     <Column mt={0.5} mb={0.5} w="100%">
@@ -277,14 +318,14 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, day }) => {
         >
           {showDuration &&
             showQuantity &&
-            getDurationQuantitySlotContent(slot, dateFrom, t)}
+            getDurationQuantitySlotContent(slot, dateFrom, t, timeZone, service)}
           {showDuration &&
             !showQuantity &&
-            getDurationSlotContent(slot, dateFrom, t)}
+            getDurationSlotContent(slot, dateFrom, t, timeZone, service)}
           {!showDuration &&
             showQuantity &&
-            getQuantitySlotContent(slot, dateFrom, t)}
-          {!showDuration && !showQuantity && getBaseSlotContent(slot, dateFrom)}
+            getQuantitySlotContent(slot, dateFrom, t, timeZone, service)}
+          {!showDuration && !showQuantity && getBaseSlotContent(slot, dateFrom, timeZone, service)}
         </TimeSlotButton>
       )}
     </Column>

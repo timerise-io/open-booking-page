@@ -24,9 +24,10 @@ import { filterFormFields, FormField } from "models/formFields";
 import { uploadAttachmentsAtom } from "state/atoms/uploadAttachments";
 import _ from "lodash";
 import { useLocale } from "helpers/hooks/useLocale";
-import { formatInTimeZone } from "date-fns-tz";
 import { generateValidationSchema } from "./validators";
 import { BOOKING_FORM_TYPES } from "models/service";
+import { timeZoneAtom } from "state/atoms/timeZone";
+import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 
 const getSubmitButtonText = (
   selectedSlotValue: string,
@@ -100,7 +101,7 @@ const BookService = () => {
   const selectedSlotValue = useRecoilValue(selectedSlot);
   const selectedDateRangeValue = useRecoilValue(selectedDateRange);
   const servicePriceValue = useRecoilValue(servicePrice);
-  const service = useRecoilValue(serviceAtom);
+  const service = useRecoilValue(serviceAtom)!;
   const serviceType = service?.viewConfig.displayType;
   const { formFields }: { formFields: Array<FormField> } = service ?? {
     formFields: [],
@@ -111,13 +112,18 @@ const BookService = () => {
   const { bookDateRangeMutation, loadingDateRange, errorDateRange } = useBookDateRange();
   const { id } = useParams<{ id: string }>();
   const uploadState = useRecoilValue(uploadAttachmentsAtom);
+  const timeZone = useRecoilValue(timeZoneAtom);
 
   const isUploading =
     Object.values(uploadState).filter((item) => item.isLoading).length > 0;
 
   const formattedDate =
     selectedSlotValue &&
-    formatInTimeZone(selectedSlotValue, "UTC", "iii dd MMM, H:mm", {
+    convertSourceDateTimeToTargetDateTime({
+      date: selectedSlotValue,
+      targetTimeZone: timeZone,
+      sourceTimeZone: service.project.localTimeZone,
+      dateFormat: "iiii dd MMM, H:mm",
       locale,
     });
 
@@ -164,6 +170,7 @@ const BookService = () => {
           serviceId: id!,
           slots: [slot.slotId],
           formFields: json,
+          timezone: timeZone,
           ...(service?.paymentProviders.length && {
             paymentProvider: service.paymentProviders[0],
           }),
@@ -174,6 +181,7 @@ const BookService = () => {
         variables: {
           serviceId: id!,
           formFields: json,
+          timezone: timeZone,
           ...selectedDateRangeValue,
           ...(service?.paymentProviders.length && {
             paymentProvider: service.paymentProviders[0],
