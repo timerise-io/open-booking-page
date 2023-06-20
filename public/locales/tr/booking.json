@@ -1,0 +1,23 @@
+{
+    "date-and-time": "Tarih ve saat:",
+    "delete": "silme",
+    "the-booking": " rezervasyon.",
+    "show-service-details": "Hizmet ayrıntılarını göster",
+    "hide-service-details": "Hizmet ayrıntılarını gizle",
+    "want-to-delete": "Bu rezervasyonu <strong>iptal<\/strong> etmek istediğinizden emin misiniz?",
+    "go-back": "Rezervasyona geri dön",
+    "cancel-booking": "Rezervasyonu iptal et",
+    "add-to-calendar": "Takviminize ekleyin",
+    "download-qr": "QR kodunu indir",
+    "pay": "Ödemeye git",
+    "reschedule": "Yeniden planlayın",
+    "select-dates": "Tarihleri seçin",
+    "select-date": "Tarih seçiniz",
+    "avl": "Avl.",
+    "discard": "Iskarta",
+    "done": "Bitti",
+    "select-date-range-up-to": "{{süre}} günlerine kadar tarih aralığı seçin",
+    "start-date": "Başlangıç tarihi",
+    "end-date": "Bitiş tarihi",
+    "here": "Burada"
+}

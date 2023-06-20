@@ -1,0 +1,37 @@
+{
+    "solution-name": "Timerise",
+    "footer": {
+        "copyright": "Timerise © 2023",
+        "terms-and-conditions": "Şartlar ve Koşullar",
+        "privacy-policy": "Gizlilik Politikası",
+        "powered-by": "tarafından desteklenmektedir"
+    },
+    "validation": {
+        "required": "Gerekli",
+        "min-length": "Minimum uzunluk {{uzunluk}} karakterdir",
+        "email": "Yanlış e-posta formatı",
+        "slots-quantity": "Yuva sayısı 0'dan büyük olmalıdır",
+        "min-value": "Minimum değer {{minValue}} şeklindedir.",
+        "max-value": "Maksimum değer {{maxValue}}'dur.",
+        "incorrect-format": "Yanlış format"
+    },
+    "loading-info": "Sonsuzdan geriye doğru sayma",
+    "theme": {
+        "light": "Işık modu",
+        "dark": "Karanlık mod"
+    },
+    "details": {
+        "duration": "Süre",
+        "payment": "Ödeme",
+        "location": "Konum",
+        "hosted-by": "Ev sahibi"
+    },
+    "select-date-and-time": "Tarih ve saati seçin",
+    "time-zone": "Saat dilimi",
+    "language": "Dil",
+    "no-time-slots-available": "Bu tarih aralığında mevcut zaman aralığı yok",
+    "show-more": "Daha fazla göster",
+    "show-less": "Daha az göster",
+    "available": "mevcut",
+    "timezone": "Zaman Dilimi"
+}

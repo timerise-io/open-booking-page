@@ -17,6 +17,7 @@ const KEY_TO_LOCALE: Record<string, string> = {
   sk: "sk",
   sv: "sv",
   uk: "uk",
+  tr: "tr",
 };
 
 export const dateLocaleSelector = selector({
