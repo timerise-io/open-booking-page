@@ -1,0 +1,7 @@
+{
+    "booking\/delete": {
+        "title": "Rezervasyonu iptal et",
+        "abort-text": "İptal",
+        "confirm-text": "Rezervasyonu iptal et"
+    }
+}

@@ -9,9 +9,22 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { DateRangePicker } from "react-dates";
 import { DateRangeFooter } from "./components";
-import 'moment/locale/pl';
+import 'moment/locale/cs';
+import 'moment/locale/nl';
+import 'moment/locale/en-gb';
+import 'moment/locale/fi';
+import 'moment/locale/fr';
 import 'moment/locale/de';
+import 'moment/locale/el';
+import 'moment/locale/hu';
+import 'moment/locale/it';
+import 'moment/locale/pl';
+import 'moment/locale/pt';
+import 'moment/locale/es';
+import 'moment/locale/sk';
+import 'moment/locale/sv';
 import 'moment/locale/uk';
+import 'moment/locale/tr';
 
 const StyledWrapper = styled.div<{translations: any}>`
   position: relative;
