@@ -1,8 +1,8 @@
+import React from "react";
 import { Card } from "components/Card";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { SkeletonBox } from "components/layout/SkeletonBox";
-import React from "react";
 import { useRecoilValue } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
 import BookingCardBottom from "./BookingCardBottom/BookingCardBottom";
@@ -36,10 +36,7 @@ const BookingCard = () => {
   return (
     <Card padding="8px 20px 20px 20px">
       <ShortId shortId={bookingValue.shortId} />
-      <BookingCardSummary
-        status={bookingValue.status}
-        dateTimeFrom={bookingValue.dateTimeFrom}
-      />
+      <BookingCardSummary status={bookingValue.status} dateTimeFrom={bookingValue.dateTimeFrom} />
       <BookingCardBottom />
     </Card>
   );

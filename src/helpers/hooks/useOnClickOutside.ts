@@ -1,9 +1,6 @@
 import { useEffect } from "react";
 
-const useOnClickOutside = (
-  ref: React.RefObject<HTMLDivElement>,
-  handler: Function
-) => {
+const useOnClickOutside = (ref: React.RefObject<HTMLDivElement>, handler: Function) => {
   useEffect(() => {
     const listener = (event: Event) => {
       if (!ref.current || ref.current.contains(event.target as Node)) {

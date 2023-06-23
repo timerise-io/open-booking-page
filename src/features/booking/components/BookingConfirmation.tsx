@@ -1,5 +1,5 @@
-import { Typography } from "components/Typography";
 import React from "react";
+import { Typography } from "components/Typography";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { useConfirmBooking } from "../hooks/useConfirmBooking";

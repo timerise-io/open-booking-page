@@ -1,18 +1,18 @@
-import "styled-components";
 import {
-  ThemeType,
-  ThemeColors,
-  ButtonType,
-  ButtonColorSchema,
-  IconButtonType,
-  IconButtonColorSchema,
-  BackgroundType,
   BackgroundColorSchema,
-  TypographyType,
-  TypographyTheme,
+  BackgroundType,
+  ButtonColorSchema,
+  ButtonType,
+  IconButtonColorSchema,
+  IconButtonType,
+  ThemeColors,
+  ThemeType,
   TimeSlotButtonColorSchema,
   TimeSlotButtonType,
+  TypographyTheme,
+  TypographyType,
 } from "models/theme";
+import "styled-components";
 
 declare module "styled-components" {
   export interface DefaultTheme {

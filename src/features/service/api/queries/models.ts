@@ -1,10 +1,5 @@
 import { FormField } from "models/formFields";
-import {
-  BookingStatusesConfigView,
-  PaymentStatusesConfigView,
-  PaymentType,
-  DisplayType,
-} from "models/service";
+import { BookingStatusesConfigView, DisplayType, PaymentStatusesConfigView, PaymentType } from "models/service";
 import { Slot } from "models/slots";
 
 export interface ServiceQueryResult {

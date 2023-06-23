@@ -26,12 +26,7 @@ export const getUrlFromString = (text: any) => {
       }
       return (
         <React.Fragment key={index}>
-          <StyledLink
-            key={index}
-            onClick={(e) => openUrl(e, word)}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <StyledLink key={index} onClick={(e) => openUrl(e, word)} target="_blank" rel="noopener noreferrer">
             {word}
           </StyledLink>
           {hasLastBracket && ")"}

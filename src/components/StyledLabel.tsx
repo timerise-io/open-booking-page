@@ -20,10 +20,7 @@ const Label = styled.label`
   min-width: 100%;
 `;
 
-const StyledLabel: React.FC<StyledLabelProps> = ({
-  htmlFor,
-  children,
-}) => {
+const StyledLabel: React.FC<StyledLabelProps> = ({ htmlFor, children }) => {
   const labelRef = useRef() as React.MutableRefObject<HTMLLabelElement>;
   const [isEllipsis, setIsEllipsis] = useState(false);
 
@@ -34,8 +31,10 @@ const StyledLabel: React.FC<StyledLabelProps> = ({
   }, [htmlFor, children]);
 
   return (
-    <Label htmlFor={htmlFor} ref={labelRef} title={isEllipsis ? children : null}>{children}</Label>
-  )
+    <Label htmlFor={htmlFor} ref={labelRef} title={isEllipsis ? children : null}>
+      {children}
+    </Label>
+  );
 };
 
 export default StyledLabel;

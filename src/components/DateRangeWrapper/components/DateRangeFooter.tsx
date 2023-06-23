@@ -1,13 +1,13 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { Button } from "components/Button";
-import { Column, ColumnProps } from "components/layout/Column";
 import { Typography } from "components/Typography";
+import { Column, ColumnProps } from "components/layout/Column";
+import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 
 const StyledCalendarFooter = styled(Column)<{ hasDuration: boolean } & ColumnProps>`
   flex-direction: row;
-  
+
   ${({ hasDuration }) => {
     return css`
       justify-content: ${hasDuration ? "space-between" : "flex-end"};
@@ -75,16 +75,11 @@ export const DateRangeFooter: React.FC<Props> = ({
   return (
     <StyledCalendarFooter ai="center" w="100%" p={2.5} hasDuration={Boolean(duration && rangeSelect)}>
       <Typography typographyType="body" displayType="contents">
-        { duration && rangeSelect && t("select-date-range-up-to", { duration }) }
+        {duration && rangeSelect && t("select-date-range-up-to", { duration })}
       </Typography>
       <StyledButtons>
-        <StyledDiscardButton
-          type="submit"
-          buttonType="secondary"
-          data-cy="111"
-          onClick={() => handleDiscardCalendar()}
-        >
-          { t(`discard`) }
+        <StyledDiscardButton type="submit" buttonType="secondary" data-cy="111" onClick={() => handleDiscardCalendar()}>
+          {t(`discard`)}
         </StyledDiscardButton>
         <StyledDoneButton
           type="submit"
@@ -93,7 +88,7 @@ export const DateRangeFooter: React.FC<Props> = ({
           disabled={!dateTimeFrom || !dateTimeTo}
           onClick={() => handleCloseCalendar()}
         >
-          { t(`done`) }
+          {t(`done`)}
         </StyledDoneButton>
       </StyledButtons>
     </StyledCalendarFooter>

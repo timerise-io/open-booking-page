@@ -1,9 +1,9 @@
-import Select from "components/forms/Select";
 import React from "react";
+import Select from "components/forms/Select";
+import { zonesSelectObject } from "helpers/timeZones";
 import { useRecoilState } from "recoil";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import styled from "styled-components";
-import { zonesSelectObject } from "helpers/timeZones";
 
 const SelectWrapper = styled.div`
   & > div > select {

@@ -1,5 +1,5 @@
-import { Typography } from "components/Typography";
 import React from "react";
+import { Typography } from "components/Typography";
 import { useTranslation } from "react-i18next";
 import { FileUploadStyledButton } from "./FileUploadStyledButton";
 

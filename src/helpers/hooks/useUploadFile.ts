@@ -1,16 +1,14 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { serviceAtom } from "state/atoms/service";
-import axios from "axios";
 import { uploadAttachmentsAtom } from "state/atoms/uploadAttachments";
 
 export const useUploadFile = (fieldId: string) => {
   const service = useRecoilValue(serviceAtom);
   const [filePath, setFilePath] = useState<string | undefined>();
   const [fileToUpload, setFileToUpload] = useState<ArrayBuffer | undefined>();
-  const [fileToUploadExtension, setFileToUploadExtension] = useState<
-    string | undefined
-  >();
+  const [fileToUploadExtension, setFileToUploadExtension] = useState<string | undefined>();
   const setUploadState = useSetRecoilState(uploadAttachmentsAtom);
 
   const upload = (file: ArrayBuffer, extension: string) => {
@@ -20,11 +18,7 @@ export const useUploadFile = (fieldId: string) => {
   };
 
   useEffect(() => {
-    if (
-      service?.project.projectId === undefined ||
-      fileToUpload === undefined ||
-      fileToUploadExtension === undefined
-    )
+    if (service?.project.projectId === undefined || fileToUpload === undefined || fileToUploadExtension === undefined)
       return;
 
     setUploadState((loaders) => ({
@@ -42,7 +36,7 @@ export const useUploadFile = (fieldId: string) => {
             "content-type": "application/octet-stream",
           },
           signal: controller.signal,
-        }
+        },
       )
       .then((response) => {
         setFilePath(response.data.filePath);

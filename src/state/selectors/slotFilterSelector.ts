@@ -3,14 +3,13 @@ import { format } from "date-fns-tz";
 import { getDateInTimezone } from "helpers/timeFormat";
 import { selector } from "recoil";
 import { serviceAtom } from "state/atoms/service";
-import { slotsFiltersAtom, SlotsFiltersAtom } from "state/atoms/slotsFilters";
+import { SlotsFiltersAtom, slotsFiltersAtom } from "state/atoms/slotsFilters";
 
 export const slotsFilterSelector = selector({
   key: "slotsFilterSelector",
   get: ({ get }) => {
     const filters = get(slotsFiltersAtom);
-    const serviceMinDate =
-      get(serviceAtom)?.dateTimeFrom ?? new Date().toISOString();
+    const serviceMinDate = get(serviceAtom)?.dateTimeFrom ?? new Date().toISOString();
 
     const tomorrowMin = addDays(new Date(serviceMinDate), 1).toISOString();
 

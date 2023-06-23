@@ -14,16 +14,12 @@ export const Button = styled.button<ButtonProps>`
   box-shadow: rgba(0, 0, 0, 0.28) 0px 1px 2px;
   ${({ theme, buttonType, disabled }) => {
     const colors = theme.colorSchemas.button[buttonType];
-    const textColor = disabled
-      ? colors.textDisabled ?? colors.text
-      : colors.text;
+    const textColor = disabled ? colors.textDisabled ?? colors.text : colors.text;
 
     const border = colors.border ?? "unset";
 
     return css`
-      background-color: ${disabled
-        ? colors.backgroundDisabled
-        : colors.background};
+      background-color: ${disabled ? colors.backgroundDisabled : colors.background};
       color: ${textColor};
       border-radius: ${theme.borderRadius};
       font-size: ${theme.typography.body.size};
@@ -32,9 +28,7 @@ export const Button = styled.button<ButtonProps>`
 
       &:hover,
       &:focus {
-        background-color: ${disabled
-          ? colors.backgroundDisabled
-          : colors.backgroundActive};
+        background-color: ${disabled ? colors.backgroundDisabled : colors.backgroundActive};
         box-shadow: rgb(0 0 0 / 28%) 0px 1px 2px;
       }
     `;

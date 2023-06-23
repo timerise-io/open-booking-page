@@ -1,31 +1,24 @@
 import React from "react";
-import {
-  useNavigate,
-  generatePath,
-  createSearchParams,
-} from "react-router-dom";
-import { TFunction, useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
-import styled from "styled-components";
 import { Button } from "components/Button";
 import { Card } from "components/Card";
-import { Box } from "components/layout/Box";
 import { Typography } from "components/Typography";
+import { Box } from "components/layout/Box";
 import { useLangParam } from "features/i18n/useLangParam";
 import { useRescheduleBooking } from "features/service/hooks/useRescheduleBooking";
 import { useLocale } from "helpers/hooks/useLocale";
-import { PAGES } from "pages/constans";
-import { selectedSlot } from "state/atoms/selectedSlot";
-import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
-import { serviceAtom } from "state/atoms/service";
-import { bookingAtom } from "state/atoms/booking";
-import { timeZoneAtom } from "state/atoms/timeZone";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
+import { PAGES } from "pages/constans";
+import { TFunction, useTranslation } from "react-i18next";
+import { createSearchParams, generatePath, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { bookingAtom } from "state/atoms/booking";
+import { selectedSlot } from "state/atoms/selectedSlot";
+import { serviceAtom } from "state/atoms/service";
+import { timeZoneAtom } from "state/atoms/timeZone";
+import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
+import styled from "styled-components";
 
-const getSubmitButtonText = (
-  selectedSlotValue: string,
-  t: TFunction<"forms"[]>
-) => {
+const getSubmitButtonText = (selectedSlotValue: string, t: TFunction<"forms"[]>) => {
   const textBase = t("reschedule-button");
 
   if (selectedSlotValue === "") return textBase;
@@ -62,7 +55,7 @@ const RescheduleService = () => {
   const slot = useRecoilValue(selectedSlotSelector);
   const { rescheduleBookingMutation, loading } = useRescheduleBooking();
   const timeZone = useRecoilValue(timeZoneAtom);
-  
+
   const formattedDateTo =
     selectedSlotValue &&
     convertSourceDateTimeToTargetDateTime({
@@ -113,19 +106,17 @@ const RescheduleService = () => {
             {formattedDateFrom}
           </StyledDateValue>
         </Box>
-        {
-          slot && (
-            <Box mt={0.5}>
-              <Typography typographyType="label" displayType="contents">
-                {t("to")}:
-              </Typography>
-              <StyledDateValue typographyType="label" weight="700" displayType="contents">
-                {formattedDateTo}
-              </StyledDateValue>
-            </Box>
-          )
-        }
-        
+        {slot && (
+          <Box mt={0.5}>
+            <Typography typographyType="label" displayType="contents">
+              {t("to")}:
+            </Typography>
+            <StyledDateValue typographyType="label" weight="700" displayType="contents">
+              {formattedDateTo}
+            </StyledDateValue>
+          </Box>
+        )}
+
         <StyledButtonsWrapper mt={4}>
           <Button
             type="submit"
@@ -146,14 +137,13 @@ const RescheduleService = () => {
                 generatePath(`${PAGES.BOOKING}:query`, {
                   id: bookingValue.bookingId,
                   query: lang ? `?${createSearchParams({ lang }).toString()}` : "",
-                })
+                }),
               );
             }}
           >
             {t("back")}
           </Button>
         </StyledButtonsWrapper>
-
       </WrapperCard>
     </Box>
   );

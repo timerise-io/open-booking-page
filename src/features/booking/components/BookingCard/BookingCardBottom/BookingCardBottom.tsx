@@ -11,7 +11,7 @@ const Wrapper = styled(Row)`
   padding-top: 20px;
 `;
 
-const StyledDualButtonWrapper = styled.div<{showRescheduleButton?: boolean, showCancelButton?: boolean,}>`
+const StyledDualButtonWrapper = styled.div<{ showRescheduleButton?: boolean; showCancelButton?: boolean }>`
   gap: 8px;
   ${({ showRescheduleButton, showCancelButton }) => {
     return css`
@@ -23,7 +23,11 @@ const StyledDualButtonWrapper = styled.div<{showRescheduleButton?: boolean, show
 const BookingCardBottom = () => {
   const cardConfig = useRecoilValue(bookingCardViewConfig);
 
-  const { cancel: showCancelButton, service: showBackToServiceButton, reschedule: showRescheduleButton } = {
+  const {
+    cancel: showCancelButton,
+    service: showBackToServiceButton,
+    reschedule: showRescheduleButton,
+  } = {
     ...cardConfig?.actions,
   };
 
@@ -32,16 +36,11 @@ const BookingCardBottom = () => {
   return (
     <Wrapper
       jc={
-        !!showBackToServiceButton && (!!showCancelButton || !!showRescheduleButton)
-          ? "space-between"
-          : "space-around"
+        !!showBackToServiceButton && (!!showCancelButton || !!showRescheduleButton) ? "space-between" : "space-around"
       }
     >
       {!!showBackToServiceButton && <BackToServiceButton />}
-      <StyledDualButtonWrapper
-        showRescheduleButton={showRescheduleButton}
-        showCancelButton={showCancelButton}
-      >
+      <StyledDualButtonWrapper showRescheduleButton={showRescheduleButton} showCancelButton={showCancelButton}>
         {!!showRescheduleButton && <RescheduleBookingButton />}
         {!!showCancelButton && <CancelBookingButton />}
       </StyledDualButtonWrapper>

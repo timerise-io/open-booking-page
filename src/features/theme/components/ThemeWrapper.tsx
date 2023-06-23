@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from "react";
 import { useRecoilValue } from "recoil";
 import { themeSelector } from "state/selectors/theme";
 import { ThemeProvider } from "styled-components";
-import { lightTheme, darkTheme } from "styles/appTheme";
+import { darkTheme, lightTheme } from "styles/appTheme";
 
 const themes = {
   light: lightTheme,

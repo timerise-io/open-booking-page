@@ -1,12 +1,12 @@
-import { Column } from "components/layout/Column";
 import React from "react";
-import styled from "styled-components";
-import { useField } from "formik";
+import StyledInput from "components/StyledInput";
+import StyledLabel from "components/StyledLabel";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
+import { Column } from "components/layout/Column";
+import { useField } from "formik";
 import { useTranslation } from "react-i18next";
-import StyledLabel from "components/StyledLabel";
-import StyledInput from "components/StyledInput";
+import styled from "styled-components";
 
 const StyledNumberInput = styled(StyledInput)`
   &::-webkit-inner-spin-button {

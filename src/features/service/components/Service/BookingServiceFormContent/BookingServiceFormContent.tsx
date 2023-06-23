@@ -2,8 +2,8 @@ import { Row } from "components/layout/Row";
 import { useRecoilValue } from "recoil";
 import { serviceAtom } from "state/atoms/service";
 import styled from "styled-components";
-import { splitFormConfigIntoRows } from "./splitFormConfigIntoRow";
 import FormComponent from "./FormComponent";
+import { splitFormConfigIntoRows } from "./splitFormConfigIntoRow";
 
 const FormRow = styled(Row)`
   gap: 0 10px;
@@ -22,9 +22,7 @@ export const BookingServiceFormContent = () => {
 
   if (formFields === undefined || formFields?.length === 0) return null;
 
-  const enabledFields = [...formFields].sort(
-    (item, nextItem) => item.order - nextItem.order
-  );
+  const enabledFields = [...formFields].sort((item, nextItem) => item.order - nextItem.order);
 
   const formRows = splitFormConfigIntoRows(enabledFields);
 

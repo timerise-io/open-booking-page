@@ -1,18 +1,18 @@
-import { Column } from "components/layout/Column";
-import { Typography } from "components/Typography";
 import React from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { timeSlot } from "state/selectors/timeSlot";
-import { selectedSlot } from "state/atoms/selectedSlot";
-import styled, { css } from "styled-components";
-import { TimeSlotButtonType } from "models/theme";
-import { Slot } from "models/slots";
-import { slotsViewConfiguration } from "state/selectors/slotsViewConfiguration";
-import { TFunction, useTranslation } from "react-i18next";
-import { timeZoneAtom } from "state/atoms/timeZone";
-import { Service } from "models/service";
-import { serviceAtom } from "state/atoms/service";
+import { Typography } from "components/Typography";
+import { Column } from "components/layout/Column";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
+import { Service } from "models/service";
+import { Slot } from "models/slots";
+import { TimeSlotButtonType } from "models/theme";
+import { TFunction, useTranslation } from "react-i18next";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { selectedSlot } from "state/atoms/selectedSlot";
+import { serviceAtom } from "state/atoms/service";
+import { timeZoneAtom } from "state/atoms/timeZone";
+import { slotsViewConfiguration } from "state/selectors/slotsViewConfiguration";
+import { timeSlot } from "state/selectors/timeSlot";
+import styled, { css } from "styled-components";
 
 type TimeSlotButtonState = "available" | "unavailable" | "selected";
 
@@ -47,8 +47,7 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
       border-radius: ${({ theme }) => theme.borderRadius};
       background-color: ${colorSchema.background};
       min-width: ${showDuration ? "96px" : "unset"};
-      min-height: ${timeSlotHeight[`${showDuration}-${showQuantity}`] ??
-      "unset"};
+      min-height: ${timeSlotHeight[`${showDuration}-${showQuantity}`] ?? "unset"};
       padding: ${showQuantity ? "2px 0 4px 0" : "8px 0"};
     `;
   }}
@@ -91,25 +90,15 @@ const DummySlotWrapper = styled.div<DummySlotProps>`
     const colorSchema = theme.colorSchemas.timeSlotButton.unavailable;
     return css`
       color: ${colorSchema.text};
-      height: ${dummyTimeSlotHeight[`${showDuration}-${showQuantity}`] ??
-      "38px"};
+      height: ${dummyTimeSlotHeight[`${showDuration}-${showQuantity}`] ?? "38px"};
     `;
   }}
 `;
 
-const DummySlot: React.FC<DummySlotProps> = ({
-  showDuration,
-  showQuantity,
-}) => {
+const DummySlot: React.FC<DummySlotProps> = ({ showDuration, showQuantity }) => {
   return (
     <DummySlotWrapper showDuration={showDuration} showQuantity={showQuantity}>
-      <Typography
-        typographyType="h3"
-        weight="500"
-        as="span"
-        align="center"
-        color="inherit"
-      >
+      <Typography typographyType="h3" weight="500" as="span" align="center" color="inherit">
         -
       </Typography>
     </DummySlotWrapper>
@@ -125,7 +114,7 @@ interface TimeSlotProps {
 const getTimeSlotButtonState = (
   dateString: string,
   selectedDateString: string,
-  isAvailable: boolean
+  isAvailable: boolean,
 ): TimeSlotButtonState => {
   if (dateString === selectedDateString) return "selected";
 
@@ -135,7 +124,7 @@ const getTimeSlotButtonState = (
 };
 
 const getBaseSlotContent = (slot: Slot, date: string, timeZone: string, service?: Service) => {
-  if(!service?.project.localTimeZone) return;
+  if (!service?.project.localTimeZone) return;
 
   return (
     <Typography
@@ -174,7 +163,7 @@ const getDurationQuantitySlotContent = (
   timeZone: string,
   service?: Service,
 ) => {
-  if(!service?.project.localTimeZone) return;
+  if (!service?.project.localTimeZone) return;
 
   return (
     <Column>
@@ -200,15 +189,8 @@ const getDurationQuantitySlotContent = (
       </DurationText>
       {slot.quantity > 0 && (
         <>
-          <QuantityText
-            typographyType="body"
-            weight="500"
-            as="span"
-            align="center"
-            color="inherit"
-          >
-            {t("available")}{" "}
-            {slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)}
+          <QuantityText typographyType="body" weight="500" as="span" align="center" color="inherit">
+            {t("available")} {slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)}
           </QuantityText>
         </>
       )}
@@ -222,7 +204,7 @@ const getQuantitySlotContent = (
   timeZone: string,
   service?: Service,
 ) => {
-  if(!service?.project.localTimeZone) return;
+  if (!service?.project.localTimeZone) return;
 
   return (
     <Column>
@@ -243,15 +225,8 @@ const getQuantitySlotContent = (
       </DurationText>
       {slot.quantity > 0 && (
         <>
-          <QuantityText
-            typographyType="body"
-            weight="500"
-            as="span"
-            align="center"
-            color="inherit"
-          >
-            {t("available")}{" "}
-            {slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)}
+          <QuantityText typographyType="body" weight="500" as="span" align="center" color="inherit">
+            {t("available")} {slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)}
           </QuantityText>
         </>
       )}
@@ -266,7 +241,7 @@ const getDurationSlotContent = (
   timeZone: string,
   service?: Service,
 ) => {
-  if(!service?.project.localTimeZone) return;
+  if (!service?.project.localTimeZone) return;
 
   return (
     <Column>
@@ -316,15 +291,9 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, day }) => {
             setSelectedSlot(dateFrom);
           }}
         >
-          {showDuration &&
-            showQuantity &&
-            getDurationQuantitySlotContent(slot, dateFrom, t, timeZone, service)}
-          {showDuration &&
-            !showQuantity &&
-            getDurationSlotContent(slot, dateFrom, t, timeZone, service)}
-          {!showDuration &&
-            showQuantity &&
-            getQuantitySlotContent(slot, dateFrom, t, timeZone, service)}
+          {showDuration && showQuantity && getDurationQuantitySlotContent(slot, dateFrom, t, timeZone, service)}
+          {showDuration && !showQuantity && getDurationSlotContent(slot, dateFrom, t, timeZone, service)}
+          {!showDuration && showQuantity && getQuantitySlotContent(slot, dateFrom, t, timeZone, service)}
           {!showDuration && !showQuantity && getBaseSlotContent(slot, dateFrom, timeZone, service)}
         </TimeSlotButton>
       )}

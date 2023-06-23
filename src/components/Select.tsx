@@ -1,10 +1,10 @@
-import { IconCheck, IconChevronDown } from "@tabler/icons";
-import useOnClickOutside from "helpers/hooks/useOnClickOutside";
 import React, { useCallback, useRef, useState } from "react";
+import useOnClickOutside from "helpers/hooks/useOnClickOutside";
 import styled from "styled-components";
+import { IconCheck, IconChevronDown } from "@tabler/icons";
+import { Typography } from "./Typography";
 import { Column } from "./layout/Column";
 import { Row } from "./layout/Row";
-import { Typography } from "./Typography";
 
 const SelectWrapper = styled(Column)`
   position: relative;
@@ -94,12 +94,7 @@ interface SelectProps {
   onChange?: (value: string) => void;
 }
 
-export const Select: React.FC<SelectProps> = ({
-  label,
-  value,
-  options,
-  onChange,
-}) => {
+export const Select: React.FC<SelectProps> = ({ label, value, options, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const memoizedCallback = useCallback(() => setIsOpen(false), []);
@@ -125,15 +120,8 @@ export const Select: React.FC<SelectProps> = ({
         <OptionsWrapper>
           {Object.entries(options).map(([itemKey, itemValue]) => {
             return (
-              <OptionButton
-                key={`select-popup-option-${itemKey}`}
-                onClick={() => handleChange(itemKey)}
-              >
-                <Typography
-                  typographyType="body"
-                  weight={itemKey === value ? "700" : "400"}
-                  as="span"
-                >
+              <OptionButton key={`select-popup-option-${itemKey}`} onClick={() => handleChange(itemKey)}>
+                <Typography typographyType="body" weight={itemKey === value ? "700" : "400"} as="span">
                   {itemValue}
                 </Typography>
                 {itemKey === value && <IconCheck size={20} />}

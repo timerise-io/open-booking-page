@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useMedia } from "helpers/hooks";
-import { useTranslation } from "react-i18next";
 import { parse } from "iso8601-duration";
 import moment from "moment";
-import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons";
-import styled, { css } from "styled-components";
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
+import "moment/locale/cs";
+import "moment/locale/de";
+import "moment/locale/el";
+import "moment/locale/en-gb";
+import "moment/locale/es";
+import "moment/locale/fi";
+import "moment/locale/fr";
+import "moment/locale/hu";
+import "moment/locale/it";
+import "moment/locale/nl";
+import "moment/locale/pl";
+import "moment/locale/pt";
+import "moment/locale/sk";
+import "moment/locale/sv";
+import "moment/locale/tr";
+import "moment/locale/uk";
 import { DateRangePicker } from "react-dates";
+import "react-dates/initialize";
+import "react-dates/lib/css/_datepicker.css";
+import { useTranslation } from "react-i18next";
+import styled, { css } from "styled-components";
+import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons";
 import { DateRangeFooter } from "./components";
-import 'moment/locale/cs';
-import 'moment/locale/nl';
-import 'moment/locale/en-gb';
-import 'moment/locale/fi';
-import 'moment/locale/fr';
-import 'moment/locale/de';
-import 'moment/locale/el';
-import 'moment/locale/hu';
-import 'moment/locale/it';
-import 'moment/locale/pl';
-import 'moment/locale/pt';
-import 'moment/locale/es';
-import 'moment/locale/sk';
-import 'moment/locale/sv';
-import 'moment/locale/uk';
-import 'moment/locale/tr';
 
-const StyledWrapper = styled.div<{translations: any}>`
+const StyledWrapper = styled.div<{ translations: any }>`
   position: relative;
   width: 100%;
 
@@ -138,11 +138,11 @@ const StyledWrapper = styled.div<{translations: any}>`
         max-width: 100%;
         width: 0;
         min-width: 100%;
-        content: "${props => props.translations(`end-date`)}";
+        content: "${(props) => props.translations(`end-date`)}";
       }
       &:first-child {
         &:before {
-          content: "${props => props.translations(`start-date`)}";
+          content: "${(props) => props.translations(`start-date`)}";
         }
       }
     }
@@ -172,7 +172,8 @@ const StyledWrapper = styled.div<{translations: any}>`
       font-size: ${theme.typography.body.size};
       padding: calc(1.125 * ${theme.spacing}) calc(1.375 * ${theme.spacing});
 
-      &:hover, &.DateInput_input__focused {
+      &:hover,
+      &.DateInput_input__focused {
         border-color: ${theme.colorSchemas.input.borderHover};
       }
 
@@ -393,7 +394,6 @@ interface Props {
   additionalData: any;
 }
 
-
 export const DateRangeWrapper: React.FC<Props> = ({
   numberOfMonths = 2,
   startDatePlaceholderText,
@@ -411,11 +411,13 @@ export const DateRangeWrapper: React.FC<Props> = ({
   additionalData,
 }) => {
   const { t, i18n } = useTranslation(["booking"]);
-  const isMobile = useMedia('(max-width: 1200px)');
+  const isMobile = useMedia("(max-width: 1200px)");
   const [dateTimeFrom, setDateTimeFrom] = useState<any | null>(null);
   const [dateTimeTo, setDateTimeTo] = useState<any | null>(null);
   const [focusedInput, setFocusedInput] = useState<any | null>(null);
-  const duration = additionalData.service.viewConfig.calendar.maxRange ? parse(additionalData.service.viewConfig.calendar.maxRange).days : null;
+  const duration = additionalData.service.viewConfig.calendar.maxRange
+    ? parse(additionalData.service.viewConfig.calendar.maxRange).days
+    : null;
   const hasQuantity = additionalData.service.viewConfig.calendar.quantity;
   const rangeSelect = additionalData.service.viewConfig.calendar.rangeSelect;
 
@@ -423,7 +425,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
     moment.locale(i18n.language);
   }, [i18n.language]);
 
-  const handleChangeDate = ({ dateTimeFrom, dateTimeTo }: { dateTimeFrom: any, dateTimeTo: any }) => {
+  const handleChangeDate = ({ dateTimeFrom, dateTimeTo }: { dateTimeFrom: any; dateTimeTo: any }) => {
     dateTimeFrom && setDateTimeFrom(dateTimeFrom);
     dateTimeTo && setDateTimeTo(dateTimeTo);
 
@@ -449,23 +451,24 @@ export const DateRangeWrapper: React.FC<Props> = ({
 
   const renderDayContents = (day: any) => {
     let quantity;
-    additionalData.slots.some((slot: {
-      quantity: any; dateTimeFrom: moment.MomentInput; 
-    }) => {
+    additionalData.slots.some((slot: { quantity: any; dateTimeFrom: moment.MomentInput }) => {
       const isSameDay = moment(slot.dateTimeFrom).format("DD-MM-YYYY") === day.format("DD-MM-YYYY");
       if (isSameDay) quantity = slot.quantity;
       return isSameDay;
     });
 
-    return <StyledDay>{ day.format("D") }{hasQuantity && <span>{ `${t(`avl`)} ${quantity ?? 0}` }</span>}</StyledDay>;
+    return (
+      <StyledDay>
+        {day.format("D")}
+        {hasQuantity && <span>{`${t(`avl`)} ${quantity ?? 0}`}</span>}
+      </StyledDay>
+    );
   };
 
   const isDayBlocked = (day: any) => {
     let isSameDay, quantity;
 
-    const hasSlot = additionalData.slots.some((slot: {
-      quantity: any; dateTimeFrom: moment.MomentInput; 
-    }) => {
+    const hasSlot = additionalData.slots.some((slot: { quantity: any; dateTimeFrom: moment.MomentInput }) => {
       isSameDay = moment(slot.dateTimeFrom).format("DD-MM-YYYY") === day.format("DD-MM-YYYY");
       quantity = slot.quantity;
       return isSameDay && !!quantity;
@@ -474,65 +477,68 @@ export const DateRangeWrapper: React.FC<Props> = ({
     return !hasSlot;
   };
 
-  const isOutsideRange = (day: { isBefore: (arg0: any) => any; isAfter: (arg0: any) => any; }) => (
-    dateTimeFrom && duration && rangeSelect && focusedInput === "endDate" && (day.isBefore(dateTimeFrom) || day.isAfter(dateTimeFrom.clone().add(duration - 1, 'days')))
-  );
+  const isOutsideRange = (day: { isBefore: (arg0: any) => any; isAfter: (arg0: any) => any }) =>
+    dateTimeFrom &&
+    duration &&
+    rangeSelect &&
+    focusedInput === "endDate" &&
+    (day.isBefore(dateTimeFrom) || day.isAfter(dateTimeFrom.clone().add(duration - 1, "days")));
 
   const PrevIcon = () => (
     <StyledPrevIcon>
-      <IconArrowNarrowLeft/>
+      <IconArrowNarrowLeft />
     </StyledPrevIcon>
   );
 
   const NextIcon = () => (
     <StyledNextIcon>
-      <IconArrowNarrowRight/>
+      <IconArrowNarrowRight />
     </StyledNextIcon>
   );
 
   return (
     <StyledWrapper translations={t}>
       <DateRangePicker
-          startDate={dateTimeFrom}
-          startDateId={`startDate-${id}`}
-          endDate={dateTimeTo}
-          endDateId={`endDate-${id}`}
-          onDatesChange={({startDate, endDate}) => handleChangeDate({ dateTimeFrom: startDate, dateTimeTo: endDate })}
-          focusedInput={focusedInput}
-          keepOpenOnDateSelect
-          onFocusChange={handleFocusedInput}
-          numberOfMonths={numberOfMonths}
-          startDatePlaceholderText={startDatePlaceholderText}
-          endDatePlaceholderText={endDatePlaceholderText}
-          hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
-          monthFormat={monthFormat}
-          displayFormat={displayFormat}
-          firstDayOfWeek={1}
-          weekDayFormat={weekDayFormat}
-          noBorder
-          verticalSpacing={verticalSpacing}
-          navPrev={<PrevIcon/>}
-          navNext={<NextIcon/>}
-          daySize={daySize}
-          transitionDuration={transitionDuration}
-          regular={regular}
-          isOutsideRange={isOutsideRange}
-          orientation={ isMobile ? "vertical" : "horizontal" }
-          //withFullScreenPortal
-          
-          renderDayContents={renderDayContents}
-          isDayBlocked={isDayBlocked}
-          renderCalendarInfo={() => (
-            <DateRangeFooter
-              duration={duration}
-              handleDiscardCalendar={handleDiscardCalendar}
-              handleCloseCalendar={handleCloseCalendar}
-              dateTimeFrom={dateTimeFrom}
-              dateTimeTo={dateTimeTo}
-              rangeSelect={rangeSelect}
-            />
-          )}
-        />
+        startDate={dateTimeFrom}
+        startDateId={`startDate-${id}`}
+        endDate={dateTimeTo}
+        endDateId={`endDate-${id}`}
+        onDatesChange={({ startDate, endDate }) => handleChangeDate({ dateTimeFrom: startDate, dateTimeTo: endDate })}
+        focusedInput={focusedInput}
+        keepOpenOnDateSelect
+        onFocusChange={handleFocusedInput}
+        numberOfMonths={numberOfMonths}
+        startDatePlaceholderText={startDatePlaceholderText}
+        endDatePlaceholderText={endDatePlaceholderText}
+        hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
+        monthFormat={monthFormat}
+        displayFormat={displayFormat}
+        firstDayOfWeek={1}
+        weekDayFormat={weekDayFormat}
+        noBorder
+        verticalSpacing={verticalSpacing}
+        navPrev={<PrevIcon />}
+        navNext={<NextIcon />}
+        daySize={daySize}
+        transitionDuration={transitionDuration}
+        regular={regular}
+        isOutsideRange={isOutsideRange}
+        orientation={isMobile ? "vertical" : "horizontal"}
+        //withFullScreenPortal
+
+        renderDayContents={renderDayContents}
+        isDayBlocked={isDayBlocked}
+        renderCalendarInfo={() => (
+          <DateRangeFooter
+            duration={duration}
+            handleDiscardCalendar={handleDiscardCalendar}
+            handleCloseCalendar={handleCloseCalendar}
+            dateTimeFrom={dateTimeFrom}
+            dateTimeTo={dateTimeTo}
+            rangeSelect={rangeSelect}
+          />
+        )}
+      />
     </StyledWrapper>
   );
 };

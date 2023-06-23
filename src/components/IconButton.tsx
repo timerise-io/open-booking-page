@@ -6,9 +6,7 @@ export const IconButton = styled.button`
   display: flex;
   border-radius: 50%;
   color: ${({ theme, disabled }) =>
-    disabled
-      ? theme.colorSchemas.iconButton.primary.colorDisabled
-      : theme.colorSchemas.iconButton.primary.color};
+    disabled ? theme.colorSchemas.iconButton.primary.colorDisabled : theme.colorSchemas.iconButton.primary.color};
   transition: color 0.2s ease-in-out;
 
   &:active,

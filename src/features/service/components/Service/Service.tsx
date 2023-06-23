@@ -1,15 +1,15 @@
 import {
+  ContentSection,
   ContentWithDetails,
   DetailsSection,
-  ContentSection,
   DetailsTextWrapper,
   SliderWrapper,
 } from "components/layout/ContentWithDetails";
-import BookService from "./BookService/BookService";
 import { useService } from "features/service/hooks/useService";
+import BookService from "./BookService/BookService";
 import ServiceDetails from "./ServiceDetails";
-import ServiceImageCarousel from "./ServiceImageCarousel";
 import { ServiceFactory } from "./ServiceFactory";
+import ServiceImageCarousel from "./ServiceImageCarousel";
 
 const ServiceHook = () => {
   useService();
@@ -30,7 +30,7 @@ const Service = () => {
           </DetailsTextWrapper>
         </DetailsSection>
         <ContentSection>
-          <ServiceFactory/>
+          <ServiceFactory />
           <BookService />
         </ContentSection>
       </ContentWithDetails>

@@ -1,6 +1,6 @@
+import React from "react";
 import ConfirmModal from "features/confirmation/components/ConfirmModal";
 import { ConfirmationType } from "models/confirmation";
-import React from "react";
 import ReactDOM from "react-dom";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
@@ -32,7 +32,7 @@ const StateModal = () => {
     >
       {getContent(confirmation.type)}
     </ConfirmModal>,
-    document.getElementById("modal")!
+    document.getElementById("modal")!,
   );
 };
 

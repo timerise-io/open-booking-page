@@ -1,12 +1,12 @@
-import { IconCheck } from "@tabler/icons";
+import React from "react";
+import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
-import { Typography } from "components/Typography";
-import { getUrlFromString } from "helpers/functions";
 import { useField } from "formik";
-import React from "react";
+import { getUrlFromString } from "helpers/functions";
 import styled, { css } from "styled-components";
+import { IconCheck } from "@tabler/icons";
 
 const CheckboxInput = styled.input`
   margin: 0 6px 0 0;

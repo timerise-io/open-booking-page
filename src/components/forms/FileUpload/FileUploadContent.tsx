@@ -1,5 +1,5 @@
-import { Typography } from "components/Typography";
 import React from "react";
+import { Typography } from "components/Typography";
 import { useTranslation } from "react-i18next";
 import { FileUploadStyledButton } from "./FileUploadStyledButton";
 
@@ -9,11 +9,7 @@ interface FileUploadContentProps {
   onClick: () => void;
 }
 
-const FileUploadContent = ({
-  fileName,
-  isLoading,
-  onClick,
-}: FileUploadContentProps) => {
+const FileUploadContent = ({ fileName, isLoading, onClick }: FileUploadContentProps) => {
   const { t } = useTranslation("forms");
   return (
     <>

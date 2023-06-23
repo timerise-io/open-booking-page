@@ -1,12 +1,12 @@
-import { Column } from "components/layout/Column";
 import React from "react";
-import styled, { css } from "styled-components";
-import { useField,  } from "formik";
+import StyledInput from "components/StyledInput";
+import StyledLabel from "components/StyledLabel";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
+import { Column } from "components/layout/Column";
+import { useField } from "formik";
 import { useTranslation } from "react-i18next";
-import StyledLabel from "components/StyledLabel";
-import StyledInput from "components/StyledInput";
+import styled, { css } from "styled-components";
 
 const StyledTextArea = styled.textarea`
   all: unset;
@@ -39,12 +39,7 @@ interface TextFieldProps {
   placeholder?: string;
 }
 
-const TextField: React.FC<TextFieldProps> = ({
-  label,
-  name,
-  multiline = false,
-  placeholder,
-}) => {
+const TextField: React.FC<TextFieldProps> = ({ label, name, multiline = false, placeholder }) => {
   const { t } = useTranslation(["forms"]);
   const labelToDisplay = label === undefined ? t(`${name}Field`) : label;
 

@@ -1,15 +1,15 @@
+import React from "react";
+import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
-import { Typography } from "components/Typography";
-import React from "react";
+import { useLocale } from "helpers/hooks/useLocale";
+import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import { useRecoilValue } from "recoil";
+import { serviceAtom } from "state/atoms/service";
+import { timeZoneAtom } from "state/atoms/timeZone";
+import { slotsDayPattern } from "state/selectors/slotsDayPattern";
 import styled from "styled-components";
 import TimeSlot from "./TimeSlot";
-import { slotsDayPattern } from "state/selectors/slotsDayPattern";
-import { useLocale } from "helpers/hooks/useLocale";
-import { timeZoneAtom } from "state/atoms/timeZone";
-import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
-import { serviceAtom } from "state/atoms/service";
 
 const ServiceCalendarDayWrapper = styled(Column)`
   min-width: 56px;
@@ -45,12 +45,7 @@ const ServiceCalendarDay: React.FC<ServiceCalendarDayProps> = ({ day }) => {
             locale,
           }).replace(/[.]$/, "")}
         </Typography>
-        <DateTypography
-          className="date-text"
-          typographyType="body"
-          as="div"
-          align="center"
-        >
+        <DateTypography className="date-text" typographyType="body" as="div" align="center">
           {convertSourceDateTimeToTargetDateTime({
             date: day,
             targetTimeZone: timeZone,

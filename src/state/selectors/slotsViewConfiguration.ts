@@ -1,6 +1,6 @@
+import { BOOKING_FORM_TYPES } from "models/service";
 import { selector } from "recoil";
 import { serviceAtom } from "state/atoms/service";
-import { BOOKING_FORM_TYPES } from "models/service";
 
 interface SlotViewConfiguration {
   showDuration: boolean;

@@ -1,13 +1,13 @@
+import React from "react";
 import CheckBox from "components/forms/CheckBox";
 import FileUpload from "components/forms/FileUpload/FileUpload";
+import GuestsList from "components/forms/GuestsList";
 import NumberField from "components/forms/NumberField";
 import PhoneSelect from "components/forms/PhoneSelect";
 import QuantityField from "components/forms/QuantityField";
-import GuestsList from "components/forms/GuestsList";
 import SelectField from "components/forms/SelectField";
 import TextField from "components/forms/TextField";
 import { FormField } from "models/formFields";
-import React from "react";
 import { useTranslation } from "react-i18next";
 
 interface FormComponentProps {
@@ -53,13 +53,7 @@ const FormComponent = ({ config }: FormComponentProps) => {
       );
     }
     case "SYSTEM_PHONE_NUMBER": {
-      return (
-        <PhoneSelect
-          key={`booking-form-field-SYSTEM_PHONE_NUMBER`}
-          name="phone"
-          label={label}
-        />
-      );
+      return <PhoneSelect key={`booking-form-field-SYSTEM_PHONE_NUMBER`} name="phone" label={label} />;
     }
     case "SYSTEM_EMAIL_ADDRESS": {
       return (
@@ -126,31 +120,13 @@ const FormComponent = ({ config }: FormComponentProps) => {
       );
     }
     case "NUMBER": {
-      return (
-        <NumberField
-          key={`booking-form-field-${config.fieldId}`}
-          name={config.fieldId}
-          label={label}
-        />
-      );
+      return <NumberField key={`booking-form-field-${config.fieldId}`} name={config.fieldId} label={label} />;
     }
     case "CHECKBOX": {
-      return (
-        <CheckBox
-          key={`booking-form-field-${config.fieldId}`}
-          name={config.fieldId}
-          label={label}
-        />
-      );
+      return <CheckBox key={`booking-form-field-${config.fieldId}`} name={config.fieldId} label={label} />;
     }
     case "FILE_UPLOAD": {
-      return (
-        <FileUpload
-          key={`booking-form-field-FILE_UPLOAD-${config.fieldId}`}
-          {...config}
-          label={label}
-        />
-      );
+      return <FileUpload key={`booking-form-field-FILE_UPLOAD-${config.fieldId}`} {...config} label={label} />;
     }
     default: {
       return null;

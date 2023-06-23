@@ -1,6 +1,6 @@
+import React from "react";
 import ImageCarousel from "components/ImageCarousel/ImageCarousel";
 import { SkeletonBox } from "components/layout/SkeletonBox";
-import React from "react";
 import { useRecoilValue } from "recoil";
 import { serviceAtom } from "state/atoms/service";
 import { themeSelector } from "state/selectors/theme";

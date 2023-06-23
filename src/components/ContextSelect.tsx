@@ -1,11 +1,11 @@
-import { IconCheck, IconChevronDown } from "@tabler/icons";
-import { Column } from "components/layout/Column";
-import { Row } from "components/layout/Row";
+import React, { useCallback, useRef, useState } from "react";
 import StyledLabel from "components/StyledLabel";
 import { Typography } from "components/Typography";
+import { Column } from "components/layout/Column";
+import { Row } from "components/layout/Row";
 import useOnClickOutside from "helpers/hooks/useOnClickOutside";
-import React, { useCallback, useRef, useState } from "react";
 import styled, { css } from "styled-components";
+import { IconCheck, IconChevronDown } from "@tabler/icons";
 
 const SelectWrapper = styled(Column)`
   position: relative;
@@ -31,9 +31,7 @@ const OpenListButton = styled.button`
   border-style: solid;
   ${({ theme, disabled }) => {
     const borderColor = theme.colorSchemas.input.border;
-    const backgroundColor = disabled
-      ? "#F6F6F6"
-      : theme.colorSchemas.input.background;
+    const backgroundColor = disabled ? "#F6F6F6" : theme.colorSchemas.input.background;
 
     return css`
       background-color: ${backgroundColor};
@@ -135,10 +133,7 @@ const showTick = (key: string, value: string | Array<string>) => {
   return index > -1;
 };
 
-const getMultiValue = (
-  value: Array<string>,
-  options: Record<string, string>
-) => {
+const getMultiValue = (value: Array<string>, options: Record<string, string>) => {
   const texts = value.map((item) => {
     return options[item] ?? "";
   });
@@ -198,8 +193,7 @@ export const ContextSelect: React.FC<ContextSelectProps> = ({
     closeAfterChange && setIsOpen(false);
   };
 
-  const selectedValue =
-    typeof value === "string" ? options[value] : getMultiValue(value, options);
+  const selectedValue = typeof value === "string" ? options[value] : getMultiValue(value, options);
 
   return (
     <SelectWrapper ai="flex-start" ref={ref} className={className}>
@@ -224,16 +218,8 @@ export const ContextSelect: React.FC<ContextSelectProps> = ({
             const isMarked = showTick(itemKey, value);
 
             return (
-              <OptionButton
-                key={`select-popup-option-${itemKey}`}
-                onClick={() => handleChange(itemKey)}
-                type="button"
-              >
-                <Typography
-                  typographyType="body"
-                  weight={isMarked ? "700" : "400"}
-                  as="span"
-                >
+              <OptionButton key={`select-popup-option-${itemKey}`} onClick={() => handleChange(itemKey)} type="button">
+                <Typography typographyType="body" weight={isMarked ? "700" : "400"} as="span">
                   {itemValue}
                 </Typography>
                 {isMarked && <IconCheck size={20} />}

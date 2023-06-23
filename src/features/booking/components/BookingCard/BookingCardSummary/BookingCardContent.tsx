@@ -1,20 +1,15 @@
+import { LinkButton } from "components/LinkButton";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
-import { LinkButton } from "components/LinkButton";
 import { Booking } from "models/booking";
 import { useTranslation } from "react-i18next";
 
-type BookingCardContentProps = Pick<Booking, "iCalUrl" | "qrUrl"> & { 
+type BookingCardContentProps = Pick<Booking, "iCalUrl" | "qrUrl"> & {
   showCalendarButton: boolean;
   showQRButton: boolean;
 };
 
-const BookingCardContent = ({
-  iCalUrl,
-  qrUrl,
-  showCalendarButton,
-  showQRButton,
-}: BookingCardContentProps) => {
+const BookingCardContent = ({ iCalUrl, qrUrl, showCalendarButton, showQRButton }: BookingCardContentProps) => {
   const { t } = useTranslation(["booking"]);
 
   if (!showCalendarButton && !showQRButton) return null;

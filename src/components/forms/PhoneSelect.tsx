@@ -1,30 +1,22 @@
-import { useSearchParams } from "react-router-dom";
-import { Column } from "components/layout/Column";
+import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import BaseInput from "components/StyledInput";
 import StyledLabel from "components/StyledLabel";
-import React, {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { useTranslation } from "react-i18next";
-import styled, { css } from "styled-components";
-import ReactCountryFlag from "react-country-flag";
-import { IconChevronDown } from "@tabler/icons";
-import { COUNTRY_PHONE_PREFIXES } from "helpers/constans";
 import { Typography } from "components/Typography";
-import { useField } from "formik";
 import { Box } from "components/layout/Box";
-import useOnClickOutside from "helpers/hooks/useOnClickOutside";
-import { defaultPhonePrefixSelector } from "state/selectors/defaultPhonePrefix";
-import { useRecoilValue } from "recoil";
+import { Column } from "components/layout/Column";
 import { useLangParam } from "features/i18n/useLangParam";
+import { useField } from "formik";
+import { COUNTRY_PHONE_PREFIXES } from "helpers/constans";
+import useOnClickOutside from "helpers/hooks/useOnClickOutside";
+import ReactCountryFlag from "react-country-flag";
+import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { defaultPhonePrefixSelector } from "state/selectors/defaultPhonePrefix";
+import styled, { css } from "styled-components";
+import { IconChevronDown } from "@tabler/icons";
 
-const countryList = Object.entries(COUNTRY_PHONE_PREFIXES).sort(
-  ([aKey], [bKey]) => (aKey < bKey ? -1 : 1)
-);
+const countryList = Object.entries(COUNTRY_PHONE_PREFIXES).sort(([aKey], [bKey]) => (aKey < bKey ? -1 : 1));
 
 interface PhoneSelectProps {
   label?: string;
@@ -86,8 +78,7 @@ const ChooseCountryButton = styled(OpenListButton)`
   align-items: center;
 
   &:hover {
-    background-color: ${({ theme }) =>
-      theme.colorSchemas.background.primary.color};
+    background-color: ${({ theme }) => theme.colorSchemas.background.primary.color};
   }
 
   .flag {
@@ -132,17 +123,12 @@ const ListWrapper = styled.div`
   `}
 `;
 
-const PhoneSelect: React.FC<PhoneSelectProps> = ({
-  name,
-  label,
-}) => {
+const PhoneSelect: React.FC<PhoneSelectProps> = ({ name, label }) => {
   const [searchParams] = useSearchParams();
   const paramLang = useLangParam();
   const serviceDefaultCountryCode = useRecoilValue(defaultPhonePrefixSelector);
   const defaultCountryCode =
-    paramLang !== null && paramLang.split("-").length > 1
-      ? paramLang.split("-")[1]
-      : serviceDefaultCountryCode;
+    paramLang !== null && paramLang.split("-").length > 1 ? paramLang.split("-")[1] : serviceDefaultCountryCode;
   const [focused, setFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [, meta, helpers] = useField(name);
@@ -211,11 +197,7 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({
                   onClick={() => handleCountryCodeChange(countryCode)}
                   type="button"
                 >
-                  <ReactCountryFlag
-                    className="flag"
-                    svg
-                    countryCode={countryCode}
-                  />
+                  <ReactCountryFlag className="flag" svg countryCode={countryCode} />
                   <Typography typographyType="body" as="span">
                     {`${countryCode} ${prefix ? `+${prefix}` : ``}`}{" "}
                   </Typography>

@@ -20,11 +20,7 @@ export interface Space {
   provider: SpaceProvider;
 }
 
-export type BookingStatus =
-  | "NEW"
-  | "ACCEPTED"
-  | "CONFIRMED"
-  | "CANCELED";
+export type BookingStatus = "NEW" | "ACCEPTED" | "CONFIRMED" | "CANCELED";
 
 export type PaymentStatus =
   | "NEW"
