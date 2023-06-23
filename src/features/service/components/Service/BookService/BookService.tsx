@@ -1,33 +1,33 @@
-import { useSearchParams } from "react-router-dom";
+import React, { useCallback } from "react";
 import { Button } from "components/Button";
 import { Card } from "components/Card";
+import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
-import { Typography } from "components/Typography";
-import React, { useCallback } from "react";
-import { useRecoilValue } from "recoil";
-import { selectedSlot } from "state/atoms/selectedSlot";
-import { selectedDateRange } from "state/atoms/selectedDateRange";
-import { servicePrice } from "state/selectors/servicePrice";
-import { Formik, Form } from "formik";
-import { TFunction, useTranslation } from "react-i18next";
-import { useBookSlot } from "features/service/hooks/useBookSlot";
 import { useBookDateRange } from "features/service/hooks/useBookDateRange";
+import { useBookSlot } from "features/service/hooks/useBookSlot";
+import { Form, Formik } from "formik";
+import { useLocale } from "helpers/hooks/useLocale";
+import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
+import _ from "lodash";
+import { FormField, filterFormFields } from "models/formFields";
+import { BOOKING_FORM_TYPES } from "models/service";
+import { TFunction, useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
-import { BookingServiceFormContent } from "../BookingServiceFormContent/BookingServiceFormContent";
+import { useRecoilValue } from "recoil";
+import { selectedDateRange } from "state/atoms/selectedDateRange";
+import { selectedSlot } from "state/atoms/selectedSlot";
 import { serviceAtom } from "state/atoms/service";
+import { slotsFiltersAtom } from "state/atoms/slotsFilters";
+import { timeZoneAtom } from "state/atoms/timeZone";
+import { uploadAttachmentsAtom } from "state/atoms/uploadAttachments";
+import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
+import { servicePrice } from "state/selectors/servicePrice";
 import styled from "styled-components";
 import { IconInfoCircle } from "@tabler/icons";
-import { slotsFiltersAtom } from "state/atoms/slotsFilters";
-import { filterFormFields, FormField } from "models/formFields";
-import { uploadAttachmentsAtom } from "state/atoms/uploadAttachments";
-import _ from "lodash";
-import { useLocale } from "helpers/hooks/useLocale";
+import { BookingServiceFormContent } from "../BookingServiceFormContent/BookingServiceFormContent";
 import { generateValidationSchema } from "./validators";
-import { BOOKING_FORM_TYPES } from "models/service";
-import { timeZoneAtom } from "state/atoms/timeZone";
-import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 
 const getSubmitButtonText = (
   selectedSlotValue: string,
@@ -37,7 +37,7 @@ const getSubmitButtonText = (
         currency: string;
       }
     | undefined,
-  t: TFunction<"forms"[]>
+  t: TFunction<"forms"[]>,
 ) => {
   const textBase = t("book-free-button");
 
@@ -89,7 +89,7 @@ const getInitialValues = (formFields: Array<FormField>, searchParams: URLSearchP
         if (item.fieldType === "NUMBER") return { [item.fieldId]: searchParams.get(item.fieldId) ?? 1 };
         if (item.fieldType === "SELECT") return { [item.fieldId]: [] };
         return { [item.fieldId]: "" };
-      })
+      }),
     ),
   };
 };
@@ -114,8 +114,7 @@ const BookService = () => {
   const uploadState = useRecoilValue(uploadAttachmentsAtom);
   const timeZone = useRecoilValue(timeZoneAtom);
 
-  const isUploading =
-    Object.values(uploadState).filter((item) => item.isLoading).length > 0;
+  const isUploading = Object.values(uploadState).filter((item) => item.isLoading).length > 0;
 
   const formattedDate =
     selectedSlotValue &&
@@ -129,12 +128,24 @@ const BookService = () => {
 
   const checkDisableButton = useCallback(() => {
     const disabledForSlot = selectedSlotValue === "" || loading || isUploading;
-    const disabledForDateRange = selectedDateRangeValue.dateTimeFrom === null || selectedDateRangeValue.dateTimeTo === null || loadingDateRange || isUploading;
+    const disabledForDateRange =
+      selectedDateRangeValue.dateTimeFrom === null ||
+      selectedDateRangeValue.dateTimeTo === null ||
+      loadingDateRange ||
+      isUploading;
     const isSlotType = serviceType === BOOKING_FORM_TYPES.DAYS;
     const isDateRangeType = serviceType === BOOKING_FORM_TYPES.CALENDAR;
 
     return (isSlotType && disabledForSlot) || (isDateRangeType && disabledForDateRange);
-  }, [selectedSlotValue, loading, isUploading, selectedDateRangeValue.dateTimeFrom, selectedDateRangeValue.dateTimeTo, loadingDateRange, serviceType]);
+  }, [
+    selectedSlotValue,
+    loading,
+    isUploading,
+    selectedDateRangeValue.dateTimeFrom,
+    selectedDateRangeValue.dateTimeTo,
+    loadingDateRange,
+    serviceType,
+  ]);
 
   const handleSubmit = (value: Record<string, any>) => {
     const fullName = _.find(formFields, { fieldType: "SYSTEM_FULL_NAME" });
@@ -176,7 +187,11 @@ const BookService = () => {
           }),
         },
       });
-    } else if (serviceType === BOOKING_FORM_TYPES.CALENDAR && selectedDateRangeValue.dateTimeFrom !== null && selectedDateRangeValue.dateTimeTo !== null) {
+    } else if (
+      serviceType === BOOKING_FORM_TYPES.CALENDAR &&
+      selectedDateRangeValue.dateTimeFrom !== null &&
+      selectedDateRangeValue.dateTimeTo !== null
+    ) {
       bookDateRangeMutation({
         variables: {
           serviceId: id!,
@@ -186,7 +201,7 @@ const BookService = () => {
           ...(service?.paymentProviders.length && {
             paymentProvider: service.paymentProviders[0],
           }),
-        }
+        },
       });
     }
   };
@@ -213,24 +228,14 @@ const BookService = () => {
                 {(showWarning || error || errorDateRange) && (
                   <StyledWarning>
                     <IconInfoCircle size={20} color="#EA4335" />
-                    <Typography
-                      className="info-text"
-                      typographyType="body"
-                      as="span"
-                      color="inherit"
-                    >
+                    <Typography className="info-text" typographyType="body" as="span" color="inherit">
                       {error && t(error)}
                       {errorDateRange && t(errorDateRange)}
                       {!error && t("slot-already-booked")}
                     </Typography>
                   </StyledWarning>
                 )}
-                <Button
-                  type="submit"
-                  buttonType="primary"
-                  disabled={checkDisableButton()}
-                  data-cy="book-now-button"
-                >
+                <Button type="submit" buttonType="primary" disabled={checkDisableButton()} data-cy="book-now-button">
                   {getSubmitButtonText(formattedDate, servicePriceValue, t)}
                 </Button>
               </Column>

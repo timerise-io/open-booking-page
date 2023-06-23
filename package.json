@@ -5,18 +5,22 @@
   "dependencies": {
     "@apollo/client": "^3.6.9",
     "@tabler/icons": "^1.84.0",
+    "@trivago/prettier-plugin-sort-imports": "^4.1.1",
     "axios": "^1.2.1",
     "countries-and-timezones": "^3.3.0",
     "date-fns": "^2.28.0",
     "date-fns-tz": "^1.3.5",
+    "eslint-config-prettier": "^8.8.0",
     "formik": "^2.2.9",
     "graphql": "^15.5.1",
     "graphql-ws": "^5.10.0",
+    "husky": "^8.0.3",
     "i18next": "^20.3.5",
     "i18next-http-backend": "^1.4.1",
     "iso8601-duration": "^2.1.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
+    "prettier": "^2.8.8",
     "react": "^18.2.0",
     "react-cool-dimensions": "^2.0.7",
     "react-country-flag": "^3.0.2",
@@ -36,7 +40,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "lint": "eslint --ext .jsx --ext .js --ext .ts --ext .tsx src && npm run check-types",
+    "check-types": "tsc",
+    "prettier": "prettier --check \"src/**/*.tsx\" \"src/**/*.ts\"",
+    "prettier:fix": "prettier --write \"src/**/*.tsx\" \"src/**/*.ts\"",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [

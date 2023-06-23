@@ -1,16 +1,16 @@
-import { Typography } from "components/Typography";
-import { Column } from "components/layout/Column";
 import React from "react";
-import { useTranslation } from "react-i18next";
-import { bookingAtom } from "state/atoms/booking";
-import { useRecoilValue } from "recoil";
-import { serviceAtom } from "state/atoms/service";
-import { Row } from "components/layout/Row";
+import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
-import styled from "styled-components";
+import { Column } from "components/layout/Column";
+import { Row } from "components/layout/Row";
 import { useLocale } from "helpers/hooks/useLocale";
-import { timeZoneAtom } from "state/atoms/timeZone";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
+import { useTranslation } from "react-i18next";
+import { useRecoilValue } from "recoil";
+import { bookingAtom } from "state/atoms/booking";
+import { serviceAtom } from "state/atoms/service";
+import { timeZoneAtom } from "state/atoms/timeZone";
+import styled from "styled-components";
 
 const StyledTypography = styled(Typography)`
   & > strong {

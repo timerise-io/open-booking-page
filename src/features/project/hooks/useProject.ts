@@ -1,29 +1,26 @@
-import { useQuery } from "@apollo/client";
+import { useEffect } from "react";
 import { useIsBrandedPageFlag } from "helpers/hooks/useIsBrandedPageFlag";
 import { Project } from "models/project";
-import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
-import { loaderAtom, LOADERS } from "state/atoms/loader";
+import { LOADERS, loaderAtom } from "state/atoms/loader";
 import { projectAtom } from "state/atoms/project";
+import { useQuery } from "@apollo/client";
 import { ProjectVariables } from "../api/queries/models";
 import { GET_PROJECT } from "../api/queries/queries";
 
 export const useProjectState = (projectId: string) => {
   const isBrandedPage = useIsBrandedPageFlag();
-  const { loading, data } = useQuery<{ project: Project }, ProjectVariables>(
-    GET_PROJECT,
-    {
-      context: {
-        headers: {
-          "x-api-client-name": "booking-page",
-        },
+  const { loading, data } = useQuery<{ project: Project }, ProjectVariables>(GET_PROJECT, {
+    context: {
+      headers: {
+        "x-api-client-name": "booking-page",
       },
-      variables: {
-        projectId: projectId ?? "",
-      },
-      skip: !projectId || !isBrandedPage,
-    }
-  );
+    },
+    variables: {
+      projectId: projectId ?? "",
+    },
+    skip: !projectId || !isBrandedPage,
+  });
 
   const setProject = useSetRecoilState(projectAtom);
   const setProjectLoader = useSetRecoilState(loaderAtom(LOADERS.PROJECT));

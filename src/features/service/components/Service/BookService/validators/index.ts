@@ -2,40 +2,24 @@ import { FormField, filterFormFields } from "models/formFields";
 import { TFunction } from "react-i18next";
 import * as Yup from "yup";
 import { getCustomFieldsValidation } from "./customFields";
-import {
-  getStringFieldValidation,
-  getPhoneFieldValidation,
-  getEmailFieldValidation,
-} from "./systemFields";
+import { getEmailFieldValidation, getPhoneFieldValidation, getStringFieldValidation } from "./systemFields";
 
 export const generateValidationSchema = (
   t: TFunction<"forms"[]>,
   formFields: Array<FormField>,
-  isAcceptRequired: boolean
+  isAcceptRequired: boolean,
 ) => {
   if (formFields.length === 0) return Yup.object({});
 
-  const systemFullName = formFields.find(
-    (item) => item.fieldType === "SYSTEM_FULL_NAME"
-  );
-  const systemPhoneNumber = formFields.find(
-    (item) => item.fieldType === "SYSTEM_PHONE_NUMBER"
-  );
-  const systemEmailAddress = formFields.find(
-    (item) => item.fieldType === "SYSTEM_EMAIL_ADDRESS"
-  );
-  const systemMessage = formFields.find(
-    (item) => item.fieldType === "SYSTEM_MESSAGE"
-  );
-  const systemSlotQuantity = formFields.find(
-    (item) => item.fieldType === "SYSTEM_SLOT_QUANTITY"
-  );
+  const systemFullName = formFields.find((item) => item.fieldType === "SYSTEM_FULL_NAME");
+  const systemPhoneNumber = formFields.find((item) => item.fieldType === "SYSTEM_PHONE_NUMBER");
+  const systemEmailAddress = formFields.find((item) => item.fieldType === "SYSTEM_EMAIL_ADDRESS");
+  const systemMessage = formFields.find((item) => item.fieldType === "SYSTEM_MESSAGE");
+  const systemSlotQuantity = formFields.find((item) => item.fieldType === "SYSTEM_SLOT_QUANTITY");
   // const systemGuestsList = formFields.find(
   //   (item) => item.fieldType === "SYSTEM_GUESTS_LIST"
   // );
-  const systemAllowListCode = formFields.find(
-    (item) => item.fieldType === "SYSTEM_ALLOWLIST_CODE" && item.required
-  );
+  const systemAllowListCode = formFields.find((item) => item.fieldType === "SYSTEM_ALLOWLIST_CODE" && item.required);
 
   const requiredCustomFormFields = filterFormFields(formFields, false);
 
@@ -44,7 +28,7 @@ export const generateValidationSchema = (
       {},
       ...requiredCustomFormFields.map((item) => {
         return getCustomFieldsValidation(item, t);
-      })
+      }),
     ),
     ...(systemFullName && {
       fullName: getStringFieldValidation(t, systemFullName.required),

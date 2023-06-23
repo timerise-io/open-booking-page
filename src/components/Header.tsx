@@ -1,16 +1,16 @@
-import { Box } from "components/layout/Box";
-import { SkeletonBox } from "components/layout/SkeletonBox";
 import { CompanyLogo } from "components/CompanyLogo";
-import { Row } from "components/layout/Row";
 import { Typography } from "components/Typography";
-import styled from "styled-components";
-import { useRecoilValue } from "recoil";
-import { useIsBrandedPageFlag } from "helpers/hooks/useIsBrandedPageFlag";
+import { Box } from "components/layout/Box";
+import { Row } from "components/layout/Row";
+import { SkeletonBox } from "components/layout/SkeletonBox";
 import { TIMERISE_LOGO_URL } from "helpers/constans";
+import { useIsBrandedPageFlag } from "helpers/hooks/useIsBrandedPageFlag";
 import { useTranslation } from "react-i18next";
-import { headerSelector } from "state/selectors/headerSelector";
 import { useLocation } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { headerSelector } from "state/selectors/headerSelector";
 import { themeSelector } from "state/selectors/theme";
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   display: flex;
@@ -62,11 +62,7 @@ const ErrorHeader = () => {
   const themeType = useRecoilValue(themeSelector);
   return (
     <ErrorHeaderWrapper>
-      <TimeRiseLogo
-        src={footerLogo[themeType]}
-        alt="timerise logo"
-        data-cy="time-rise-footer-logo"
-      />
+      <TimeRiseLogo src={footerLogo[themeType]} alt="timerise logo" data-cy="time-rise-footer-logo" />
     </ErrorHeaderWrapper>
   );
 };
@@ -78,12 +74,8 @@ const Header: React.FC = () => {
   const { t } = useTranslation();
   if (isBrandedPage && data === undefined) return <HeaderLoader />;
 
-  const logoUrl = isBrandedPage
-    ? data?.logoUrl
-    : undefined ?? TIMERISE_LOGO_URL;
-  const headerTitle = isBrandedPage
-    ? data?.title
-    : undefined ?? t("solution-name");
+  const logoUrl = isBrandedPage ? data?.logoUrl : undefined ?? TIMERISE_LOGO_URL;
+  const headerTitle = isBrandedPage ? data?.title : undefined ?? t("solution-name");
 
   if (location.pathname === "/") {
     return <ErrorHeader />;
@@ -95,12 +87,7 @@ const Header: React.FC = () => {
         <Row>
           <CompanyLogo src={logoUrl} alt="logo" />
           <Box ml={1.25}>
-            <Typography
-              typographyType="h1"
-              as="h1"
-              displayType="contents"
-              data-cy="company-name"
-            >
+            <Typography typographyType="h1" as="h1" displayType="contents" data-cy="company-name">
               {headerTitle}
             </Typography>
           </Box>

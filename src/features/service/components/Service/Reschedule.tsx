@@ -1,13 +1,13 @@
-import { useBooking } from "features/booking/hooks/useBooking";
 import {
+  ContentSection,
   ContentWithDetails,
   DetailsSection,
-  ContentSection,
   DetailsTextWrapper,
   SliderWrapper,
 } from "components/layout/ContentWithDetails";
-import ServiceDateTime from "./ServiceDateTime/ServiceDateTime";
+import { useBooking } from "features/booking/hooks/useBooking";
 import RescheduleService from "./RescheduleService/RescheduleService";
+import ServiceDateTime from "./ServiceDateTime/ServiceDateTime";
 import ServiceDetails from "./ServiceDetails";
 import ServiceImageCarousel from "./ServiceImageCarousel";
 

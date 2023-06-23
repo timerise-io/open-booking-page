@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import { Column } from "components/layout/Column";
+import styled from "styled-components";
 
 export const ContentWithDetails = styled.div`
   display: flex;

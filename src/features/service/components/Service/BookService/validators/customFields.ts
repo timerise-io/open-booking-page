@@ -1,31 +1,17 @@
-import {
-  FormField,
-  FormFieldFileUpload,
-  FormFieldNumber,
-  FormFieldText,
-} from "models/formFields";
+import { FormField, FormFieldFileUpload, FormFieldNumber, FormFieldText } from "models/formFields";
 import { TFunction } from "react-i18next";
 import * as Yup from "yup";
 
-export const getCustomFieldsValidation = (
-  item: FormField,
-  t: TFunction<"forms"[]>
-) => {
-  if (item.fieldType === "CHECKBOX")
-    return getCheckBoxCustomFieldsValidation(item, t);
-  if (item.fieldType === "NUMBER")
-    return getNumberCustomFieldsValidation(item, t);
-  if (item.fieldType === "SELECT")
-    return getSelectCustomFieldsValidation(item, t);
+export const getCustomFieldsValidation = (item: FormField, t: TFunction<"forms"[]>) => {
+  if (item.fieldType === "CHECKBOX") return getCheckBoxCustomFieldsValidation(item, t);
+  if (item.fieldType === "NUMBER") return getNumberCustomFieldsValidation(item, t);
+  if (item.fieldType === "SELECT") return getSelectCustomFieldsValidation(item, t);
   if (item.fieldType === "TEXT") return getTextCustomFieldsValidation(item, t);
   if (item.fieldType === "FILE_UPLOAD") return getFileUploadValidation(item, t);
   return {};
 };
 
-const getFileUploadValidation = (
-  item: FormFieldFileUpload,
-  t: TFunction<"forms"[]>
-) => {
+const getFileUploadValidation = (item: FormFieldFileUpload, t: TFunction<"forms"[]>) => {
   let schema = Yup.string();
 
   if (item.required) {
@@ -37,10 +23,7 @@ const getFileUploadValidation = (
   };
 };
 
-const getCheckBoxCustomFieldsValidation = (
-  item: FormField,
-  t: TFunction<"forms"[]>
-) => {
+const getCheckBoxCustomFieldsValidation = (item: FormField, t: TFunction<"forms"[]>) => {
   let schema = Yup.boolean();
 
   if (item.required) {
@@ -52,10 +35,7 @@ const getCheckBoxCustomFieldsValidation = (
   };
 };
 
-const getSelectCustomFieldsValidation = (
-  item: FormField,
-  t: TFunction<"forms"[]>
-) => {
+const getSelectCustomFieldsValidation = (item: FormField, t: TFunction<"forms"[]>) => {
   let schema = Yup.array();
 
   if (item.required) {
@@ -67,10 +47,7 @@ const getSelectCustomFieldsValidation = (
   };
 };
 
-const getTextCustomFieldsValidation = (
-  item: FormFieldText,
-  t: TFunction<"forms"[]>
-) => {
+const getTextCustomFieldsValidation = (item: FormFieldText, t: TFunction<"forms"[]>) => {
   let schema = Yup.string();
 
   if (item.required) {
@@ -78,10 +55,7 @@ const getTextCustomFieldsValidation = (
   }
 
   if (item.validationRegex) {
-    schema = schema.matches(
-      new RegExp(item.validationRegex),
-      t("common:validation.incorrect-format")
-    );
+    schema = schema.matches(new RegExp(item.validationRegex), t("common:validation.incorrect-format"));
   }
 
   return {
@@ -89,23 +63,15 @@ const getTextCustomFieldsValidation = (
   };
 };
 
-const getNumberCustomFieldsValidation = (
-  item: FormFieldNumber,
-  t: TFunction<"forms"[]>
-) => {
+const getNumberCustomFieldsValidation = (item: FormFieldNumber, t: TFunction<"forms"[]>) => {
   let schema = Yup.number();
 
   if (item.required) {
-    schema = schema
-      .required(t("common:validation.required"))
-      .min(0, t("common:validation.min-value", { minValue: 0 }));
+    schema = schema.required(t("common:validation.required")).min(0, t("common:validation.min-value", { minValue: 0 }));
   }
 
   if (item.maxValue !== null) {
-    schema = schema.max(
-      item.maxValue,
-      t("common:validation.max-value", { maxValue: item.maxValue })
-    );
+    schema = schema.max(item.maxValue, t("common:validation.max-value", { maxValue: item.maxValue }));
   }
 
   return {

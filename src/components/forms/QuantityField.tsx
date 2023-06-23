@@ -1,10 +1,10 @@
-import { Box } from "components/layout/Box";
-import { Column } from "components/layout/Column";
+import React, { ChangeEvent, useEffect } from "react";
 import StyledInput from "components/StyledInput";
 import StyledLabel from "components/StyledLabel";
 import { Typography } from "components/Typography";
+import { Box } from "components/layout/Box";
+import { Column } from "components/layout/Column";
 import { useField } from "formik";
-import React, { ChangeEvent, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
@@ -26,11 +26,7 @@ interface QuantityFieldProps {
   maxQuantity?: number | null;
 }
 
-const QuantityField: React.FC<QuantityFieldProps> = ({
-  name,
-  label,
-  maxQuantity = 1,
-}) => {
+const QuantityField: React.FC<QuantityFieldProps> = ({ name, label, maxQuantity = 1 }) => {
   const selectedSlot = useRecoilValue(selectedSlotSelector);
   const { t } = useTranslation(["forms"]);
   const labelToDisplay = label === undefined ? t(`${name}Field`) : label;
@@ -41,9 +37,7 @@ const QuantityField: React.FC<QuantityFieldProps> = ({
   const { setValue, setTouched } = helpers;
 
   const maxValue =
-    selectedSlot !== undefined && (maxQuantity ?? 1) > selectedSlot.quantity
-      ? selectedSlot.quantity
-      : maxQuantity ?? 1;
+    selectedSlot !== undefined && (maxQuantity ?? 1) > selectedSlot.quantity ? selectedSlot.quantity : maxQuantity ?? 1;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
@@ -89,7 +83,9 @@ const QuantityField: React.FC<QuantityFieldProps> = ({
       />
 
       {selectedSlot !== undefined && (
-        <StyledHint typographyType="body" as="span">{t("out-of", { maxValue })}</StyledHint>
+        <StyledHint typographyType="body" as="span">
+          {t("out-of", { maxValue })}
+        </StyledHint>
       )}
 
       <Box h="13px" mt={0.5} mb={1}>

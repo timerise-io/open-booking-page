@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { Column } from "components/layout/Column";
 import { PropsWithChildren, Suspense } from "react";
+import { Column } from "components/layout/Column";
+import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;

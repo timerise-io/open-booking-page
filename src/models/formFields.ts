@@ -8,12 +8,7 @@ export type FormFieldSystemType =
   | "SYSTEM_ALLOWLIST_CODE"
   | "SYSTEM_PROMO_CODE";
 
-export type FormFieldCustomType =
-  | "TEXT"
-  | "NUMBER"
-  | "SELECT"
-  | "CHECKBOX"
-  | "FILE_UPLOAD";
+export type FormFieldCustomType = "TEXT" | "NUMBER" | "SELECT" | "CHECKBOX" | "FILE_UPLOAD";
 
 export type FormFieldType = FormFieldSystemType | FormFieldCustomType;
 
@@ -29,15 +24,10 @@ const systemFieldsList: Array<FormFieldSystemType> = [
 ];
 
 export const isSystemField = (formField: FormField) => {
-  return (
-    systemFieldsList.findIndex((item) => item === formField.fieldType) > -1
-  );
+  return systemFieldsList.findIndex((item) => item === formField.fieldType) > -1;
 };
 
-export const filterFormFields = (
-  formFields: Array<FormField>,
-  system = true
-) => {
+export const filterFormFields = (formFields: Array<FormField>, system = true) => {
   return formFields.filter((item) => isSystemField(item) === system);
 };
 

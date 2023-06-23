@@ -1,18 +1,18 @@
+import React from "react";
 import { Card } from "components/Card";
+import { DateRangeWrapper } from "components/DateRangeWrapper";
+import { Typography } from "components/Typography";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
-import { Typography } from "components/Typography";
-import React from "react";
+import "react-dates/initialize";
+import "react-dates/lib/css/_datepicker.css";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
-import TimezoneInfo from "../TimezoneInfo";
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
+import { useRecoilState, useRecoilValue } from "recoil";
 import { selectedDateRange } from "state/atoms/selectedDateRange";
 import { serviceAtom } from "state/atoms/service";
 import { serviceSlotsAtom } from "state/atoms/serviceSlots";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { DateRangeWrapper } from "components/DateRangeWrapper";
+import styled from "styled-components";
+import TimezoneInfo from "../TimezoneInfo";
 
 const WrapperCard = styled(Card)`
   position: relative;
@@ -38,7 +38,7 @@ export const ServiceDateRange = () => {
   const [, setSelectedDateRange] = useRecoilState(selectedDateRange);
   const handlers = {
     setSelectedDateRange,
-  }
+  };
 
   return (
     <WrapperCard padding="20px">
@@ -55,11 +55,9 @@ export const ServiceDateRange = () => {
           handlers={handlers}
           startDatePlaceholderText={t(`select-date`)}
           endDatePlaceholderText={t(`select-date`)}
-          additionalData={{service, slots}}
+          additionalData={{ service, slots }}
         />
-
       </Column>
-      
     </WrapperCard>
   );
 };

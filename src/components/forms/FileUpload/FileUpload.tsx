@@ -1,15 +1,15 @@
 import React, { useEffect, useId, useState } from "react";
 import StyledLabel from "components/StyledLabel";
-import { Column } from "components/layout/Column";
-import { FormFieldFileUpload } from "models/formFields";
-import { Box } from "components/layout/Box";
 import { Typography } from "components/Typography";
+import { Box } from "components/layout/Box";
+import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
-import styled, { css } from "styled-components";
-import { useUploadFile } from "helpers/hooks/useUploadFile";
 import { useField } from "formik";
-import NoFileFileUploadContent from "./NoFileFileUploadContent";
+import { useUploadFile } from "helpers/hooks/useUploadFile";
+import { FormFieldFileUpload } from "models/formFields";
+import styled, { css } from "styled-components";
 import FileUploadContent from "./FileUploadContent";
+import NoFileFileUploadContent from "./NoFileFileUploadContent";
 
 const StyledRow = styled(Row)`
   border-radius: 4px;

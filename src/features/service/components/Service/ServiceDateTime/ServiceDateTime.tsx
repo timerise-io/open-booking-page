@@ -1,10 +1,10 @@
+import React, { useEffect, useState } from "react";
 import { Card, CardProps } from "components/Card";
 import { ContextButton } from "components/ContextButton";
+import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
-import { Typography } from "components/Typography";
-import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import { slotsDayPattern } from "state/selectors/slotsDayPattern";
@@ -62,9 +62,7 @@ const FULL_HEIGHT_COUNT = 10;
 const ServiceDateTime = () => {
   const { t } = useTranslation();
   const numberOfSlotsPerDay = useRecoilValue(slotsDayPattern).length;
-  const [isFullHeight, setIsFullHeight] = useState(
-    numberOfSlotsPerDay < FULL_HEIGHT_COUNT + 1
-  );
+  const [isFullHeight, setIsFullHeight] = useState(numberOfSlotsPerDay < FULL_HEIGHT_COUNT + 1);
 
   useEffect(() => {
     setIsFullHeight(numberOfSlotsPerDay < FULL_HEIGHT_COUNT + 1);
@@ -91,13 +89,7 @@ const ServiceDateTime = () => {
               setIsFullHeight(!isFullHeight);
             }}
           >
-            <Typography
-              typographyType="body"
-              align="center"
-              as="span"
-              color="inherit"
-              weight="700"
-            >
+            <Typography typographyType="body" align="center" as="span" color="inherit" weight="700">
               {t(isFullHeight === false ? "show-more" : "show-less")}
             </Typography>
           </ContextButton>

@@ -1,5 +1,5 @@
+import { format, utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
 import parseISO from "date-fns/parseISO";
-import { zonedTimeToUtc, utcToZonedTime, format } from "date-fns-tz";
 
 export const getDateInTimezone = (isoDate: string) => {
   const dateToFormat = parseISO(isoDate.split("Z")[0]);
@@ -20,13 +20,13 @@ type ConvertSourceDateTimeToTargetDateTime = ({
   sourceTimeZone,
   targetTimeZone,
   dateFormat,
-  locale
+  locale,
 }: {
-  date: string,
-  sourceTimeZone: string,
-  targetTimeZone: string,
-  dateFormat?: string,
-  locale?: Locale,
+  date: string;
+  sourceTimeZone: string;
+  targetTimeZone: string;
+  dateFormat?: string;
+  locale?: Locale;
 }) => string;
 
 export const convertSourceDateTimeToTargetDateTime: ConvertSourceDateTimeToTargetDateTime = ({

@@ -36,15 +36,7 @@ interface StatusConfig {
   title: string;
 }
 
-type BookingStatusConfigActions =
-  | "calendar"
-  | "cancel"
-  | "hide"
-  | "pay"
-  | "qr"
-  | "reschedule"
-  | "service"
-  | "spaces";
+type BookingStatusConfigActions = "calendar" | "cancel" | "hide" | "pay" | "qr" | "reschedule" | "service" | "spaces";
 
 interface BookingStatusConfig extends StatusConfig {
   actions: Record<BookingStatusConfigActions, boolean> | null;
@@ -56,15 +48,9 @@ interface PaymentStatusConfig extends StatusConfig {
   actions: Record<PaymentStatusConfigActions, boolean> | null;
 }
 
-export type BookingStatusesConfigView = Record<
-  BookingStatus,
-  BookingStatusConfig
->;
+export type BookingStatusesConfigView = Record<BookingStatus, BookingStatusConfig>;
 
-export type PaymentStatusesConfigView = Record<
-  PaymentStatus,
-  PaymentStatusConfig
->;
+export type PaymentStatusesConfigView = Record<PaymentStatus, PaymentStatusConfig>;
 
 export enum BOOKING_FORM_TYPES {
   DAYS = "DAYS",

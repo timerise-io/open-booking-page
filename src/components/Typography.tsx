@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components";
 import { ThemeColors, TypographyType } from "models/theme";
+import styled, { css } from "styled-components";
 
 interface TypographyProps {
   typographyType: TypographyType;

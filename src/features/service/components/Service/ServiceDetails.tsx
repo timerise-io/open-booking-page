@@ -1,17 +1,16 @@
 import React from "react";
-
+import { ReactNode } from "react";
+import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
-import { Typography } from "components/Typography";
-import { ReactNode } from "react";
+import { SkeletonBox } from "components/layout/SkeletonBox";
+import ReactMarkdown from "react-markdown";
+import { useRecoilValue } from "recoil";
+import rehypeRaw from "rehype-raw";
+import { serviceAtom } from "state/atoms/service";
 import styled, { css } from "styled-components";
 import { IconCreditCard, IconMapPin, IconUser } from "@tabler/icons";
-import { SkeletonBox } from "components/layout/SkeletonBox";
-import { useRecoilValue } from "recoil";
-import { serviceAtom } from "state/atoms/service";
-import ReactMarkdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
 
 const StyledMD = styled.div`
   .md-wrapper {
@@ -54,11 +53,7 @@ const DetailsRow: React.FC<DetailsRowProps> = ({ name, value, icon }) => {
       <IconWrapper>{icon}</IconWrapper>
       <Box ml={0.5} w="100%">
         {value === null ? (
-          <SkeletonBox
-            w="100%"
-            h="12px"
-            style={{ minWidth: "-webkit-fill-available" }}
-          />
+          <SkeletonBox w="100%" h="12px" style={{ minWidth: "-webkit-fill-available" }} />
         ) : (
           <Typography typographyType="body" weight="700" displayType="contents">
             {value}
@@ -91,11 +86,7 @@ const ServiceDetails = () => {
       </>
     ) : (
       <StyledMD>
-        <ReactMarkdown
-          className="md-wrapper"
-          rehypePlugins={[rehypeRaw]}
-          children={serviceData.description}
-        />
+        <ReactMarkdown className="md-wrapper" rehypePlugins={[rehypeRaw]} children={serviceData.description} />
       </StyledMD>
     );
 
@@ -110,13 +101,7 @@ const ServiceDetails = () => {
             value={
               serviceData === undefined
                 ? null
-                : `${
-                    serviceData.price === 0
-                      ? "Free"
-                      : `${serviceData.price.toFixed(2)} ${
-                          serviceData.currency
-                        }`
-                  }`
+                : `${serviceData.price === 0 ? "Free" : `${serviceData.price.toFixed(2)} ${serviceData.currency}`}`
             }
             icon={<IconCreditCard />}
           />

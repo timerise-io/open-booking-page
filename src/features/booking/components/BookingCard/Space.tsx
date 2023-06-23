@@ -1,12 +1,12 @@
 import React from "react";
+import { CardButton } from "components/CardButton";
+import { LinkButton } from "components/LinkButton";
+import { Typography } from "components/Typography";
+import { Box } from "components/layout/Box";
+import { Row } from "components/layout/Row";
+import { SPACE_PROVIDERS_NAMES } from "helpers/constans";
 import { Space as SpaceModel } from "models/booking";
 import styled, { css } from "styled-components";
-import { Typography } from "components/Typography";
-import { Row } from "components/layout/Row";
-import { LinkButton } from "components/LinkButton";
-import { SPACE_PROVIDERS_NAMES } from "helpers/constans";
-import { CardButton } from "components/CardButton";
-import { Box } from "components/layout/Box";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -64,10 +64,7 @@ const Space = ({ space }: SpaceProps) => {
       )}
       <Row mb={0.75}>
         <ProviderButton href={space.url} target="_blank">
-          <ProviderLogo
-            src={`https://cdn.timerise.io/admin/${space.provider}.png`}
-            alt={`${space.provider} logo`}
-          />
+          <ProviderLogo src={`https://cdn.timerise.io/admin/${space.provider}.png`} alt={`${space.provider} logo`} />
           {space.title || SPACE_PROVIDERS_NAMES[space.provider]}
         </ProviderButton>
         <CardButton

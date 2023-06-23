@@ -43,14 +43,8 @@ export const BOOK_DATE_RANGE = gql`
 `;
 
 export const RESCHEDULE_BOOKING = gql`
-  mutation BookingReschedule(
-    $bookingId: ID!
-    $slots: [ID!]
-  ) {
-    bookingReschedule(
-      bookingId: $bookingId
-      slots: $slots
-    ) {
+  mutation BookingReschedule($bookingId: ID!, $slots: [ID!]) {
+    bookingReschedule(bookingId: $bookingId, slots: $slots) {
       bookingId
     }
   }

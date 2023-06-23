@@ -1,5 +1,5 @@
-import { Box, BoxProps } from "./Box";
 import styled, { css } from "styled-components";
+import { Box, BoxProps } from "./Box";
 
 type SkeletonBoxProps = BoxProps & {
   version?: "primary" | "secondary";
@@ -12,12 +12,7 @@ export const SkeletonBox = styled(Box)<SkeletonBoxProps>`
   border-radius: 4px;
   animation: fadein 1s;
   ${({ theme, version }) => {
-    const backgroundColor =
-      theme.themeType === "light"
-        ? "#e7e7e7"
-        : version === "secondary"
-        ? "#202020"
-        : "#0a0a0a";
+    const backgroundColor = theme.themeType === "light" ? "#e7e7e7" : version === "secondary" ? "#202020" : "#0a0a0a";
     return css`
       background-color: ${backgroundColor};
     `;
@@ -30,13 +25,7 @@ export const SkeletonBox = styled(Box)<SkeletonBoxProps>`
     bottom: 0;
     left: 0;
     transform: translateX(-100%);
-    background-image: linear-gradient(
-      90deg,
-      #0a0a0a 0,
-      #1a1a1a 45%,
-      #1a1a1a 55%,
-      #0a0a0a
-    );
+    background-image: linear-gradient(90deg, #0a0a0a 0, #1a1a1a 45%, #1a1a1a 55%, #0a0a0a);
     animation: shimmer 2s infinite;
     content: "";
     ${({ theme, version }) => {

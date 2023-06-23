@@ -7,14 +7,10 @@ export const ContextButton = styled.button<{ colorType: "primary" | "danger" }>`
   padding: 7px 12px;
 
   ${({ theme, colorType, disabled }) => {
-    const color =
-      colorType === "danger" ? theme.colors.error : theme.colors.primary;
+    const color = colorType === "danger" ? theme.colors.error : theme.colors.primary;
     const borderColor =
-      colorType === "danger"
-        ? theme.colors.error
-        : theme.colorSchemas.timeSlotButton.available.border;
-    const borderColorHover =
-      colorType === "danger" ? theme.colors.error : theme.colors.darkGrey;
+      colorType === "danger" ? theme.colors.error : theme.colorSchemas.timeSlotButton.available.border;
+    const borderColorHover = colorType === "danger" ? theme.colors.error : theme.colors.darkGrey;
 
     return css`
       color: ${color};

@@ -1,14 +1,14 @@
 import React, { PropsWithChildren } from "react";
-import styled from "styled-components";
+import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { IconButton } from "components/IconButton";
+import { Typography } from "components/Typography";
+import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
-import { Typography } from "components/Typography";
-import { IconX } from "@tabler/icons";
-import { Button } from "components/Button";
-import { Box } from "components/layout/Box";
 import { ButtonType } from "models/theme";
+import styled from "styled-components";
+import { IconX } from "@tabler/icons";
 
 const Wrapper = styled.div`
   background-color: #00000073;
@@ -69,16 +69,10 @@ const ConfirmModal: React.FC<PropsWithChildren<ConfirmModalProps>> = ({
           </Row>
           <Box mr={1.25}>{children}</Box>
           <Row jc="flex-end" mt={2.5}>
-            <StyledButton
-              onClick={() => onAbort && onAbort()}
-              buttonType="secondary"
-            >
+            <StyledButton onClick={() => onAbort && onAbort()} buttonType="secondary">
               {abortText}
             </StyledButton>
-            <StyledButton
-              onClick={() => onConfirm && onConfirm()}
-              buttonType={confirmButtonType}
-            >
+            <StyledButton onClick={() => onConfirm && onConfirm()} buttonType={confirmButtonType}>
               {confirmText}
             </StyledButton>
           </Row>

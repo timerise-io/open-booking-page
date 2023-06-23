@@ -16,11 +16,9 @@ export const pageDates = selector({
 
     const firstDate = new Date(firstDayDate);
 
-    const result: Array<string> = new Array(7)
-      .fill(undefined)
-      .map((_, index) => {
-        return addDays(firstDate, index).toISOString();
-      });
+    const result: Array<string> = new Array(7).fill(undefined).map((_, index) => {
+      return addDays(firstDate, index).toISOString();
+    });
 
     return result;
   },

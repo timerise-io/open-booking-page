@@ -1,18 +1,13 @@
-import styled, { css } from "styled-components";
-import {
-  IconChevronRight,
-  IconChevronLeft,
-  IconChevronsLeft,
-  IconChevronsRight,
-} from "@tabler/icons";
+import { ContextButton } from "components/ContextButton";
 import { Row } from "components/layout/Row";
+import { addMonths } from "date-fns";
+import { addDays, addMinutes, isAfter, isSameDay, set } from "date-fns/esm";
+import isBefore from "date-fns/isBefore";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { serviceAtom } from "state/atoms/service";
 import { slotsFiltersAtom } from "state/atoms/slotsFilters";
-import { addDays, addMinutes, isAfter, isSameDay, set } from "date-fns/esm";
-import isBefore from "date-fns/isBefore";
-import { ContextButton } from "components/ContextButton";
-import { addMonths } from "date-fns";
+import styled, { css } from "styled-components";
+import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from "@tabler/icons";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -50,10 +45,7 @@ const ServiceCalendarActionRow = () => {
     return Loader;
   }
 
-  const pageEnd = addDays(
-    new Date(serviceFilters.firstDayDate),
-    serviceFilters.pageSize
-  );
+  const pageEnd = addDays(new Date(serviceFilters.firstDayDate), serviceFilters.pageSize);
 
   const pageEndToCompare = addMinutes(
     set(new Date(serviceFilters.firstDayDate), {
@@ -61,18 +53,12 @@ const ServiceCalendarActionRow = () => {
       minutes: 0,
       seconds: 0,
     }),
-    serviceFilters.pageSize * 24 * 60 - 1
+    serviceFilters.pageSize * 24 * 60 - 1,
   );
 
   const isPrevDisabled =
-    isBefore(
-      new Date(serviceFilters.firstDayDate),
-      new Date(service.dateTimeFrom)
-    ) ||
-    isSameDay(
-      new Date(serviceFilters.firstDayDate),
-      new Date(service.dateTimeFrom)
-    ) ||
+    isBefore(new Date(serviceFilters.firstDayDate), new Date(service.dateTimeFrom)) ||
+    isSameDay(new Date(serviceFilters.firstDayDate), new Date(service.dateTimeFrom)) ||
     isSameDay(new Date(), new Date(serviceFilters.firstDayDate)) ||
     isAfter(new Date(), new Date(serviceFilters.firstDayDate));
 
@@ -85,10 +71,7 @@ const ServiceCalendarActionRow = () => {
   const isNextMonthDisabled = isNextDisabled;
 
   const handlePrevClick = () => {
-    const firstDayDate = addDays(
-      new Date(serviceFilters.firstDayDate),
-      serviceFilters.pageSize * -1
-    );
+    const firstDayDate = addDays(new Date(serviceFilters.firstDayDate), serviceFilters.pageSize * -1);
 
     setServiceFilters({
       ...serviceFilters,
@@ -97,10 +80,7 @@ const ServiceCalendarActionRow = () => {
   };
 
   const handlePrevMonthClick = () => {
-    const prevMonth = addMonths(
-      set(new Date(serviceFilters.firstDayDate), { date: 1 }),
-      -1
-    );
+    const prevMonth = addMonths(set(new Date(serviceFilters.firstDayDate), { date: 1 }), -1);
     const firstDayDate = isBefore(prevMonth, new Date(service.dateTimeFrom))
       ? new Date(service.dateTimeFrom)
       : prevMonth;
@@ -116,14 +96,9 @@ const ServiceCalendarActionRow = () => {
   };
 
   const handleNextMonthClick = () => {
-    const nextMonth = addMonths(
-      set(new Date(serviceFilters.firstDayDate), { date: 1 }),
-      1
-    );
+    const nextMonth = addMonths(set(new Date(serviceFilters.firstDayDate), { date: 1 }), 1);
 
-    const firstDayDate = isAfter(nextMonth, new Date(service.dateTimeTo))
-      ? new Date(service.dateTimeTo)
-      : nextMonth;
+    const firstDayDate = isAfter(nextMonth, new Date(service.dateTimeTo)) ? new Date(service.dateTimeTo) : nextMonth;
 
     setServiceFilters({
       ...serviceFilters,
@@ -134,34 +109,18 @@ const ServiceCalendarActionRow = () => {
   return (
     <Wrapper>
       <Row gap="8px">
-        <PaginationButton
-          colorType="primary"
-          onClick={handlePrevMonthClick}
-          disabled={isPrevMonthDisabled}
-        >
+        <PaginationButton colorType="primary" onClick={handlePrevMonthClick} disabled={isPrevMonthDisabled}>
           <IconChevronsLeft />
         </PaginationButton>
-        <PaginationButton
-          colorType="primary"
-          onClick={handlePrevClick}
-          disabled={isPrevDisabled}
-        >
+        <PaginationButton colorType="primary" onClick={handlePrevClick} disabled={isPrevDisabled}>
           <IconChevronLeft />
         </PaginationButton>
       </Row>
       <Row gap="8px">
-        <PaginationButton
-          colorType="primary"
-          onClick={handleNextClick}
-          disabled={isNextDisabled}
-        >
+        <PaginationButton colorType="primary" onClick={handleNextClick} disabled={isNextDisabled}>
           <IconChevronRight />
         </PaginationButton>
-        <PaginationButton
-          colorType="primary"
-          onClick={handleNextMonthClick}
-          disabled={isNextMonthDisabled}
-        >
+        <PaginationButton colorType="primary" onClick={handleNextMonthClick} disabled={isNextMonthDisabled}>
           <IconChevronsRight />
         </PaginationButton>
       </Row>

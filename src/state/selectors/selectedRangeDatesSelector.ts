@@ -6,6 +6,6 @@ export const selectedRangeDatesSelector = selector({
   get: ({ get }) => {
     const selectedDateTime = get(selectedDateRange);
 
-    return selectedDateTime
+    return selectedDateTime;
   },
 });

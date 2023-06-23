@@ -1,11 +1,8 @@
-import { useMutation } from "@apollo/client";
-import { PAGES } from "pages/constans";
 import { useEffect } from "react";
+import { PAGES } from "pages/constans";
 import { generatePath, useNavigate } from "react-router";
-import {
-  ConfirmBookingMutationResult,
-  ConfirmBookingMutationVariables,
-} from "../api/mutations/models";
+import { useMutation } from "@apollo/client";
+import { ConfirmBookingMutationResult, ConfirmBookingMutationVariables } from "../api/mutations/models";
 import { CONFIRM_BOOKING } from "../api/mutations/mutations";
 
 export const useConfirmBooking = (bookingId: string) => {

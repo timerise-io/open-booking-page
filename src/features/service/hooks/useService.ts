@@ -1,11 +1,17 @@
-import { useQuery } from "@apollo/client";
 import { useEffect } from "react";
+import addDays from "date-fns/addDays";
+import { useLangParam } from "features/i18n/useLangParam";
+import { TIMERISE_LOGO_URL } from "helpers/constans";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { loaderAtom, LOADERS } from "state/atoms/loader";
+import { LOADERS, loaderAtom } from "state/atoms/loader";
 import { serviceAtom } from "state/atoms/service";
 import { serviceSlotsAtom } from "state/atoms/serviceSlots";
 import { slotsFiltersAtom } from "state/atoms/slotsFilters";
+import { timeZoneAtom } from "state/atoms/timeZone";
+import { slotsFilterSelector } from "state/selectors/slotFilterSelector";
+import { slotsViewConfiguration } from "state/selectors/slotsViewConfiguration";
+import { useQuery } from "@apollo/client";
 import {
   ServiceQueryResult,
   ServiceQueryVariables,
@@ -13,28 +19,16 @@ import {
   ServiceSlotsQueryVariables,
 } from "../api/queries/models";
 import { GET_SERVICE, GET_SERVICE_SLOTS } from "../api/queries/queries";
-import { slotsFilterSelector } from "state/selectors/slotFilterSelector";
-import { slotsViewConfiguration } from "state/selectors/slotsViewConfiguration";
-import { timeZoneAtom } from "state/atoms/timeZone";
-import { TIMERISE_LOGO_URL } from "helpers/constans";
-import addDays from "date-fns/addDays";
-import { useLangParam } from "features/i18n/useLangParam";
 
 export const useServiceSlotsState = (serviceId: string) => {
   const isServiceLoaded = !!useRecoilValue(serviceAtom);
   const navigate = useNavigate();
   const setServiceSlots = useSetRecoilState(serviceSlotsAtom);
-  const {
-    firstDayDate,
-    fetchDate: fetchFrom,
-    triggerId,
-  } = useRecoilValue(slotsFilterSelector);
+  const { firstDayDate, fetchDate: fetchFrom, triggerId } = useRecoilValue(slotsFilterSelector);
 
   const { maxDaysPerPage } = useRecoilValue(slotsViewConfiguration);
 
-  const setServiceSlotsLoader = useSetRecoilState(
-    loaderAtom(LOADERS.SERVICE_SLOTS)
-  );
+  const setServiceSlotsLoader = useSetRecoilState(loaderAtom(LOADERS.SERVICE_SLOTS));
   const setSlotsFilter = useSetRecoilState(slotsFiltersAtom);
 
   const fetchTo = `${
@@ -48,23 +42,20 @@ export const useServiceSlotsState = (serviceId: string) => {
     data: slotsData,
     error: slotsError,
     refetch,
-  } = useQuery<ServiceSlotsQueryResult, ServiceSlotsQueryVariables>(
-    GET_SERVICE_SLOTS,
-    {
-      context: {
-        headers: {
-          "x-api-client-name": "booking-page",
-        },
+  } = useQuery<ServiceSlotsQueryResult, ServiceSlotsQueryVariables>(GET_SERVICE_SLOTS, {
+    context: {
+      headers: {
+        "x-api-client-name": "booking-page",
       },
-      fetchPolicy: "no-cache",
-      variables: {
-        serviceId: serviceId,
-        from: fetchFrom,
-        to: fetchTo,
-      },
-      skip: isServiceLoaded === false,
-    }
-  );
+    },
+    fetchPolicy: "no-cache",
+    variables: {
+      serviceId: serviceId,
+      from: fetchFrom,
+      to: fetchTo,
+    },
+    skip: isServiceLoaded === false,
+  });
 
   useEffect(() => {
     if (triggerId !== 0) {
@@ -93,23 +84,13 @@ export const useServiceSlotsState = (serviceId: string) => {
         firstDayDate: fetchFrom,
         triggerId,
       });
-  }, [
-    slotsLoading,
-    setServiceSlotsLoader,
-    fetchFrom,
-    firstDayDate,
-    setSlotsFilter,
-    triggerId,
-  ]);
+  }, [slotsLoading, setServiceSlotsLoader, fetchFrom, firstDayDate, setSlotsFilter, triggerId]);
 };
 
 export const useServiceState = (serviceId: string, lang: string | null) => {
   const navigate = useNavigate();
 
-  const { loading, data, error } = useQuery<
-    { service?: ServiceQueryResult },
-    ServiceQueryVariables
-  >(GET_SERVICE, {
+  const { loading, data, error } = useQuery<{ service?: ServiceQueryResult }, ServiceQueryVariables>(GET_SERVICE, {
     context: {
       headers: {
         ...(lang && { "Accept-Language": lang }),
@@ -134,7 +115,7 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
 
       if (service.project.localTimeZone) {
         //setTimeZone(service.project.localTimeZone);
-        setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone)
+        setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
       }
 
       setService({
@@ -148,9 +129,7 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
         price: service.price ?? 0,
         promoPrice: service.promoPrice,
         currency: service.currency,
-        locations: (service.locations ?? [{ title: "" }]).map(
-          (item) => item.title
-        ),
+        locations: (service.locations ?? [{ title: "" }]).map((item) => item.title),
         hostedBy:
           service.hosts.length > 1
             ? `${service.hosts[0].fullName} +${service.hosts.length - 1}`

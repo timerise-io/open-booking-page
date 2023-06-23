@@ -5,8 +5,7 @@ import { userPreferenceAtom } from "state/atoms/userPreference";
 export const themeSelector = selector({
   key: "theme",
   get: ({ get }) => {
-    const projectTheme: "light" | "dark" =
-      get(serviceAtom)?.project.theme === "DARK" ? "dark" : "light";
+    const projectTheme: "light" | "dark" = get(serviceAtom)?.project.theme === "DARK" ? "dark" : "light";
 
     return get(userPreferenceAtom).theme ?? projectTheme ?? "light";
   },

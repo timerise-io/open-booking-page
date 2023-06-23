@@ -1,5 +1,5 @@
-import { selector } from "recoil";
 import ct, { TimezoneName } from "countries-and-timezones";
+import { selector } from "recoil";
 import { timeZoneAtom } from "state/atoms/timeZone";
 
 export const timeZoneOffsetSelector = selector({

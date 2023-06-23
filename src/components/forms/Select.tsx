@@ -59,11 +59,7 @@ interface SelectProps {
   defaultValue?: string;
 }
 
-const Select: React.FC<PropsWithChildren<SelectProps>> = ({
-  onChange,
-  defaultValue,
-  children,
-}) => {
+const Select: React.FC<PropsWithChildren<SelectProps>> = ({ onChange, defaultValue, children }) => {
   return (
     <WrapperDiv>
       <IconChevronDown />

@@ -1,17 +1,14 @@
-import { useQuery } from "@apollo/client";
+import { useEffect } from "react";
 import { useLangParam } from "features/i18n/useLangParam";
 import { useProjectState } from "features/project/hooks/useProject";
-import { useServiceState, useServiceSlotsState } from "features/service/hooks/useService";
-import { useEffect } from "react";
+import { useServiceSlotsState, useServiceState } from "features/service/hooks/useService";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
-import { loaderAtom, LOADERS } from "state/atoms/loader";
+import { LOADERS, loaderAtom } from "state/atoms/loader";
 import { serviceAtom } from "state/atoms/service";
-import {
-  BookingQueryResult,
-  BookingQueryVariables,
-} from "../api/queries/models";
+import { useQuery } from "@apollo/client";
+import { BookingQueryResult, BookingQueryVariables } from "../api/queries/models";
 import { GET_BOOKING } from "../api/queries/queries";
 
 export const useBookingState = (bookingId: string) => {
@@ -19,20 +16,20 @@ export const useBookingState = (bookingId: string) => {
   const setBooking = useSetRecoilState(bookingAtom);
   const setServiceLoader = useSetRecoilState(loaderAtom(LOADERS.BOOKING));
 
-  const { loading, data, error, startPolling, stopPolling } = useQuery<
-    BookingQueryResult,
-    BookingQueryVariables
-  >(GET_BOOKING, {
-    fetchPolicy: "no-cache",
-    context: {
-      headers: {
-        "x-api-client-name": "booking-page",
+  const { loading, data, error, startPolling, stopPolling } = useQuery<BookingQueryResult, BookingQueryVariables>(
+    GET_BOOKING,
+    {
+      fetchPolicy: "no-cache",
+      context: {
+        headers: {
+          "x-api-client-name": "booking-page",
+        },
+      },
+      variables: {
+        bookingId,
       },
     },
-    variables: {
-      bookingId,
-    },
-  });
+  );
 
   useEffect(() => {
     startPolling(2000);

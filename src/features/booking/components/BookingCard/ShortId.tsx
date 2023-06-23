@@ -1,6 +1,6 @@
+import React from "react";
 import { Typography } from "components/Typography";
 import TimezoneInfo from "features/service/components/Service/TimezoneInfo";
-import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`

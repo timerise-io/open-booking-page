@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import { ConfirmationType } from "models/confirmation";
 import { ButtonType } from "models/theme";
-import { useEffect, useState } from "react";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import confirmationAtom from "state/atoms/confirmation";
 
@@ -11,12 +11,7 @@ interface UseContextProps {
   type: ConfirmationType;
 }
 
-const useConfirmation = ({
-  onAbort,
-  confirmButtonType,
-  onConfirm,
-  type,
-}: UseContextProps) => {
+const useConfirmation = ({ onAbort, confirmButtonType, onConfirm, type }: UseContextProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [confirmation, setConfirmation] = useRecoilState(confirmationAtom);
   const resetConfirmation = useResetRecoilState(confirmationAtom);

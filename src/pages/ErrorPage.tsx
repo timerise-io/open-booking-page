@@ -1,5 +1,5 @@
-import { Button } from "components/Button";
 import React from "react";
+import { Button } from "components/Button";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -58,8 +58,8 @@ const ErrorPage = () => {
         <StyledH2>Oh no... there’s nothing here! 😱</StyledH2>
       </div>
       <StyledInfo>
-        Don’t worry, it’s just an error. Sometimes it happens, but don't get
-        discouraged. Try again with a different address or...
+        Don’t worry, it’s just an error. Sometimes it happens, but don't get discouraged. Try again with a different
+        address or...
       </StyledInfo>
       <StyledButton
         buttonType="primary"

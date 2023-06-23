@@ -11,15 +11,9 @@ export const bookingCardViewConfig = selector({
     if (!booking || !service) return null;
 
     const { status, paymentStatus } = booking;
-    const {
-      bookingStatus: bookingStatusConfig,
-      paymentStatus: paymentStatusConfig,
-    } = service.viewConfig;
+    const { bookingStatus: bookingStatusConfig, paymentStatus: paymentStatusConfig } = service.viewConfig;
 
-    const usePaymentFlow = !!(
-      paymentStatus !== null &&
-      !paymentStatusConfig[paymentStatus]?.actions?.hide
-    );
+    const usePaymentFlow = !!(paymentStatus !== null && !paymentStatusConfig[paymentStatus]?.actions?.hide);
 
     if (usePaymentFlow && !!paymentStatus) {
       return { ...paymentStatusConfig[paymentStatus] };

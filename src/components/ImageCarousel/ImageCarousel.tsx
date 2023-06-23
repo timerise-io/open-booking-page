@@ -1,7 +1,7 @@
-import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
-import { IconButton } from "components/IconButton";
 import React, { useState } from "react";
+import { IconButton } from "components/IconButton";
 import styled, { css } from "styled-components";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
 
 const MainWrapper = styled.div`
   min-height: inherit;
@@ -123,14 +123,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
         </>
       )}
       {images.map((url, index) => {
-        return (
-          <StyledImg
-            key={`image-carousel-${index}`}
-            src={url}
-            index={index}
-            currentIndex={currentIndex}
-          />
-        );
+        return <StyledImg key={`image-carousel-${index}`} src={url} index={index} currentIndex={currentIndex} />;
       })}
     </MainWrapper>
   );

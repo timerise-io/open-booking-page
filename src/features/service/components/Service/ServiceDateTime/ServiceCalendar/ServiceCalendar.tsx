@@ -1,6 +1,6 @@
 import { SkeletonBox } from "components/layout/SkeletonBox";
 import { useRecoilValue } from "recoil";
-import { loaderAtom, LOADERS } from "state/atoms/loader";
+import { LOADERS, loaderAtom } from "state/atoms/loader";
 import ServiceCalendarWrapper from "./ServiceCalendarWrapper";
 
 const ServiceCalendar = () => {

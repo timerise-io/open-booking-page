@@ -19,15 +19,11 @@ export const Box = styled.div<BoxProps>`
   width: ${({ w: width }) => width ?? "unset"};
   height: ${({ h: height }) => height ?? "unset"};
   margin: ${({ theme, mt, mr, mb, ml, m = 0 }) =>
-    `calc(${theme.spacing} * ${mt ?? m}) calc(${theme.spacing} * ${
-      mr ?? m
-    }) calc(${theme.spacing} * ${mb ?? m}) calc(${theme.spacing} * ${
-      ml ?? m
-    })`};
+    `calc(${theme.spacing} * ${mt ?? m}) calc(${theme.spacing} * ${mr ?? m}) calc(${theme.spacing} * ${mb ?? m}) calc(${
+      theme.spacing
+    } * ${ml ?? m})`};
   padding: ${({ theme, pt, pr, pb, pl, p = 0 }) =>
-    `calc(${theme.spacing} * ${pt ?? p}) calc(${theme.spacing} * ${
-      pr ?? p
-    }) calc(${theme.spacing} * ${pb ?? p}) calc(${theme.spacing} * ${
-      pl ?? p
-    })`};
+    `calc(${theme.spacing} * ${pt ?? p}) calc(${theme.spacing} * ${pr ?? p}) calc(${theme.spacing} * ${pb ?? p}) calc(${
+      theme.spacing
+    } * ${pl ?? p})`};
 `;

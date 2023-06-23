@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { AlignItems, JustifyContent } from "models/commonProperties";
 import { Box, BoxProps } from "components/layout/Box";
+import { AlignItems, JustifyContent } from "models/commonProperties";
+import styled from "styled-components";
 
 type RowProps = BoxProps & {
   jc?: JustifyContent;

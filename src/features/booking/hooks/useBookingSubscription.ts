@@ -1,17 +1,14 @@
-import { useSubscription } from "@apollo/client";
+import { useEffect } from "react";
 import { useLangParam } from "features/i18n/useLangParam";
 import { useProjectState } from "features/project/hooks/useProject";
 import { useServiceState } from "features/service/hooks/useService";
-import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
-import { loaderAtom, LOADERS } from "state/atoms/loader";
+import { LOADERS, loaderAtom } from "state/atoms/loader";
 import { serviceAtom } from "state/atoms/service";
-import {
-  BookingQueryResult,
-  BookingQueryVariables,
-} from "../api/queries/models";
+import { useSubscription } from "@apollo/client";
+import { BookingQueryResult, BookingQueryVariables } from "../api/queries/models";
 import { BOOKING_SUBSCRIPTION } from "../api/subscriptions/booking";
 
 export const useBookingSubscription = (bookingId: string) => {
@@ -19,10 +16,7 @@ export const useBookingSubscription = (bookingId: string) => {
   const setBooking = useSetRecoilState(bookingAtom);
   const setServiceLoader = useSetRecoilState(loaderAtom(LOADERS.BOOKING));
 
-  const { loading, data, error } = useSubscription<
-    BookingQueryResult,
-    BookingQueryVariables
-  >(BOOKING_SUBSCRIPTION, {
+  const { loading, data, error } = useSubscription<BookingQueryResult, BookingQueryVariables>(BOOKING_SUBSCRIPTION, {
     fetchPolicy: "no-cache",
     variables: {
       bookingId,

@@ -1,14 +1,11 @@
+import React, { useState } from "react";
+import { Typography } from "components/Typography";
 import { Column } from "components/layout/Column";
-import {
-  DetailsTextWrapper,
-  SliderWrapper,
-} from "components/layout/ContentWithDetails";
+import { DetailsTextWrapper, SliderWrapper } from "components/layout/ContentWithDetails";
 import { Row } from "components/layout/Row";
 import { SkeletonBox } from "components/layout/SkeletonBox";
-import { Typography } from "components/Typography";
 import ServiceDetails from "features/service/components/Service/ServiceDetails";
 import ServiceImageCarousel from "features/service/components/Service/ServiceImageCarousel";
-import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import { serviceAtom } from "state/atoms/service";
@@ -49,8 +46,7 @@ const SmallDetailsRow = styled(Row)`
   border-radius: 4px;
   overflow: hidden;
 
-  background-color: ${({ theme }) =>
-    theme.colorSchemas.background.primary.color};
+  background-color: ${({ theme }) => theme.colorSchemas.background.primary.color};
   ${({ theme }) => theme.mediaBelow(theme.breakpoints.sm)} {
     border-radius: 0;
   }
@@ -89,9 +85,7 @@ const SmallDetails = () => {
   const { t } = useTranslation(["booking"]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const buttonText = isOpen
-    ? t("hide-service-details")
-    : t("show-service-details");
+  const buttonText = isOpen ? t("hide-service-details") : t("show-service-details");
 
   const smallServiceData = serviceData ? (
     <SmallDetailsRow jc="flex-start">

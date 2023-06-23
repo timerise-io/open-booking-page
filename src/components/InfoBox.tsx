@@ -1,6 +1,6 @@
-import { IconInfoCircle } from "@tabler/icons";
 import React, { PropsWithChildren } from "react";
 import styled, { css } from "styled-components";
+import { IconInfoCircle } from "@tabler/icons";
 import { Typography } from "./Typography";
 
 const StyledInfo = styled.div`
