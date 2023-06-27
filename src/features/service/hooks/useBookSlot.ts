@@ -35,8 +35,7 @@ export const useBookSlot = () => {
         }),
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  }, [data?.bookingCreate.bookingId, lang, navigate]);
 
   useEffect(() => {
     if (error) {
