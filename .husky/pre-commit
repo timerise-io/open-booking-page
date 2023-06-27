@@ -3,4 +3,5 @@
 
 npx browserslist@latest --update-db
 npm run prettier
+npm run test
 npm run lint
