@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm ci && npm run build
+      - lint: npm run lint
+      - prettier: npm run prettier
+      - tests: npm run test
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
