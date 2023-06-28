@@ -1,6 +1,7 @@
 import { useEffect } from "react";
+import { getPath } from "helpers/functions";
 import { PAGES } from "pages/constans";
-import { generatePath, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { useMutation } from "@apollo/client";
 import { ConfirmBookingMutationResult, ConfirmBookingMutationVariables } from "../api/mutations/models";
 import { CONFIRM_BOOKING } from "../api/mutations/mutations";
@@ -35,7 +36,7 @@ export const useConfirmBooking = (bookingId: string) => {
 
   useEffect(() => {
     if (!data && loading === false) {
-      navigate(generatePath(PAGES.BOOKING, { id: bookingId }));
+      navigate(getPath({ url: PAGES.BOOKING, params: { id: bookingId } }));
     }
   }, [bookingId, data, navigate, loading]);
 };

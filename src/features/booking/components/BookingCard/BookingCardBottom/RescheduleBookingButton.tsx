@@ -1,9 +1,10 @@
 import { ContextButton } from "components/ContextButton";
 import { Typography } from "components/Typography";
 import { useLangParam } from "features/i18n/useLangParam";
+import { getPath } from "helpers/functions";
 import { PAGES } from "pages/constans";
 import { useTranslation } from "react-i18next";
-import { createSearchParams, generatePath, useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
 
@@ -20,9 +21,12 @@ export const RescheduleBookingButton = () => {
       colorType="primary"
       onClick={() => {
         navigate(
-          generatePath(`${PAGES.RESCHEDULE}:query`, {
-            id: bookingValue.bookingId,
-            query: lang ? `?${createSearchParams({ lang }).toString()}` : "",
+          getPath({
+            url: `${PAGES.RESCHEDULE}:query`,
+            params: {
+              id: bookingValue.bookingId,
+              query: lang ? `?${createSearchParams({ lang }).toString()}` : "",
+            },
           }),
         );
       }}

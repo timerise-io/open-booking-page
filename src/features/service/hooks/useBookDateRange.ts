@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useLangParam } from "features/i18n/useLangParam";
+import { getPath } from "helpers/functions";
 import { PAGES } from "pages/constans";
-import { createSearchParams, generatePath, useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { selectedSlot } from "state/atoms/selectedSlot";
 import { slotsFiltersAtom } from "state/atoms/slotsFilters";
@@ -29,9 +30,12 @@ export const useBookDateRange = () => {
   useEffect(() => {
     if (data?.bookingCreate.bookingId) {
       navigate(
-        generatePath(`${PAGES.BOOKING}:query`, {
-          id: data.bookingCreate.bookingId,
-          query: lang ? `?${createSearchParams({ lang }).toString()}` : "",
+        getPath({
+          url: `${PAGES.BOOKING}:query`,
+          params: {
+            id: data.bookingCreate.bookingId,
+            query: lang ? `?${createSearchParams({ lang }).toString()}` : "",
+          },
         }),
       );
     }

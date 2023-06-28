@@ -5,11 +5,12 @@ import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { useLangParam } from "features/i18n/useLangParam";
 import { useRescheduleBooking } from "features/service/hooks/useRescheduleBooking";
+import { getPath } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import { PAGES } from "pages/constans";
 import { TFunction, useTranslation } from "react-i18next";
-import { createSearchParams, generatePath, useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
 import { selectedSlot } from "state/atoms/selectedSlot";
@@ -134,9 +135,12 @@ const RescheduleService = () => {
             data-cy="book-now-button"
             onClick={() => {
               navigate(
-                generatePath(`${PAGES.BOOKING}:query`, {
-                  id: bookingValue.bookingId,
-                  query: lang ? `?${createSearchParams({ lang }).toString()}` : "",
+                getPath({
+                  url: `${PAGES.BOOKING}:query`,
+                  params: {
+                    id: bookingValue.bookingId,
+                    query: lang ? `?${createSearchParams({ lang }).toString()}` : "",
+                  },
                 }),
               );
             }}
