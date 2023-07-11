@@ -2,6 +2,7 @@ import { selector } from "recoil";
 import { langAtom } from "state/atoms/langAtom";
 
 const KEY_TO_LOCALE: Record<string, string> = {
+  bg: "bg",
   cs: "cs",
   nl: "nl",
   en: "en-gb",
