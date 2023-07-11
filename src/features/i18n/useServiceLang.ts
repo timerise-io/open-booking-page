@@ -5,7 +5,25 @@ import { langAtom } from "state/atoms/langAtom";
 import { serviceAtom } from "state/atoms/service";
 import { useLangParam } from "./useLangParam";
 
-const UITranslation = ["bg", "cs", "nl", "en", "fi", "fr", "de", "el", "hu", "it", "pl", "pt", "es", "sk", "sv", "uk", "tr"];
+const UITranslation = [
+  "bg",
+  "cs",
+  "nl",
+  "en",
+  "fi",
+  "fr",
+  "de",
+  "el",
+  "hu",
+  "it",
+  "pl",
+  "pt",
+  "es",
+  "sk",
+  "sv",
+  "uk",
+  "tr",
+];
 
 export const useServiceLang = () => {
   const serviceLang = useRecoilValue(serviceAtom)?.project.defaultLocale;

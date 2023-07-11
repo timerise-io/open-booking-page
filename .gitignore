@@ -24,3 +24,4 @@ yarn-debug.log*
 yarn-error.log*
 e2e/serviceAccountKey.json
 .env
+package-lock.json
