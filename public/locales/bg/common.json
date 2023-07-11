@@ -1,0 +1,37 @@
+{
+    "solution-name": "Timerise",
+    "footer": {
+        "copyright": "Timerise © 2023",
+        "terms-and-conditions": "Правила и условия",
+        "privacy-policy": "Политика за поверителност",
+        "powered-by": "задвижван от"
+    },
+    "validation": {
+        "required": "Изисква се",
+        "min-length": "Минималната дължина е {{дължина}} знаци",
+        "email": "Неправилен формат на електронната поща",
+        "slots-quantity": "Количеството на слотовете трябва да е по-голямо от 0",
+        "min-value": "Минималната стойност е {{minValue}}.",
+        "max-value": "Максималната стойност е {{maxValue}}.",
+        "incorrect-format": "Неправилен формат"
+    },
+    "loading-info": "Обратно броене от безкрайност",
+    "theme": {
+        "light": "Светлинен режим",
+        "dark": "Тъмният режим"
+    },
+    "details": {
+        "duration": "Продължителност",
+        "payment": "Плащане",
+        "location": "Местоположение",
+        "hosted-by": "Домакин е"
+    },
+    "select-date-and-time": "Избор на дата и час",
+    "time-zone": "Часова зона",
+    "language": "Език",
+    "no-time-slots-available": "Няма налични времеви интервали в този диапазон от дати",
+    "show-more": "Покажи повече",
+    "show-less": "Покажи по-малко",
+    "available": "на разположение",
+    "timezone": "Часови пояс"
+}
