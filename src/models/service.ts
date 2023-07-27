@@ -27,7 +27,12 @@ export interface QuantityConfig {
   __typename: string;
 }
 
-export type PaymentType = "OFFLINE" | "STRIPE";
+export enum PAYMENT_TYPES {
+  OFFLINE = "OFFLINE",
+  STRIPE = "STRIPE",
+}
+
+export type PaymentType = keyof typeof PAYMENT_TYPES;
 
 interface StatusConfig {
   description: string;

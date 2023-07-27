@@ -1,3 +1,4 @@
+import { PAYMENT_TYPES } from "models/service";
 import { selector } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
 import { serviceAtom } from "state/atoms/service";
@@ -12,8 +13,14 @@ export const bookingCardViewConfig = selector({
 
     const { status, paymentStatus } = booking;
     const { bookingStatus: bookingStatusConfig, paymentStatus: paymentStatusConfig } = service.viewConfig;
+    const { paymentProviders } = service;
 
-    const usePaymentFlow = !!(paymentStatus !== null && !paymentStatusConfig[paymentStatus]?.actions?.hide);
+    const usePaymentFlow = !!(
+      paymentStatus !== null &&
+      !paymentStatusConfig[paymentStatus]?.actions?.hide &&
+      paymentProviders?.length &&
+      paymentProviders?.includes(PAYMENT_TYPES.STRIPE)
+    );
 
     if (usePaymentFlow && !!paymentStatus) {
       return { ...paymentStatusConfig[paymentStatus] };
