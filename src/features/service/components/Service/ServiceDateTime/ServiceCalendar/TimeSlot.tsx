@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography } from "components/Typography";
 import { Column } from "components/layout/Column";
-import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
+import { convertSourceDateTimeToTargetDateTimeWithHoursSystem } from "helpers/timeFormat";
 import { Service } from "models/service";
 import { Slot } from "models/slots";
 import { TimeSlotButtonType } from "models/theme";
@@ -35,15 +35,12 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  border-width: 1px;
-  border-style: solid;
   ${({ theme, state, showDuration, showQuantity }) => {
-    const colorSchema = theme.colorSchemas.timeSlotButton[state];
+    const colorSchema = theme.colorSchemas.timeSlotButton[state] as any;
 
     return css`
       color: ${colorSchema.text};
       cursor: ${state === "unavailable" ? "unset" : "pointer"};
-      border-color: ${colorSchema.border};
       border-radius: ${({ theme }) => theme.borderRadius};
       background-color: ${colorSchema.background};
       min-width: ${showDuration ? "96px" : "unset"};
@@ -56,8 +53,7 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
     ${({ theme, state }) => {
       const colorSchema = theme.colorSchemas.timeSlotButton[state];
       return css`
-        border-color: ${colorSchema.borderActive};
-        background-color: ${colorSchema.backgroundActive};
+        background-color: ${colorSchema.backgroundHover};
       `;
     }}
   }
@@ -70,13 +66,18 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
 interface DummySlotProps {
   showDuration: boolean;
   showQuantity: boolean;
+  is12HoursSystem: boolean;
 }
 
 const dummyTimeSlotHeight: Record<string, string> = {
-  "true-true": "60px",
-  "false-true": "50px",
-  "true-false": "38px",
-  "false-false": "36px",
+  "true-true-false": "60px",
+  "false-true-false": "50px",
+  "true-false-false": "38px",
+  "false-false-false": "34px",
+  "true-true-true": "60px",
+  "false-true-true": "50px",
+  "true-false-true": "39.5px",
+  "false-false-true": "36.5px",
 };
 
 const DummySlotWrapper = styled.div<DummySlotProps>`
@@ -86,18 +87,18 @@ const DummySlotWrapper = styled.div<DummySlotProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  ${({ theme, showDuration, showQuantity }) => {
-    const colorSchema = theme.colorSchemas.timeSlotButton.unavailable;
+  ${({ theme, showDuration, showQuantity, is12HoursSystem }) => {
+    const colorSchema = theme.colorSchemas.timeSlotButton.unavailable as any;
     return css`
       color: ${colorSchema.text};
-      height: ${dummyTimeSlotHeight[`${showDuration}-${showQuantity}`] ?? "38px"};
+      height: ${dummyTimeSlotHeight[`${showDuration}-${showQuantity}-${is12HoursSystem}`] ?? "38px"};
     `;
   }}
 `;
 
-const DummySlot: React.FC<DummySlotProps> = ({ showDuration, showQuantity }) => {
+const DummySlot: React.FC<DummySlotProps> = ({ showDuration, showQuantity, is12HoursSystem }) => {
   return (
-    <DummySlotWrapper showDuration={showDuration} showQuantity={showQuantity}>
+    <DummySlotWrapper showDuration={showDuration} showQuantity={showQuantity} is12HoursSystem={is12HoursSystem}>
       <Typography typographyType="h3" weight="500" as="span" align="center" color="inherit">
         -
       </Typography>
@@ -109,6 +110,7 @@ interface TimeSlotProps {
   dateFrom: string;
   dateTo: string;
   day: string;
+  is12HoursSystem: boolean;
 }
 
 const getTimeSlotButtonState = (
@@ -123,7 +125,13 @@ const getTimeSlotButtonState = (
   return "unavailable";
 };
 
-const getBaseSlotContent = (slot: Slot, date: string, timeZone: string, service?: Service) => {
+const getBaseSlotContent = (
+  slot: Slot,
+  date: string,
+  timeZone: string,
+  is12HoursSystem: boolean,
+  service?: Service,
+) => {
   if (!service?.project.localTimeZone) return;
 
   return (
@@ -135,11 +143,11 @@ const getBaseSlotContent = (slot: Slot, date: string, timeZone: string, service?
       className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
       color="inherit"
     >
-      {convertSourceDateTimeToTargetDateTime({
+      {convertSourceDateTimeToTargetDateTimeWithHoursSystem({
         date,
         targetTimeZone: timeZone,
         sourceTimeZone: service.project.localTimeZone,
-        dateFormat: "H:mm",
+        is12HoursSystem,
       })}
     </Typography>
   );
@@ -156,11 +164,16 @@ const DurationText = styled(Typography)`
   }
 `;
 
+const WrapperWithDuration = styled.div`
+  display: flex;
+`;
+
 const getDurationQuantitySlotContent = (
   slot: Slot,
   date: string,
   t: TFunction<"translation">,
   timeZone: string,
+  is12HoursSystem: boolean,
   service?: Service,
 ) => {
   if (!service?.project.localTimeZone) return;
@@ -175,17 +188,21 @@ const getDurationQuantitySlotContent = (
         className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
         color="inherit"
       >
-        {`${convertSourceDateTimeToTargetDateTime({
-          date,
-          targetTimeZone: timeZone,
-          sourceTimeZone: service.project.localTimeZone,
-          dateFormat: "H:mm",
-        })}-${convertSourceDateTimeToTargetDateTime({
-          date: slot.dateTimeTo,
-          targetTimeZone: timeZone,
-          sourceTimeZone: service.project.localTimeZone,
-          dateFormat: "H:mm",
-        })}`}
+        <WrapperWithDuration>
+          {convertSourceDateTimeToTargetDateTimeWithHoursSystem({
+            date,
+            targetTimeZone: timeZone,
+            sourceTimeZone: service.project.localTimeZone,
+            is12HoursSystem,
+          })}
+          {" - "}
+          {convertSourceDateTimeToTargetDateTimeWithHoursSystem({
+            date: slot.dateTimeTo,
+            targetTimeZone: timeZone,
+            sourceTimeZone: service.project.localTimeZone,
+            is12HoursSystem,
+          })}
+        </WrapperWithDuration>
       </DurationText>
       {slot.quantity > 0 && (
         <>
@@ -202,6 +219,7 @@ const getQuantitySlotContent = (
   date: string,
   t: TFunction<"translation">,
   timeZone: string,
+  is12HoursSystem: boolean,
   service?: Service,
 ) => {
   if (!service?.project.localTimeZone) return;
@@ -216,11 +234,11 @@ const getQuantitySlotContent = (
         className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
         color="inherit"
       >
-        {convertSourceDateTimeToTargetDateTime({
+        {convertSourceDateTimeToTargetDateTimeWithHoursSystem({
           date,
           targetTimeZone: timeZone,
           sourceTimeZone: service.project.localTimeZone,
-          dateFormat: "H:mm",
+          is12HoursSystem,
         })}
       </DurationText>
       {slot.quantity > 0 && (
@@ -239,6 +257,7 @@ const getDurationSlotContent = (
   date: string,
   t: TFunction<"translation">,
   timeZone: string,
+  is12HoursSystem: boolean,
   service?: Service,
 ) => {
   if (!service?.project.localTimeZone) return;
@@ -253,23 +272,27 @@ const getDurationSlotContent = (
         className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
         color="inherit"
       >
-        {`${convertSourceDateTimeToTargetDateTime({
-          date,
-          targetTimeZone: timeZone,
-          sourceTimeZone: service.project.localTimeZone,
-          dateFormat: "H:mm",
-        })}-${convertSourceDateTimeToTargetDateTime({
-          date: slot.dateTimeTo,
-          targetTimeZone: timeZone,
-          sourceTimeZone: service.project.localTimeZone,
-          dateFormat: "H:mm",
-        })}`}
+        <WrapperWithDuration>
+          {convertSourceDateTimeToTargetDateTimeWithHoursSystem({
+            date,
+            targetTimeZone: timeZone,
+            sourceTimeZone: service.project.localTimeZone,
+            is12HoursSystem,
+          })}
+          {" - "}
+          {convertSourceDateTimeToTargetDateTimeWithHoursSystem({
+            date: slot.dateTimeTo,
+            targetTimeZone: timeZone,
+            sourceTimeZone: service.project.localTimeZone,
+            is12HoursSystem,
+          })}
+        </WrapperWithDuration>
       </DurationText>
     </Column>
   );
 };
 
-const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, day }) => {
+const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, day, is12HoursSystem }) => {
   const slot = useRecoilValue(timeSlot({ from: dateFrom, to: dateTo }));
   const [selected, setSelectedSlot] = useRecoilState(selectedSlot);
   const { showDuration, showQuantity } = useRecoilValue(slotsViewConfiguration);
@@ -280,7 +303,7 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, day }) => {
   return (
     <Column mt={0.5} mb={0.5} w="100%">
       {!slot ? (
-        <DummySlot showDuration={showDuration} showQuantity={showQuantity} />
+        <DummySlot showDuration={showDuration} showQuantity={showQuantity} is12HoursSystem={is12HoursSystem} />
       ) : (
         <TimeSlotButton
           showDuration={showDuration}
@@ -291,10 +314,16 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, day }) => {
             setSelectedSlot(dateFrom);
           }}
         >
-          {showDuration && showQuantity && getDurationQuantitySlotContent(slot, dateFrom, t, timeZone, service)}
-          {showDuration && !showQuantity && getDurationSlotContent(slot, dateFrom, t, timeZone, service)}
-          {!showDuration && showQuantity && getQuantitySlotContent(slot, dateFrom, t, timeZone, service)}
-          {!showDuration && !showQuantity && getBaseSlotContent(slot, dateFrom, timeZone, service)}
+          {showDuration &&
+            showQuantity &&
+            getDurationQuantitySlotContent(slot, dateFrom, t, timeZone, is12HoursSystem, service)}
+          {showDuration &&
+            !showQuantity &&
+            getDurationSlotContent(slot, dateFrom, t, timeZone, is12HoursSystem, service)}
+          {!showDuration &&
+            showQuantity &&
+            getQuantitySlotContent(slot, dateFrom, t, timeZone, is12HoursSystem, service)}
+          {!showDuration && !showQuantity && getBaseSlotContent(slot, dateFrom, timeZone, is12HoursSystem, service)}
         </TimeSlotButton>
       )}
     </Column>

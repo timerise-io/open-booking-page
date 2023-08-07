@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { Typography } from "components/Typography";
@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import { hoursSystemAtom } from "state/atoms";
 import { selectedDateRange } from "state/atoms/selectedDateRange";
 import { selectedSlot } from "state/atoms/selectedSlot";
 import { selectedSlots } from "state/atoms/selectedSlots";
@@ -27,6 +28,7 @@ import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
 import styled from "styled-components";
 import { IconInfoCircle } from "@tabler/icons";
 import { BookingServiceFormContent } from "../BookingServiceFormContent/BookingServiceFormContent";
+import { HOURS_SYSTEMS } from "../HoursSystem/enums/HoursSystem.enum";
 import { getSubmitButtonText } from "./helpers";
 import { generateValidationSchema } from "./validators";
 
@@ -97,8 +99,12 @@ const BookService = () => {
   const { id } = useParams<{ id: string }>();
   const uploadState = useRecoilValue(uploadAttachmentsAtom);
   const timeZone = useRecoilValue(timeZoneAtom);
+  const hoursSystem = useRecoilValue(hoursSystemAtom);
+  const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
 
   const isUploading = Object.values(uploadState).filter((item) => item.isLoading).length > 0;
+
+  const dateFormat = is12HoursSystem ? "iiii dd MMM, h:mm a" : "iiii dd MMM, H:mm";
 
   const formattedDate =
     selectedSlotValue &&
@@ -106,7 +112,7 @@ const BookService = () => {
       date: selectedSlotValue,
       targetTimeZone: timeZone,
       sourceTimeZone: service.project.localTimeZone,
-      dateFormat: "iiii dd MMM, H:mm",
+      dateFormat,
       locale,
     });
 

@@ -33,5 +33,6 @@
     "show-more": "Afficher plus",
     "show-less": "Montrer moins",
     "available": "disponible",
-    "timezone": "Fuseau horaire"
+    "timezone": "Fuseau horaire",
+    "format": "Format"
 }

@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import { slotsDayPattern } from "state/selectors/slotsDayPattern";
 import styled, { css } from "styled-components";
+import { HoursSystem } from "../HoursSystem";
 import ServiceCalendarActionRow from "../ServiceCalendarActionRow";
 import TimezoneInfo from "../TimezoneInfo";
 import ServiceCalendar from "./ServiceCalendar/ServiceCalendar";
@@ -57,6 +58,11 @@ const TimezoneStyledRow = styled(Row)`
   }
 `;
 
+const TimezoneHourSystemStyledContainer = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
 const FULL_HEIGHT_COUNT = 10;
 
 const ServiceDateTime = () => {
@@ -75,7 +81,10 @@ const ServiceDateTime = () => {
           <Typography typographyType="h3" as="h3" displayType="contents">
             {t(`select-date-and-time`)}
           </Typography>
-          <TimezoneInfo />
+          <TimezoneHourSystemStyledContainer>
+            <TimezoneInfo />
+            <HoursSystem />
+          </TimezoneHourSystemStyledContainer>
         </TimezoneStyledRow>
         <ServiceCalendarActionRow />
         <ServiceCalendar />

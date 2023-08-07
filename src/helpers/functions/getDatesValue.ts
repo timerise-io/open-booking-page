@@ -8,6 +8,7 @@ type GetDatesValue = ({
   targetTimeZone,
   sourceTimeZone,
   locale,
+  is12HoursSystem,
 }: {
   service: Service;
   dateTimeFrom: string;
@@ -15,14 +16,23 @@ type GetDatesValue = ({
   targetTimeZone: string;
   sourceTimeZone: string;
   locale: Locale;
+  is12HoursSystem: boolean;
 }) => string;
 
-const getDaysDatesValue: GetDatesValue = ({ dateTimeFrom, targetTimeZone, sourceTimeZone, locale }) => {
+const getDaysDatesValue: GetDatesValue = ({
+  dateTimeFrom,
+  targetTimeZone,
+  sourceTimeZone,
+  locale,
+  is12HoursSystem,
+}) => {
+  const dateFormat = is12HoursSystem ? "iiii dd MMM yyyy, h:mm a" : "iiii dd MMM yyyy, H:mm";
+
   return convertSourceDateTimeToTargetDateTime({
     date: dateTimeFrom,
     targetTimeZone,
     sourceTimeZone,
-    dateFormat: "iiii dd MMM yyyy, H:mm",
+    dateFormat,
     locale,
   });
 };
@@ -60,8 +70,10 @@ const getEventDatesValue: GetDatesValue = ({
   targetTimeZone,
   sourceTimeZone,
   locale,
+  is12HoursSystem,
 }) => {
   const showTime = service?.viewConfig?.list?.showTime;
+  const hourFormat = is12HoursSystem ? "h:mm a" : "H:mm";
 
   const dateFromWithTimezone = convertSourceDateTimeToTargetDateTime({
     date: dateTimeFrom,
@@ -83,7 +95,7 @@ const getEventDatesValue: GetDatesValue = ({
     date: dateTimeFrom,
     targetTimeZone,
     sourceTimeZone,
-    dateFormat: "H:mm",
+    dateFormat: hourFormat,
     locale,
   });
 
@@ -91,7 +103,7 @@ const getEventDatesValue: GetDatesValue = ({
     date: dateTimeTo,
     targetTimeZone,
     sourceTimeZone,
-    dateFormat: "H:mm",
+    dateFormat: hourFormat,
     locale,
   });
 
@@ -115,6 +127,7 @@ export const getDatesValue: GetDatesValue = ({
   targetTimeZone,
   sourceTimeZone,
   locale,
+  is12HoursSystem,
 }) => {
   const serviceType = service?.viewConfig.displayType;
   const sharedParams = {
@@ -124,6 +137,7 @@ export const getDatesValue: GetDatesValue = ({
     targetTimeZone,
     sourceTimeZone,
     locale,
+    is12HoursSystem,
   };
 
   if (serviceType === BOOKING_FORM_TYPES.DAYS) {

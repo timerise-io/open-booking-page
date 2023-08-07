@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
+import { HOURS_SYSTEMS } from "features/service/components/Service/HoursSystem/enums/HoursSystem.enum";
 import { getDatesValue } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
 import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
+import { hoursSystemAtom } from "state/atoms";
 import { bookingAtom } from "state/atoms/booking";
 import { serviceAtom } from "state/atoms/service";
 import { timeZoneAtom } from "state/atoms/timeZone";
@@ -24,6 +26,8 @@ const DeleteBooking = () => {
   const booking = useRecoilValue(bookingAtom)!;
   const service = useRecoilValue(serviceAtom)!;
   const timeZone = useRecoilValue(timeZoneAtom);
+  const hoursSystem = useRecoilValue(hoursSystemAtom);
+  const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
 
   return (
     <Column ai="flex-start">
@@ -51,6 +55,7 @@ const DeleteBooking = () => {
               targetTimeZone: timeZone,
               sourceTimeZone: service.project.localTimeZone,
               locale,
+              is12HoursSystem,
             })}
           </Typography>
         </Box>

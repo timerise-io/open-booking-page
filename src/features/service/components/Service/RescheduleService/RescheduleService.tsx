@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { Typography } from "components/Typography";
@@ -13,6 +13,7 @@ import { PAGES } from "pages/constans";
 import { useTranslation } from "react-i18next";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import { hoursSystemAtom } from "state/atoms";
 import { bookingAtom } from "state/atoms/booking";
 import { selectedDateRange } from "state/atoms/selectedDateRange";
 import { selectedSlot } from "state/atoms/selectedSlot";
@@ -22,6 +23,7 @@ import { timeZoneAtom } from "state/atoms/timeZone";
 import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
 import styled from "styled-components";
 import { getSubmitButtonText } from "../BookService/helpers";
+import { HOURS_SYSTEMS } from "../HoursSystem/enums/HoursSystem.enum";
 
 const WrapperCard = styled(Card)`
   ${({ theme }) => theme.mediaBelow(theme.breakpoints.sm)} {
@@ -54,11 +56,16 @@ const RescheduleService = () => {
   const slot = useRecoilValue(selectedSlotSelector);
   const { rescheduleBookingMutation, loading } = useRescheduleBooking();
   const timeZone = useRecoilValue(timeZoneAtom);
+
   const serviceType = service?.viewConfig.displayType;
 
   const isSlotType = serviceType === BOOKING_FORM_TYPES.DAYS;
   const isDateRangeType = serviceType === BOOKING_FORM_TYPES.CALENDAR;
   const isEventType = serviceType === BOOKING_FORM_TYPES.LIST;
+
+  const hoursSystem = useRecoilValue(hoursSystemAtom);
+  const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
+  const dateFormat = is12HoursSystem ? "iiii dd MMM, h:mm a" : "iiii dd MMM, H:mm";
 
   const formattedDateTo =
     selectedSlotValue &&
@@ -66,7 +73,7 @@ const RescheduleService = () => {
       date: selectedSlotValue,
       targetTimeZone: timeZone,
       sourceTimeZone: service.project.localTimeZone,
-      dateFormat: "iiii dd MMM, H:mm",
+      dateFormat,
       locale,
     });
 
@@ -76,7 +83,7 @@ const RescheduleService = () => {
       date: bookingValue.dateTimeFrom,
       targetTimeZone: timeZone,
       sourceTimeZone: service.project.localTimeZone,
-      dateFormat: "iiii dd MMM, H:mm",
+      dateFormat,
       locale,
     });
 

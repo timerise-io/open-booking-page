@@ -1,10 +1,12 @@
 import React, { useMemo } from "react";
 import { Typography } from "components/Typography";
 import { Column } from "components/layout/Column";
+import { HOURS_SYSTEMS } from "features/service/components/Service/HoursSystem/enums/HoursSystem.enum";
 import { getDatesValue } from "helpers/functions";
 import { Service } from "models/service";
 import { TimeSlotButtonType } from "models/theme";
 import { useRecoilValue } from "recoil";
+import { hoursSystemAtom } from "state/atoms";
 import { selectedSlots } from "state/atoms/selectedSlots";
 import styled, { css } from "styled-components";
 
@@ -18,8 +20,6 @@ const EventSlotButton = styled.button<EventSlotButtonProps>`
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  border-width: 1px;
-  border-style: solid;
   padding: 16px;
   ${({ theme, state }) => {
     const colorSchema = theme.colorSchemas.timeSlotButton[state] as any;
@@ -37,8 +37,7 @@ const EventSlotButton = styled.button<EventSlotButtonProps>`
     ${({ theme, state }) => {
       const colorSchema = theme.colorSchemas.timeSlotButton[state] as any;
       return css`
-        border-color: ${colorSchema.borderActive};
-        background-color: ${colorSchema.backgroundActive};
+        background-color: ${colorSchema.backgroundHover};
       `;
     }}
   }
@@ -81,6 +80,8 @@ export const EventSlot: React.FC<Props> = ({
   service,
 }) => {
   const selectedSlotsValue = useRecoilValue(selectedSlots);
+  const hoursSystem = useRecoilValue(hoursSystemAtom);
+  const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
 
   const getEventSlotButtonState = (): TimeSlotButtonType => {
     if (selectedSlotsValue.includes(id)) return "selected";
@@ -113,9 +114,18 @@ export const EventSlot: React.FC<Props> = ({
         targetTimeZone,
         sourceTimeZone,
         locale,
+        is12HoursSystem,
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dateTimeFrom, dateTimeTo, targetTimeZone, sourceTimeZone, locale, service?.viewConfig?.list?.showTime],
+    [
+      dateTimeFrom,
+      dateTimeTo,
+      targetTimeZone,
+      sourceTimeZone,
+      locale,
+      service?.viewConfig?.list?.showTime,
+      is12HoursSystem,
+    ],
   );
 
   const showQuantity = useMemo(() => service?.viewConfig?.list?.quantity, [service]);
@@ -128,6 +138,7 @@ export const EventSlot: React.FC<Props> = ({
           weight="700"
           as="span"
           className={quantity > 0 ? "" : "unavailable-time-slot"}
+          style={{ color: "inherit" }}
         >
           {getDatesRow}
         </Typography>
@@ -137,6 +148,7 @@ export const EventSlot: React.FC<Props> = ({
             weight="500"
             as="span"
             className={quantity > 0 ? "" : "unavailable-time-slot"}
+            style={{ color: "inherit" }}
           >
             {quantity} slots available
           </Typography>
