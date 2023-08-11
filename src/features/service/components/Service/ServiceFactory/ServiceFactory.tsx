@@ -2,6 +2,7 @@ import React from "react";
 import { BOOKING_FORM_TYPES } from "models/service";
 import { useRecoilValue } from "recoil";
 import { serviceAtom } from "state/atoms/service";
+import { ServiceDateEvent } from "../ServiceDateEvent";
 import { ServiceDateRange } from "../ServiceDateRange";
 import ServiceDateTime from "../ServiceDateTime/ServiceDateTime";
 
@@ -13,6 +14,8 @@ export const ServiceFactory = () => {
     return <ServiceDateTime />;
   } else if (serviceType === BOOKING_FORM_TYPES.CALENDAR) {
     return <ServiceDateRange />;
+  } else if (serviceType === BOOKING_FORM_TYPES.LIST) {
+    return <ServiceDateEvent />;
   }
 
   return null;

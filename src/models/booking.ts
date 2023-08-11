@@ -32,10 +32,15 @@ export interface Booking {
     spaces: Array<Space> | null;
   };
   dateTimeFrom: string;
+  dateTimeTo: string;
   status: BookingStatus;
   createdAt: string;
   qrUrl: string;
   iCalUrl: string;
   paymentLink: string | null;
   paymentStatus: PaymentStatus | null;
+  slots: Array<{
+    dateTimeFrom: string;
+    dateTimeTo: string;
+  }> | null;
 }

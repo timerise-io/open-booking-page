@@ -36,7 +36,7 @@ const BookingCard = () => {
   return (
     <Card padding="8px 20px 20px 20px">
       <ShortId shortId={bookingValue.shortId} />
-      <BookingCardSummary status={bookingValue.status} dateTimeFrom={bookingValue.dateTimeFrom} />
+      <BookingCardSummary dateTimeFrom={bookingValue.dateTimeFrom} dateTimeTo={bookingValue.dateTimeTo} />
       <BookingCardBottom />
     </Card>
   );
