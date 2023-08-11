@@ -154,48 +154,6 @@ export const GET_SERVICE = gql`
             iconUrl
             title
           }
-          REQUIRES_ACTION {
-            actions {
-              calendar
-              cancel
-              hide
-              pay
-              qr
-              service
-            }
-            description
-            details
-            iconUrl
-            title
-          }
-          REQUIRES_CONFIRMATION {
-            actions {
-              calendar
-              cancel
-              hide
-              pay
-              qr
-              service
-            }
-            description
-            details
-            iconUrl
-            title
-          }
-          REQUIRES_PAYMENT_METHOD {
-            actions {
-              calendar
-              cancel
-              hide
-              pay
-              qr
-              service
-            }
-            description
-            details
-            iconUrl
-            title
-          }
           SUCCEEDED {
             actions {
               calendar
