@@ -13,9 +13,10 @@ const Wrapper = styled(Row)`
   gap: 20px;
 
   & > .left-column {
-    width: 175px;
+    width: auto;
     align-items: center;
     flex-wrap: wrap;
+    gap: 16px;
   }
 
   ${({ theme }) => theme.mediaBelow(theme.breakpoints.sm)} {
