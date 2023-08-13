@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import InfoBox from "components/InfoBox";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
@@ -32,7 +32,10 @@ const ServiceCalendarWrapper = () => {
   const slotsViewConfig = useRecoilValue(slotsViewConfiguration);
 
   const pageSize = Math.min(slotsViewConfig.maxDaysPerPage, Math.trunc(width / slotsViewConfig.slotsColumnWidth));
-  const daysToRender = days.slice(0, pageSize === 0 ? slotsViewConfig.minDaysPerPage : pageSize);
+  const daysToRender = useMemo(
+    () => days.slice(0, pageSize === 0 ? slotsViewConfig.minDaysPerPage : pageSize),
+    [days, pageSize, slotsViewConfig.minDaysPerPage],
+  );
 
   useEffect(() => {
     if (pageSize !== serviceCalendarFilters.pageSize)
