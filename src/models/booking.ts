@@ -22,14 +22,7 @@ export interface Space {
 
 export type BookingStatus = "NEW" | "ACCEPTED" | "CONFIRMED" | "CANCELED";
 
-export type PaymentStatus =
-  | "NEW"
-  | "REQUIRES_PAYMENT_METHOD"
-  | "REQUIRES_CONFIRMATION"
-  | "REQUIRES_ACTION"
-  | "PROCESSING"
-  | "SUCCEEDED"
-  | "CANCELED";
+export type PaymentStatus = "NEW" | "PROCESSING" | "SUCCEEDED" | "CANCELED";
 
 export interface Booking {
   bookingId: string;

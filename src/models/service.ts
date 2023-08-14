@@ -30,6 +30,7 @@ export interface QuantityConfig {
 export enum PAYMENT_TYPES {
   OFFLINE = "OFFLINE",
   STRIPE = "STRIPE",
+  ADYEN = "ADYEN",
 }
 
 export type PaymentType = keyof typeof PAYMENT_TYPES;

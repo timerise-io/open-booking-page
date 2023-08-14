@@ -19,7 +19,7 @@ export const bookingCardViewConfig = selector({
       paymentStatus !== null &&
       !paymentStatusConfig[paymentStatus]?.actions?.hide &&
       paymentProviders?.length &&
-      paymentProviders?.includes(PAYMENT_TYPES.STRIPE)
+      (paymentProviders?.includes(PAYMENT_TYPES.STRIPE) || paymentProviders?.includes(PAYMENT_TYPES.ADYEN))
     );
 
     if (usePaymentFlow && !!paymentStatus) {
