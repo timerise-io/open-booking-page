@@ -23,6 +23,7 @@ const UITranslation = [
   "sv",
   "uk",
   "tr",
+  "nb",
 ];
 
 export const useServiceLang = () => {

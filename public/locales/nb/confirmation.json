@@ -1,0 +1,7 @@
+{
+    "booking/delete": {
+        "title": "Avbestill bestilling",
+        "abort-text": "Avbryt",
+        "confirm-text": "Avbestill bestilling"
+    }
+}
