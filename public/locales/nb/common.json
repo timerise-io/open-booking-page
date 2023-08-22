@@ -1,0 +1,37 @@
+{
+  "solution-name": "Timerise",
+  "footer": {
+    "copyright": "Timerise © 2023",
+    "terms-and-conditions": "Vilkår & Betingelser",
+    "privacy-policy": "Personvernpolicy",
+    "powered-by": "drevet av"
+  },
+  "validation": {
+    "required": "Obligatorisk",
+    "min-length": "Minimumslengde er {{length}} tegn",
+    "email": "Ukorrekt e-postformat",
+    "slots-quantity": "Antall tidsluker må være større enn 0",
+    "min-value": "Minimumsverdien er {{minValue}}.",
+    "max-value": "Maksimalverdien er {{maxValue}}.",
+    "incorrect-format": "Feil format"
+  },
+  "loading-info": "Teller ned fra uendelighet",
+  "theme": {
+    "light": "Lys modus",
+    "dark": "Mørk modus"
+  },
+  "details": {
+    "duration": "Varighet",
+    "payment": "Betaling",
+    "location": "Sted",
+    "hosted-by": "Vert av"
+  },
+  "select-date-and-time": "Velg dato og tid",
+  "time-zone": "Tidssone",
+  "language": "Språk",
+  "no-time-slots-available": "Ingen tilgjengelige tidsluker i denne datoperioden",
+  "show-more": "Vis mer",
+  "show-less": "Vis mindre",
+  "available": "tilgjengelig",
+  "timezone": "Tidssone"
+}

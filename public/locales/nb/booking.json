@@ -1,0 +1,23 @@
+{
+  "date-and-time": "Dato og tid:",
+  "delete": "slett",
+  "the-booking": " bestillingen.",
+  "show-service-details": "Vis tjenestedetaljer",
+  "hide-service-details": "Skjul tjenestedetaljer",
+  "want-to-delete": "Er du sikker på at du vil <strong>avbestille</strong> denne bestillingen?",
+  "go-back": "Gå tilbake til bestilling",
+  "cancel-booking": "Avbestill bestilling",
+  "add-to-calendar": "Legg til i kalenderen din",
+  "download-qr": "Last ned QR-kode",
+  "pay": "Gå til betaling",
+  "reschedule": "Endre tidspunkt",
+  "select-dates": "Velg datoer",
+  "select-date": "Velg dato",
+  "avl": "ledig.",
+  "discard": "Forkast",
+  "done": "Ferdig",
+  "select-date-range-up-to": "Velg datoperiode opp til {{duration}} dager",
+  "start-date": "Startdato",
+  "end-date": "Sluttdato"
+}
+
