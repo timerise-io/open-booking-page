@@ -1,6 +1,5 @@
 import React from "react";
 import { Box } from "components/layout/Box";
-import { BookingStatus } from "models/booking";
 import { useRecoilValue } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
 import { bookingCardViewConfig } from "state/selectors/bookingCardViewConfig";
@@ -10,11 +9,11 @@ import { StyledColumn } from "./BookingCardSummary.styled";
 import BookingCardTitle from "./BookingCardTitle";
 
 interface BookingCardSummaryProps {
-  status: BookingStatus;
   dateTimeFrom: string;
+  dateTimeTo: string;
 }
 
-const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({ status, dateTimeFrom }) => {
+const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({ dateTimeFrom, dateTimeTo }) => {
   const cardConfig = useRecoilValue(bookingCardViewConfig);
   const booking = useRecoilValue(bookingAtom);
 
@@ -24,6 +23,7 @@ const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({ status, dateTim
     <StyledColumn mb={5}>
       <BookingCardTitle
         dateTimeFrom={dateTimeFrom}
+        dateTimeTo={dateTimeTo}
         paymentLink={booking.paymentLink ?? ""}
         description={cardConfig.description}
         iconUrl={cardConfig.iconUrl}

@@ -3,8 +3,8 @@ import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
+import { getDatesValue } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
-import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
@@ -40,15 +40,16 @@ const DeleteBooking = () => {
         </Typography>
       </Box>
       <Row>
-        <Typography typographyType="body">{t("date-and-time")}</Typography>
+        <Typography typographyType="body">{t("date-and-time")}:</Typography>
         <Box ml={0.5}>
           <Typography typographyType="body" weight="700">
             {" "}
-            {convertSourceDateTimeToTargetDateTime({
-              date: booking.dateTimeFrom,
+            {getDatesValue({
+              service,
+              dateTimeFrom: booking.dateTimeFrom,
+              dateTimeTo: booking.dateTimeTo,
               targetTimeZone: timeZone,
               sourceTimeZone: service.project.localTimeZone,
-              dateFormat: "iiii dd MMM yyyy, H:mm",
               locale,
             })}
           </Typography>

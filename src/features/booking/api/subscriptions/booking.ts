@@ -16,12 +16,17 @@ export const BOOKING_SUBSCRIPTION = gql`
         }
       }
       dateTimeFrom
+      dateTimeTo
       status
       createdAt
       qrUrl
       iCalUrl
       paymentLink
       paymentStatus
+      slots {
+        dateTimeFrom
+        dateTimeTo
+      }
     }
   }
 `;

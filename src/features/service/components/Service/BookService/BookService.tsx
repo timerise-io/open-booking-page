@@ -12,39 +12,23 @@ import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import _ from "lodash";
 import { FormField, filterFormFields } from "models/formFields";
 import { BOOKING_FORM_TYPES } from "models/service";
-import { TFunction, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { selectedDateRange } from "state/atoms/selectedDateRange";
 import { selectedSlot } from "state/atoms/selectedSlot";
+import { selectedSlots } from "state/atoms/selectedSlots";
 import { serviceAtom } from "state/atoms/service";
 import { slotsFiltersAtom } from "state/atoms/slotsFilters";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { uploadAttachmentsAtom } from "state/atoms/uploadAttachments";
 import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
-import { servicePrice } from "state/selectors/servicePrice";
 import styled from "styled-components";
 import { IconInfoCircle } from "@tabler/icons";
 import { BookingServiceFormContent } from "../BookingServiceFormContent/BookingServiceFormContent";
+import { getSubmitButtonText } from "./helpers";
 import { generateValidationSchema } from "./validators";
-
-const getSubmitButtonText = (
-  selectedSlotValue: string,
-  servicePriceValue:
-    | {
-        price: number;
-        currency: string;
-      }
-    | undefined,
-  t: TFunction<"forms"[]>,
-) => {
-  const textBase = t("book-free-button");
-
-  if (selectedSlotValue === "") return textBase;
-
-  return `${textBase}: ${selectedSlotValue}`;
-};
 
 const StyledWarning = styled.div`
   margin: 15px 0 20px 0;
@@ -100,7 +84,7 @@ const BookService = () => {
   const { t } = useTranslation(["forms"]);
   const selectedSlotValue = useRecoilValue(selectedSlot);
   const selectedDateRangeValue = useRecoilValue(selectedDateRange);
-  const servicePriceValue = useRecoilValue(servicePrice);
+  const selectedSlotsValue = useRecoilValue(selectedSlots);
   const service = useRecoilValue(serviceAtom)!;
   const serviceType = service?.viewConfig.displayType;
   const { formFields }: { formFields: Array<FormField> } = service ?? {
@@ -128,6 +112,7 @@ const BookService = () => {
 
   const checkDisableButton = useCallback(() => {
     const disabledForSlot = selectedSlotValue === "" || loading || isUploading;
+    const disabledForSlots = !selectedSlotsValue.length || loading || isUploading;
     const disabledForDateRange =
       selectedDateRangeValue.dateTimeFrom === null ||
       selectedDateRangeValue.dateTimeTo === null ||
@@ -135,8 +120,11 @@ const BookService = () => {
       isUploading;
     const isSlotType = serviceType === BOOKING_FORM_TYPES.DAYS;
     const isDateRangeType = serviceType === BOOKING_FORM_TYPES.CALENDAR;
+    const isEventType = serviceType === BOOKING_FORM_TYPES.LIST;
 
-    return (isSlotType && disabledForSlot) || (isDateRangeType && disabledForDateRange);
+    return (
+      (isSlotType && disabledForSlot) || (isDateRangeType && disabledForDateRange) || (isEventType && disabledForSlots)
+    );
   }, [
     selectedSlotValue,
     loading,
@@ -145,6 +133,7 @@ const BookService = () => {
     selectedDateRangeValue.dateTimeTo,
     loadingDateRange,
     serviceType,
+    selectedSlotsValue,
   ]);
 
   const handleSubmit = (value: Record<string, any>) => {
@@ -203,6 +192,18 @@ const BookService = () => {
           }),
         },
       });
+    } else if (serviceType === BOOKING_FORM_TYPES.LIST && selectedSlotsValue.length) {
+      bookSlotMutation({
+        variables: {
+          serviceId: id!,
+          slots: selectedSlotsValue,
+          formFields: json,
+          timezone: timeZone,
+          ...(service?.paymentProviders.length && {
+            paymentProvider: service.paymentProviders[0],
+          }),
+        },
+      });
     }
   };
 
@@ -236,7 +237,11 @@ const BookService = () => {
                   </StyledWarning>
                 )}
                 <Button type="submit" buttonType="primary" disabled={checkDisableButton()} data-cy="book-now-button">
-                  {getSubmitButtonText(formattedDate, servicePriceValue, t)}
+                  {getSubmitButtonText({
+                    selectedSlotValue: formattedDate,
+                    selectedSlotsValue,
+                    t,
+                  })}
                 </Button>
               </Column>
             </Form>
