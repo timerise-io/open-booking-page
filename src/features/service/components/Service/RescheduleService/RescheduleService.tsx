@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { Typography } from "components/Typography";
@@ -8,24 +8,20 @@ import { useRescheduleBooking } from "features/service/hooks/useRescheduleBookin
 import { getPath } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
+import { BOOKING_FORM_TYPES } from "models/service";
 import { PAGES } from "pages/constans";
-import { TFunction, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
+import { selectedDateRange } from "state/atoms/selectedDateRange";
 import { selectedSlot } from "state/atoms/selectedSlot";
+import { selectedSlots } from "state/atoms/selectedSlots";
 import { serviceAtom } from "state/atoms/service";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
 import styled from "styled-components";
-
-const getSubmitButtonText = (selectedSlotValue: string, t: TFunction<"forms"[]>) => {
-  const textBase = t("reschedule-button");
-
-  if (selectedSlotValue === "") return textBase;
-
-  return `${textBase}: ${selectedSlotValue}`;
-};
+import { getSubmitButtonText } from "../BookService/helpers";
 
 const WrapperCard = styled(Card)`
   ${({ theme }) => theme.mediaBelow(theme.breakpoints.sm)} {
@@ -52,10 +48,17 @@ const RescheduleService = () => {
   const lang = useLangParam();
   const { t } = useTranslation(["forms"]);
   const selectedSlotValue = useRecoilValue(selectedSlot);
+  const selectedDateRangeValue = useRecoilValue(selectedDateRange);
+  const selectedSlotsValue = useRecoilValue(selectedSlots);
   const service = useRecoilValue(serviceAtom)!;
   const slot = useRecoilValue(selectedSlotSelector);
   const { rescheduleBookingMutation, loading } = useRescheduleBooking();
   const timeZone = useRecoilValue(timeZoneAtom);
+  const serviceType = service?.viewConfig.displayType;
+
+  const isSlotType = serviceType === BOOKING_FORM_TYPES.DAYS;
+  const isDateRangeType = serviceType === BOOKING_FORM_TYPES.CALENDAR;
+  const isEventType = serviceType === BOOKING_FORM_TYPES.LIST;
 
   const formattedDateTo =
     selectedSlotValue &&
@@ -78,15 +81,52 @@ const RescheduleService = () => {
     });
 
   const handleSubmit = () => {
-    if (slot === undefined || bookingValue?.bookingId === undefined) return;
-
-    rescheduleBookingMutation({
-      variables: {
-        bookingId: bookingValue.bookingId,
-        slots: [slot.slotId],
-      },
-    });
+    if (isSlotType) {
+      if (slot === undefined || bookingValue?.bookingId === undefined) return;
+      rescheduleBookingMutation({
+        variables: {
+          bookingId: bookingValue.bookingId,
+          slots: [slot.slotId],
+        },
+      });
+    } else if (isDateRangeType) {
+      if (slot === undefined || bookingValue?.bookingId === undefined) return;
+      rescheduleBookingMutation({
+        variables: {
+          bookingId: bookingValue.bookingId,
+          slots: [slot.slotId],
+        },
+      });
+    } else if (isEventType) {
+      if (bookingValue?.bookingId === undefined) return;
+      rescheduleBookingMutation({
+        variables: {
+          bookingId: bookingValue.bookingId,
+          slots: selectedSlotsValue,
+        },
+      });
+    }
   };
+
+  const checkDisableButton = useCallback(() => {
+    const disabledForSlot = selectedSlotValue === "" || loading;
+    const disabledForSlots = !selectedSlotsValue.length || loading;
+    const disabledForDateRange =
+      selectedDateRangeValue.dateTimeFrom === null || selectedDateRangeValue.dateTimeTo === null;
+
+    return (
+      (isSlotType && disabledForSlot) || (isDateRangeType && disabledForDateRange) || (isEventType && disabledForSlots)
+    );
+  }, [
+    selectedSlotValue,
+    loading,
+    selectedDateRangeValue.dateTimeFrom,
+    selectedDateRangeValue.dateTimeTo,
+    selectedSlotsValue,
+    isSlotType,
+    isDateRangeType,
+    isEventType,
+  ]);
 
   if (service === undefined || bookingValue === undefined) return null;
 
@@ -98,7 +138,6 @@ const RescheduleService = () => {
             {t("headers.reschedule-booking")}
           </Typography>
         </Box>
-
         <Box>
           <Typography typographyType="label" displayType="contents">
             {t("from")}:
@@ -122,11 +161,15 @@ const RescheduleService = () => {
           <Button
             type="submit"
             buttonType="primary"
-            disabled={selectedSlotValue === "" || loading}
+            disabled={checkDisableButton()}
             data-cy="book-now-button"
             onClick={() => handleSubmit()}
           >
-            {getSubmitButtonText(formattedDateTo, t)}
+            {getSubmitButtonText({
+              selectedSlotValue: formattedDateTo,
+              selectedSlotsValue,
+              t,
+            })}
           </Button>
 
           <Button
