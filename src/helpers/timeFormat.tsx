@@ -73,6 +73,7 @@ export const convertSourceDateTimeToTargetDateTimeWithHoursSystem: ConvertSource
       small {
         font-size: 9px;
         text-transform: lowercase;
+        line-height: 7px;
       }
     `;
 

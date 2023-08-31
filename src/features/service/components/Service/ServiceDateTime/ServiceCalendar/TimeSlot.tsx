@@ -23,8 +23,8 @@ interface TimeSlotButtonProps {
 }
 
 const timeSlotHeight: Record<string, string> = {
-  "true-true": "60px",
-  "false-true": "50px",
+  "true-true": "unset",
+  "false-true": "unset",
   "true-false": "unset",
   "false-false": "unset",
 };
@@ -35,6 +35,12 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
   box-sizing: border-box;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
+
   ${({ theme, state, showDuration, showQuantity }) => {
     const colorSchema = theme.colorSchemas.timeSlotButton[state] as any;
 
@@ -45,7 +51,6 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
       background-color: ${colorSchema.background};
       min-width: ${showDuration ? "96px" : "unset"};
       min-height: ${timeSlotHeight[`${showDuration}-${showQuantity}`] ?? "unset"};
-      padding: ${showQuantity ? "2px 0 4px 0" : "8px 0"};
     `;
   }}
 
@@ -66,18 +71,13 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
 interface DummySlotProps {
   showDuration: boolean;
   showQuantity: boolean;
-  is12HoursSystem: boolean;
 }
 
 const dummyTimeSlotHeight: Record<string, string> = {
-  "true-true-false": "60px",
-  "false-true-false": "50px",
-  "true-false-false": "38px",
-  "false-false-false": "34px",
-  "true-true-true": "60px",
-  "false-true-true": "50px",
-  "true-false-true": "39.5px",
-  "false-false-true": "36.5px",
+  "true-true": "70px",
+  "false-true": "44px",
+  "true-false": "54px",
+  "false-false": "26px",
 };
 
 const DummySlotWrapper = styled.div<DummySlotProps>`
@@ -87,18 +87,19 @@ const DummySlotWrapper = styled.div<DummySlotProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  ${({ theme, showDuration, showQuantity, is12HoursSystem }) => {
+
+  ${({ theme, showDuration, showQuantity }) => {
     const colorSchema = theme.colorSchemas.timeSlotButton.unavailable as any;
     return css`
       color: ${colorSchema.text};
-      height: ${dummyTimeSlotHeight[`${showDuration}-${showQuantity}-${is12HoursSystem}`] ?? "38px"};
+      height: ${dummyTimeSlotHeight[`${showDuration}-${showQuantity}`] ?? "38px"};
     `;
   }}
 `;
 
-const DummySlot: React.FC<DummySlotProps> = ({ showDuration, showQuantity, is12HoursSystem }) => {
+const DummySlot: React.FC<DummySlotProps> = ({ showDuration, showQuantity }) => {
   return (
-    <DummySlotWrapper showDuration={showDuration} showQuantity={showQuantity} is12HoursSystem={is12HoursSystem}>
+    <DummySlotWrapper showDuration={showDuration} showQuantity={showQuantity}>
       <Typography typographyType="h3" weight="500" as="span" align="center" color="inherit">
         -
       </Typography>
@@ -156,7 +157,7 @@ const getBaseSlotContent = (
 const QuantityText = styled(Typography)`
   font-size: 10px;
   line-height: 12px;
-  margin-top: 2px;
+  margin: 2px 0;
 `;
 const DurationText = styled(Typography)`
   &.unavailable-time-slot {
@@ -166,6 +167,11 @@ const DurationText = styled(Typography)`
 
 const WrapperWithDuration = styled.div`
   display: flex;
+  flex-direction: column;
+
+  em {
+    line-height: 6px;
+  }
 `;
 
 const getDurationQuantitySlotContent = (
@@ -189,19 +195,23 @@ const getDurationQuantitySlotContent = (
         color="inherit"
       >
         <WrapperWithDuration>
-          {convertSourceDateTimeToTargetDateTimeWithHoursSystem({
-            date,
-            targetTimeZone: timeZone,
-            sourceTimeZone: service.project.localTimeZone,
-            is12HoursSystem,
-          })}
-          {" - "}
-          {convertSourceDateTimeToTargetDateTimeWithHoursSystem({
-            date: slot.dateTimeTo,
-            targetTimeZone: timeZone,
-            sourceTimeZone: service.project.localTimeZone,
-            is12HoursSystem,
-          })}
+          <span>
+            {convertSourceDateTimeToTargetDateTimeWithHoursSystem({
+              date,
+              targetTimeZone: timeZone,
+              sourceTimeZone: service.project.localTimeZone,
+              is12HoursSystem,
+            })}
+          </span>
+          <em>-</em>
+          <span>
+            {convertSourceDateTimeToTargetDateTimeWithHoursSystem({
+              date: slot.dateTimeTo,
+              targetTimeZone: timeZone,
+              sourceTimeZone: service.project.localTimeZone,
+              is12HoursSystem,
+            })}
+          </span>
         </WrapperWithDuration>
       </DurationText>
       {slot.quantity > 0 && (
@@ -273,19 +283,23 @@ const getDurationSlotContent = (
         color="inherit"
       >
         <WrapperWithDuration>
-          {convertSourceDateTimeToTargetDateTimeWithHoursSystem({
-            date,
-            targetTimeZone: timeZone,
-            sourceTimeZone: service.project.localTimeZone,
-            is12HoursSystem,
-          })}
-          {" - "}
-          {convertSourceDateTimeToTargetDateTimeWithHoursSystem({
-            date: slot.dateTimeTo,
-            targetTimeZone: timeZone,
-            sourceTimeZone: service.project.localTimeZone,
-            is12HoursSystem,
-          })}
+          <span>
+            {convertSourceDateTimeToTargetDateTimeWithHoursSystem({
+              date,
+              targetTimeZone: timeZone,
+              sourceTimeZone: service.project.localTimeZone,
+              is12HoursSystem,
+            })}
+          </span>
+          <em>-</em>
+          <span>
+            {convertSourceDateTimeToTargetDateTimeWithHoursSystem({
+              date: slot.dateTimeTo,
+              targetTimeZone: timeZone,
+              sourceTimeZone: service.project.localTimeZone,
+              is12HoursSystem,
+            })}
+          </span>
         </WrapperWithDuration>
       </DurationText>
     </Column>
@@ -303,7 +317,7 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, day, is12HoursSys
   return (
     <Column mt={0.5} mb={0.5} w="100%">
       {!slot ? (
-        <DummySlot showDuration={showDuration} showQuantity={showQuantity} is12HoursSystem={is12HoursSystem} />
+        <DummySlot showDuration={showDuration} showQuantity={showQuantity} />
       ) : (
         <TimeSlotButton
           showDuration={showDuration}
