@@ -34,7 +34,7 @@ export const useBookSlot = () => {
           url: `${PAGES.BOOKING}:query`,
           params: {
             id: data.bookingCreate.bookingId,
-            query: lang ? `?${createSearchParams({ lang }).toString()}` : "",
+            query: lang ? `?${createSearchParams({ locale: lang }).toString()}` : "",
           },
         }),
       );

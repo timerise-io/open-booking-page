@@ -35,7 +35,7 @@ export const useRescheduleBooking = () => {
           url: `${PAGES.BOOKING}:query`,
           params: {
             id: data.bookingReschedule.bookingId,
-            query: lang ? `?${createSearchParams({ lang }).toString()}` : "",
+            query: lang ? `?${createSearchParams({ locale: lang }).toString()}` : "",
           },
         }),
       );

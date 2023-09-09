@@ -7,6 +7,7 @@ export const BOOK_SLOT = gql`
     $formFields: JSON
     $paymentProvider: PaymentProvider
     $timezone: TimeZone
+    $locale: Locale
   ) {
     bookingCreate(
       serviceId: $serviceId
@@ -14,6 +15,7 @@ export const BOOK_SLOT = gql`
       formFields: $formFields
       paymentProvider: $paymentProvider
       timezone: $timezone
+      locale: $locale
     ) {
       bookingId
     }
@@ -28,6 +30,7 @@ export const BOOK_DATE_RANGE = gql`
     $formFields: JSON
     $paymentProvider: PaymentProvider
     $timezone: TimeZone
+    $locale: Locale
   ) {
     bookingCreate(
       serviceId: $serviceId
@@ -36,6 +39,7 @@ export const BOOK_DATE_RANGE = gql`
       formFields: $formFields
       paymentProvider: $paymentProvider
       timezone: $timezone
+      locale: $locale
     ) {
       bookingId
     }

@@ -25,7 +25,7 @@ export const RescheduleBookingButton = () => {
             url: `${PAGES.RESCHEDULE}:query`,
             params: {
               id: bookingValue.bookingId,
-              query: lang ? `?${createSearchParams({ lang }).toString()}` : "",
+              query: lang ? `?${createSearchParams({ locale: lang }).toString()}` : "",
             },
           }),
         );

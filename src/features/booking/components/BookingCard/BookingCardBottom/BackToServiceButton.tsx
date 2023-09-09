@@ -25,7 +25,7 @@ const BackToServiceButton = () => {
             url: `${PAGES.SERVICE}:query`,
             params: {
               id: bookingValue.service.serviceId,
-              query: lang ? `?${createSearchParams({ lang }).toString()}` : "",
+              query: lang ? `?${createSearchParams({ locale: lang }).toString()}` : "",
             },
           }),
         );

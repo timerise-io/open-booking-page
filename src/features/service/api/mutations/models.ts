@@ -6,6 +6,7 @@ export interface BookSlotMutationVariables {
   formFields: string;
   paymentProvider?: PaymentType;
   timezone: string;
+  locale?: string;
 }
 
 export interface BookSlotMutationRespons {
@@ -21,6 +22,7 @@ export interface BookDateRangeMutationVariables {
   formFields: string;
   paymentProvider?: PaymentType;
   timezone: string;
+  locale?: string;
 }
 
 export interface BookDateRangeMutationRespons {
