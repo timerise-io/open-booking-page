@@ -174,6 +174,7 @@ const BookService = () => {
           ...(service?.paymentProviders.length && {
             paymentProvider: service.paymentProviders[0],
           }),
+          locale: locale.code,
         },
       });
     } else if (
@@ -190,6 +191,7 @@ const BookService = () => {
           ...(service?.paymentProviders.length && {
             paymentProvider: service.paymentProviders[0],
           }),
+          locale: locale.code,
         },
       });
     } else if (serviceType === BOOKING_FORM_TYPES.LIST && selectedSlotsValue.length) {
@@ -202,6 +204,7 @@ const BookService = () => {
           ...(service?.paymentProviders.length && {
             paymentProvider: service.paymentProviders[0],
           }),
+          locale: locale.code,
         },
       });
     }
