@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { LinkButton } from "components/LinkButton";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
+import { HOURS_SYSTEMS } from "features/service/components/Service/HoursSystem/enums/HoursSystem.enum";
 import { getDatesValue } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
 import { Booking } from "models/booking";
 import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
+import { hoursSystemAtom } from "state/atoms";
 import { bookingAtom } from "state/atoms/booking";
 import { serviceAtom } from "state/atoms/service";
 import { timeZoneAtom } from "state/atoms/timeZone";
@@ -29,8 +31,6 @@ interface BookingCardTitleProps extends Pick<Booking, "paymentLink" | "dateTimeF
 
 const BookingCardTitle = ({
   paymentLink,
-  dateTimeFrom,
-  dateTimeTo,
   title,
   description,
   iconUrl,
@@ -42,6 +42,8 @@ const BookingCardTitle = ({
   const timeZone = useRecoilValue(timeZoneAtom);
   const service = useRecoilValue(serviceAtom)!;
   const booking = useRecoilValue(bookingAtom);
+  const hoursSystem = useRecoilValue(hoursSystemAtom);
+  const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
 
   return (
     <>
@@ -52,6 +54,7 @@ const BookingCardTitle = ({
       <Typography typographyType="body" align="center" className="status-description">
         {description}
       </Typography>
+
       {showDetails &&
         booking?.slots &&
         booking?.slots.length > 0 &&
@@ -66,6 +69,7 @@ const BookingCardTitle = ({
                 targetTimeZone: timeZone,
                 sourceTimeZone: service.project.localTimeZone,
                 locale,
+                is12HoursSystem,
               })} (${timeZone.replace("_", " ")})`}
             </Typography>
           </StyledRow>

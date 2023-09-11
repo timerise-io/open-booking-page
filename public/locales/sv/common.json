@@ -33,5 +33,6 @@
     "show-more": "Visa mer",
     "show-less": "Visa mindre",
     "available": "tillgänglig",
-    "timezone": "Tidszon"
+    "timezone": "Tidszon",
+    "format": "Format"
 }

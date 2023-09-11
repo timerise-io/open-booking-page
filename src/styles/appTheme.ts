@@ -86,8 +86,9 @@ const appTheme: DefaultTheme = {
     },
     timeSlotButton: {
       available: {
-        background: "none",
+        background: "#F2F2F2",
         backgroundActive: WHITE,
+        backgroundHover: "#E5E5E5",
         border: "#D9D9D9",
         borderActive: DARK_GRAY,
         text: DARK,
@@ -95,16 +96,18 @@ const appTheme: DefaultTheme = {
       unavailable: {
         background: "unset",
         backgroundActive: "unset",
+        backgroundHover: "unset",
         border: "transparent",
         borderActive: "transparent",
         text: DARK_GRAY,
       },
       selected: {
-        background: "#EBEBEB",
-        backgroundActive: "#E0E0E0",
+        background: DARK,
+        backgroundActive: DARK,
+        backgroundHover: DARK,
         border: "#333333",
         borderActive: "#333333",
-        text: DARK,
+        text: WHITE,
       },
     },
     fileUpload: {
@@ -228,25 +231,28 @@ const darkTheme: DefaultTheme = {
     },
     timeSlotButton: {
       available: {
-        background: "#0D0D0D",
-        backgroundActive: "#0D0D0D",
+        background: "#1E1E1E",
+        backgroundActive: "#F6F6F6",
+        backgroundHover: "#3E3E3E",
         border: "#474747",
         borderActive: "#EAEAEA",
-        text: "#D9D9D9",
+        text: "#F6F6F6",
       },
       unavailable: {
         background: "unset",
         backgroundActive: "unset",
+        backgroundHover: "unset",
         border: "transparent",
         borderActive: "transparent",
-        text: "#535353",
+        text: "#999999",
       },
       selected: {
-        background: "#3D3D3D",
-        backgroundActive: "#525252",
+        background: "#F6F6F6",
+        backgroundActive: "#F6F6F6",
+        backgroundHover: "#F6F6F6",
         border: "#EAEAEA",
         borderActive: "#EAEAEA",
-        text: WHITE,
+        text: "#333333",
       },
     },
     fileUpload: {

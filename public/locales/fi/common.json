@@ -33,5 +33,6 @@
     "show-more": "Näytä lisää",
     "show-less": "Näytä vähemmän",
     "available": "saatavilla",
-    "timezone": "Aikavyöhyke"
+    "timezone": "Aikavyöhyke",
+    "format": "Muoto"
 }

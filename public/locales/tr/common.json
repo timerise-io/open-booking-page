@@ -33,5 +33,6 @@
     "show-more": "Daha fazla göster",
     "show-less": "Daha az göster",
     "available": "mevcut",
-    "timezone": "Zaman Dilimi"
+    "timezone": "Zaman Dilimi",
+    "format": "Biçim"
 }

@@ -33,5 +33,6 @@
     "show-more": "Többet mutasson",
     "show-less": "Kevesebb mutatása",
     "available": "elérhető",
-    "timezone": "Időzóna"
+    "timezone": "Időzóna",
+    "format": "Formátum"
 }

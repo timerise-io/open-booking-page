@@ -35,6 +35,7 @@ export interface IconButtonColorSchema {
 export interface TimeSlotButtonColorSchema {
   background: string;
   backgroundActive: string;
+  backgroundHover: string;
   border: string;
   borderActive: string;
   text: string;
