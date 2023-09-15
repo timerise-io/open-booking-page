@@ -34,5 +34,8 @@
     "show-less": "Покажи по-малко",
     "available": "на разположение",
     "timezone": "Часови пояс",
-    "format": "Формат"
+    "format": "Формат",
+    "quantity-slots-available": "{{quantity}} налични слота",
+    "no-event-slots-available": "Няма налични слотове за събитие"
+
 }

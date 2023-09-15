@@ -34,5 +34,7 @@
     "show-less": "Näytä vähemmän",
     "available": "saatavilla",
     "timezone": "Aikavyöhyke",
-    "format": "Muoto"
+    "format": "Muoto",
+    "quantity-slots-available": "{{quantity}} paikkaa saatavilla",
+    "no-event-slots-available": "Ei tapahtumapaikkoja saatavilla"
 }

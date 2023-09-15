@@ -33,5 +33,7 @@
   "show-more": "Vis mer",
   "show-less": "Vis mindre",
   "available": "tilgjengelig",
-  "timezone": "Tidssone"
+  "timezone": "Tidssone",
+  "quantity-slots-available": "{{quantity}} ledige plasser",
+  "no-event-slots-available": "Ingen ledige plasser for arrangementet"
 }

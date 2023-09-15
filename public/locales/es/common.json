@@ -34,5 +34,7 @@
     "show-less": "Mostrar menos",
     "available": "disponible",
     "timezone": "Zona horaria",
-    "format": "Formato"
+    "format": "Formato",
+    "quantity-slots-available": "{{quantity}} espacios disponibles",
+    "no-event-slots-available": "No hay espacios disponibles para el evento"
 }
