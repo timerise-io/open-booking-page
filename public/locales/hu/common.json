@@ -34,5 +34,7 @@
     "show-less": "Kevesebb mutatása",
     "available": "elérhető",
     "timezone": "Időzóna",
-    "format": "Formátum"
+    "format": "Formátum",
+    "quantity-slots-available": "{{quantity}} hely elérhető",
+    "no-event-slots-available": "Nincsenek elérhető helyek az eseményhez"
 }

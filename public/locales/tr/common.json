@@ -34,5 +34,7 @@
     "show-less": "Daha az göster",
     "available": "mevcut",
     "timezone": "Zaman Dilimi",
-    "format": "Biçim"
+    "format": "Biçim",
+    "quantity-slots-available": "{{quantity}} slot mevcut",
+    "no-event-slots-available": "Etkinlik için boş slot yok"
 }

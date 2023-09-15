@@ -34,5 +34,7 @@
   "show-less": "Show less",
   "available": "available",
   "timezone": "Timezone",
-  "format": "Format"
+  "format": "Format",
+  "quantity-slots-available": "{{quantity}} slots available",
+  "no-event-slots-available": "No event slots available"
 }

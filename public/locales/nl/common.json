@@ -34,5 +34,7 @@
     "show-less": "Minder tonen",
     "available": "beschikbaar",
     "timezone": "Tijdzone",
-    "format": "Formaat"
+    "format": "Formaat",
+    "quantity-slots-available": "{{quantity}} slots beschikbaar",
+    "no-event-slots-available": "Geen slots beschikbaar voor het evenement"
 }

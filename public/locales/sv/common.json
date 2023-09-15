@@ -34,5 +34,7 @@
     "show-less": "Visa mindre",
     "available": "tillgänglig",
     "timezone": "Tidszon",
-    "format": "Format"
+    "format": "Format",
+    "quantity-slots-available": "{{quantity}} platser tillgängliga",
+    "no-event-slots-available": "Inga platser tillgängliga för evenemanget"
 }

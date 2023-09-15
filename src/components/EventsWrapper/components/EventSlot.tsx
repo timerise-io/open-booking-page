@@ -5,6 +5,7 @@ import { HOURS_SYSTEMS } from "features/service/components/Service/HoursSystem/e
 import { getDatesValue } from "helpers/functions";
 import { Service } from "models/service";
 import { TimeSlotButtonType } from "models/theme";
+import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import { hoursSystemAtom } from "state/atoms";
 import { selectedSlots } from "state/atoms/selectedSlots";
@@ -82,6 +83,7 @@ export const EventSlot: React.FC<Props> = ({
   const selectedSlotsValue = useRecoilValue(selectedSlots);
   const hoursSystem = useRecoilValue(hoursSystemAtom);
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
+  const { t } = useTranslation();
 
   const getEventSlotButtonState = (): TimeSlotButtonType => {
     if (selectedSlotsValue.includes(id)) return "selected";
@@ -150,7 +152,7 @@ export const EventSlot: React.FC<Props> = ({
             className={quantity > 0 ? "" : "unavailable-time-slot"}
             style={{ color: "inherit" }}
           >
-            {quantity} slots available
+            {t("quantity-slots-available", { quantity })}
           </Typography>
         )}
       </EventSlotButton>

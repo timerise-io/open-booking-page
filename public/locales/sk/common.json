@@ -34,5 +34,7 @@
     "show-less": "Zobraziť menej",
     "available": "k dispozícii na",
     "timezone": "Časové pásmo",
-    "format": "Formát"
+    "format": "Formát",
+    "quantity-slots-available": "{{quantity}} voľných slotov",
+    "no-event-slots-available": "Žiadne voľné sloty pre udalosť"
 }
