@@ -15,7 +15,7 @@ import { BOOKING_FORM_TYPES } from "models/service";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { hoursSystemAtom } from "state/atoms";
 import { selectedDateRange } from "state/atoms/selectedDateRange";
 import { selectedSlot } from "state/atoms/selectedSlot";
@@ -24,7 +24,6 @@ import { serviceAtom } from "state/atoms/service";
 import { slotsFiltersAtom } from "state/atoms/slotsFilters";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { uploadAttachmentsAtom } from "state/atoms/uploadAttachments";
-import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
 import styled from "styled-components";
 import { IconInfoCircle } from "@tabler/icons";
 import { BookingServiceFormContent } from "../BookingServiceFormContent/BookingServiceFormContent";
@@ -93,7 +92,6 @@ const BookService = () => {
     formFields: [],
   };
   const showWarning = useRecoilValue(slotsFiltersAtom).triggerId !== 0;
-  const slot = useRecoilValue(selectedSlotSelector);
   const { bookSlotMutation, loading, error } = useBookSlot();
   const { bookDateRangeMutation, loadingDateRange, errorDateRange } = useBookDateRange();
   const { id } = useParams<{ id: string }>();
@@ -101,6 +99,7 @@ const BookService = () => {
   const timeZone = useRecoilValue(timeZoneAtom);
   const hoursSystem = useRecoilValue(hoursSystemAtom);
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
+  const [, setSelectedSlots] = useRecoilState(selectedSlots);
 
   const isUploading = Object.values(uploadState).filter((item) => item.isLoading).length > 0;
 
@@ -117,7 +116,6 @@ const BookService = () => {
     });
 
   const checkDisableButton = useCallback(() => {
-    const disabledForSlot = selectedSlotValue === "" || loading || isUploading;
     const disabledForSlots = !selectedSlotsValue.length || loading || isUploading;
     const disabledForDateRange =
       selectedDateRangeValue.dateTimeFrom === null ||
@@ -129,10 +127,9 @@ const BookService = () => {
     const isEventType = serviceType === BOOKING_FORM_TYPES.LIST;
 
     return (
-      (isSlotType && disabledForSlot) || (isDateRangeType && disabledForDateRange) || (isEventType && disabledForSlots)
+      (isSlotType && disabledForSlots) || (isDateRangeType && disabledForDateRange) || (isEventType && disabledForSlots)
     );
   }, [
-    selectedSlotValue,
     loading,
     isUploading,
     selectedDateRangeValue.dateTimeFrom,
@@ -170,11 +167,11 @@ const BookService = () => {
       ...Object.assign({}, ...customFormFields),
     });
 
-    if (serviceType === BOOKING_FORM_TYPES.DAYS && slot !== undefined) {
+    if (serviceType === BOOKING_FORM_TYPES.DAYS && selectedSlotsValue.length) {
       bookSlotMutation({
         variables: {
           serviceId: id!,
-          slots: [slot.slotId],
+          slots: selectedSlotsValue,
           formFields: json,
           timezone: timeZone,
           ...(service?.paymentProviders.length && {
@@ -182,7 +179,7 @@ const BookService = () => {
           }),
           locale: locale.code,
         },
-      });
+      }).then(() => setSelectedSlots([]));
     } else if (
       serviceType === BOOKING_FORM_TYPES.CALENDAR &&
       selectedDateRangeValue.dateTimeFrom !== null &&
@@ -212,7 +209,7 @@ const BookService = () => {
           }),
           locale: locale.code,
         },
-      });
+      }).then(() => setSelectedSlots([]));
     }
   };
 

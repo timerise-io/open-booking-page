@@ -11,8 +11,9 @@ export const slotsDayPattern = selector({
       return Object.values(item).map((slot) => {
         const from = slot.dateTimeFrom.split("T")[1];
         const to = slot.dateTimeTo.split("T")[1];
+        const slotId = slot.slotId;
 
-        return { key: `${from}-${to}`, from, to };
+        return { key: `${from}-${to}`, from, to, slotId };
       });
     });
 

@@ -7,7 +7,7 @@ import { Slot } from "models/slots";
 import { TimeSlotButtonType } from "models/theme";
 import { TFunction, useTranslation } from "react-i18next";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { selectedSlot } from "state/atoms/selectedSlot";
+import { selectedSlots } from "state/atoms/selectedSlots";
 import { serviceAtom } from "state/atoms/service";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { slotsViewConfiguration } from "state/selectors/slotsViewConfiguration";
@@ -110,16 +110,11 @@ const DummySlot: React.FC<DummySlotProps> = ({ showDuration, showQuantity }) => 
 interface TimeSlotProps {
   dateFrom: string;
   dateTo: string;
-  day: string;
   is12HoursSystem: boolean;
 }
 
-const getTimeSlotButtonState = (
-  dateString: string,
-  selectedDateString: string,
-  isAvailable: boolean,
-): TimeSlotButtonState => {
-  if (dateString === selectedDateString) return "selected";
+const getTimeSlotButtonState = (selected: boolean, isAvailable: boolean): TimeSlotButtonState => {
+  if (selected) return "selected";
 
   if (isAvailable) return "available";
 
@@ -306,13 +301,29 @@ const getDurationSlotContent = (
   );
 };
 
-const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, day, is12HoursSystem }) => {
+const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, is12HoursSystem }) => {
   const slot = useRecoilValue(timeSlot({ from: dateFrom, to: dateTo }));
-  const [selected, setSelectedSlot] = useRecoilState(selectedSlot);
+  const slotId = slot?.slotId!;
   const { showDuration, showQuantity } = useRecoilValue(slotsViewConfiguration);
   const { t } = useTranslation();
   const timeZone = useRecoilValue(timeZoneAtom);
-  const service = useRecoilValue(serviceAtom);
+  const service = useRecoilValue(serviceAtom)!;
+  const [selectedSlotsValue, setSelectedSlots] = useRecoilState(selectedSlots);
+  const selected = selectedSlotsValue.includes(slotId);
+
+  const handleSlotClick = () => {
+    const hasMultipleSlots = service.viewConfig?.days?.multiSelect;
+
+    if (hasMultipleSlots) {
+      if (selected) {
+        setSelectedSlots(selectedSlotsValue.filter((id: string) => id !== slotId));
+      } else {
+        setSelectedSlots([...selectedSlotsValue, slotId]);
+      }
+    } else {
+      setSelectedSlots(selected ? [] : [slotId]);
+    }
+  };
 
   return (
     <Column mt={0.5} mb={0.5} w="100%">
@@ -322,11 +333,9 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, day, is12HoursSys
         <TimeSlotButton
           showDuration={showDuration}
           showQuantity={showQuantity}
-          state={getTimeSlotButtonState(dateFrom, selected, slot.quantity > 0)}
+          state={getTimeSlotButtonState(selected, slot.quantity > 0)}
           disabled={slot.quantity === 0}
-          onClick={() => {
-            setSelectedSlot(dateFrom);
-          }}
+          onClick={handleSlotClick}
         >
           {showDuration &&
             showQuantity &&
