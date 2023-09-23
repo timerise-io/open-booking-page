@@ -7,6 +7,7 @@ import { Column } from "components/layout/Column";
 import { useBookDateRange } from "features/service/hooks/useBookDateRange";
 import { useBookSlot } from "features/service/hooks/useBookSlot";
 import { Form, Formik } from "formik";
+import { getServiceConfigByType } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import _ from "lodash";
@@ -18,9 +19,9 @@ import { useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { hoursSystemAtom } from "state/atoms";
 import { selectedDateRange } from "state/atoms/selectedDateRange";
-import { selectedSlot } from "state/atoms/selectedSlot";
 import { selectedSlots } from "state/atoms/selectedSlots";
 import { serviceAtom } from "state/atoms/service";
+import { slotsAtom } from "state/atoms/slots";
 import { slotsFiltersAtom } from "state/atoms/slotsFilters";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { uploadAttachmentsAtom } from "state/atoms/uploadAttachments";
@@ -83,11 +84,11 @@ const BookService = () => {
   const [searchParams] = useSearchParams();
   const locale = useLocale();
   const { t } = useTranslation(["forms"]);
-  const selectedSlotValue = useRecoilValue(selectedSlot);
   const selectedDateRangeValue = useRecoilValue(selectedDateRange);
   const selectedSlotsValue = useRecoilValue(selectedSlots);
   const service = useRecoilValue(serviceAtom)!;
   const serviceType = service?.viewConfig.displayType;
+  const serviceConfig = service && getServiceConfigByType({ service });
   const { formFields }: { formFields: Array<FormField> } = service ?? {
     formFields: [],
   };
@@ -100,20 +101,22 @@ const BookService = () => {
   const hoursSystem = useRecoilValue(hoursSystemAtom);
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
   const [, setSelectedSlots] = useRecoilState(selectedSlots);
+  const slots = useRecoilValue(slotsAtom)!;
 
   const isUploading = Object.values(uploadState).filter((item) => item.isLoading).length > 0;
 
   const dateFormat = is12HoursSystem ? "iiii dd MMM, h:mm a" : "iiii dd MMM, H:mm";
 
-  const formattedDate =
-    selectedSlotValue &&
-    convertSourceDateTimeToTargetDateTime({
-      date: selectedSlotValue,
-      targetTimeZone: timeZone,
-      sourceTimeZone: service.project.localTimeZone,
-      dateFormat,
-      locale,
-    });
+  const selectedSlot = slots.find((slot) => slot.slotId === selectedSlotsValue[0])!;
+  const formattedDate = selectedSlotsValue?.length
+    ? convertSourceDateTimeToTargetDateTime({
+        date: selectedSlot.dateTimeFrom,
+        targetTimeZone: timeZone,
+        sourceTimeZone: service.project.localTimeZone,
+        dateFormat,
+        locale,
+      })
+    : "";
 
   const checkDisableButton = useCallback(() => {
     const disabledForSlots = !selectedSlotsValue.length || loading || isUploading;
@@ -247,6 +250,7 @@ const BookService = () => {
                     selectedSlotValue: formattedDate,
                     selectedSlotsValue,
                     t,
+                    serviceConfig,
                   })}
                 </Button>
               </Column>

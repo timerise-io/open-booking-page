@@ -39,7 +39,7 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4px 0;
+  padding: 6px 0;
 
   ${({ theme, state, showDuration, showQuantity }) => {
     const colorSchema = theme.colorSchemas.timeSlotButton[state] as any;
@@ -48,8 +48,8 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
       color: ${colorSchema.text};
       cursor: ${state === "unavailable" ? "unset" : "pointer"};
       border-radius: ${({ theme }) => theme.borderRadius};
-      background-color: ${colorSchema.background};
-      min-width: ${showDuration ? "96px" : "unset"};
+      background-color: ${colorSchema.background} !important;
+      border: 1px solid ${colorSchema.border};
       min-height: ${timeSlotHeight[`${showDuration}-${showQuantity}`] ?? "unset"};
     `;
   }}
@@ -58,7 +58,7 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
     ${({ theme, state }) => {
       const colorSchema = theme.colorSchemas.timeSlotButton[state];
       return css`
-        background-color: ${colorSchema.backgroundHover};
+        background-color: ${colorSchema.backgroundHover} !important;
       `;
     }}
   }
@@ -74,10 +74,10 @@ interface DummySlotProps {
 }
 
 const dummyTimeSlotHeight: Record<string, string> = {
-  "true-true": "70px",
-  "false-true": "44px",
+  "true-true": "67px",
+  "false-true": "47px",
   "true-false": "54px",
-  "false-false": "26px",
+  "false-false": "32px",
 };
 
 const DummySlotWrapper = styled.div<DummySlotProps>`
@@ -150,9 +150,9 @@ const getBaseSlotContent = (
 };
 
 const QuantityText = styled(Typography)`
-  font-size: 10px;
-  line-height: 12px;
-  margin: 2px 0;
+  font-size: 9px;
+  line-height: 11px;
+  margin: 2px 0 0;
 `;
 const DurationText = styled(Typography)`
   &.unavailable-time-slot {
@@ -165,7 +165,7 @@ const WrapperWithDuration = styled.div`
   flex-direction: column;
 
   em {
-    line-height: 6px;
+    line-height: 0px;
   }
 `;
 
@@ -212,7 +212,7 @@ const getDurationQuantitySlotContent = (
       {slot.quantity > 0 && (
         <>
           <QuantityText typographyType="body" weight="500" as="span" align="center" color="inherit">
-            {t("available")} {slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)}
+            {slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)}
           </QuantityText>
         </>
       )}
@@ -249,7 +249,7 @@ const getQuantitySlotContent = (
       {slot.quantity > 0 && (
         <>
           <QuantityText typographyType="body" weight="500" as="span" align="center" color="inherit">
-            {t("available")} {slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)}
+            {slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)}
           </QuantityText>
         </>
       )}

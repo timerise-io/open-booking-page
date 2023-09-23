@@ -22,9 +22,9 @@ export const slotsViewConfiguration = selector<SlotViewConfiguration>({
     const isDateRange = serviceType === BOOKING_FORM_TYPES.CALENDAR;
     const isEvent = serviceType === BOOKING_FORM_TYPES.LIST;
 
-    const maxDaysPerPage = isDateRange || isEvent ? 365 : duration || quantity ? 5 : 7;
-    const minDaysPerPage = duration || quantity ? 2 : 4;
-    const slotsColumnWidth = duration || quantity ? 106 : 76;
+    const maxDaysPerPage = isDateRange || isEvent ? 365 : duration || quantity ? 7 : 7;
+    const minDaysPerPage = duration || quantity ? 4 : 4;
+    const slotsColumnWidth = duration || quantity ? 76 : 76;
 
     return {
       showDuration: duration,

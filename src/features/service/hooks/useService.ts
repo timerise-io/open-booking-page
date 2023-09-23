@@ -7,6 +7,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { LOADERS, loaderAtom } from "state/atoms/loader";
 import { serviceAtom } from "state/atoms/service";
 import { serviceSlotsAtom } from "state/atoms/serviceSlots";
+import { slotsAtom } from "state/atoms/slots";
 import { slotsFiltersAtom } from "state/atoms/slotsFilters";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { slotsFilterSelector } from "state/selectors/slotFilterSelector";
@@ -30,6 +31,7 @@ export const useServiceSlotsState = (serviceId: string) => {
 
   const setServiceSlotsLoader = useSetRecoilState(loaderAtom(LOADERS.SERVICE_SLOTS));
   const setSlotsFilter = useSetRecoilState(slotsFiltersAtom);
+  const [, setAllSlots] = useRecoilState(slotsAtom);
 
   const fetchTo = `${
     addDays(new Date(fetchFrom), maxDaysPerPage - 1)
@@ -67,9 +69,10 @@ export const useServiceSlotsState = (serviceId: string) => {
   useEffect(() => {
     if (slotsData && slotsData.service) {
       const { slots } = slotsData.service;
+      setAllSlots(slots);
       setServiceSlots(slots);
     }
-  }, [slotsData, setServiceSlots]);
+  }, [slotsData, setServiceSlots, setAllSlots]);
 
   useEffect(() => {
     if (slotsError || slotsData?.service === null) navigate("/");

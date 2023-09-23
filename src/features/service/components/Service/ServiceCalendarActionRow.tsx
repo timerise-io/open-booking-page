@@ -23,6 +23,13 @@ const PaginationButton = styled(ContextButton)`
   height: 36px;
   width: 36px;
   display: grid;
+  border: none;
+
+  &:hover {
+    border: none;
+    background: ${({ theme, disabled }) =>
+      disabled ? "transparent" : theme.colorSchemas.timeSlotButton.available.background};
+  }
   & > * {
     margin: auto;
     ${({ theme, disabled }) => {
