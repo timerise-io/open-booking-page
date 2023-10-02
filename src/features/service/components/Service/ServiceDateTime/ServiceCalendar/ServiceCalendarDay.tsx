@@ -54,7 +54,6 @@ const ServiceCalendarDay: React.FC<ServiceCalendarDayProps> = ({ day }) => {
             key={`${dayPart}-${item.key}`}
             dateFrom={`${dayPart}T${item.from}`}
             dateTo={`${dayPart}T${item.to}`}
-            day={day}
             is12HoursSystem={is12HoursSystem}
           />
         );

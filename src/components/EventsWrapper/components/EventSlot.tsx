@@ -28,7 +28,7 @@ const EventSlotButton = styled.button<EventSlotButtonProps>`
     return css`
       color: ${colorSchema.text};
       cursor: ${state === "unavailable" ? "unset" : "pointer"};
-      border-color: ${colorSchema.border};
+      border: 1px solid ${colorSchema.border};
       border-radius: ${({ theme }) => theme.borderRadius};
       background-color: ${colorSchema.background};
     `;

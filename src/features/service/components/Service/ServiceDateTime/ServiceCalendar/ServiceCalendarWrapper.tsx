@@ -30,7 +30,6 @@ const ServiceCalendarWrapper = () => {
   const [serviceCalendarFilters, setServiceCalendarFilters] = useRecoilState(slotsFiltersAtom);
   const { t } = useTranslation();
   const slotsViewConfig = useRecoilValue(slotsViewConfiguration);
-
   const pageSize = Math.min(slotsViewConfig.maxDaysPerPage, Math.trunc(width / slotsViewConfig.slotsColumnWidth));
   const daysToRender = useMemo(
     () => days.slice(0, pageSize === 0 ? slotsViewConfig.minDaysPerPage : pageSize),

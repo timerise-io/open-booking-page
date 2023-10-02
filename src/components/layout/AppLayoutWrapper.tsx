@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   display: grid;
   grid-template-columns:
     1fr
-    min(900px, calc(100% - 40px))
+    min(980px, calc(100% - 40px))
     1fr;
 
   & > * {

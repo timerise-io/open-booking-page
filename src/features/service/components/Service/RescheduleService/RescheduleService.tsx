@@ -5,7 +5,7 @@ import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { useLangParam } from "features/i18n/useLangParam";
 import { useRescheduleBooking } from "features/service/hooks/useRescheduleBooking";
-import { getPath } from "helpers/functions";
+import { getPath, getServiceConfigByType } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import { BOOKING_FORM_TYPES } from "models/service";
@@ -53,6 +53,7 @@ const RescheduleService = () => {
   const selectedDateRangeValue = useRecoilValue(selectedDateRange);
   const selectedSlotsValue = useRecoilValue(selectedSlots);
   const service = useRecoilValue(serviceAtom)!;
+  const serviceConfig = service && getServiceConfigByType({ service });
   const slot = useRecoilValue(selectedSlotSelector);
   const { rescheduleBookingMutation, loading } = useRescheduleBooking();
   const timeZone = useRecoilValue(timeZoneAtom);
@@ -176,6 +177,7 @@ const RescheduleService = () => {
               selectedSlotValue: formattedDateTo,
               selectedSlotsValue,
               t,
+              serviceConfig,
             })}
           </Button>
 

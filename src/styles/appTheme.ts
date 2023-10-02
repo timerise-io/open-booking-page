@@ -9,6 +9,7 @@ const SUCCESS = "#34A853";
 const WHITE = "#FFFFFF";
 const WARNING = "#FE852F";
 const SECONDARY_DARK = "#E7E7E7";
+const PRIMARY_LIGHT_GRAY = "#F2F2F2";
 
 const appTheme: DefaultTheme = {
   themeType: "light",
@@ -29,6 +30,7 @@ const appTheme: DefaultTheme = {
     white: WHITE,
     warning: WARNING,
     primary: "#333333",
+    primaryLight: PRIMARY_LIGHT_GRAY,
   },
 
   colorSchemas: {
@@ -86,10 +88,10 @@ const appTheme: DefaultTheme = {
     },
     timeSlotButton: {
       available: {
-        background: "#F2F2F2",
+        background: PRIMARY_LIGHT_GRAY,
         backgroundActive: WHITE,
         backgroundHover: "#E5E5E5",
-        border: "#D9D9D9",
+        border: "transparent",
         borderActive: DARK_GRAY,
         text: DARK,
       },
@@ -102,16 +104,16 @@ const appTheme: DefaultTheme = {
         text: DARK_GRAY,
       },
       selected: {
-        background: DARK,
-        backgroundActive: DARK,
-        backgroundHover: DARK,
+        background: "#E5E5E5",
+        backgroundActive: PRIMARY_LIGHT_GRAY,
+        backgroundHover: "#E5E5E5",
         border: "#333333",
         borderActive: "#333333",
-        text: WHITE,
+        text: DARK,
       },
     },
     fileUpload: {
-      backgroundColor: "#F2F2F2",
+      backgroundColor: PRIMARY_LIGHT_GRAY,
     },
   },
 
@@ -173,6 +175,7 @@ const darkTheme: DefaultTheme = {
     white: DARK,
     warning: WARNING,
     primary: "#D9D9D9",
+    primaryLight: "#3E3E3E",
   },
 
   colorSchemas: {
@@ -234,7 +237,7 @@ const darkTheme: DefaultTheme = {
         background: "#1E1E1E",
         backgroundActive: "#F6F6F6",
         backgroundHover: "#3E3E3E",
-        border: "#474747",
+        border: "transparent",
         borderActive: "#EAEAEA",
         text: "#F6F6F6",
       },
@@ -247,12 +250,12 @@ const darkTheme: DefaultTheme = {
         text: "#999999",
       },
       selected: {
-        background: "#F6F6F6",
+        background: "#3E3E3E",
         backgroundActive: "#F6F6F6",
-        backgroundHover: "#F6F6F6",
-        border: "#EAEAEA",
+        backgroundHover: "#3E3E3E",
+        border: "#D9D9D9",
         borderActive: "#EAEAEA",
-        text: "#333333",
+        text: "#F6F6F6",
       },
     },
     fileUpload: {

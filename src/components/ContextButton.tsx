@@ -8,8 +8,7 @@ export const ContextButton = styled.button<{ colorType: "primary" | "danger" }>`
 
   ${({ theme, colorType, disabled }) => {
     const color = colorType === "danger" ? theme.colors.error : theme.colors.primary;
-    const borderColor =
-      colorType === "danger" ? theme.colors.error : theme.colorSchemas.timeSlotButton.available.border;
+    const borderColor = colorType === "danger" ? theme.colors.error : theme.colorSchemas.input.border;
     const borderColorHover = colorType === "danger" ? theme.colors.error : theme.colors.darkGrey;
 
     return css`

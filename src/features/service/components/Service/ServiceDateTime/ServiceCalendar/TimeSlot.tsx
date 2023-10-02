@@ -7,7 +7,7 @@ import { Slot } from "models/slots";
 import { TimeSlotButtonType } from "models/theme";
 import { TFunction, useTranslation } from "react-i18next";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { selectedSlot } from "state/atoms/selectedSlot";
+import { selectedSlots } from "state/atoms/selectedSlots";
 import { serviceAtom } from "state/atoms/service";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { slotsViewConfiguration } from "state/selectors/slotsViewConfiguration";
@@ -39,7 +39,7 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4px 0;
+  padding: 6px 0;
 
   ${({ theme, state, showDuration, showQuantity }) => {
     const colorSchema = theme.colorSchemas.timeSlotButton[state] as any;
@@ -48,8 +48,8 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
       color: ${colorSchema.text};
       cursor: ${state === "unavailable" ? "unset" : "pointer"};
       border-radius: ${({ theme }) => theme.borderRadius};
-      background-color: ${colorSchema.background};
-      min-width: ${showDuration ? "96px" : "unset"};
+      background-color: ${colorSchema.background} !important;
+      border: 1px solid ${colorSchema.border};
       min-height: ${timeSlotHeight[`${showDuration}-${showQuantity}`] ?? "unset"};
     `;
   }}
@@ -58,7 +58,7 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
     ${({ theme, state }) => {
       const colorSchema = theme.colorSchemas.timeSlotButton[state];
       return css`
-        background-color: ${colorSchema.backgroundHover};
+        background-color: ${colorSchema.backgroundHover} !important;
       `;
     }}
   }
@@ -74,10 +74,10 @@ interface DummySlotProps {
 }
 
 const dummyTimeSlotHeight: Record<string, string> = {
-  "true-true": "70px",
-  "false-true": "44px",
+  "true-true": "67px",
+  "false-true": "47px",
   "true-false": "54px",
-  "false-false": "26px",
+  "false-false": "32px",
 };
 
 const DummySlotWrapper = styled.div<DummySlotProps>`
@@ -110,16 +110,11 @@ const DummySlot: React.FC<DummySlotProps> = ({ showDuration, showQuantity }) => 
 interface TimeSlotProps {
   dateFrom: string;
   dateTo: string;
-  day: string;
   is12HoursSystem: boolean;
 }
 
-const getTimeSlotButtonState = (
-  dateString: string,
-  selectedDateString: string,
-  isAvailable: boolean,
-): TimeSlotButtonState => {
-  if (dateString === selectedDateString) return "selected";
+const getTimeSlotButtonState = (selected: boolean, isAvailable: boolean): TimeSlotButtonState => {
+  if (selected) return "selected";
 
   if (isAvailable) return "available";
 
@@ -155,9 +150,9 @@ const getBaseSlotContent = (
 };
 
 const QuantityText = styled(Typography)`
-  font-size: 10px;
-  line-height: 12px;
-  margin: 2px 0;
+  font-size: 9px;
+  line-height: 11px;
+  margin: 2px 0 0;
 `;
 const DurationText = styled(Typography)`
   &.unavailable-time-slot {
@@ -170,7 +165,7 @@ const WrapperWithDuration = styled.div`
   flex-direction: column;
 
   em {
-    line-height: 6px;
+    line-height: 0px;
   }
 `;
 
@@ -217,7 +212,7 @@ const getDurationQuantitySlotContent = (
       {slot.quantity > 0 && (
         <>
           <QuantityText typographyType="body" weight="500" as="span" align="center" color="inherit">
-            {t("available")} {slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)}
+            {slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)}
           </QuantityText>
         </>
       )}
@@ -254,7 +249,7 @@ const getQuantitySlotContent = (
       {slot.quantity > 0 && (
         <>
           <QuantityText typographyType="body" weight="500" as="span" align="center" color="inherit">
-            {t("available")} {slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)}
+            {slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)}
           </QuantityText>
         </>
       )}
@@ -306,13 +301,29 @@ const getDurationSlotContent = (
   );
 };
 
-const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, day, is12HoursSystem }) => {
+const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, is12HoursSystem }) => {
   const slot = useRecoilValue(timeSlot({ from: dateFrom, to: dateTo }));
-  const [selected, setSelectedSlot] = useRecoilState(selectedSlot);
+  const slotId = slot?.slotId!;
   const { showDuration, showQuantity } = useRecoilValue(slotsViewConfiguration);
   const { t } = useTranslation();
   const timeZone = useRecoilValue(timeZoneAtom);
-  const service = useRecoilValue(serviceAtom);
+  const service = useRecoilValue(serviceAtom)!;
+  const [selectedSlotsValue, setSelectedSlots] = useRecoilState(selectedSlots);
+  const selected = selectedSlotsValue.includes(slotId);
+
+  const handleSlotClick = () => {
+    const hasMultipleSlots = service.viewConfig?.days?.multiSelect;
+
+    if (hasMultipleSlots) {
+      if (selected) {
+        setSelectedSlots(selectedSlotsValue.filter((id: string) => id !== slotId));
+      } else {
+        setSelectedSlots([...selectedSlotsValue, slotId]);
+      }
+    } else {
+      setSelectedSlots(selected ? [] : [slotId]);
+    }
+  };
 
   return (
     <Column mt={0.5} mb={0.5} w="100%">
@@ -322,11 +333,9 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, day, is12HoursSys
         <TimeSlotButton
           showDuration={showDuration}
           showQuantity={showQuantity}
-          state={getTimeSlotButtonState(dateFrom, selected, slot.quantity > 0)}
+          state={getTimeSlotButtonState(selected, slot.quantity > 0)}
           disabled={slot.quantity === 0}
-          onClick={() => {
-            setSelectedSlot(dateFrom);
-          }}
+          onClick={handleSlotClick}
         >
           {showDuration &&
             showQuantity &&

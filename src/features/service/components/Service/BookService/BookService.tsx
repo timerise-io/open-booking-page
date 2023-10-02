@@ -7,6 +7,7 @@ import { Column } from "components/layout/Column";
 import { useBookDateRange } from "features/service/hooks/useBookDateRange";
 import { useBookSlot } from "features/service/hooks/useBookSlot";
 import { Form, Formik } from "formik";
+import { getServiceConfigByType } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import _ from "lodash";
@@ -15,16 +16,15 @@ import { BOOKING_FORM_TYPES } from "models/service";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { hoursSystemAtom } from "state/atoms";
 import { selectedDateRange } from "state/atoms/selectedDateRange";
-import { selectedSlot } from "state/atoms/selectedSlot";
 import { selectedSlots } from "state/atoms/selectedSlots";
 import { serviceAtom } from "state/atoms/service";
+import { slotsAtom } from "state/atoms/slots";
 import { slotsFiltersAtom } from "state/atoms/slotsFilters";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { uploadAttachmentsAtom } from "state/atoms/uploadAttachments";
-import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
 import styled from "styled-components";
 import { IconInfoCircle } from "@tabler/icons";
 import { BookingServiceFormContent } from "../BookingServiceFormContent/BookingServiceFormContent";
@@ -84,16 +84,15 @@ const BookService = () => {
   const [searchParams] = useSearchParams();
   const locale = useLocale();
   const { t } = useTranslation(["forms"]);
-  const selectedSlotValue = useRecoilValue(selectedSlot);
   const selectedDateRangeValue = useRecoilValue(selectedDateRange);
   const selectedSlotsValue = useRecoilValue(selectedSlots);
   const service = useRecoilValue(serviceAtom)!;
   const serviceType = service?.viewConfig.displayType;
+  const serviceConfig = service && getServiceConfigByType({ service });
   const { formFields }: { formFields: Array<FormField> } = service ?? {
     formFields: [],
   };
   const showWarning = useRecoilValue(slotsFiltersAtom).triggerId !== 0;
-  const slot = useRecoilValue(selectedSlotSelector);
   const { bookSlotMutation, loading, error } = useBookSlot();
   const { bookDateRangeMutation, loadingDateRange, errorDateRange } = useBookDateRange();
   const { id } = useParams<{ id: string }>();
@@ -101,23 +100,25 @@ const BookService = () => {
   const timeZone = useRecoilValue(timeZoneAtom);
   const hoursSystem = useRecoilValue(hoursSystemAtom);
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
+  const [, setSelectedSlots] = useRecoilState(selectedSlots);
+  const slots = useRecoilValue(slotsAtom)!;
 
   const isUploading = Object.values(uploadState).filter((item) => item.isLoading).length > 0;
 
   const dateFormat = is12HoursSystem ? "iiii dd MMM, h:mm a" : "iiii dd MMM, H:mm";
 
-  const formattedDate =
-    selectedSlotValue &&
-    convertSourceDateTimeToTargetDateTime({
-      date: selectedSlotValue,
-      targetTimeZone: timeZone,
-      sourceTimeZone: service.project.localTimeZone,
-      dateFormat,
-      locale,
-    });
+  const selectedSlot = slots.find((slot) => slot.slotId === selectedSlotsValue[0])!;
+  const formattedDate = selectedSlotsValue?.length
+    ? convertSourceDateTimeToTargetDateTime({
+        date: selectedSlot.dateTimeFrom,
+        targetTimeZone: timeZone,
+        sourceTimeZone: service.project.localTimeZone,
+        dateFormat,
+        locale,
+      })
+    : "";
 
   const checkDisableButton = useCallback(() => {
-    const disabledForSlot = selectedSlotValue === "" || loading || isUploading;
     const disabledForSlots = !selectedSlotsValue.length || loading || isUploading;
     const disabledForDateRange =
       selectedDateRangeValue.dateTimeFrom === null ||
@@ -129,10 +130,9 @@ const BookService = () => {
     const isEventType = serviceType === BOOKING_FORM_TYPES.LIST;
 
     return (
-      (isSlotType && disabledForSlot) || (isDateRangeType && disabledForDateRange) || (isEventType && disabledForSlots)
+      (isSlotType && disabledForSlots) || (isDateRangeType && disabledForDateRange) || (isEventType && disabledForSlots)
     );
   }, [
-    selectedSlotValue,
     loading,
     isUploading,
     selectedDateRangeValue.dateTimeFrom,
@@ -170,11 +170,11 @@ const BookService = () => {
       ...Object.assign({}, ...customFormFields),
     });
 
-    if (serviceType === BOOKING_FORM_TYPES.DAYS && slot !== undefined) {
+    if (serviceType === BOOKING_FORM_TYPES.DAYS && selectedSlotsValue.length) {
       bookSlotMutation({
         variables: {
           serviceId: id!,
-          slots: [slot.slotId],
+          slots: selectedSlotsValue,
           formFields: json,
           timezone: timeZone,
           ...(service?.paymentProviders.length && {
@@ -182,7 +182,7 @@ const BookService = () => {
           }),
           locale: locale.code,
         },
-      });
+      }).then(() => setSelectedSlots([]));
     } else if (
       serviceType === BOOKING_FORM_TYPES.CALENDAR &&
       selectedDateRangeValue.dateTimeFrom !== null &&
@@ -212,7 +212,7 @@ const BookService = () => {
           }),
           locale: locale.code,
         },
-      });
+      }).then(() => setSelectedSlots([]));
     }
   };
 
@@ -250,6 +250,7 @@ const BookService = () => {
                     selectedSlotValue: formattedDate,
                     selectedSlotsValue,
                     t,
+                    serviceConfig,
                   })}
                 </Button>
               </Column>

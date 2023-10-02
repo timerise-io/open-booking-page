@@ -9,7 +9,8 @@ export type ThemeColors =
   | "success"
   | "white"
   | "warning"
-  | "primary";
+  | "primary"
+  | "primaryLight";
 
 export interface TypographyTheme {
   size: string;
