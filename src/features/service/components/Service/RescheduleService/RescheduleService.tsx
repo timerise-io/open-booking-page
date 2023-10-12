@@ -5,7 +5,8 @@ import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { useLangParam } from "features/i18n/useLangParam";
 import { useRescheduleBooking } from "features/service/hooks/useRescheduleBooking";
-import { getPath, getServiceConfigByType } from "helpers/functions";
+import { getPath } from "helpers/functions";
+import { useSubmitButtonText } from "helpers/hooks";
 import { useLocale } from "helpers/hooks/useLocale";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import { BOOKING_FORM_TYPES } from "models/service";
@@ -22,7 +23,6 @@ import { serviceAtom } from "state/atoms/service";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
 import styled from "styled-components";
-import { getSubmitButtonText } from "../BookService/helpers";
 import { HOURS_SYSTEMS } from "../HoursSystem/enums/HoursSystem.enum";
 
 const WrapperCard = styled(Card)`
@@ -53,10 +53,10 @@ const RescheduleService = () => {
   const selectedDateRangeValue = useRecoilValue(selectedDateRange);
   const selectedSlotsValue = useRecoilValue(selectedSlots);
   const service = useRecoilValue(serviceAtom)!;
-  const serviceConfig = service && getServiceConfigByType({ service });
   const slot = useRecoilValue(selectedSlotSelector);
   const { rescheduleBookingMutation, loading } = useRescheduleBooking();
   const timeZone = useRecoilValue(timeZoneAtom);
+  const submitButtonText = useSubmitButtonText();
 
   const serviceType = service?.viewConfig.displayType;
 
@@ -173,12 +173,7 @@ const RescheduleService = () => {
             data-cy="book-now-button"
             onClick={() => handleSubmit()}
           >
-            {getSubmitButtonText({
-              selectedSlotValue: formattedDateTo,
-              selectedSlotsValue,
-              t,
-              serviceConfig,
-            })}
+            {submitButtonText}
           </Button>
 
           <Button
