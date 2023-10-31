@@ -5,7 +5,7 @@ export interface BookSlotMutationVariables {
   slots: Array<string>;
   formFields: string;
   paymentProvider?: PaymentType;
-  timezone: string;
+  timeZone: string;
   locale?: string;
 }
 
@@ -21,7 +21,7 @@ export interface BookDateRangeMutationVariables {
   dateTimeTo: string;
   formFields: string;
   paymentProvider?: PaymentType;
-  timezone: string;
+  timeZone: string;
   locale?: string;
 }
 
