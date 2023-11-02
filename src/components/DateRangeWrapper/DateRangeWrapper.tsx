@@ -37,14 +37,14 @@ const StyledWrapper = styled.div<{ translations: any }>`
   .DayPicker {
     width: 600px !important;
 
-    ${({ theme }) => theme.mediaBelow(theme.breakpoints.lg)} {
+    ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
       width: 100% !important;
     }
 
     & > div > div {
       width: 600px !important;
 
-      ${({ theme }) => theme.mediaBelow(theme.breakpoints.lg)} {
+      ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
         width: 100% !important;
       }
     }
@@ -53,7 +53,7 @@ const StyledWrapper = styled.div<{ translations: any }>`
   .DayPicker_transitionContainer {
     width: 600px !important;
 
-    ${({ theme }) => theme.mediaBelow(theme.breakpoints.lg)} {
+    ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
       width: 100% !important;
     }
   }
@@ -98,7 +98,7 @@ const StyledWrapper = styled.div<{ translations: any }>`
   }
 
   .DateRangePicker_picker {
-    left: -40px !important;
+    left: 0px !important;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
 
