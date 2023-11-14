@@ -11,7 +11,7 @@ export const getPhoneFieldValidation = (t: TFunction<"forms"[]>, required: boole
         .min(8, t("common:validation.min-length", { length: 8 }))
     : Yup.string().test({
         message: t("common:validation.min-length", { length: 8 }),
-        test: (item) => item === undefined || item.length < 3 || item.length > 7,
+        test: (item) => item === undefined || item.length < 4 || item.length > 7,
       });
 
 export const getEmailFieldValidation = (t: TFunction<"forms"[]>, required: boolean) =>
