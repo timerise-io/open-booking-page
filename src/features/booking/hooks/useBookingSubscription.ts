@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { useProjectState } from "features/project/hooks/useProject";
 import { useServiceState } from "features/service/hooks/useService";
@@ -20,6 +21,9 @@ export const useBookingSubscription = (bookingId: string) => {
     fetchPolicy: "no-cache",
     variables: {
       bookingId,
+    },
+    context: {
+      version: VERSION.V1,
     },
   });
 

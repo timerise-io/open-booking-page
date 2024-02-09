@@ -1,17 +1,19 @@
+import { VERSION } from "enums";
 import { createClient } from "graphql-ws";
 import { ApolloClient, HttpLink, InMemoryCache, split } from "@apollo/client/core";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getMainDefinition } from "@apollo/client/utilities";
 
-const httpLink = new HttpLink({
-  uri: process.env.REACT_APP_TIMERISE_API,
-});
+const httpLink = split(
+  (operation) => operation.getContext()?.version === VERSION.V2,
+  new HttpLink({ uri: `${process.env.REACT_APP_TIMERISE_API}/${VERSION.V2}` }),
+  new HttpLink({ uri: `${process.env.REACT_APP_TIMERISE_API}/${VERSION.V1}` }),
+);
 
-const wsLink = new GraphQLWsLink(
-  createClient({
-    url: process.env.REACT_APP_TIMERISE_WS!,
-    connectionParams: {},
-  }),
+const wsLink = split(
+  (operation) => operation.getContext()?.version === VERSION.V2,
+  new GraphQLWsLink(createClient({ url: `${process.env.REACT_APP_TIMERISE_WS}/${VERSION.V2}`, connectionParams: {} })),
+  new GraphQLWsLink(createClient({ url: `${process.env.REACT_APP_TIMERISE_WS}/${VERSION.V1}`, connectionParams: {} })),
 );
 
 const splitLink = split(
