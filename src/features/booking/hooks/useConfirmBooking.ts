@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { VERSION } from "enums";
 import { getPath } from "helpers/functions";
 import { PAGES } from "pages/constans";
 import { useNavigate } from "react-router";
@@ -17,6 +18,7 @@ export const useConfirmBooking = (bookingId: string) => {
       headers: {
         "x-api-client-name": "booking-page",
       },
+      version: VERSION.V2,
     },
     variables: {
       bookingId,
