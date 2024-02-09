@@ -58,24 +58,24 @@ type ConvertSourceDateTimeToTargetDateTimeWithHoursSystem = ({
   is12HoursSystem?: boolean;
 }) => JSX.Element;
 
+const Wrapper = styled.span`
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: center;
+
+  small {
+    font-size: 9px;
+    text-transform: lowercase;
+    line-height: 7px;
+  }
+`;
+
 export const convertSourceDateTimeToTargetDateTimeWithHoursSystem: ConvertSourceDateTimeToTargetDateTimeWithHoursSystem =
   ({ date, sourceTimeZone, targetTimeZone, locale, is12HoursSystem }) => {
     const sourceDate = new Date(date.slice(0, -5));
     const utcDate = zonedTimeToUtc(sourceDate, sourceTimeZone);
     const targetDate = utcToZonedTime(utcDate, targetTimeZone);
-
-    const Wrapper = styled.span`
-      display: flex;
-      flex-direction: row;
-      align-items: baseline;
-      justify-content: center;
-
-      small {
-        font-size: 9px;
-        text-transform: lowercase;
-        line-height: 7px;
-      }
-    `;
 
     return (
       <Wrapper>

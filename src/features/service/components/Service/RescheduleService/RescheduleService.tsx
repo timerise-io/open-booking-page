@@ -16,9 +16,9 @@ import { useRecoilValue } from "recoil";
 import { hoursSystemAtom } from "state/atoms";
 import { bookingAtom } from "state/atoms/booking";
 import { selectedDateRange } from "state/atoms/selectedDateRange";
-import { selectedSlot } from "state/atoms/selectedSlot";
 import { selectedSlots } from "state/atoms/selectedSlots";
 import { serviceAtom } from "state/atoms/service";
+import { slotsAtom } from "state/atoms/slots";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
 import styled from "styled-components";
@@ -49,7 +49,6 @@ const RescheduleService = () => {
   const bookingValue = useRecoilValue(bookingAtom);
   const lang = useLangParam();
   const { t } = useTranslation(["forms"]);
-  const selectedSlotValue = useRecoilValue(selectedSlot);
   const selectedDateRangeValue = useRecoilValue(selectedDateRange);
   const selectedSlotsValue = useRecoilValue(selectedSlots);
   const service = useRecoilValue(serviceAtom)!;
@@ -57,6 +56,7 @@ const RescheduleService = () => {
   const slot = useRecoilValue(selectedSlotSelector);
   const { rescheduleBookingMutation, loading } = useRescheduleBooking();
   const timeZone = useRecoilValue(timeZoneAtom);
+  const slots = useRecoilValue(slotsAtom)!;
 
   const serviceType = service?.viewConfig.displayType;
 
@@ -68,15 +68,16 @@ const RescheduleService = () => {
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
   const dateFormat = is12HoursSystem ? "iiii dd MMM, h:mm a" : "iiii dd MMM, H:mm";
 
-  const formattedDateTo =
-    selectedSlotValue &&
-    convertSourceDateTimeToTargetDateTime({
-      date: selectedSlotValue,
-      targetTimeZone: timeZone,
-      sourceTimeZone: service.project.localTimeZone,
-      dateFormat,
-      locale,
-    });
+  const selectedSlot = slots.find((slot) => slot.slotId === selectedSlotsValue[0])!;
+  const formattedDateTo = selectedSlotsValue?.length
+    ? convertSourceDateTimeToTargetDateTime({
+        date: selectedSlot.dateTimeFrom,
+        targetTimeZone: timeZone,
+        sourceTimeZone: service.project.localTimeZone,
+        dateFormat,
+        locale,
+      })
+    : "";
 
   const formattedDateFrom =
     bookingValue &&
@@ -90,23 +91,23 @@ const RescheduleService = () => {
 
   const handleSubmit = () => {
     if (isSlotType) {
-      if (slot === undefined || bookingValue?.bookingId === undefined) return;
+      if (!selectedSlotsValue.length || bookingValue?.bookingId === undefined) return;
       rescheduleBookingMutation({
         variables: {
           bookingId: bookingValue.bookingId,
-          slots: [slot.slotId],
+          slots: selectedSlotsValue,
         },
       });
     } else if (isDateRangeType) {
-      if (slot === undefined || bookingValue?.bookingId === undefined) return;
+      if (!selectedSlotsValue.length || bookingValue?.bookingId === undefined) return;
       rescheduleBookingMutation({
         variables: {
           bookingId: bookingValue.bookingId,
-          slots: [slot.slotId],
+          slots: selectedSlotsValue,
         },
       });
     } else if (isEventType) {
-      if (bookingValue?.bookingId === undefined) return;
+      if (!selectedSlotsValue.length || bookingValue?.bookingId === undefined) return;
       rescheduleBookingMutation({
         variables: {
           bookingId: bookingValue.bookingId,
@@ -117,16 +118,14 @@ const RescheduleService = () => {
   };
 
   const checkDisableButton = useCallback(() => {
-    const disabledForSlot = selectedSlotValue === "" || loading;
     const disabledForSlots = !selectedSlotsValue.length || loading;
     const disabledForDateRange =
       selectedDateRangeValue.dateTimeFrom === null || selectedDateRangeValue.dateTimeTo === null;
 
     return (
-      (isSlotType && disabledForSlot) || (isDateRangeType && disabledForDateRange) || (isEventType && disabledForSlots)
+      (isSlotType && disabledForSlots) || (isDateRangeType && disabledForDateRange) || (isEventType && disabledForSlots)
     );
   }, [
-    selectedSlotValue,
     loading,
     selectedDateRangeValue.dateTimeFrom,
     selectedDateRangeValue.dateTimeTo,
