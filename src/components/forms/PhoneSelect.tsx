@@ -79,7 +79,7 @@ const ChooseCountryButton = styled(OpenListButton)`
   align-items: center;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colorSchemas.background.primary.color};
+    background-color: ${({ theme }) => theme.colorSchemas.background.secondary.color};
   }
 
   .flag {
@@ -91,28 +91,25 @@ const ScrollWrapper = styled.div`
   position: absolute;
   top: 100%;
   width: 150px;
-  height: 200px;
+  max-height: 200px;
   overflow: hidden;
   border-radius: 4px;
   box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+  z-index: 1000;
 `;
 
 const ListWrapper = styled.div`
-  z-index: 1000;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  position: absolute;
   overflow-x: hidden;
-  top: 0;
   width: 150px;
   max-height: 200px;
   ${({ theme }) => css`
     background-color: ${theme.colorSchemas.input.background};
     border-radius: ${theme.borderRadius};
     font-size: ${theme.typography.body.size};
-    //padding: calc(0.5 * ${theme.spacing}) 0;
 
     &:hover {
       border-color: ${theme.colorSchemas.input.borderHover};

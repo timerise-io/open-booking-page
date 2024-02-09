@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { getPath } from "helpers/functions";
 import { PAGES } from "pages/constans";
@@ -24,6 +25,7 @@ export const useBookDateRange = () => {
       headers: {
         "x-api-client-name": "booking-page",
       },
+      version: VERSION.V2,
     },
   });
 
