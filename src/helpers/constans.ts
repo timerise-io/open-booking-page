@@ -1,4 +1,4 @@
-import { SpaceProvider } from "models/booking";
+import { SPACE_PROVIDER } from "models/booking";
 
 export const TIMERISE_LOGO_URL = "https://cdn.timerise.io/booking-page/favicon.png";
 
@@ -253,7 +253,7 @@ export const COUNTRY_PHONE_PREFIXES: Record<string, string> = {
   MZ: "258",
 };
 
-export const SPACE_PROVIDERS_NAMES: Record<SpaceProvider, string> = {
+export const SPACE_PROVIDERS_NAMES: Record<SPACE_PROVIDER, string> = {
   AMAZON_CHIME: "Amazon Chime",
   FACEBOOK_SPACES: "Facebook Spaces",
   GOOGLE_MEET: "Google Meet",

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Box } from "components/layout/Box";
+import { SPACE_PROVIDER, Space as SpaceModel } from "models/booking";
 import { useRecoilValue } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
 import { bookingCardViewConfig } from "state/selectors/bookingCardViewConfig";
@@ -16,6 +17,17 @@ interface BookingCardSummaryProps {
 const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({ dateTimeFrom, dateTimeTo }) => {
   const cardConfig = useRecoilValue(bookingCardViewConfig);
   const booking = useRecoilValue(bookingAtom);
+  const [spaces, setSpaces] = useState<SpaceModel[]>([]);
+
+  const hiddenSpaces = useMemo(() => [SPACE_PROVIDER.GOOGLE_MEET], []);
+
+  useEffect(() => {
+    if (booking?.service?.spaces?.length) {
+      const filteredSpaces = booking?.service?.spaces?.filter((space) => !hiddenSpaces.includes(space.provider)) ?? [];
+
+      setSpaces(filteredSpaces);
+    }
+  }, [booking?.service?.spaces, hiddenSpaces]);
 
   if (!cardConfig || !booking) return null;
 
@@ -31,9 +43,9 @@ const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({ dateTimeFrom, d
         title={cardConfig.title}
         showPayButton={!!cardConfig.actions?.pay}
       />
-      {!!cardConfig.actions?.spaces && booking.service.spaces && booking.service.spaces.length > 0 && (
+      {!!cardConfig.actions?.spaces && spaces?.length > 0 && (
         <Box mt={5} w="100%">
-          {booking.service.spaces.map((item) => (
+          {spaces.map((item) => (
             <Space key={item.spaceId} space={item} />
           ))}
         </Box>
