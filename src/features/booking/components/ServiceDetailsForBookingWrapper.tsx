@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import { serviceAtom } from "state/atoms/service";
 import styled from "styled-components";
+import { IconChevronRight } from "@tabler/icons";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -33,11 +34,10 @@ const SmallDetailsImage = styled.img`
   width: 60px;
   height: 60px;
   object-fit: cover;
-  margin-right: 12px;
 `;
 
 const SmallServiceName = styled(Typography)`
-  margin: 10px 20px 10px 0;
+  margin: 10px 20px 10px 12px;
   display: block;
 `;
 
@@ -45,6 +45,8 @@ const SmallDetailsRow = styled(Row)`
   width: 100%;
   border-radius: 4px;
   overflow: hidden;
+  min-height: 60px;
+  cursor: pointer;
 
   background-color: ${({ theme }) => theme.colorSchemas.background.primary.color};
   ${({ theme }) => theme.mediaBelow(theme.breakpoints.sm)} {
@@ -62,22 +64,33 @@ const FullDetailsWrapper = styled(Column)`
   }
 `;
 
-const fullDetails = (
-  <FullDetailsWrapper ai="stretch">
-    <SliderWrapper>
-      <ServiceImageCarousel />
-    </SliderWrapper>
-    <DetailsTextWrapper className="text-details">
-      <ServiceDetails />
-    </DetailsTextWrapper>
-  </FullDetailsWrapper>
-);
+const FullDetails = () => {
+  const serviceData = useRecoilValue(serviceAtom);
+
+  return (
+    <FullDetailsWrapper ai="stretch">
+      {serviceData?.images[0] && (
+        <SliderWrapper>
+          <ServiceImageCarousel />
+        </SliderWrapper>
+      )}
+      <DetailsTextWrapper className="text-details">
+        <ServiceDetails />
+      </DetailsTextWrapper>
+    </FullDetailsWrapper>
+  );
+};
 
 const OpenButton = styled.button`
   all: unset;
   width: fit-content;
   padding: 8px;
   text-decoration: underline;
+  cursor: pointer;
+`;
+
+const StyledIconChevronRight = styled(IconChevronRight)`
+  margin: 0 12px 0 auto;
 `;
 
 const SmallDetails = () => {
@@ -85,14 +98,13 @@ const SmallDetails = () => {
   const { t } = useTranslation(["booking"]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const buttonText = isOpen ? t("hide-service-details") : t("show-service-details");
-
   const smallServiceData = serviceData ? (
-    <SmallDetailsRow jc="flex-start">
-      <SmallDetailsImage src={serviceData.images[0]} alt="service cover" />
+    <SmallDetailsRow jc="flex-start" onClick={() => setIsOpen(!isOpen)}>
+      {serviceData.images[0] && <SmallDetailsImage src={serviceData.images[0]} alt="service cover" />}
       <SmallServiceName typographyType="body" as="h2" displayType="contents">
         {serviceData.title}
       </SmallServiceName>
+      <StyledIconChevronRight size={24} />
     </SmallDetailsRow>
   ) : (
     <SkeletonBox style={{ flexGrow: 1 }} />
@@ -100,14 +112,16 @@ const SmallDetails = () => {
 
   return (
     <Column ai="stretch">
-      {isOpen ? fullDetails : smallServiceData}
-      <Column ai="center">
-        <OpenButton onClick={() => setIsOpen(!isOpen)}>
-          <Typography typographyType="body" as="span" color="primary">
-            {buttonText}
-          </Typography>
-        </OpenButton>
-      </Column>
+      {isOpen ? <FullDetails /> : smallServiceData}
+      {isOpen ? (
+        <Column ai="center">
+          <OpenButton onClick={() => setIsOpen(!isOpen)}>
+            <Typography typographyType="body" as="span" color="primary">
+              {t("hide-service-details")}
+            </Typography>
+          </OpenButton>
+        </Column>
+      ) : null}
     </Column>
   );
 };
@@ -115,7 +129,9 @@ const SmallDetails = () => {
 const ServiceDetailsForBookingWrapper = () => {
   return (
     <Wrapper>
-      <div className="full-width">{fullDetails}</div>
+      <div className="full-width">
+        <FullDetails />
+      </div>
       <div className="md-width">
         <SmallDetails />
       </div>

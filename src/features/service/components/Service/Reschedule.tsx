@@ -41,9 +41,11 @@ const Reschedule = () => {
       <BookingHook />
       <ContentWithDetails>
         <DetailsSection>
-          <SliderWrapper>
-            <ServiceImageCarousel />
-          </SliderWrapper>
+          {service?.images[0] && (
+            <SliderWrapper>
+              <ServiceImageCarousel />
+            </SliderWrapper>
+          )}
           <DetailsTextWrapper>
             <ServiceDetails />
           </DetailsTextWrapper>
