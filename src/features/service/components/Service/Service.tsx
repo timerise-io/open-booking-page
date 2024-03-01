@@ -6,6 +6,8 @@ import {
   SliderWrapper,
 } from "components/layout/ContentWithDetails";
 import { useService } from "features/service/hooks/useService";
+import { useRecoilValue } from "recoil";
+import { serviceAtom } from "state/atoms/service";
 import BookService from "./BookService/BookService";
 import ServiceDetails from "./ServiceDetails";
 import { ServiceFactory } from "./ServiceFactory";
@@ -17,14 +19,18 @@ const ServiceHook = () => {
 };
 
 const Service = () => {
+  const serviceData = useRecoilValue(serviceAtom);
+
   return (
     <>
       <ServiceHook />
       <ContentWithDetails>
         <DetailsSection>
-          <SliderWrapper>
-            <ServiceImageCarousel />
-          </SliderWrapper>
+          {serviceData?.images[0] && (
+            <SliderWrapper>
+              <ServiceImageCarousel />
+            </SliderWrapper>
+          )}
           <DetailsTextWrapper>
             <ServiceDetails />
           </DetailsTextWrapper>
