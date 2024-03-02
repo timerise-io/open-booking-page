@@ -1,11 +1,12 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { useLangParam } from "features/i18n/useLangParam";
+import { useBookingsRangeCount } from "features/service/hooks";
 import { useRescheduleBooking } from "features/service/hooks/useRescheduleBooking";
-import { getPath, getServiceConfigByType } from "helpers/functions";
+import { getIsSlotsWithinRange, getPath, getServiceConfigByType } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import { BOOKING_FORM_TYPES } from "models/service";
@@ -22,8 +23,24 @@ import { slotsAtom } from "state/atoms/slots";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
 import styled from "styled-components";
+import { IconInfoCircle } from "@tabler/icons";
 import { getSubmitButtonText } from "../BookService/helpers";
 import { HOURS_SYSTEMS } from "../HoursSystem/enums/HoursSystem.enum";
+
+const StyledWarning = styled.div`
+  margin: 15px 0 8px 0;
+  display: flex;
+  background: #fef6f5;
+  border: 1px solid #ea4335;
+  border-radius: 4px;
+  padding: 8px;
+  gap: 8px;
+  color: #ea4335;
+
+  & > .info-text {
+    width: fit-content;
+  }
+`;
 
 const WrapperCard = styled(Card)`
   ${({ theme }) => theme.mediaBelow(theme.breakpoints.sm)} {
@@ -44,6 +61,8 @@ const StyledButtonsWrapper = styled(Box)`
 `;
 
 const RescheduleService = () => {
+  const [isTouched, setIsTouched] = useState(false);
+  const [slotsOutOfRange, setSlotsOutOfRange] = useState(false);
   const locale = useLocale();
   const navigate = useNavigate();
   const bookingValue = useRecoilValue(bookingAtom);
@@ -58,7 +77,10 @@ const RescheduleService = () => {
   const timeZone = useRecoilValue(timeZoneAtom);
   const slots = useRecoilValue(slotsAtom)!;
 
-  const serviceType = service?.viewConfig.displayType;
+  const viewConfig = service?.viewConfig;
+  const serviceType = viewConfig?.displayType;
+
+  const { minSelect, maxSelect } = useBookingsRangeCount({ viewConfig });
 
   const isSlotType = serviceType === BOOKING_FORM_TYPES.DAYS;
   const isDateRangeType = serviceType === BOOKING_FORM_TYPES.CALENDAR;
@@ -68,7 +90,11 @@ const RescheduleService = () => {
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
   const dateFormat = is12HoursSystem ? "iiii dd MMM, h:mm a" : "iiii dd MMM, H:mm";
 
-  const selectedSlot = slots.find((slot) => slot.slotId === selectedSlotsValue[0])!;
+  const selectedSlot = useMemo(
+    () => slots.find((slot) => slot.slotId === selectedSlotsValue[0])!,
+    [slots, selectedSlotsValue],
+  );
+
   const formattedDateTo = selectedSlotsValue?.length
     ? convertSourceDateTimeToTargetDateTime({
         date: selectedSlot.dateTimeFrom,
@@ -117,23 +143,38 @@ const RescheduleService = () => {
     }
   };
 
-  const checkDisableButton = useCallback(() => {
+  const checkDisableButton = useMemo(() => {
     const disabledForSlots = !selectedSlotsValue.length || loading;
     const disabledForDateRange =
       selectedDateRangeValue.dateTimeFrom === null || selectedDateRangeValue.dateTimeTo === null;
 
+    const isSlotWithinRange = getIsSlotsWithinRange({
+      selectedSlotsLength: selectedSlotsValue.length,
+      viewConfig,
+    });
+
+    setSlotsOutOfRange(!isSlotWithinRange);
+
     return (
-      (isSlotType && disabledForSlots) || (isDateRangeType && disabledForDateRange) || (isEventType && disabledForSlots)
+      !isSlotWithinRange ||
+      (isSlotType && disabledForSlots) ||
+      (isDateRangeType && disabledForDateRange) ||
+      (isEventType && disabledForSlots)
     );
   }, [
     loading,
     selectedDateRangeValue.dateTimeFrom,
     selectedDateRangeValue.dateTimeTo,
-    selectedSlotsValue,
+    selectedSlotsValue.length,
+    viewConfig,
     isSlotType,
     isDateRangeType,
     isEventType,
   ]);
+
+  useEffect(() => {
+    setIsTouched(selectedSlotsValue.length > 0);
+  }, [selectedSlotsValue.length]);
 
   if (service === undefined || bookingValue === undefined) return null;
 
@@ -163,12 +204,19 @@ const RescheduleService = () => {
             </StyledDateValue>
           </Box>
         )}
-
         <StyledButtonsWrapper mt={4}>
+          {isTouched && slotsOutOfRange && (
+            <StyledWarning>
+              <IconInfoCircle size={20} color="#EA4335" />
+              <Typography className="info-text" typographyType="body" as="span" color="inherit">
+                {t("slots-out-of-range", { minSelect, maxSelect })}
+              </Typography>
+            </StyledWarning>
+          )}
           <Button
             type="submit"
             buttonType="primary"
-            disabled={checkDisableButton()}
+            disabled={checkDisableButton}
             data-cy="book-now-button"
             onClick={() => handleSubmit()}
           >

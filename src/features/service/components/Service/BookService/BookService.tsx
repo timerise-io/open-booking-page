@@ -1,13 +1,14 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
+import { useBookingsRangeCount } from "features/service/hooks";
 import { useBookDateRange } from "features/service/hooks/useBookDateRange";
 import { useBookSlot } from "features/service/hooks/useBookSlot";
 import { Form, Formik } from "formik";
-import { getServiceConfigByType } from "helpers/functions";
+import { getIsSlotsWithinRange, getServiceConfigByType } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import _ from "lodash";
@@ -81,13 +82,19 @@ const getInitialValues = (formFields: Array<FormField>, searchParams: URLSearchP
 };
 
 const BookService = () => {
+  const [isTouched, setIsTouched] = useState(false);
+  const [slotsOutOfRange, setSlotsOutOfRange] = useState(false);
   const [searchParams] = useSearchParams();
   const locale = useLocale();
   const { t } = useTranslation(["forms"]);
   const selectedDateRangeValue = useRecoilValue(selectedDateRange);
   const selectedSlotsValue = useRecoilValue(selectedSlots);
   const service = useRecoilValue(serviceAtom)!;
-  const serviceType = service?.viewConfig.displayType;
+  const viewConfig = service?.viewConfig;
+
+  const { minSelect, maxSelect } = useBookingsRangeCount({ viewConfig });
+
+  const serviceType = viewConfig?.displayType;
   const serviceConfig = service && getServiceConfigByType({ service });
   const { formFields }: { formFields: Array<FormField> } = service ?? {
     formFields: [],
@@ -118,7 +125,7 @@ const BookService = () => {
       })
     : "";
 
-  const checkDisableButton = useCallback(() => {
+  const checkDisableButton = useMemo(() => {
     const disabledForSlots = !selectedSlotsValue.length || loading || isUploading;
     const disabledForDateRange =
       selectedDateRangeValue.dateTimeFrom === null ||
@@ -129,8 +136,18 @@ const BookService = () => {
     const isDateRangeType = serviceType === BOOKING_FORM_TYPES.CALENDAR;
     const isEventType = serviceType === BOOKING_FORM_TYPES.LIST;
 
+    const isSlotWithinRange = getIsSlotsWithinRange({
+      selectedSlotsLength: selectedSlotsValue.length,
+      viewConfig,
+    });
+
+    setSlotsOutOfRange(!isSlotWithinRange);
+
     return (
-      (isSlotType && disabledForSlots) || (isDateRangeType && disabledForDateRange) || (isEventType && disabledForSlots)
+      !isSlotWithinRange ||
+      (isSlotType && disabledForSlots) ||
+      (isDateRangeType && disabledForDateRange) ||
+      (isEventType && disabledForSlots)
     );
   }, [
     loading,
@@ -140,6 +157,7 @@ const BookService = () => {
     loadingDateRange,
     serviceType,
     selectedSlotsValue,
+    viewConfig,
   ]);
 
   const handleSubmit = (value: Record<string, any>) => {
@@ -216,6 +234,10 @@ const BookService = () => {
     }
   };
 
+  useEffect(() => {
+    setIsTouched(selectedSlotsValue.length > 0);
+  }, [selectedSlotsValue.length]);
+
   if (formFields === undefined || formFields.length === 0) return null;
 
   return (
@@ -245,7 +267,15 @@ const BookService = () => {
                     </Typography>
                   </StyledWarning>
                 )}
-                <Button type="submit" buttonType="primary" disabled={checkDisableButton()} data-cy="book-now-button">
+                {isTouched && slotsOutOfRange && (
+                  <StyledWarning>
+                    <IconInfoCircle size={20} color="#EA4335" />
+                    <Typography className="info-text" typographyType="body" as="span" color="inherit">
+                      {t("slots-out-of-range", { minSelect, maxSelect })}
+                    </Typography>
+                  </StyledWarning>
+                )}
+                <Button type="submit" buttonType="primary" disabled={checkDisableButton} data-cy="book-now-button">
                   {getSubmitButtonText({
                     selectedSlotValue: formattedDate,
                     selectedSlotsValue,

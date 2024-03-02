@@ -35,5 +35,6 @@
   "reschedule-button": "Reschedule to",
   "from": "From",
   "to": "To",
-  "out-of": "out of {{maxValue}}"
+  "out-of": "out of {{maxValue}}",
+  "slots-out-of-range": "Please select from {{minSelect}} to {{maxSelect}} time slots."
 }
