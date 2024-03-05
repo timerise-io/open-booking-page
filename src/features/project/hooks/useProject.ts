@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { VERSION } from "enums";
 import { useIsBrandedPageFlag } from "helpers/hooks/useIsBrandedPageFlag";
 import { Project } from "models/project";
 import { useSetRecoilState } from "recoil";
@@ -15,6 +16,7 @@ export const useProjectState = (projectId: string) => {
       headers: {
         "x-api-client-name": "booking-page",
       },
+      version: VERSION.V1,
     },
     variables: {
       projectId: projectId ?? "",
