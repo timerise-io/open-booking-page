@@ -23,7 +23,7 @@ export const useBookingSubscription = (bookingId: string) => {
       bookingId,
     },
     context: {
-      version: VERSION.V1,
+      version: VERSION.V2,
     },
   });
 
