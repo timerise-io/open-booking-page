@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import { SearchSelect } from "components/SearchSelect";
 import BaseInput from "components/StyledInput";
 import StyledLabel from "components/StyledLabel";
 import { Typography } from "components/Typography";
@@ -106,12 +107,12 @@ const ListWrapper = styled.div`
   overflow-x: hidden;
   top: 0;
   width: 150px;
-  height: 200px;
+  max-height: 200px;
   ${({ theme }) => css`
     background-color: ${theme.colorSchemas.input.background};
     border-radius: ${theme.borderRadius};
     font-size: ${theme.typography.body.size};
-    padding: calc(0.5 * ${theme.spacing}) 0;
+    //padding: calc(0.5 * ${theme.spacing}) 0;
 
     &:hover {
       border-color: ${theme.colorSchemas.input.borderHover};
@@ -139,6 +140,7 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({ name, label }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDefaultSetted, setIsDefaultSetted] = useState(false);
+  const [filteredCountryList, setFilteredCountryList] = useState(countryList);
   const ref = useRef<HTMLDivElement>(null);
   const memoizedCallback = useCallback(() => setIsMenuOpen(false), []);
   useOnClickOutside(ref, memoizedCallback);
@@ -178,7 +180,7 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({ name, label }) => {
     inputRef.current.setSelectionRange(value.length, value.length, "none");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, focused, searchParams]);
-
+  console.log("PhoneSelect", filteredCountryList);
   return (
     <StyledColumn ai="stretch">
       <StyledLabel htmlFor="phone-number-select">{labelToDisplay}</StyledLabel>
@@ -191,7 +193,8 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({ name, label }) => {
           <ScrollWrapper>
             <ListWrapper />
             <ListWrapper>
-              {countryList.map(([countryCode, prefix]) => (
+              <SearchSelect options={countryList} setFilteredOptions={setFilteredCountryList} isOpen={isMenuOpen} />
+              {filteredCountryList.map(([countryCode, prefix]) => (
                 <ChooseCountryButton
                   key={countryCode}
                   onClick={() => handleCountryCodeChange(countryCode)}

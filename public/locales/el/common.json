@@ -36,5 +36,6 @@
     "timezone": "Χρονοζώνη",
     "format": "Μορφή",
     "quantity-slots-available": "{{quantity}} διαθέσιμες θέσεις",
-    "no-event-slots-available": "Δεν υπάρχουν διαθέσιμες θέσεις για την εκδήλωση"
+    "no-event-slots-available": "Δεν υπάρχουν διαθέσιμες θέσεις για την εκδήλωση",
+    "search-placeholder": "Αναζήτηση..."
 }

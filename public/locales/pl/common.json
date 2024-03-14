@@ -36,5 +36,6 @@
   "timezone": "Strefa czasowa",
   "format": "Format",
   "quantity-slots-available": "{{quantity}} miejsc dostępnych",
-  "no-event-slots-available": "Brak miejsc na wydarzenie"
+  "no-event-slots-available": "Brak miejsc na wydarzenie",
+  "search-placeholder": "Szukaj..."
 }

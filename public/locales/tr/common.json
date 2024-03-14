@@ -36,5 +36,6 @@
     "timezone": "Zaman Dilimi",
     "format": "Biçim",
     "quantity-slots-available": "{{quantity}} slot mevcut",
-    "no-event-slots-available": "Etkinlik için boş slot yok"
+    "no-event-slots-available": "Etkinlik için boş slot yok",
+    "search-placeholder": "Ara..."
 }

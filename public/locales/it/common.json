@@ -36,5 +36,6 @@
     "timezone": "Fuso orario",
     "format": "Formato",
     "quantity-slots-available": "{{quantity}} posti disponibili",
-    "no-event-slots-available": "Posti esauriti"
+    "no-event-slots-available": "Posti esauriti",
+    "search-placeholder": "Cerca..."
 }

@@ -36,6 +36,6 @@
     "timezone": "Часови пояс",
     "format": "Формат",
     "quantity-slots-available": "{{quantity}} налични слота",
-    "no-event-slots-available": "Няма налични слотове за събитие"
-
+    "no-event-slots-available": "Няма налични слотове за събитие",
+    "search-placeholder": "Търсене..."
 }

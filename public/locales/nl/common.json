@@ -36,5 +36,6 @@
     "timezone": "Tijdzone",
     "format": "Formaat",
     "quantity-slots-available": "{{quantity}} slots beschikbaar",
-    "no-event-slots-available": "Geen slots beschikbaar voor het evenement"
+    "no-event-slots-available": "Geen slots beschikbaar voor het evenement",
+    "search-placeholder": "Zoeken..."
 }

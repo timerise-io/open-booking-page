@@ -36,5 +36,6 @@
     "timezone": "Fuso horário",
     "format": "Formato",
     "quantity-slots-available": "{{quantity}} vagas disponíveis",
-    "no-event-slots-available": "Não há vagas disponíveis para o evento"
+    "no-event-slots-available": "Não há vagas disponíveis para o evento",
+    "search-placeholder": "Pesquisar..."
 }

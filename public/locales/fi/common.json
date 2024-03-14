@@ -36,5 +36,6 @@
     "timezone": "Aikavyöhyke",
     "format": "Muoto",
     "quantity-slots-available": "{{quantity}} paikkaa saatavilla",
-    "no-event-slots-available": "Ei tapahtumapaikkoja saatavilla"
+    "no-event-slots-available": "Ei tapahtumapaikkoja saatavilla",
+    "search-placeholder": "Hae..."
 }
