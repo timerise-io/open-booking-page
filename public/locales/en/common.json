@@ -36,5 +36,6 @@
   "timezone": "Timezone",
   "format": "Format",
   "quantity-slots-available": "{{quantity}} slots available",
-  "no-event-slots-available": "No event slots available"
+  "no-event-slots-available": "No event slots available",
+  "search-placeholder": "Search..."
 }

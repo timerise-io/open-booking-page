@@ -35,5 +35,6 @@
   "available": "tilgjengelig",
   "timezone": "Tidssone",
   "quantity-slots-available": "{{quantity}} ledige plasser",
-  "no-event-slots-available": "Ingen ledige plasser for arrangementet"
+  "no-event-slots-available": "Ingen ledige plasser for arrangementet",
+  "search-placeholder": "Søk..."
 }

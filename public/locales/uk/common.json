@@ -36,5 +36,6 @@
   "timezone": "Часовий пояс",
   "format": "Формат",
   "quantity-slots-available": "{{quantity}} слотів доступно",
-  "no-event-slots-available": "Немає доступних слотів для події"
+  "no-event-slots-available": "Немає доступних слотів для події",
+  "search-placeholder": "Пошук..."
 }

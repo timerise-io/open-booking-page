@@ -36,5 +36,6 @@
     "timezone": "Fuseau horaire",
     "format": "Format",
     "quantity-slots-available": "{{quantity}} créneaux disponibles",
-    "no-event-slots-available": "Pas de créneaux disponibles pour l'événement"
+    "no-event-slots-available": "Pas de créneaux disponibles pour l'événement",
+    "search-placeholder": "Rechercher..."
 }

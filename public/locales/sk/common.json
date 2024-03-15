@@ -36,5 +36,6 @@
     "timezone": "Časové pásmo",
     "format": "Formát",
     "quantity-slots-available": "{{quantity}} voľných slotov",
-    "no-event-slots-available": "Žiadne voľné sloty pre udalosť"
+    "no-event-slots-available": "Žiadne voľné sloty pre udalosť",
+    "search-placeholder": "Vyhľadať..."
 }
