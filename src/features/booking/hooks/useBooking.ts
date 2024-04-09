@@ -25,7 +25,7 @@ export const useBookingState = (bookingId: string) => {
         headers: {
           "x-api-client-name": "booking-page",
         },
-        version: VERSION.V2,
+        version: VERSION.V1,
       },
       variables: {
         bookingId,

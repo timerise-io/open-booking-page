@@ -24,7 +24,7 @@ export const useBookSlot = () => {
         headers: {
           "x-api-client-name": "booking-page",
         },
-        version: VERSION.V2,
+        version: VERSION.V1,
       },
     },
   );

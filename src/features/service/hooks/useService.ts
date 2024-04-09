@@ -50,7 +50,7 @@ export const useServiceSlotsState = (serviceId: string) => {
       headers: {
         "x-api-client-name": "booking-page",
       },
-      version: VERSION.V2,
+      version: VERSION.V1,
     },
     fetchPolicy: "no-cache",
     variables: {
@@ -101,7 +101,7 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
         ...(lang && { "Accept-Language": lang }),
         "x-api-client-name": "booking-page",
       },
-      version: VERSION.V2,
+      version: VERSION.V1,
     },
     fetchPolicy: "no-cache",
     variables: {
