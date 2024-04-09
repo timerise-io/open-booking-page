@@ -5,6 +5,7 @@ import { Row } from "components/layout/Row";
 import { SkeletonBox } from "components/layout/SkeletonBox";
 import { TIMERISE_LOGO_URL } from "helpers/constans";
 import { useIsBrandedPageFlag } from "helpers/hooks/useIsBrandedPageFlag";
+import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -71,7 +72,10 @@ const Header: React.FC = () => {
   const location = useLocation();
   const data = useRecoilValue(headerSelector);
   const isBrandedPage = useIsBrandedPageFlag();
+  const { isEmbeddedPage } = useIsEmbeddedPage();
   const { t } = useTranslation();
+
+  if (isEmbeddedPage) return null;
   if (isBrandedPage && data === undefined) return <HeaderLoader />;
 
   const logoUrl = isBrandedPage ? data?.logoUrl : undefined ?? TIMERISE_LOGO_URL;

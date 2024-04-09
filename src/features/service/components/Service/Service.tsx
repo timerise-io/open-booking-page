@@ -6,6 +6,7 @@ import {
   SliderWrapper,
 } from "components/layout/ContentWithDetails";
 import { useService } from "features/service/hooks/useService";
+import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { useRecoilValue } from "recoil";
 import { serviceAtom } from "state/atoms/service";
 import BookService from "./BookService/BookService";
@@ -20,21 +21,24 @@ const ServiceHook = () => {
 
 const Service = () => {
   const serviceData = useRecoilValue(serviceAtom);
+  const { isEmbeddedPage } = useIsEmbeddedPage();
 
   return (
     <>
       <ServiceHook />
       <ContentWithDetails>
-        <DetailsSection>
-          {serviceData?.images[0] && (
-            <SliderWrapper>
-              <ServiceImageCarousel />
-            </SliderWrapper>
-          )}
-          <DetailsTextWrapper>
-            <ServiceDetails />
-          </DetailsTextWrapper>
-        </DetailsSection>
+        {!isEmbeddedPage && (
+          <DetailsSection>
+            {serviceData?.images[0] && (
+              <SliderWrapper>
+                <ServiceImageCarousel />
+              </SliderWrapper>
+            )}
+            <DetailsTextWrapper>
+              <ServiceDetails />
+            </DetailsTextWrapper>
+          </DetailsSection>
+        )}
         <ContentSection>
           <ServiceFactory />
           <BookService />

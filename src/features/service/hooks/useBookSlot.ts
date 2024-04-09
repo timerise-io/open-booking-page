@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { getPath } from "helpers/functions";
-import { PAGES } from "pages/constans";
+import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { selectedSlot } from "state/atoms/selectedSlot";
@@ -16,6 +16,7 @@ export const useBookSlot = () => {
   const setSelectedSlot = useSetRecoilState(selectedSlot);
   const navigate = useNavigate();
   const lang = useLangParam();
+  const { PAGES } = useIsEmbeddedPage();
 
   const [bookSlotMutation, { data, loading, error }] = useMutation<BookSlotMutationRespons, BookSlotMutationVariables>(
     BOOK_SLOT,
@@ -41,7 +42,7 @@ export const useBookSlot = () => {
         }),
       );
     }
-  }, [data?.bookingCreate.bookingId, lang, navigate]);
+  }, [data?.bookingCreate.bookingId, lang, navigate, PAGES]);
 
   useEffect(() => {
     if (error) {
