@@ -1,5 +1,6 @@
 import React from "react";
 import { ContentSection, ContentWithDetails, DetailsSection } from "components/layout/ContentWithDetails";
+import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { useBooking } from "../hooks/useBookingSubscription";
 import BookingCard from "./BookingCard/BookingCard";
 import ServiceDetailsForBookingWrapper from "./ServiceDetailsForBookingWrapper";
@@ -10,13 +11,17 @@ const BookingHook = () => {
 };
 
 const Booking = () => {
+  const { isEmbeddedPage } = useIsEmbeddedPage();
+
   return (
     <>
       <BookingHook />
       <ContentWithDetails>
-        <DetailsSection>
-          <ServiceDetailsForBookingWrapper />
-        </DetailsSection>
+        {!isEmbeddedPage && (
+          <DetailsSection>
+            <ServiceDetailsForBookingWrapper />
+          </DetailsSection>
+        )}
         <ContentSection>
           <BookingCard />
         </ContentSection>

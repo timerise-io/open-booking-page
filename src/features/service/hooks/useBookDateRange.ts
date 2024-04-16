@@ -1,7 +1,8 @@
 import { useEffect } from "react";
+import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { getPath } from "helpers/functions";
-import { PAGES } from "pages/constans";
+import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { selectedSlot } from "state/atoms/selectedSlot";
@@ -15,6 +16,7 @@ export const useBookDateRange = () => {
   const setSelectedSlot = useSetRecoilState(selectedSlot);
   const navigate = useNavigate();
   const lang = useLangParam();
+  const { PAGES } = useIsEmbeddedPage();
 
   const [bookDateRangeMutation, { data, loading, error }] = useMutation<
     BookDateRangeMutationRespons,
@@ -24,6 +26,7 @@ export const useBookDateRange = () => {
       headers: {
         "x-api-client-name": "booking-page",
       },
+      version: VERSION.V1,
     },
   });
 

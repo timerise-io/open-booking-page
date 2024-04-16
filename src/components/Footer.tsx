@@ -1,5 +1,6 @@
 import { Typography } from "components/Typography";
 import { Row } from "components/layout/Row";
+import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -110,6 +111,9 @@ const Footer = () => {
   const { t } = useTranslation();
   const themeType = useRecoilValue(themeSelector);
   const setUserPreference = useSetRecoilState(userPreferenceAtom);
+  const { isEmbeddedPage } = useIsEmbeddedPage();
+
+  if (isEmbeddedPage) return null;
 
   if (location.pathname === "/") {
     return <ErrorFooter />;

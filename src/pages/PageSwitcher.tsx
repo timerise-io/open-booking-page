@@ -1,8 +1,8 @@
 import React, { Suspense } from "react";
 import { useServiceLang } from "features/i18n/useServiceLang";
 import ServiceHeaders from "features/service/components/ServiceHeaders";
+import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { Route, Routes } from "react-router-dom";
-import { PAGES } from "./constans";
 
 const ServicePage = React.lazy(() => import("./ServicePage"));
 const ServicesPage = React.lazy(() => import("./ServicesPage"));
@@ -19,6 +19,8 @@ interface PageSwitcherProps {
 
 const PageSwitcher: React.FC<PageSwitcherProps> = ({ children }) => {
   useServiceLang();
+  const { PAGES } = useIsEmbeddedPage();
+
   return (
     <>
       <ServiceHeaders />

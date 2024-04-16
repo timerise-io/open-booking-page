@@ -1,3 +1,4 @@
+import { VERSION } from "enums";
 import { useParams } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { CancelBookingMutationResult, CancelBookingMutationVariables } from "../api/mutations/models";
@@ -10,6 +11,7 @@ export const useDeleteBooking = () => {
       headers: {
         "x-api-client-name": "booking-page",
       },
+      version: VERSION.V1,
     },
   });
 

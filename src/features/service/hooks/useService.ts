@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import addDays from "date-fns/addDays";
+import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { TIMERISE_LOGO_URL } from "helpers/constans";
 import { useNavigate, useParams } from "react-router-dom";
@@ -49,6 +50,7 @@ export const useServiceSlotsState = (serviceId: string) => {
       headers: {
         "x-api-client-name": "booking-page",
       },
+      version: VERSION.V1,
     },
     fetchPolicy: "no-cache",
     variables: {
@@ -99,6 +101,7 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
         ...(lang && { "Accept-Language": lang }),
         "x-api-client-name": "booking-page",
       },
+      version: VERSION.V1,
     },
     fetchPolicy: "no-cache",
     variables: {

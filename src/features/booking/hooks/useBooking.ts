@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { useProjectState } from "features/project/hooks/useProject";
 import { useServiceSlotsState, useServiceState } from "features/service/hooks/useService";
@@ -24,6 +25,7 @@ export const useBookingState = (bookingId: string) => {
         headers: {
           "x-api-client-name": "booking-page",
         },
+        version: VERSION.V1,
       },
       variables: {
         bookingId,

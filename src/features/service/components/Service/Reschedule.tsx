@@ -7,6 +7,7 @@ import {
   SliderWrapper,
 } from "components/layout/ContentWithDetails";
 import { useBooking } from "features/booking/hooks/useBooking";
+import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { BOOKING_FORM_TYPES } from "models/service";
 import { useRecoilValue } from "recoil";
 import { serviceAtom } from "state/atoms/service";
@@ -26,6 +27,8 @@ const Reschedule = () => {
   const service = useRecoilValue(serviceAtom);
   const serviceType = service?.viewConfig.displayType;
 
+  const { isEmbeddedPage } = useIsEmbeddedPage();
+
   const getService = useMemo(() => {
     if (serviceType === BOOKING_FORM_TYPES.DAYS) {
       return <ServiceDateTime />;
@@ -40,19 +43,21 @@ const Reschedule = () => {
     <>
       <BookingHook />
       <ContentWithDetails>
-        <DetailsSection>
-          {service?.images[0] && (
-            <SliderWrapper>
-              <ServiceImageCarousel />
-            </SliderWrapper>
-          )}
-          <DetailsTextWrapper>
-            <ServiceDetails />
-          </DetailsTextWrapper>
-        </DetailsSection>
+        {!isEmbeddedPage && (
+          <DetailsSection>
+            {service?.images[0] && (
+              <SliderWrapper>
+                <ServiceImageCarousel />
+              </SliderWrapper>
+            )}
+            <DetailsTextWrapper>
+              <ServiceDetails />
+            </DetailsTextWrapper>
+          </DetailsSection>
+        )}
         <ContentSection>
           {getService}
-          <RescheduleService />
+          {service && <RescheduleService />}
         </ContentSection>
       </ContentWithDetails>
     </>
