@@ -37,9 +37,11 @@ const ProviderLogo = styled.img`
 
 const LinkPreview = styled(Typography)`
   max-width: 195px;
+  min-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: center;
   ${({ theme }) => {
     const color = theme.colorSchemas.iconButton.primary.colorDisabled;
     return css`
