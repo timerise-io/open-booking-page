@@ -62,6 +62,7 @@ export enum BOOKING_FORM_TYPES {
   DAYS = "DAYS",
   CALENDAR = "CALENDAR",
   LIST = "LIST",
+  MULTILIST = "MULTILIST",
 }
 
 export type DisplayType = keyof typeof BOOKING_FORM_TYPES;
@@ -114,6 +115,12 @@ export interface Service {
       multiSelect: boolean;
       rangeSelect: boolean;
       quantity: boolean;
+    };
+    multiList: {
+      duration: boolean;
+      quantity: boolean;
+      showTime: boolean;
+      multiSelect: boolean;
     };
   };
   paymentProviders: Array<PaymentType>;

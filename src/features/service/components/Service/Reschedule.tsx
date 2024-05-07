@@ -17,6 +17,7 @@ import { ServiceDateRange } from "./ServiceDateRange";
 import ServiceDateTime from "./ServiceDateTime/ServiceDateTime";
 import ServiceDetails from "./ServiceDetails";
 import ServiceImageCarousel from "./ServiceImageCarousel";
+import { ServiceMultiDateEvent } from "./ServiceMultiDateEvent";
 
 const BookingHook = () => {
   useBooking();
@@ -36,6 +37,8 @@ const Reschedule = () => {
       return <ServiceDateRange />;
     } else if (serviceType === BOOKING_FORM_TYPES.LIST) {
       return <ServiceDateEvent />;
+    } else if (serviceType === BOOKING_FORM_TYPES.MULTILIST) {
+      return <ServiceMultiDateEvent />;
     }
   }, [serviceType]);
 

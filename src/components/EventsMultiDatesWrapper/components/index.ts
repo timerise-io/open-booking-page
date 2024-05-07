@@ -1,0 +1,1 @@
+export { EventMultiSlot } from "./EventMultiSlot";

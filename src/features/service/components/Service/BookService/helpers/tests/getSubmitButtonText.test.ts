@@ -9,6 +9,13 @@ describe("getSubmitButtonText", () => {
     return "";
   };
 
+  const serviceMock = {
+    title: "Service name",
+    viewConfig: {
+      displayType: "LIST",
+    },
+  } as Service;
+
   const serviceConfigMock = {
     multiSelect: false,
   } as Service["viewConfig"]["days" | "list" | "calendar"];
@@ -19,6 +26,7 @@ describe("getSubmitButtonText", () => {
       selectedSlotsValue: [],
       t: tMock,
       serviceConfig: serviceConfigMock,
+      service: serviceMock,
     });
 
     expect(buttonText).toBe("Book now");
@@ -31,6 +39,7 @@ describe("getSubmitButtonText", () => {
       selectedSlotsValue: ["slot1", "slot2"],
       t: tMock,
       serviceConfig: serviceConfigMock,
+      service: serviceMock,
     });
 
     expect(buttonText).toBe("Book now (2)");
@@ -42,6 +51,7 @@ describe("getSubmitButtonText", () => {
       selectedSlotsValue: [],
       t: tMock,
       serviceConfig: serviceConfigMock,
+      service: serviceMock,
     });
 
     expect(buttonText).toBe("Book now: slot1");

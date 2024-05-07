@@ -63,7 +63,7 @@ const RescheduleService = () => {
 
   const isSlotType = serviceType === BOOKING_FORM_TYPES.DAYS;
   const isDateRangeType = serviceType === BOOKING_FORM_TYPES.CALENDAR;
-  const isEventType = serviceType === BOOKING_FORM_TYPES.LIST;
+  const isEventType = serviceType === BOOKING_FORM_TYPES.LIST || serviceType === BOOKING_FORM_TYPES.MULTILIST;
 
   const hoursSystem = useRecoilValue(hoursSystemAtom);
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
@@ -178,6 +178,7 @@ const RescheduleService = () => {
               selectedSlotsValue,
               t,
               serviceConfig,
+              service,
             })}
           </Button>
 

@@ -172,6 +172,12 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
             rangeSelect: service.viewConfig.calendar.rangeSelect,
             quantity: service.viewConfig.calendar.quantity,
           },
+          multiList: {
+            duration: service.viewConfig.multiList.duration,
+            quantity: service.viewConfig.multiList.quantity,
+            showTime: service.viewConfig.multiList.showTime,
+            multiSelect: service.viewConfig.multiList.multiSelect,
+          },
         },
         paymentProviders: [...(service.paymentProviders ?? [])],
       });
