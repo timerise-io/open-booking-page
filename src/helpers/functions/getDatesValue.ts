@@ -144,7 +144,7 @@ export const getDatesValue: GetDatesValue = ({
     return getDaysDatesValue(sharedParams);
   } else if (serviceType === BOOKING_FORM_TYPES.CALENDAR) {
     return getCalendarDatesValue(sharedParams);
-  } else if (serviceType === BOOKING_FORM_TYPES.LIST) {
+  } else if (serviceType === BOOKING_FORM_TYPES.LIST || serviceType === BOOKING_FORM_TYPES.MULTILIST) {
     return getEventDatesValue(sharedParams);
   }
 

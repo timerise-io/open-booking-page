@@ -20,7 +20,7 @@ export const slotsViewConfiguration = selector<SlotViewConfiguration>({
     };
     const serviceType = service?.viewConfig.displayType;
     const isDateRange = serviceType === BOOKING_FORM_TYPES.CALENDAR;
-    const isEvent = serviceType === BOOKING_FORM_TYPES.LIST;
+    const isEvent = serviceType === BOOKING_FORM_TYPES.LIST || serviceType === BOOKING_FORM_TYPES.MULTILIST;
 
     const maxDaysPerPage = isDateRange || isEvent ? 365 : duration || quantity ? 7 : 7;
     const minDaysPerPage = duration || quantity ? 4 : 4;

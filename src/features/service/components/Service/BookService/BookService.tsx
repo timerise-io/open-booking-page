@@ -127,7 +127,7 @@ const BookService = () => {
       isUploading;
     const isSlotType = serviceType === BOOKING_FORM_TYPES.DAYS;
     const isDateRangeType = serviceType === BOOKING_FORM_TYPES.CALENDAR;
-    const isEventType = serviceType === BOOKING_FORM_TYPES.LIST;
+    const isEventType = serviceType === BOOKING_FORM_TYPES.LIST || serviceType === BOOKING_FORM_TYPES.MULTILIST;
 
     return (
       (isSlotType && disabledForSlots) || (isDateRangeType && disabledForDateRange) || (isEventType && disabledForSlots)
@@ -200,7 +200,10 @@ const BookService = () => {
           locale: locale.code,
         },
       });
-    } else if (serviceType === BOOKING_FORM_TYPES.LIST && selectedSlotsValue.length) {
+    } else if (
+      (serviceType === BOOKING_FORM_TYPES.LIST || serviceType === BOOKING_FORM_TYPES.MULTILIST) &&
+      selectedSlotsValue.length
+    ) {
       bookSlotMutation({
         variables: {
           serviceId: id!,
@@ -251,6 +254,7 @@ const BookService = () => {
                     selectedSlotsValue,
                     t,
                     serviceConfig,
+                    service,
                   })}
                 </Button>
               </Column>

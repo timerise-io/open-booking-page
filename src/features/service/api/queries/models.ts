@@ -52,6 +52,12 @@ export interface ServiceQueryResult {
       rangeSelect: boolean;
       quantity: boolean;
     };
+    multiList: {
+      duration: boolean;
+      quantity: boolean;
+      showTime: boolean;
+      multiSelect: boolean;
+    };
   };
   formFields: Array<FormField>;
   paymentProviders: Array<PaymentType> | null;

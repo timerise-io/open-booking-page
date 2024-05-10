@@ -194,6 +194,11 @@ export const GET_SERVICE = gql`
           rangeSelect
           quantity
         }
+        multiList {
+          duration
+          quantity
+          showTime
+        }
       }
       paymentProviders
       formFields {

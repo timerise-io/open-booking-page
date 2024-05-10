@@ -170,6 +170,11 @@ export const service = {
       rangeSelect: true,
       quantity: true,
     },
+    multiList: {
+      duration: false,
+      quantity: false,
+      showTime: false,
+    },
   },
   paymentProviders: ["OFFLINE"],
   formFields: [

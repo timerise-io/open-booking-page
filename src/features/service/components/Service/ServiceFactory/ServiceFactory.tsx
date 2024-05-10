@@ -5,6 +5,7 @@ import { serviceAtom } from "state/atoms/service";
 import { ServiceDateEvent } from "../ServiceDateEvent";
 import { ServiceDateRange } from "../ServiceDateRange";
 import ServiceDateTime from "../ServiceDateTime/ServiceDateTime";
+import { ServiceMultiDateEvent } from "../ServiceMultiDateEvent";
 
 export const ServiceFactory = () => {
   const service = useRecoilValue(serviceAtom);
@@ -16,6 +17,8 @@ export const ServiceFactory = () => {
     return <ServiceDateRange />;
   } else if (serviceType === BOOKING_FORM_TYPES.LIST) {
     return <ServiceDateEvent />;
+  } else if (serviceType === BOOKING_FORM_TYPES.MULTILIST) {
+    return <ServiceMultiDateEvent />;
   }
 
   return null;
