@@ -27,6 +27,7 @@ export const getSubmitButtonText: GetSubmitButtonText = ({
   const isMultiDateList = service.viewConfig.displayType === BOOKING_FORM_TYPES.MULTILIST;
   const serviceName = service.title;
 
+  if (isMultiSelect && selectedSlotsValue.length) return `${textBase} (${selectedSlotsValue.length})`;
   if (selectedSlotValue === "" && !selectedSlotsValue.length) return textBase;
   if (selectedSlotValue !== "" && selectedSlotsValue.length) {
     if (isMultiSelect) return `${textBase} (${selectedSlotsValue.length})`;

@@ -108,7 +108,8 @@ const BookService = () => {
   const dateFormat = is12HoursSystem ? "iiii dd MMM, h:mm a" : "iiii dd MMM, H:mm";
 
   const selectedSlot = slots.find((slot) => slot.slotId === selectedSlotsValue[0])!;
-  const formattedDate = selectedSlotsValue?.length
+
+  const formattedDate = selectedSlot
     ? convertSourceDateTimeToTargetDateTime({
         date: selectedSlot.dateTimeFrom,
         targetTimeZone: timeZone,
