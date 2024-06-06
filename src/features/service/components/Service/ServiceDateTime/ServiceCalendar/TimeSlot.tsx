@@ -209,13 +209,9 @@ const getDurationQuantitySlotContent = (
           </span>
         </WrapperWithDuration>
       </DurationText>
-      {slot.quantity > 0 && (
-        <>
-          <QuantityText typographyType="body" weight="500" as="span" align="center" color="inherit">
-            {slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)}
-          </QuantityText>
-        </>
-      )}
+      <QuantityText typographyType="body" weight="500" as="span" align="center" color="inherit">
+        {slot.quantity > 0 ? (slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)) : "-"}
+      </QuantityText>
     </Column>
   );
 };
@@ -246,13 +242,9 @@ const getQuantitySlotContent = (
           is12HoursSystem,
         })}
       </DurationText>
-      {slot.quantity > 0 && (
-        <>
-          <QuantityText typographyType="body" weight="500" as="span" align="center" color="inherit">
-            {slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)}
-          </QuantityText>
-        </>
-      )}
+      <QuantityText typographyType="body" weight="500" as="span" align="center" color="inherit">
+        {slot.quantity > 0 ? (slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)) : "-"}
+      </QuantityText>
     </Column>
   );
 };
