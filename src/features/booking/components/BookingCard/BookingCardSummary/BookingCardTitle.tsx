@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { LinkButton } from "components/LinkButton";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
@@ -44,6 +44,19 @@ const BookingCardTitle = ({
   const booking = useRecoilValue(bookingAtom);
   const hoursSystem = useRecoilValue(hoursSystemAtom);
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
+
+  const redirectToPayment = () => {
+    if (!paymentLink) return;
+
+    window.open(paymentLink, "_self")?.focus();
+  };
+
+  useEffect(() => {
+    if (showPayButton && paymentLink) {
+      redirectToPayment();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showPayButton, paymentLink]);
 
   return (
     <>
