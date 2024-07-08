@@ -7,6 +7,7 @@ import { getDatesValue } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
 import { Booking } from "models/booking";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { hoursSystemAtom } from "state/atoms";
 import { bookingAtom } from "state/atoms/booking";
@@ -44,9 +45,11 @@ const BookingCardTitle = ({
   const booking = useRecoilValue(bookingAtom);
   const hoursSystem = useRecoilValue(hoursSystemAtom);
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
+  const bookingPaymentStatus = booking?.paymentStatus;
+  const { paymentStatus } = useParams<{ paymentStatus: string }>();
 
   const redirectToPayment = () => {
-    if (!paymentLink) return;
+    if (!paymentLink || paymentStatus === "CANCELED" || bookingPaymentStatus === "CANCELED") return;
 
     window.open(paymentLink, "_self")?.focus();
   };
