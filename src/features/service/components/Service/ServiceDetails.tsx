@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ReactNode } from "react";
 import { ContextSelect } from "components/ContextSelect";
 import { Typography } from "components/Typography";
@@ -6,7 +6,6 @@ import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
 import { SkeletonBox } from "components/layout/SkeletonBox";
-import { set } from "lodash";
 import ReactMarkdown from "react-markdown";
 import { useRecoilState, useRecoilValue } from "recoil";
 import rehypeRaw from "rehype-raw";
@@ -88,12 +87,11 @@ const DetailsRow: React.FC<DetailsRowProps> = ({ name, value, icon }) => {
 
 const ServiceDetails = () => {
   const serviceData = useRecoilValue(serviceAtom);
-  //const [location, setLocation] = useState(serviceData?.locations[0] ?? "");
-
   const [location, setLocation] = useRecoilState(locationAtom);
 
   useEffect(() => {
     setLocation(serviceData?.locations[0] ?? "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [serviceData]);
 
   const title =
