@@ -6,6 +6,7 @@ export interface SlotsFiltersAtom {
   fetchDate: string;
   pageSize: number;
   triggerId: number;
+  locations: string[];
 }
 
 const defaultDayStart = formatInTimeZone(new Date(), "UTC", "yyyy-MM-dd");
@@ -14,6 +15,7 @@ const defaultFiltersPage: SlotsFiltersAtom = {
   fetchDate: `${defaultDayStart}T00:00:00Z`,
   pageSize: 7,
   triggerId: 0,
+  locations: [],
 };
 
 export const slotsFiltersAtom = atom({

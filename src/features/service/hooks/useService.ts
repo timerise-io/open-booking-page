@@ -26,7 +26,7 @@ export const useServiceSlotsState = (serviceId: string) => {
   const isServiceLoaded = !!useRecoilValue(serviceAtom);
   const navigate = useNavigate();
   const setServiceSlots = useSetRecoilState(serviceSlotsAtom);
-  const { firstDayDate, fetchDate: fetchFrom, triggerId } = useRecoilValue(slotsFilterSelector);
+  const { firstDayDate, fetchDate: fetchFrom, triggerId, locations } = useRecoilValue(slotsFilterSelector);
 
   const { maxDaysPerPage } = useRecoilValue(slotsViewConfiguration);
 
@@ -57,6 +57,7 @@ export const useServiceSlotsState = (serviceId: string) => {
       serviceId: serviceId,
       from: fetchFrom,
       to: fetchTo,
+      locations,
     },
     skip: isServiceLoaded === false,
   });
@@ -88,8 +89,9 @@ export const useServiceSlotsState = (serviceId: string) => {
         fetchDate: fetchFrom,
         firstDayDate: fetchFrom,
         triggerId,
+        locations,
       });
-  }, [slotsLoading, setServiceSlotsLoader, fetchFrom, firstDayDate, setSlotsFilter, triggerId]);
+  }, [slotsLoading, setServiceSlotsLoader, fetchFrom, firstDayDate, setSlotsFilter, triggerId, locations]);
 };
 
 export const useServiceState = (serviceId: string, lang: string | null) => {
