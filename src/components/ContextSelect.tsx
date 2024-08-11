@@ -78,6 +78,7 @@ const StyledValue = styled(Typography)`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  width: calc(100% - 30px);
 `;
 
 const OptionsWrapper = styled.div`
@@ -90,6 +91,8 @@ const OptionsWrapper = styled.div`
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   max-height: 300px;
   overflow: auto;
+  width: 100%;
+
   ${({ theme }) => {
     return css`
       background-color: ${theme.colorSchemas.input.background};
@@ -120,6 +123,9 @@ const OptionButton = styled.button`
   & > span {
     margin: 0;
     white-space: nowrap;
+    width: calc(100% - 30px);
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 `;
 
@@ -205,8 +211,8 @@ export const ContextSelect: React.FC<ContextSelectProps> = ({
         type="button"
         disabled={disabled}
       >
-        <Row className="label-value" jc="flex-start">
-          <StyledValue className="disabled-text" typographyType="body">
+        <Row className="label-value" jc="flex-start" w="100% ">
+          <StyledValue className="disabled-text" typographyType="body" title={fixedDisplay || selectedValue}>
             {fixedDisplay || selectedValue}
           </StyledValue>
         </Row>
@@ -218,7 +224,12 @@ export const ContextSelect: React.FC<ContextSelectProps> = ({
             const isMarked = showTick(itemKey, value);
 
             return (
-              <OptionButton key={`select-popup-option-${itemKey}`} onClick={() => handleChange(itemKey)} type="button">
+              <OptionButton
+                key={`select-popup-option-${itemKey}`}
+                onClick={() => handleChange(itemKey)}
+                type="button"
+                title={itemValue}
+              >
                 <Typography typographyType="body" weight={isMarked ? "700" : "400"} as="span">
                   {itemValue}
                 </Typography>
