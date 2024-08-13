@@ -2,11 +2,12 @@ import { PaymentType } from "models/service";
 
 export interface BookSlotMutationVariables {
   serviceId: string;
-  slots: Array<string>;
+  slots: string[];
   formFields: string;
   paymentProvider?: PaymentType;
   timeZone: string;
   locale?: string;
+  locations?: string[];
 }
 
 export interface BookSlotMutationRespons {

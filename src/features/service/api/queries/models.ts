@@ -76,4 +76,5 @@ export interface ServiceSlotsQueryVariables {
   serviceId: string;
   from: string;
   to: string;
+  locations: string[];
 }

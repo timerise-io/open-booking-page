@@ -76,6 +76,6 @@ export const SliderWrapper = styled.div`
 `;
 
 export const DetailsTextWrapper = styled.div`
-  min-width: 320px;
+  width: 100%;
   flex: 1;
 `;

@@ -75,7 +75,7 @@ const BookingCardTitle = ({
         booking?.slots &&
         booking?.slots.length > 0 &&
         booking.slots.map((slot) => (
-          <StyledRow jc="center" gap="6px">
+          <StyledRow jc="center" gap="6px" key={`${slot.dateTimeFrom}-${slot.dateTimeTo}`}>
             <IconCalendarEvent />
             <Typography typographyType="body" align="center" weight="700" displayType="contents">
               {`${getDatesValue({

@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ReactNode } from "react";
+import { ContextSelect } from "components/ContextSelect";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
 import { SkeletonBox } from "components/layout/SkeletonBox";
 import ReactMarkdown from "react-markdown";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import rehypeRaw from "rehype-raw";
+import { locationAtom } from "state/atoms/location";
 import { serviceAtom } from "state/atoms/service";
 import styled, { css } from "styled-components";
 import { IconCreditCard, IconMapPin, IconUser } from "@tabler/icons";
@@ -47,6 +49,31 @@ const IconWrapper = styled.div`
   }
 `;
 
+const StyledDetailsRowSelect = styled(Row)`
+  width: 100%;
+
+  & > div {
+    & > button {
+      border: none;
+      background: transparent;
+      padding: 0;
+
+      & > div {
+        width: calc(100% - 40px);
+
+        & > p {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}
+`;
+
+const StyledContextSelect = styled(ContextSelect)`
+  width: calc(100% - 20px);
+}`;
+
 const DetailsRow: React.FC<DetailsRowProps> = ({ name, value, icon }) => {
   return (
     <Row mb={0.5} w="100%" jc="flex-start" ai="flex-start">
@@ -66,6 +93,12 @@ const DetailsRow: React.FC<DetailsRowProps> = ({ name, value, icon }) => {
 
 const ServiceDetails = () => {
   const serviceData = useRecoilValue(serviceAtom);
+  const [location, setLocation] = useRecoilState(locationAtom);
+
+  useEffect(() => {
+    setLocation(serviceData?.locations[0] ?? "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [serviceData]);
 
   const title =
     serviceData === undefined ? (
@@ -90,6 +123,12 @@ const ServiceDetails = () => {
       </StyledMD>
     );
 
+  const locationsOptions =
+    serviceData?.locations.reduce((acc, location) => {
+      acc[location] = location;
+      return acc;
+    }, {} as Record<string, string>) ?? {};
+
   return (
     <>
       {title}
@@ -106,13 +145,29 @@ const ServiceDetails = () => {
             icon={<IconCreditCard />}
           />
         )}
-        {serviceData?.locations[0] && (
-          <DetailsRow
-            name="Location"
-            value={serviceData === undefined ? null : serviceData.locations[0]}
-            icon={<IconMapPin />}
-          />
-        )}
+        {location && serviceData?.locations?.length ? (
+          serviceData?.locations?.length === 1 ? (
+            <DetailsRow
+              name="Location"
+              value={serviceData === undefined ? null : serviceData.locations[0]}
+              icon={<IconMapPin />}
+            />
+          ) : (
+            <StyledDetailsRowSelect>
+              <IconWrapper>
+                <IconMapPin />
+              </IconWrapper>
+              <StyledContextSelect
+                label={""}
+                value={location}
+                options={locationsOptions}
+                onChange={(value) => {
+                  setLocation(value as string);
+                }}
+              />
+            </StyledDetailsRowSelect>
+          )
+        ) : null}
         {serviceData?.hostedBy && serviceData?.hostedBy !== "-" && (
           <DetailsRow
             name="Hosted by"
