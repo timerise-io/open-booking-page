@@ -78,7 +78,6 @@ const StyledValue = styled(Typography)`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: calc(100% - 30px);
 `;
 
 const OptionsWrapper = styled.div`

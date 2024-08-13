@@ -59,6 +59,8 @@ const StyledDetailsRowSelect = styled(Row)`
       padding: 0;
 
       & > div {
+        width: calc(100% - 40px);
+
         & > p {
           font-weight: 700;
         }
@@ -67,6 +69,10 @@ const StyledDetailsRowSelect = styled(Row)`
   }
 }
 `;
+
+const StyledContextSelect = styled(ContextSelect)`
+  width: calc(100% - 20px);
+}`;
 
 const DetailsRow: React.FC<DetailsRowProps> = ({ name, value, icon }) => {
   return (
@@ -151,7 +157,7 @@ const ServiceDetails = () => {
               <IconWrapper>
                 <IconMapPin />
               </IconWrapper>
-              <ContextSelect
+              <StyledContextSelect
                 label={""}
                 value={location}
                 options={locationsOptions}
