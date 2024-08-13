@@ -18,6 +18,7 @@ import { useSearchParams } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { hoursSystemAtom } from "state/atoms";
+import { locationAtom } from "state/atoms/location";
 import { selectedDateRange } from "state/atoms/selectedDateRange";
 import { selectedSlots } from "state/atoms/selectedSlots";
 import { serviceAtom } from "state/atoms/service";
@@ -102,6 +103,7 @@ const BookService = () => {
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
   const [, setSelectedSlots] = useRecoilState(selectedSlots);
   const slots = useRecoilValue(slotsAtom)!;
+  const locations = useRecoilValue(locationAtom);
 
   const isUploading = Object.values(uploadState).filter((item) => item.isLoading).length > 0;
 
@@ -182,6 +184,7 @@ const BookService = () => {
             paymentProvider: service.paymentProviders[0],
           }),
           locale: locale.code,
+          locations: locations ? [locations] : [],
         },
       }).then(() => setSelectedSlots([]));
     } else if (
@@ -199,6 +202,7 @@ const BookService = () => {
             paymentProvider: service.paymentProviders[0],
           }),
           locale: locale.code,
+          locations: locations ? [locations] : [],
         },
       });
     } else if (
@@ -215,6 +219,7 @@ const BookService = () => {
             paymentProvider: service.paymentProviders[0],
           }),
           locale: locale.code,
+          locations: locations ? [locations] : [],
         },
       }).then(() => setSelectedSlots([]));
     }

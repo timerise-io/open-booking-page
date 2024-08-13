@@ -8,6 +8,7 @@ export const BOOK_SLOT = gql`
     $paymentProvider: PaymentProvider
     $timeZone: TimeZone
     $locale: Locale
+    $locations: [ID]
   ) {
     bookingCreate(
       serviceId: $serviceId
@@ -16,6 +17,7 @@ export const BOOK_SLOT = gql`
       paymentProvider: $paymentProvider
       timeZone: $timeZone
       locale: $locale
+      locations: $locations
     ) {
       bookingId
     }
@@ -31,6 +33,7 @@ export const BOOK_DATE_RANGE = gql`
     $paymentProvider: PaymentProvider
     $timeZone: TimeZone
     $locale: Locale
+    $locations: [ID]
   ) {
     bookingCreate(
       serviceId: $serviceId
@@ -40,6 +43,7 @@ export const BOOK_DATE_RANGE = gql`
       paymentProvider: $paymentProvider
       timeZone: $timeZone
       locale: $locale
+      locations: $locations
     ) {
       bookingId
     }
