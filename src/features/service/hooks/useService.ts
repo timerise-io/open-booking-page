@@ -180,6 +180,12 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
             showTime: service.viewConfig.multiList.showTime,
             multiSelect: service.viewConfig.multiList.multiSelect,
           },
+          preorder: {
+            duration: service.viewConfig.preorder.duration,
+            quantity: service.viewConfig.preorder.quantity,
+            showDate: service.viewConfig.preorder.showDate,
+            showTime: service.viewConfig.preorder.showTime,
+          },
         },
         paymentProviders: [...(service.paymentProviders ?? [])],
       });

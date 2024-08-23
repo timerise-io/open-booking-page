@@ -199,6 +199,12 @@ export const GET_SERVICE = gql`
           quantity
           showTime
         }
+        preorder {
+          duration
+          quantity
+          showDate
+          showTime
+        }
       }
       paymentProviders
       formFields {
