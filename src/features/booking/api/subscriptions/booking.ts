@@ -27,6 +27,10 @@ export const BOOKING_SUBSCRIPTION = gql`
         dateTimeFrom
         dateTimeTo
       }
+      locations {
+        locationId
+        title
+      }
     }
   }
 `;

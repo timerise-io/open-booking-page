@@ -45,4 +45,5 @@ export interface Booking {
     dateTimeFrom: string;
     dateTimeTo: string;
   }> | null;
+  locations: Array<{ locationId: string; title: string }>;
 }

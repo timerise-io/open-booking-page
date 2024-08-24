@@ -20,6 +20,10 @@ export const GET_BOOKING = gql`
       createdAt
       qrUrl
       iCalUrl
+      locations {
+        locationId
+        title
+      }
     }
   }
 `;

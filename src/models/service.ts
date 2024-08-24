@@ -83,6 +83,7 @@ export interface Service {
   promoPrice: number | null;
   currency: string;
   locations: Array<string>;
+  serviceLocations: Array<{ locationId: string; title: string }>;
   hostedBy: string;
   dateTimeTo: string;
   dateTimeFrom: string;

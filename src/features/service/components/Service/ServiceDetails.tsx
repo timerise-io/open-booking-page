@@ -6,9 +6,12 @@ import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
 import { SkeletonBox } from "components/layout/SkeletonBox";
+import { Booking } from "models/booking";
+import { Service } from "models/service";
 import ReactMarkdown from "react-markdown";
 import { useRecoilState, useRecoilValue } from "recoil";
 import rehypeRaw from "rehype-raw";
+import { bookingAtom } from "state/atoms/booking";
 import { locationAtom } from "state/atoms/location";
 import { serviceAtom } from "state/atoms/service";
 import styled, { css } from "styled-components";
@@ -91,12 +94,67 @@ const DetailsRow: React.FC<DetailsRowProps> = ({ name, value, icon }) => {
   );
 };
 
+interface LocationDetailsRowProps {
+  booking?: Booking;
+  location?: string;
+  serviceData?: Service;
+  setLocation: (location: string) => void;
+  locationsOptions: Record<string, string>;
+}
+
+const LocationDetailsRow: React.FC<LocationDetailsRowProps> = ({
+  booking,
+  location,
+  serviceData,
+  setLocation,
+  locationsOptions,
+}) => {
+  const hasBookingLocations = booking && booking?.locations?.length;
+  const hasServiceLocations = location && serviceData?.serviceLocations?.length;
+  const hasOneServiceLocation = serviceData?.serviceLocations?.length === 1;
+
+  if (hasBookingLocations) {
+    return <DetailsRow name="Location" value={booking.locations[0].title} icon={<IconMapPin />} />;
+  }
+
+  if (hasServiceLocations) {
+    if (hasOneServiceLocation) {
+      return (
+        <DetailsRow
+          name="Location"
+          value={serviceData === undefined ? null : serviceData.serviceLocations[0].title}
+          icon={<IconMapPin />}
+        />
+      );
+    }
+
+    return (
+      <StyledDetailsRowSelect>
+        <IconWrapper>
+          <IconMapPin />
+        </IconWrapper>
+        <StyledContextSelect
+          label={""}
+          value={location}
+          options={locationsOptions}
+          onChange={(value) => {
+            setLocation(value as string);
+          }}
+        />
+      </StyledDetailsRowSelect>
+    );
+  }
+
+  return null;
+};
+
 const ServiceDetails = () => {
   const serviceData = useRecoilValue(serviceAtom);
   const [location, setLocation] = useRecoilState(locationAtom);
+  const booking = useRecoilValue(bookingAtom);
 
   useEffect(() => {
-    setLocation(serviceData?.locations[0] ?? "");
+    setLocation(serviceData?.serviceLocations[0]?.locationId ?? "");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [serviceData]);
 
@@ -124,8 +182,8 @@ const ServiceDetails = () => {
     );
 
   const locationsOptions =
-    serviceData?.locations.reduce((acc, location) => {
-      acc[location] = location;
+    serviceData?.serviceLocations.reduce((acc, { title, locationId }) => {
+      acc[locationId] = title;
       return acc;
     }, {} as Record<string, string>) ?? {};
 
@@ -145,29 +203,13 @@ const ServiceDetails = () => {
             icon={<IconCreditCard />}
           />
         )}
-        {location && serviceData?.locations?.length ? (
-          serviceData?.locations?.length === 1 ? (
-            <DetailsRow
-              name="Location"
-              value={serviceData === undefined ? null : serviceData.locations[0]}
-              icon={<IconMapPin />}
-            />
-          ) : (
-            <StyledDetailsRowSelect>
-              <IconWrapper>
-                <IconMapPin />
-              </IconWrapper>
-              <StyledContextSelect
-                label={""}
-                value={location}
-                options={locationsOptions}
-                onChange={(value) => {
-                  setLocation(value as string);
-                }}
-              />
-            </StyledDetailsRowSelect>
-          )
-        ) : null}
+        <LocationDetailsRow
+          booking={booking}
+          location={location}
+          serviceData={serviceData}
+          setLocation={setLocation}
+          locationsOptions={locationsOptions}
+        />
         {serviceData?.hostedBy && serviceData?.hostedBy !== "-" && (
           <DetailsRow
             name="Hosted by"
