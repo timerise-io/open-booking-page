@@ -138,6 +138,7 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
         promoPrice: service.promoPrice,
         currency: service.currency,
         locations: (service.locations ?? [{ title: "" }]).map((item) => item.title),
+        serviceLocations: service.locations,
         hostedBy:
           service.hosts.length > 1
             ? `${service.hosts[0].fullName} +${service.hosts.length - 1}`

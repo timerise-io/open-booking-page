@@ -18,6 +18,7 @@ export interface ServiceQueryResult {
   promoPrice: number | null;
   currency: string;
   locations: Array<{
+    locationId: string;
     title: string;
   }>;
   dateTimeTo: string;

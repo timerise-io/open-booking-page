@@ -5,27 +5,30 @@ import { getPath } from "helpers/functions";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { useTranslation } from "react-i18next";
 import { createSearchParams, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
+import { serviceAtom } from "state/atoms/service";
 
 const BackToServiceButton = () => {
   const { t } = useTranslation(["booking"]);
   const navigate = useNavigate();
-  const bookingValue = useRecoilValue(bookingAtom);
   const lang = useLangParam();
   const { PAGES } = useIsEmbeddedPage();
+  const setBooking = useSetRecoilState(bookingAtom);
+  const service = useRecoilValue(serviceAtom);
 
-  if (bookingValue === undefined) return null;
+  if (service === undefined) return null;
 
   return (
     <ContextButton
       colorType="primary"
       onClick={() => {
+        setBooking(undefined);
         navigate(
           getPath({
             url: `${PAGES.SERVICE}:query`,
             params: {
-              id: bookingValue.service.serviceId,
+              id: service.serviceId,
               query: lang ? `?${createSearchParams({ locale: lang }).toString()}` : "",
             },
           }),

@@ -18,6 +18,7 @@ export const GET_SERVICE = gql`
       promoPrice
       currency
       locations {
+        locationId
         title
       }
       dateTimeTo
