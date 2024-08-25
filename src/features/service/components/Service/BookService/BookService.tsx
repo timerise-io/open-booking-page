@@ -13,6 +13,7 @@ import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import _ from "lodash";
 import { FormField, filterFormFields } from "models/formFields";
 import { BOOKING_FORM_TYPES } from "models/service";
+import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -110,6 +111,8 @@ const BookService = () => {
   const dateFormat = is12HoursSystem ? "iiii dd MMM, h:mm a" : "iiii dd MMM, H:mm";
 
   const selectedSlot = slots.find((slot) => slot.slotId === selectedSlotsValue[0])!;
+
+  const now = moment().format("YYYY-MM-DDTHH:mm:ss");
 
   const formattedDate = selectedSlot
     ? convertSourceDateTimeToTargetDateTime({
@@ -222,13 +225,28 @@ const BookService = () => {
           locations: locations ? [locations] : [],
         },
       }).then(() => setSelectedSlots([]));
+    } else if (serviceType === BOOKING_FORM_TYPES.PREORDER) {
+      bookDateRangeMutation({
+        variables: {
+          serviceId: id!,
+          formFields: json,
+          timeZone: timeZone,
+          dateTimeFrom: now,
+          dateTimeTo: now,
+          ...(service?.paymentProviders.length && {
+            paymentProvider: service.paymentProviders[0],
+          }),
+          locale: locale.code,
+          locations: locations ? [locations] : [],
+        },
+      });
     }
   };
 
   if (formFields === undefined || formFields.length === 0) return null;
 
   return (
-    <Box mt={1.125}>
+    <Box mt={serviceType === BOOKING_FORM_TYPES.PREORDER ? 0 : 1.125}>
       <WrapperCard>
         <Box mb={2.5}>
           <Typography typographyType="h3" as="h3" displayType="contents">

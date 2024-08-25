@@ -59,6 +59,12 @@ export interface ServiceQueryResult {
       showTime: boolean;
       multiSelect: boolean;
     };
+    preorder: {
+      duration: boolean;
+      quantity: boolean;
+      showDate: boolean;
+      showTime: boolean;
+    };
   };
   formFields: Array<FormField>;
   paymentProviders: Array<PaymentType> | null;

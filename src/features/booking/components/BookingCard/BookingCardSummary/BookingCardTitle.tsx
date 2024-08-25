@@ -7,7 +7,7 @@ import { getDatesValue } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
 import { Booking } from "models/booking";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { hoursSystemAtom } from "state/atoms";
 import { bookingAtom } from "state/atoms/booking";
@@ -47,9 +47,17 @@ const BookingCardTitle = ({
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
   const bookingPaymentStatus = booking?.paymentStatus;
   const { paymentStatus } = useParams<{ paymentStatus: string }>();
+  const [searchParams] = useSearchParams();
+  const searchPaymentStatus = searchParams.get("paymentStatus");
 
   const redirectToPayment = () => {
-    if (!paymentLink || paymentStatus === "CANCELED" || bookingPaymentStatus === "CANCELED") return;
+    if (
+      !paymentLink ||
+      searchPaymentStatus === "CANCELED" ||
+      paymentStatus === "CANCELED" ||
+      bookingPaymentStatus === "CANCELED"
+    )
+      return;
 
     window.open(paymentLink, "_self")?.focus();
   };

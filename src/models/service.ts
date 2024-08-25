@@ -63,6 +63,7 @@ export enum BOOKING_FORM_TYPES {
   CALENDAR = "CALENDAR",
   LIST = "LIST",
   MULTILIST = "MULTILIST",
+  PREORDER = "PREORDER",
 }
 
 export type DisplayType = keyof typeof BOOKING_FORM_TYPES;
@@ -122,6 +123,13 @@ export interface Service {
       quantity: boolean;
       showTime: boolean;
       multiSelect: boolean;
+    };
+    preorder: {
+      duration: boolean;
+      quantity: boolean;
+      showDate: boolean;
+      showTime: boolean;
+      multiSelect?: boolean;
     };
   };
   paymentProviders: Array<PaymentType>;

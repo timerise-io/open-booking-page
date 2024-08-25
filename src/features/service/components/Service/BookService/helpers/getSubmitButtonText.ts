@@ -11,7 +11,7 @@ type GetSubmitButtonText = ({
   selectedSlotValue: string;
   selectedSlotsValue: string[];
   t: TFunction<"forms"[]>;
-  serviceConfig: Service["viewConfig"]["days" | "list" | "calendar" | "multiList"];
+  serviceConfig: Service["viewConfig"]["days" | "list" | "calendar" | "multiList" | "preorder"];
   service: Service;
 }) => string;
 

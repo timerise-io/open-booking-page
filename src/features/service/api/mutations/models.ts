@@ -24,6 +24,7 @@ export interface BookDateRangeMutationVariables {
   paymentProvider?: PaymentType;
   timeZone: string;
   locale?: string;
+  locations?: string[];
 }
 
 export interface BookDateRangeMutationRespons {
