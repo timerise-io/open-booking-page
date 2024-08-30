@@ -13,8 +13,14 @@ const Wrapper = styled(Row)`
   }
 `;
 
-const TimezoneInfo = () => {
+interface TimezoneInfoProps {
+  showTimezone?: boolean;
+}
+
+const TimezoneInfo: React.FC<TimezoneInfoProps> = ({ showTimezone = true }) => {
   const timeZone = useRecoilValue(timeZoneAtom);
+
+  if (!showTimezone) return null;
 
   return (
     <Wrapper>
