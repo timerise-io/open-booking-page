@@ -328,6 +328,11 @@ export const GET_SERVICE = gql`
           order
           required
         }
+        ... on FormFieldHidden {
+          fieldId
+          fieldType
+          label
+        }
       }
     }
   }

@@ -11,7 +11,7 @@ import { getServiceConfigByType } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import _ from "lodash";
-import { FormField, filterFormFields } from "models/formFields";
+import { FormField, filterFormFields, filterHiddenFields } from "models/formFields";
 import { BOOKING_FORM_TYPES } from "models/service";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
@@ -58,6 +58,8 @@ const WrapperCard = styled(Card)`
 
 const getInitialValues = (formFields: Array<FormField>, searchParams: URLSearchParams) => {
   const customFormFields = filterFormFields(formFields, false);
+  const hiddenFields = filterHiddenFields(formFields);
+
   return {
     ...{
       fullName: searchParams.get("fullName") ?? "",
@@ -71,6 +73,9 @@ const getInitialValues = (formFields: Array<FormField>, searchParams: URLSearchP
     },
     ...Object.assign(
       {},
+      ...hiddenFields.map((item) => {
+        return { [item.label]: searchParams.get(item.label) ?? "" };
+      }),
       ...customFormFields.map((item) => {
         if (item.fieldType === "TEXT") return { [item.fieldId]: searchParams.get(item.fieldId) ?? "" };
         if (item.fieldType === "CHECKBOX") return { [item.fieldId]: false };
@@ -164,6 +169,14 @@ const BookService = () => {
       };
     });
 
+    const hiddenFields = filterHiddenFields(formFields).map((item) => {
+      return {
+        [item.fieldId]: value[item.fieldId] as any,
+      };
+    });
+
+    const urlSearchParams = Object.fromEntries(searchParams.entries());
+
     const json = JSON.stringify({
       ...(fullName && { [fullName.fieldId]: value.fullName }),
       ...(quantity && { [quantity.fieldId]: value.quantity }),
@@ -174,6 +187,8 @@ const BookService = () => {
       ...(promoCode && { [promoCode.fieldId]: value.promoCode }),
       ...(guestsList && { [guestsList.fieldId]: value.guestsList }),
       ...Object.assign({}, ...customFormFields),
+      ...Object.assign({}, ...hiddenFields),
+      ...urlSearchParams,
     });
 
     if (serviceType === BOOKING_FORM_TYPES.DAYS && selectedSlotsValue.length) {
@@ -243,16 +258,18 @@ const BookService = () => {
     }
   };
 
-  if (formFields === undefined || formFields.length === 0) return null;
+  if (!service) return null;
 
   return (
     <Box mt={serviceType === BOOKING_FORM_TYPES.PREORDER ? 0 : 1.125}>
       <WrapperCard>
-        <Box mb={2.5}>
-          <Typography typographyType="h3" as="h3" displayType="contents">
-            {t("headers.leave-details")}
-          </Typography>
-        </Box>
+        {formFields && formFields.length > 0 && (
+          <Box mb={2.5}>
+            <Typography typographyType="h3" as="h3" displayType="contents">
+              {t("headers.leave-details")}
+            </Typography>
+          </Box>
+        )}
         <Formik
           initialValues={getInitialValues(formFields, searchParams)}
           validationSchema={generateValidationSchema(t, formFields, false)}
