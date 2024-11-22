@@ -37,9 +37,10 @@ interface TextFieldProps {
   name: string;
   multiline?: boolean;
   placeholder?: string;
+  hidden?: boolean;
 }
 
-const TextField: React.FC<TextFieldProps> = ({ label, name, multiline = false, placeholder }) => {
+const TextField: React.FC<TextFieldProps> = ({ label, name, multiline = false, placeholder, hidden }) => {
   const { t } = useTranslation(["forms"]);
   const labelToDisplay = label === undefined ? t(`${name}Field`) : label;
 
@@ -52,7 +53,7 @@ const TextField: React.FC<TextFieldProps> = ({ label, name, multiline = false, p
   );
 
   return (
-    <Column ai="stretch">
+    <Column ai="stretch" hidden={hidden}>
       <StyledLabel htmlFor={name}>{labelToDisplay}</StyledLabel>
       {input}
       <Box h="13px" mt={0.5} mb={1}>

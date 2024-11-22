@@ -3,7 +3,6 @@ import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
-import { useLangParam } from "features/i18n/useLangParam";
 import { useRescheduleBooking } from "features/service/hooks/useRescheduleBooking";
 import { getPath, getServiceConfigByType } from "helpers/functions";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
@@ -11,7 +10,7 @@ import { useLocale } from "helpers/hooks/useLocale";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import { BOOKING_FORM_TYPES } from "models/service";
 import { useTranslation } from "react-i18next";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { hoursSystemAtom } from "state/atoms";
 import { bookingAtom } from "state/atoms/booking";
@@ -47,7 +46,6 @@ const RescheduleService = () => {
   const locale = useLocale();
   const navigate = useNavigate();
   const bookingValue = useRecoilValue(bookingAtom);
-  const lang = useLangParam();
   const { t } = useTranslation(["forms"]);
   const selectedDateRangeValue = useRecoilValue(selectedDateRange);
   const selectedSlotsValue = useRecoilValue(selectedSlots);
@@ -58,6 +56,8 @@ const RescheduleService = () => {
   const timeZone = useRecoilValue(timeZoneAtom);
   const slots = useRecoilValue(slotsAtom)!;
   const { PAGES } = useIsEmbeddedPage();
+  const [searchParams] = useSearchParams();
+  const urlSearchParams = Object.fromEntries(searchParams.entries());
 
   const serviceType = service?.viewConfig.displayType;
 
@@ -192,7 +192,7 @@ const RescheduleService = () => {
                   url: `${PAGES.BOOKING}:query`,
                   params: {
                     id: bookingValue.bookingId,
-                    query: lang ? `?${createSearchParams({ locale: lang }).toString()}` : "",
+                    query: `?${createSearchParams(urlSearchParams).toString()}`,
                   },
                 }),
               );

@@ -128,6 +128,9 @@ const FormComponent = ({ config }: FormComponentProps) => {
     case "FILE_UPLOAD": {
       return <FileUpload key={`booking-form-field-FILE_UPLOAD-${config.fieldId}`} {...config} label={label} />;
     }
+    case "HIDDEN": {
+      return <TextField key={`booking-form-field-${config.label}`} name={"email"} label={label} hidden />;
+    }
     default: {
       return null;
     }

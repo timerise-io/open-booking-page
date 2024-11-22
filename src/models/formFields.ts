@@ -27,8 +27,16 @@ export const isSystemField = (formField: FormField) => {
   return systemFieldsList.findIndex((item) => item === formField.fieldType) > -1;
 };
 
+export const isHiddenField = (formField: FormField) => {
+  return formField.fieldType === "HIDDEN";
+};
+
 export const filterFormFields = (formFields: Array<FormField>, system = true) => {
   return formFields.filter((item) => isSystemField(item) === system);
+};
+
+export const filterHiddenFields = (formFields: Array<FormField>) => {
+  return formFields.filter((item) => isHiddenField(item));
 };
 
 export interface BaseFormField {
@@ -121,6 +129,11 @@ export type FormFieldFileUpload = BaseFormField & {
   multiple: boolean | null;
 };
 
+export type FormFieldHidden = BaseFormField & {
+  fieldType: "HIDDEN";
+  value: string;
+};
+
 export type FormField =
   | FormFieldSystemFullName
   | FormFieldSystemEmailAddress
@@ -134,4 +147,5 @@ export type FormField =
   | FormFieldNumber
   | FormFieldCheckbox
   | FormFieldSelect
-  | FormFieldFileUpload;
+  | FormFieldFileUpload
+  | FormFieldHidden;

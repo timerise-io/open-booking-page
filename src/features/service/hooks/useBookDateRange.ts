@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import { VERSION } from "enums";
-import { useLangParam } from "features/i18n/useLangParam";
 import { getPath } from "helpers/functions";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { selectedSlot } from "state/atoms/selectedSlot";
 import { slotsFiltersAtom } from "state/atoms/slotsFilters";
@@ -15,8 +14,9 @@ export const useBookDateRange = () => {
   const [filters, setFilters] = useRecoilState(slotsFiltersAtom);
   const setSelectedSlot = useSetRecoilState(selectedSlot);
   const navigate = useNavigate();
-  const lang = useLangParam();
   const { PAGES } = useIsEmbeddedPage();
+  const [searchParams] = useSearchParams();
+  const urlSearchParams = Object.fromEntries(searchParams.entries());
 
   const [bookDateRangeMutation, { data, loading, error }] = useMutation<
     BookDateRangeMutationRespons,
@@ -37,7 +37,7 @@ export const useBookDateRange = () => {
           url: `${PAGES.BOOKING}:query`,
           params: {
             id: data.bookingCreate.bookingId,
-            query: lang ? `?${createSearchParams({ locale: lang }).toString()}` : "",
+            query: `?${createSearchParams(urlSearchParams).toString()}`,
           },
         }),
       );
