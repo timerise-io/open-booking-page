@@ -2,6 +2,7 @@ import React from "react";
 import { apolloClient } from "api/apolloClient";
 import Footer from "components/Footer";
 import Header from "components/Header";
+import { AnalyticsWrapper } from "features/analytics";
 import StateModal from "features/confirmation/components/StateModal";
 import "features/i18n";
 import ThemeWrapper from "features/theme/components/ThemeWrapper";
@@ -15,20 +16,22 @@ import { AppLayoutWrapper } from "./components/layout/AppLayoutWrapper";
 function App() {
   return (
     <RecoilRoot>
-      <Router>
-        <ApolloProvider client={apolloClient}>
-          <ThemeWrapper>
-            <GlobalStyles />
-            <AppLayoutWrapper>
-              <Header />
-              <PageSwitcher>
-                <StateModal />
-              </PageSwitcher>
-              <Footer />
-            </AppLayoutWrapper>
-          </ThemeWrapper>
-        </ApolloProvider>
-      </Router>
+      <AnalyticsWrapper>
+        <Router>
+          <ApolloProvider client={apolloClient}>
+            <ThemeWrapper>
+              <GlobalStyles />
+              <AppLayoutWrapper>
+                <Header />
+                <PageSwitcher>
+                  <StateModal />
+                </PageSwitcher>
+                <Footer />
+              </AppLayoutWrapper>
+            </ThemeWrapper>
+          </ApolloProvider>
+        </Router>
+      </AnalyticsWrapper>
     </RecoilRoot>
   );
 }
