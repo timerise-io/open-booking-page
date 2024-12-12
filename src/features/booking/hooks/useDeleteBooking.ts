@@ -1,4 +1,6 @@
+import { useContext, useEffect } from "react";
 import { VERSION } from "enums";
+import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { useParams } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { CancelBookingMutationResult, CancelBookingMutationVariables } from "../api/mutations/models";
@@ -6,6 +8,7 @@ import { CANCEL_BOOKING } from "../api/mutations/mutations";
 
 export const useDeleteBooking = () => {
   const { id } = useParams<{ id: string }>();
+  const { send } = useContext(AnalyticsContext);
   const [bookSlotMutation] = useMutation<CancelBookingMutationResult, CancelBookingMutationVariables>(CANCEL_BOOKING, {
     context: {
       headers: {
@@ -16,6 +19,10 @@ export const useDeleteBooking = () => {
   });
 
   const deleteBooking = () => id && bookSlotMutation({ variables: { bookingId: id } });
+
+  useEffect(() => {
+    send({ event: "booking", action: "delete" });
+  }, [send]);
 
   return deleteBooking;
 };

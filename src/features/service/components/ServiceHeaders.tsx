@@ -8,11 +8,12 @@ import { headerSelector } from "state/selectors/headerSelector";
 const ServiceHeaders = () => {
   const icon = useRecoilValue(headerSelector)?.logoUrl;
   const service = useRecoilValue(serviceAtom);
-  const { init } = useContext(AnalyticsContext);
+  const { init, send } = useContext(AnalyticsContext);
 
   useEffect(() => {
     if (service?.project?.googleTagId) {
       init(service.project.googleTagId);
+      send({ event: "pageview" });
     }
   }, [init, service?.project?.googleTagId]);
 

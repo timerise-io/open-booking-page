@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { VERSION } from "enums";
+import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { getPath } from "helpers/functions";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { useNavigate } from "react-router";
@@ -10,6 +11,7 @@ import { CONFIRM_BOOKING } from "../api/mutations/mutations";
 export const useConfirmBooking = (bookingId: string) => {
   const navigate = useNavigate();
   const { PAGES } = useIsEmbeddedPage();
+  const { send } = useContext(AnalyticsContext);
 
   const [confirmBooking, { data, loading, error }] = useMutation<
     ConfirmBookingMutationResult,
@@ -28,6 +30,7 @@ export const useConfirmBooking = (bookingId: string) => {
 
   useEffect(() => {
     confirmBooking();
+    send({ event: "booking", action: "confirm" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
