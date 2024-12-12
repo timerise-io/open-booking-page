@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import { ContextButton } from "components/ContextButton";
 import { Typography } from "components/Typography";
+import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { useDeleteBooking } from "features/booking/hooks/useDeleteBooking";
 import useConfirmation from "features/confirmation/hooks/useConfirmation";
 import { useTranslation } from "react-i18next";
@@ -10,6 +12,7 @@ const CancelBookingButton = () => {
   const { t } = useTranslation(["booking"]);
   const deleteBooking = useDeleteBooking();
   const bookingValue = useRecoilValue(bookingAtom);
+  const { sendEvent } = useContext(AnalyticsContext);
 
   const showConfirmation = useConfirmation({
     type: "booking/delete",
@@ -19,7 +22,14 @@ const CancelBookingButton = () => {
     },
   });
 
-  const handleDelete = () => showConfirmation();
+  const handleDelete = () => {
+    showConfirmation();
+    sendEvent({
+      category: "navigation",
+      action: "Cancel Booking Button",
+      label: t("cancel-booking"),
+    });
+  };
 
   if (bookingValue === undefined) return null;
 

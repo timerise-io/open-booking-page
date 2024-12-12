@@ -1,7 +1,7 @@
 export interface UseGoogleAnalyticsReturn {
   init: (trackingId: string) => void;
-  sendEvent: (event: any) => void;
-  send: (fieldObject: any) => void;
+  sendEvent: (event: GoogleAnalyticsEvent) => void;
+  send: (path: any) => void;
 }
 
 export type UseGoogleAnalytics = () => UseGoogleAnalyticsReturn;

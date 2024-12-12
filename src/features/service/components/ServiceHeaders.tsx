@@ -13,9 +13,9 @@ const ServiceHeaders = () => {
   useEffect(() => {
     if (service?.project?.googleTagId) {
       init(service.project.googleTagId);
-      send({ event: "pageview" });
+      send({ event: "booking", action: "view" });
     }
-  }, [init, service?.project?.googleTagId]);
+  }, [init, service?.project?.googleTagId, send]);
 
   if (service === undefined) return null;
 

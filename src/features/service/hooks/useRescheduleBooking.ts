@@ -1,6 +1,5 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { VERSION } from "enums";
-import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { getPath } from "helpers/functions";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
@@ -18,7 +17,6 @@ export const useRescheduleBooking = () => {
   const { PAGES } = useIsEmbeddedPage();
   const [searchParams] = useSearchParams();
   const urlSearchParams = Object.fromEntries(searchParams.entries());
-  const { send } = useContext(AnalyticsContext);
 
   const [rescheduleBookingMutation, { data, loading, error }] = useMutation<
     RescheduleBookingResponse,
@@ -35,7 +33,6 @@ export const useRescheduleBooking = () => {
   useEffect(() => {
     if (data?.bookingReschedule.bookingId) {
       setSelectedSlot("");
-      send({ event: "booking", action: "reschedule" });
       navigate(
         getPath({
           url: `${PAGES.BOOKING}:query`,

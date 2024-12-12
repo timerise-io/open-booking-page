@@ -1,6 +1,5 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { VERSION } from "enums";
-import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { useLangParam } from "features/i18n/useLangParam";
 import { useProjectState } from "features/project/hooks/useProject";
 import { useServiceSlotsState, useServiceState } from "features/service/hooks/useService";
@@ -17,7 +16,6 @@ export const useBookingState = (bookingId: string) => {
   const navigate = useNavigate();
   const setBooking = useSetRecoilState(bookingAtom);
   const setServiceLoader = useSetRecoilState(loaderAtom(LOADERS.BOOKING));
-  const { send } = useContext(AnalyticsContext);
 
   const { loading, data, error, startPolling, stopPolling } = useQuery<BookingQueryResult, BookingQueryVariables>(
     GET_BOOKING,
@@ -44,9 +42,8 @@ export const useBookingState = (bookingId: string) => {
     if (data && data.booking) {
       const { booking } = data;
       setBooking({ ...booking });
-      send({ event: "booking", action: "view" });
     }
-  }, [data, setBooking, send]);
+  }, [data, setBooking]);
 
   useEffect(() => {
     if (error || data?.booking === null) {

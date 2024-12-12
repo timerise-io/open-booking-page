@@ -1,6 +1,5 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { VERSION } from "enums";
-import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { getPath } from "helpers/functions";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
@@ -18,7 +17,6 @@ export const useBookSlot = () => {
   const { PAGES } = useIsEmbeddedPage();
   const [searchParams] = useSearchParams();
   const urlSearchParams = Object.fromEntries(searchParams.entries());
-  const { send } = useContext(AnalyticsContext);
 
   const [bookSlotMutation, { data, loading, error }] = useMutation<BookSlotMutationRespons, BookSlotMutationVariables>(
     BOOK_SLOT,
@@ -34,7 +32,6 @@ export const useBookSlot = () => {
 
   useEffect(() => {
     if (data?.bookingCreate.bookingId) {
-      send({ event: "booking", action: "create" });
       navigate(
         getPath({
           url: `${PAGES.BOOKING}:query`,
