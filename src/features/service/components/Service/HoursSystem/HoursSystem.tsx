@@ -40,7 +40,7 @@ export const HoursSystem = () => {
     setHoursSystem(newHoursSystem);
     sendEvent({
       category: "Hours System",
-      action: "Change",
+      action: "Change Hours System",
       label: "Change Hours System",
       value: newHoursSystem === HOURS_SYSTEMS.h12 ? 12 : 24,
     });
