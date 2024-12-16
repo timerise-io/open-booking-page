@@ -27,6 +27,7 @@
     "react-dates": "^21.8.0",
     "react-dates-gte-react-17-21.8.0-version-fixed": "^21.8.0",
     "react-dom": "^18.2.0",
+    "react-ga4": "^2.1.0",
     "react-helmet-async": "^1.3.0",
     "react-i18next": "^11.17.2",
     "react-markdown": "^8.0.0",

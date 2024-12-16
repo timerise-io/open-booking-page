@@ -11,6 +11,7 @@ export interface ServiceQueryResult {
     theme: "DARK" | "LIGHT";
     defaultLocale: string;
     localTimeZone: string;
+    googleTagId: string | null;
   };
   title: string;
   description: string;
