@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { ContextButton } from "components/ContextButton";
 import { Typography } from "components/Typography";
 import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
+import { GTMContext } from "features/analytics/contexts/GTMContext";
 import { getPath } from "helpers/functions";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { BOOKING_FORM_TYPES } from "models/service";
@@ -20,6 +21,7 @@ export const RescheduleBookingButton = () => {
   const [searchParams] = useSearchParams();
   const urlSearchParams = Object.fromEntries(searchParams.entries());
   const { sendEvent } = useContext(AnalyticsContext);
+  const { action } = useContext(GTMContext);
 
   if (bookingValue === undefined || service?.viewConfig?.displayType === BOOKING_FORM_TYPES.PREORDER) return null;
 
@@ -41,6 +43,7 @@ export const RescheduleBookingButton = () => {
           action: "Reschedule Booking Button",
           label: t("reschedule"),
         });
+        action({ event: "navigation", action: "Reschedule Booking Button" });
       }}
     >
       <Typography typographyType="body" align="center" as="span" color="inherit" weight="700">

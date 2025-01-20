@@ -5,6 +5,7 @@ import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
+import { GTMContext } from "features/analytics/contexts/GTMContext";
 import { useBookDateRange } from "features/service/hooks/useBookDateRange";
 import { useBookSlot } from "features/service/hooks/useBookSlot";
 import { Form, Formik } from "formik";
@@ -112,6 +113,7 @@ const BookService = () => {
   const slots = useRecoilValue(slotsAtom)!;
   const locations = useRecoilValue(locationAtom);
   const { sendEvent } = useContext(AnalyticsContext);
+  const { action } = useContext(GTMContext);
 
   const isUploading = Object.values(uploadState).filter((item) => item.isLoading).length > 0;
 
@@ -212,6 +214,7 @@ const BookService = () => {
         category: "Book Service",
         label: `book slot ${BOOKING_FORM_TYPES.DAYS}`,
       });
+      action({ event: "book_slot", action: "Book Service" });
     } else if (
       serviceType === BOOKING_FORM_TYPES.CALENDAR &&
       selectedDateRangeValue.dateTimeFrom !== null &&
@@ -235,6 +238,7 @@ const BookService = () => {
         category: "Book Service",
         label: `book slot ${BOOKING_FORM_TYPES.CALENDAR}`,
       });
+      action({ event: "book_slot", action: "Book Service" });
     } else if (
       (serviceType === BOOKING_FORM_TYPES.LIST || serviceType === BOOKING_FORM_TYPES.MULTILIST) &&
       selectedSlotsValue.length
@@ -252,11 +256,14 @@ const BookService = () => {
           locations: locations ? [locations] : [],
         },
       }).then(() => setSelectedSlots([]));
+
       sendEvent({
         action: "book_slot",
         category: "Book Service",
         label: `book slot ${BOOKING_FORM_TYPES.LIST}`,
       });
+
+      action({ event: "book_slot", action: "Book Service" });
     } else if (serviceType === BOOKING_FORM_TYPES.PREORDER) {
       bookDateRangeMutation({
         variables: {
@@ -272,11 +279,14 @@ const BookService = () => {
           locations: locations ? [locations] : [],
         },
       });
+
       sendEvent({
         action: "book_slot",
         category: "Book Service",
         label: `book slot ${BOOKING_FORM_TYPES.PREORDER}`,
       });
+
+      action({ event: "book_slot", action: "Book Service" });
     }
   };
 

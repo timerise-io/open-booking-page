@@ -12,6 +12,7 @@ export const GET_SERVICE = gql`
         defaultLocale
         localTimeZone
         googleTagId
+        googleAnalyticsId
       }
       title
       description

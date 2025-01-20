@@ -12,6 +12,7 @@ export interface ServiceQueryResult {
     defaultLocale: string;
     localTimeZone: string;
     googleTagId: string | null;
+    googleAnalyticsId: string | null;
   };
   title: string;
   description: string;

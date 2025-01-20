@@ -4,6 +4,7 @@ import { Card } from "components/Card";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
+import { GTMContext } from "features/analytics/contexts/GTMContext";
 import { useRescheduleBooking } from "features/service/hooks/useRescheduleBooking";
 import { getPath, getServiceConfigByType } from "helpers/functions";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
@@ -60,6 +61,7 @@ const RescheduleService = () => {
   const [searchParams] = useSearchParams();
   const urlSearchParams = Object.fromEntries(searchParams.entries());
   const { sendEvent } = useContext(AnalyticsContext);
+  const { action } = useContext(GTMContext);
 
   const serviceType = service?.viewConfig.displayType;
 
@@ -106,6 +108,7 @@ const RescheduleService = () => {
         action: "Reschedule Service",
         label: "Reschedule",
       });
+      action({ event: "reschedule_slot", action: "Reschedule Service" });
     } else if (isDateRangeType) {
       if (!selectedSlotsValue.length || bookingValue?.bookingId === undefined) return;
       rescheduleBookingMutation({
@@ -119,6 +122,7 @@ const RescheduleService = () => {
         action: "Reschedule Service",
         label: "Reschedule",
       });
+      action({ event: "reschedule_slot", action: "Reschedule Service" });
     } else if (isEventType) {
       if (!selectedSlotsValue.length || bookingValue?.bookingId === undefined) return;
       rescheduleBookingMutation({
@@ -132,6 +136,7 @@ const RescheduleService = () => {
         action: "Reschedule Service",
         label: "Reschedule",
       });
+      action({ event: "reschedule_slot", action: "Reschedule Service" });
     }
   };
 

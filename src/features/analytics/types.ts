@@ -12,3 +12,15 @@ export interface GoogleAnalyticsEvent {
   label?: string;
   value?: number;
 }
+
+export interface UseGTMReturn {
+  init: (trackingId: string) => void;
+  action: (event: GoogleTagManagerEvent) => void;
+}
+
+export type UseGTM = () => UseGTMReturn;
+
+export interface GoogleTagManagerEvent {
+  [key: string]: unknown;
+  event: string;
+}

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Typography } from "components/Typography";
 import { Row } from "components/layout/Row";
 import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
+import { GTMContext } from "features/analytics/contexts/GTMContext";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { hoursSystemAtom } from "state/atoms";
 import styled, { css } from "styled-components";
@@ -33,6 +34,7 @@ export const HoursSystem = () => {
   const hoursSystem = useRecoilValue(hoursSystemAtom);
   const setHoursSystem = useSetRecoilState(hoursSystemAtom);
   const { sendEvent } = useContext(AnalyticsContext);
+  const { action } = useContext(GTMContext);
 
   const handleHoursSystemChange = () => {
     const newHoursSystem = hoursSystem === HOURS_SYSTEMS.h12 ? HOURS_SYSTEMS.h24 : HOURS_SYSTEMS.h12;
@@ -42,6 +44,12 @@ export const HoursSystem = () => {
       category: "Hours System",
       action: "Change Hours System",
       label: "Change Hours System",
+      value: newHoursSystem === HOURS_SYSTEMS.h12 ? 12 : 24,
+    });
+
+    action({
+      event: "Hours System",
+      action: "Change Hours System",
       value: newHoursSystem === HOURS_SYSTEMS.h12 ? 12 : 24,
     });
   };
