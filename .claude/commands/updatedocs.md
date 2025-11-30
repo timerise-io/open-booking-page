@@ -9,12 +9,13 @@ This command synchronizes documentation files (README.md, CLAUDE.md) with the ac
 
 ## Project Context
 
-This is a **React Admin Panel** for the Timerise booking system:
-- Frontend SPA built with React 18 + Vite
+This is the **Timerise Open Booking Page** - a public-facing booking widget:
+- Frontend SPA built with React 19 + Vite
 - Apollo Client for GraphQL API consumption
-- Firebase client SDK for authentication
-- Recoil for state management
+- Zustand for state management (primary), Recoil (legacy)
 - styled-components for styling
+- i18next for internationalization
+- Embeddable on websites and applications
 
 ## Usage
 
@@ -30,15 +31,15 @@ This is a **React Admin Panel** for the Timerise booking system:
    - Count React components in `src/components/`
    - Count page components in `src/pages/`
    - Count TypeScript/TSX files
-   - Verify configuration files (vite.config.ts, tsconfig.json, eslint.config.mjs)
-   - Check environment variables from `.env.sample`
+   - Verify configuration files (vite.config.ts, tsconfig.json)
+   - Check environment variables from `.env`
 
 2. **Update README.md** with accurate project information:
-   - **Prerequisites**: Verify Node.js and npm version requirements
+   - **Prerequisites**: Verify Node.js version requirements
    - **Tech Stack**: Update all dependency versions from package.json
    - **Project Structure**: Verify feature module list is complete and accurate
    - **Available Scripts**: Ensure npm scripts match package.json
-   - **Environment Variables**: Verify list matches .env.sample
+   - **Environment Variables**: Verify list matches .env
 
 3. **Update CLAUDE.md** (AI assistant instructions):
    - **Commands section**: Verify scripts match package.json
@@ -92,22 +93,20 @@ find src -name "*.ts" ! -name "*.d.ts" | wc -l
 # Count total TSX files
 find src -name "*.tsx" | wc -l
 
-# Count helper files
-ls src/helpers/*.ts 2>/dev/null | wc -l
-
-# Check constants
-ls src/constants/
+# Check state management
+ls src/state/
+ls src/state/stores/ 2>/dev/null
+ls src/state/atoms/ 2>/dev/null
 ```
 
 ### Feature Detection
 
 Check for implemented features:
 
-- **GraphQL Client**: Check `src/features/api/` for Apollo setup
-- **Authentication**: Check `src/features/auth/` for Firebase auth
-- **State Management**: Check for Recoil atoms/selectors in feature modules
-- **Search**: Check `algoliasearch` in package.json, `src/features/algolia/`
-- **i18n**: Check `i18next` in package.json, `src/i18n.ts`
+- **GraphQL Client**: Check `src/api/apolloClient.ts` for Apollo setup
+- **State Management**: Check `src/state/stores/` (Zustand), `src/state/atoms/` (Recoil legacy)
+- **Analytics**: Check `src/features/analytics/` for Google Analytics (react-ga4)
+- **i18n**: Check `i18next` in package.json, `src/features/i18n/`
 - **Theming**: Check `src/features/theme/`, `src/styles/`
 - **Forms**: Check `formik` and `yup` in package.json
 
@@ -118,8 +117,6 @@ Check for implemented features:
 Update these with actual requirements from package.json engines:
 
 - Node.js version (from `engines.node`)
-- npm version (from `engines.npm`)
-- Firebase project requirement
 
 ### Tech Stack
 
@@ -128,11 +125,11 @@ Update these with actual versions from package.json:
 - **React** - version from dependencies
 - **Vite** - version from devDependencies
 - **Apollo Client** - version from dependencies
-- **Firebase** - version from dependencies
-- **Recoil** - version from dependencies
+- **Zustand** - version from dependencies
 - **styled-components** - version from dependencies
 - **Formik/Yup** - versions from dependencies
 - **React Router** - version from dependencies
+- **i18next** - version from dependencies
 
 ### Available Scripts
 
@@ -141,10 +138,12 @@ Verify all npm scripts match package.json:
 | Command | Description |
 |---------|-------------|
 | `npm start` | Start Vite dev server |
-| `npm run build` | Production build |
-| `npm test` | Run tests with Vitest |
+| `npm run build` | TypeScript + Vite production build |
+| `npm test` | Run Jest tests |
 | `npm run lint` | ESLint + type checking |
+| `npm run check-types` | TypeScript type checking only |
 | `npm run prettier` | Check formatting |
+| `npm run prettier:fix` | Fix formatting |
 
 ### Project Structure
 
@@ -153,37 +152,36 @@ Update the structure tree with actual directories:
 ```
 src/
 ├── features/           # Feature-based modules
-│   ├── api/            # Apollo client setup
-│   ├── auth/           # Firebase authentication
-│   ├── bookings/       # Booking management
-│   ├── services/       # Service configuration
-│   ├── locations/      # Location management
-│   ├── spaces/         # Space management
-│   ├── assets/         # Asset management
-│   ├── team/           # Team member management
-│   ├── project/        # Project settings
-│   ├── billing/        # Billing features
-│   ├── theme/          # Theme provider
-│   └── [others]/       # Additional feature modules
+│   ├── booking/        # Booking management and confirmation
+│   ├── service/        # Service browsing and booking UI
+│   ├── project/        # Project configuration
+│   ├── confirmation/   # Confirmation modals
+│   ├── theme/          # Theme provider (dark/light)
+│   ├── analytics/      # Google Analytics integration
+│   └── i18n/           # Internationalization
 ├── components/         # Shared UI components
 ├── pages/              # Route page components
-├── constants/          # App constants
+├── state/              # State management
+│   ├── stores/         # Zustand stores (primary)
+│   ├── atoms/          # Recoil atoms (legacy)
+│   └── selectors/      # Recoil selectors (legacy)
+├── api/                # Apollo client setup
+├── models/             # TypeScript interfaces
 ├── helpers/            # Utility functions and hooks
 ├── styles/             # Theme definitions
-└── firebase-config/    # Firebase initialization
+└── enums/              # Version constants
 ```
 
 ### Environment Variables
 
-Verify the table matches `.env.sample`:
+Verify the table matches `.env`:
 
 | Variable | Description |
 |----------|-------------|
-| `VITE_TIMERISE_API` | GraphQL API endpoint |
-| `VITE_FIREBASE_*` | Firebase configuration |
-| `VITE_STRIPE_PUBLIC_KEY` | Stripe public key |
-| `VITE_SHOW_BILLING` | Feature flag |
-| `VITE_SHOW_CONNECTION` | Feature flag |
+| `REACT_APP_TIMERISE_API` | GraphQL API endpoint |
+| `REACT_APP_TIMERISE_WS` | WebSocket endpoint for subscriptions |
+| `REACT_APP_TIMERISE_TOOLS_API` | Tools API endpoint |
+| `GENERATE_SOURCEMAP` | Build config for source maps |
 
 ## CLAUDE.md Update Sections
 
@@ -192,10 +190,11 @@ Verify the table matches `.env.sample`:
 Verify all scripts match package.json:
 
 ```bash
-npm start              # Start dev server
-npm run build          # Production build
-npm test               # Run tests
+npm start              # Start dev server (localhost:3000)
+npm run build          # TypeScript + Vite production build
+npm test               # Run Jest tests
 npm run lint           # ESLint + type checking
+npm run check-types    # TypeScript only
 npm run prettier       # Check formatting
 npm run prettier:fix   # Fix formatting
 ```
@@ -204,11 +203,11 @@ npm run prettier:fix   # Fix formatting
 
 Update with actual implementation details:
 
-- **Core Stack**: React, TypeScript, Vite versions
-- **State Management**: Recoil pattern
-- **API**: Apollo Client setup
-- **Authentication**: Firebase Auth providers
-- **Styling**: styled-components theme system
+- **Core Stack**: React 19, TypeScript, Vite
+- **State Management**: Zustand (primary), Recoil (legacy)
+- **API**: Apollo Client with GraphQL, HTTP/WS split links
+- **Styling**: styled-components with theme system
+- **i18n**: i18next with HTTP backend
 
 ### Directory Structure
 
@@ -216,23 +215,26 @@ Verify the structure matches actual directories:
 
 ```
 src/
-├── features/          # Feature-based modules
+├── features/          # Feature-based modules (7 modules)
 ├── components/        # Shared UI components
 ├── pages/             # Route page components
-├── constants/         # App constants
+├── state/             # Zustand stores + Recoil legacy
+├── api/               # Apollo client setup
+├── models/            # TypeScript interfaces
 ├── helpers/           # Utility functions
 ├── styles/            # Theme definitions
-└── firebase-config/   # Firebase initialization
+└── enums/             # Constants
 ```
 
 ### Key Patterns
 
 Verify patterns match actual code:
 
-- **Feature Module Structure**: api/, components/, hooks/, state/, model/
-- **API Hooks**: useTimeriseQuery, useTimeriseMutation
-- **State**: authUserAtom, currentUserAtom
-- **Theming**: appTheme.ts, styled-components theme prop
+- **Service Factory Pattern**: Different UI for DAYS, CALENDAR, LIST, MULTILIST, PREORDER
+- **Zustand Stores**: bookingStore, uiStore, projectStore, filterStore, uploadStore
+- **API Versioning**: V1/V2 via operation context
+- **Lazy Loading**: React.lazy() for page components
+- **Token-based Bookings**: URL tokens for confirmation flows
 
 ## Common Documentation Discrepancies to Fix
 
@@ -256,15 +258,15 @@ Verify patterns match actual code:
 
 ### 4. Environment Variables
 
-**Issue**: Documentation doesn't match .env.sample
-**Check**: `cat .env.sample`
+**Issue**: Documentation doesn't match .env
+**Check**: `cat .env`
 **Fix**: Update environment variables table
 
-### 5. File Path References
+### 5. State Management
 
-**Issue**: Documentation references incorrect file paths
-**Check**: Verify actual file locations
-**Fix**: Update file path references throughout documentation
+**Issue**: Documentation doesn't reflect Zustand migration
+**Check**: `ls src/state/stores/` and `ls src/state/atoms/`
+**Fix**: Document Zustand as primary, Recoil as legacy
 
 ## Analysis Process
 
@@ -276,9 +278,10 @@ Run commands and read files to collect:
 - Feature module list (ls src/features/)
 - Component count (ls src/components/)
 - Page count (ls src/pages/)
+- State stores (ls src/state/stores/)
 - Dependency versions
 - npm scripts
-- Environment variables (.env.sample)
+- Environment variables (.env)
 
 ### Step 2: Compare with Documentation
 
@@ -346,16 +349,20 @@ ls src/pages/*.tsx | wc -l
 find src -name "*.tsx" | wc -l
 find src -name "*.ts" ! -name "*.d.ts" | wc -l
 
-# 6. Check environment variables
-cat .env.sample
+# 6. Check state management
+ls src/state/stores/
+ls src/state/atoms/
 
-# 7. Read current documentation
+# 7. Check environment variables
+cat .env
+
+# 8. Read current documentation
 # (Read README.md, CLAUDE.md)
 
-# 8. Update documentation files
+# 9. Update documentation files
 # (Edit each file with corrections)
 
-# 9. Commit changes
+# 10. Commit changes
 git add README.md CLAUDE.md
 git commit -m "docs: sync documentation with actual codebase state"
 ```
@@ -369,4 +376,5 @@ git commit -m "docs: sync documentation with actual codebase state"
 - When in doubt, check the actual code, not assumptions
 - Pay special attention to npm scripts across all files
 - Verify feature module list is complete
-- Check environment variables match .env.sample
+- Document Zustand as primary state management, Recoil as legacy
+- This is a public booking page, not an admin panel
