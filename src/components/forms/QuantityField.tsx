@@ -37,7 +37,9 @@ const QuantityField: React.FC<QuantityFieldProps> = ({ name, label, maxQuantity 
   const { setValue, setTouched } = helpers;
 
   const maxValue =
-    selectedSlot !== undefined && (maxQuantity ?? 1) > selectedSlot.quantity ? selectedSlot.quantity : maxQuantity ?? 1;
+    selectedSlot !== undefined && (maxQuantity ?? 1) > selectedSlot.quantity
+      ? selectedSlot.quantity
+      : (maxQuantity ?? 1);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;

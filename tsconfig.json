@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
-    "target": "es5",
+    "paths": {
+      "*": [
+        "*"
+      ]
+    },
+    "target": "ES2020",
     "lib": [
       "dom",
       "dom.iterable",
@@ -10,12 +15,12 @@
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
-    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -23,6 +28,7 @@
     "declaration": true,
   },
   "include": [
-    "src"
+    "src",
+    "vite.config.ts"
   ]
 }

@@ -5,7 +5,8 @@ import { convertSourceDateTimeToTargetDateTimeWithHoursSystem } from "helpers/ti
 import { Service } from "models/service";
 import { Slot } from "models/slots";
 import { TimeSlotButtonType } from "models/theme";
-import { TFunction, useTranslation } from "react-i18next";
+import { type TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { selectedSlots } from "state/atoms/selectedSlots";
 import { serviceAtom } from "state/atoms/service";
@@ -172,7 +173,7 @@ const WrapperWithDuration = styled.div`
 const getDurationQuantitySlotContent = (
   slot: Slot,
   date: string,
-  t: TFunction<"translation">,
+  t: TFunction,
   timeZone: string,
   is12HoursSystem: boolean,
   service?: Service,
@@ -218,7 +219,7 @@ const getDurationQuantitySlotContent = (
 const getQuantitySlotContent = (
   slot: Slot,
   date: string,
-  t: TFunction<"translation">,
+  t: TFunction,
   timeZone: string,
   is12HoursSystem: boolean,
   service?: Service,
@@ -252,7 +253,7 @@ const getQuantitySlotContent = (
 const getDurationSlotContent = (
   slot: Slot,
   date: string,
-  t: TFunction<"translation">,
+  t: TFunction,
   timeZone: string,
   is12HoursSystem: boolean,
   service?: Service,

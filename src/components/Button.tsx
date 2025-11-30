@@ -14,7 +14,7 @@ export const Button = styled.button<ButtonProps>`
   box-shadow: rgba(0, 0, 0, 0.28) 0px 1px 2px;
   ${({ theme, buttonType, disabled }) => {
     const colors = theme.colorSchemas.button[buttonType];
-    const textColor = disabled ? colors.textDisabled ?? colors.text : colors.text;
+    const textColor = disabled ? (colors.textDisabled ?? colors.text) : colors.text;
 
     const border = colors.border ?? "unset";
 

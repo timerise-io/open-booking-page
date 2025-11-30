@@ -29,7 +29,7 @@ export const useUploadFile = (fieldId: string) => {
 
     axios
       .post<{ filePath: string }>(
-        `${process.env.REACT_APP_TIMERISE_TOOLS_API}/upload?extension=${fileToUploadExtension}&projectId=${service.project.projectId}`,
+        `${import.meta.env.REACT_APP_TIMERISE_TOOLS_API}/upload?extension=${fileToUploadExtension}&projectId=${service.project.projectId}`,
         fileToUpload,
         {
           headers: {

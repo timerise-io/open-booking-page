@@ -14,7 +14,7 @@ import { bookingAtom } from "state/atoms/booking";
 import { serviceAtom } from "state/atoms/service";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import styled from "styled-components";
-import { IconCalendarEvent } from "@tabler/icons";
+import { IconCalendarEvent } from "@tabler/icons-react";
 import { StyledRow } from "./BookingCardSummary.styled";
 
 const StyledImg = styled.img`

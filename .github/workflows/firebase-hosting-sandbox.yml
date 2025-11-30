@@ -10,8 +10,15 @@ jobs:
       REACT_APP_TIMERISE_WS: "${{ secrets.SANDBOX_REACT_APP_TIMERISE_WS }}"
       REACT_APP_TIMERISE_TOOLS_API: "${{ secrets.SANDBOX_REACT_APP_TIMERISE_TOOLS_API }}"
     steps:
-      - uses: actions/checkout@v2
-      - run: npm ci && npm run build
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test -- --watchAll=false
+      - run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"

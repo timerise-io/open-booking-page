@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import { serviceAtom } from "state/atoms/service";
 import styled from "styled-components";
-import { IconChevronRight } from "@tabler/icons";
+import { IconChevronRight } from "@tabler/icons-react";
 
 const Wrapper = styled.div`
   width: 100%;

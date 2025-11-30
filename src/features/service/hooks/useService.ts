@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import addDays from "date-fns/addDays";
+import { addDays } from "date-fns";
 import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { TIMERISE_LOGO_URL } from "helpers/constans";
@@ -13,7 +13,7 @@ import { slotsFiltersAtom } from "state/atoms/slotsFilters";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { slotsFilterSelector } from "state/selectors/slotFilterSelector";
 import { slotsViewConfiguration } from "state/selectors/slotsViewConfiguration";
-import { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import {
   ServiceQueryResult,
   ServiceQueryVariables,
@@ -137,15 +137,15 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
         price: service.price ?? 0,
         promoPrice: service.promoPrice,
         currency: service.currency,
-        locations: (service.locations ?? [{ title: "" }]).map((item) => item.title),
+        locations: (service.locations ?? [{ title: "" }]).map((item: any) => item.title),
         serviceLocations: service.locations,
         hostedBy:
           service.hosts.length > 1
             ? `${service.hosts[0].fullName} +${service.hosts.length - 1}`
-            : service.hosts?.[0]?.fullName ?? "-",
+            : (service.hosts?.[0]?.fullName ?? "-"),
         dateTimeTo: service.dateTimeTo,
         dateTimeFrom: service.dateTimeFrom,
-        images: service.media.map((item) => item.url),
+        images: service.media.map((item: any) => item.url),
         formFields: [...service.formFields],
         viewConfig: {
           bookingStatus: { ...service.viewConfig.bookingStatus },

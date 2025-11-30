@@ -6,7 +6,7 @@ import { createSearchParams, useNavigate, useSearchParams } from "react-router-d
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { selectedSlot } from "state/atoms/selectedSlot";
 import { slotsFiltersAtom } from "state/atoms/slotsFilters";
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
 import { BookDateRangeMutationRespons, BookDateRangeMutationVariables } from "../api/mutations/models";
 import { BOOK_DATE_RANGE } from "../api/mutations/mutations";
 

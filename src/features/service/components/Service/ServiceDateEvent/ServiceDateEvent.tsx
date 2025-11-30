@@ -4,8 +4,6 @@ import { EventsWrapper } from "components/EventsWrapper";
 import { Typography } from "components/Typography";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
-import "react-dates/initialize";
-import "react-dates/lib/css/_datepicker.css";
 import { useTranslation } from "react-i18next";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { selectedSlots } from "state/atoms/selectedSlots";

@@ -1,5 +1,5 @@
 import { BOOKING_FORM_TYPES, Service } from "models/service";
-import { TFunction } from "react-i18next";
+import { type TFunction } from "i18next";
 
 type GetSubmitButtonText = ({
   selectedSlotValue,
@@ -10,7 +10,7 @@ type GetSubmitButtonText = ({
 }: {
   selectedSlotValue: string;
   selectedSlotsValue: string[];
-  t: TFunction<"forms"[]>;
+  t: TFunction;
   serviceConfig: Service["viewConfig"]["days" | "list" | "calendar" | "multiList" | "preorder"];
   service: Service;
 }) => string;

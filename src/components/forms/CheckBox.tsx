@@ -6,7 +6,7 @@ import { Row } from "components/layout/Row";
 import { useField } from "formik";
 import { getUrlFromString } from "helpers/functions";
 import styled, { css } from "styled-components";
-import { IconCheck } from "@tabler/icons";
+import { IconCheck } from "@tabler/icons-react";
 
 const CheckboxInput = styled.input`
   margin: 0 6px 0 0;

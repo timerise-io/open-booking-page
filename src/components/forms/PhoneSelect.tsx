@@ -14,7 +14,7 @@ import { useSearchParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { defaultPhonePrefixSelector } from "state/selectors/defaultPhonePrefix";
 import styled, { css } from "styled-components";
-import { IconChevronDown } from "@tabler/icons";
+import { IconChevronDown } from "@tabler/icons-react";
 
 const countryList = Object.entries(COUNTRY_PHONE_PREFIXES).sort(([aKey], [bKey]) => (aKey < bKey ? -1 : 1));
 
@@ -141,7 +141,7 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({ name, label }) => {
   const [isDefaultSetted, setIsDefaultSetted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const memoizedCallback = useCallback(() => setIsMenuOpen(false), []);
-  useOnClickOutside(ref, memoizedCallback);
+  useOnClickOutside(ref as any, memoizedCallback);
 
   const labelToDisplay = label === undefined ? t("phone-field") : label;
 

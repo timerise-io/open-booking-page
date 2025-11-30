@@ -1,151 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { useMedia } from "helpers/hooks";
 import { parse } from "iso8601-duration";
-import moment from "moment";
-import "moment/locale/cs";
-import "moment/locale/de";
-import "moment/locale/el";
-import "moment/locale/en-gb";
-import "moment/locale/es";
-import "moment/locale/fi";
-import "moment/locale/fr";
-import "moment/locale/hu";
-import "moment/locale/it";
-import "moment/locale/nl";
-import "moment/locale/pl";
-import "moment/locale/pt";
-import "moment/locale/sk";
-import "moment/locale/sv";
-import "moment/locale/tr";
-import "moment/locale/uk";
-import { DateRangePicker } from "react-dates";
-import "react-dates/initialize";
-import "react-dates/lib/css/_datepicker.css";
+import { addDays, format, isAfter, isBefore, isSameDay, parseISO } from "date-fns";
+import { DayPicker, DateRange } from "react-day-picker";
+import "react-day-picker/style.css";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
-import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons";
+import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
 import { DateRangeFooter } from "./components";
 
 const StyledWrapper = styled.div<{ translations: any }>`
   position: relative;
   width: 100%;
 
-  .DateRangePicker {
-    width: 100%;
+  .rdp {
+    --rdp-cell-size: 40px;
+    --rdp-accent-color: ${({ theme }) => theme.colors.primary};
+    --rdp-background-color: ${({ theme }) => theme.colorSchemas.background.primary.color};
+    margin: 0;
   }
 
-  .DayPicker {
-    width: 600px !important;
-
-    ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
-      width: 100% !important;
-    }
-
-    & > div > div {
-      width: 600px !important;
-
-      ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
-        width: 100% !important;
-      }
-    }
+  .rdp-month {
+    background-color: ${({ theme }) => theme.colorSchemas.background.primary.color};
   }
 
-  .DayPicker_transitionContainer {
-    width: 600px !important;
-
-    ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
-      width: 100% !important;
-    }
+  .rdp-day_selected {
+    background-color: var(--rdp-accent-color);
+    color: white;
   }
 
-  .CalendarMonthGrid__horizontal {
-    left 0;
-  }
-
-  .CalendarMonthGrid__vertical {
-
-  }
-
-  .CalendarMonth {
-    padding: 0 16px 0 8px !important;
-
-    ${({ theme }) => {
-      return css`
-        background: ${theme.colorSchemas.background.primary.color};
-      `;
-    }}
-  }
-
-  .CalendarMonthGrid {
-    ${({ theme }) => {
-      return css`
-        background: ${theme.colorSchemas.background.primary.color};
-      `;
-    }}
-  }
-
-  .DayPicker_weekHeaders {
-    .DayPicker_weekHeader {
-      padding: 0 !important;
-      &:nth-child(2) {
-        left: 302px !important;
-      }
-    }
-  }
-
-  .DayPicker__withBorder {
-    all: unset;
-  }
-
-  .DateRangePicker_picker {
-    left: 0px !important;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-
-    ${({ theme }) => {
-      return css`
-        background-color: ${theme.colorSchemas.background.primary.color};
-      `;
-    }}
-
-    ${({ theme }) => theme.mediaBelow(theme.breakpoints.lg)} {
-      left: 0 !important;
-    }
-
-    ${({ theme }) => theme.mediaBelow(theme.breakpoints.sm)} {
-      top: 115px !important;
-    }
-  }
-
-  .DateRangePickerInput {
-    all: unset;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    align-items: stretch;
-    justify-content: space-between;
-
-    .DateInput {
-      &:before {
-        margin-bottom: calc(0.5 * ${({ theme }) => theme.spacing});
-        font-size: ${({ theme }) => theme.typography.label.size};
-        font-weight: ${({ theme }) => theme.typography.label.weight};
-        line-height: ${({ theme }) => theme.typography.label.lineHeight};
-        color: ${({ theme }) => theme.colors.dark};
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        max-width: 100%;
-        width: 0;
-        min-width: 100%;
-        content: "${(props) => props.translations(`end-date`)}";
-      }
-      &:first-child {
-        &:before {
-          content: "${(props) => props.translations(`start-date`)}";
-        }
-      }
-    }
+  .rdp-day_today {
+    font-weight: bold;
   }
 
   .DateInput {
@@ -155,6 +40,7 @@ const StyledWrapper = styled.div<{ translations: any }>`
     min-width: 210px;
     display: flex;
     flex-direction: column;
+    margin-bottom: 10px;
   }
 
   .DateInput_input {
@@ -173,200 +59,29 @@ const StyledWrapper = styled.div<{ translations: any }>`
       padding: calc(1.125 * ${theme.spacing}) calc(1.375 * ${theme.spacing});
 
       &:hover,
-      &.DateInput_input__focused {
-        border-color: ${theme.colorSchemas.input.borderHover};
-      }
-
       &:focus {
         border-color: ${theme.colors.primary};
       }
     `}
   }
 
-  .DateRangePickerInput_arrow {
-    display: none;
+  .DateRangePickerInput {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-bottom: 20px;
   }
-
-  .DayPickerNavigation_button {
-    border: 0;
-  }
-
-  .CalendarDay {
-    border 0;
-    font-weight: 700;
-    font-size: 13px;
-    line-height: 16px;
-  }
-
-  .CalendarDay__default {
-    ${({ theme }) => {
-      return css`
-        background: ${theme.colorSchemas.background.primary.color};
-        color: ${theme.colors.primary};
-      `;
-    }}
-
-    &:hover {
-      border: 0;
-
-      ${({ theme }) => {
-        return css`
-          background: ${theme.colors.primary};
-          color: ${theme.colors.white};
-        `;
-      }}
-    }
-  }
-
-  .CalendarDay__selected {
-    border: 0;
-    ${({ theme }) => {
-      return css`
-        background: ${theme.colors.primary} !important;
-        color: ${theme.colors.white} !important;
-      `;
-    }}
-
-    &:hover, :active {
-      border: 0;
-      ${({ theme }) => {
-        return css`
-          background: ${theme.colors.primary};
-          color: ${theme.colors.white};
-        `;
-      }}
-    }
-  }
-
-  .CalendarDay__selected_span {
-    border: 0;
-    ${({ theme }) => {
-      return css`
-        background: ${theme.colorSchemas.timeSlotButton.selected.background};
-        color: ${theme.colors.primary};
-      `;
-    }}
-
-    &:hover, :active {
-      border: 0;
-      ${({ theme }) => {
-        return css`
-          background: ${theme.colorSchemas.timeSlotButton.selected.backgroundActive};
-          color: ${theme.colors.primary};
-        `;
-      }}
-    }
-  }
-
-  .CalendarDay__selected_start {
-    border-radius: 4px 0px 0px 4px;
-  }
-
-  .CalendarDay__selected_end {
-    border-radius: 0px 4px 4px 0px;
-  }
-
-  .CalendarDay__hovered_span {
-    border: 0;
-    ${({ theme }) => {
-      return css`
-        background: ${theme.colorSchemas.timeSlotButton.selected.background};
-        color: ${theme.colors.primary};
-      `;
-    }}
-
-    &:hover {
-      border: 0;
-      ${({ theme }) => {
-        return css`
-          background: ${theme.colorSchemas.timeSlotButton.selected.backgroundActive};
-          color: ${theme.colors.primary};
-        `;
-      }}
-    }
-  }
-
-  .CalendarDay__blocked_out_of_range,
-  .CalendarDay__blocked_calendar {
-    background: none;
-    ${({ theme }) => {
-      return css`
-        color: ${theme.colors.darkGrey};
-      `;
-    }}
-
-    &:hover, &:active {
-      background: none;
-      ${({ theme }) => {
-        return css`
-          color: ${theme.colors.darkGrey};
-        `;
-      }}
-    }
-  }
-
-  .CalendarMonth_caption {
-    font-weight: 700;
-    font-size: 13px;
-    line-height: 20px;
-    padding-top: 16px;
-    padding-bottom: 32px;
-    ${({ theme }) => {
-      return css`
-        color: ${theme.colors.primary};
-      `;
-    }}
-  }
-
-  .CalendarMonth_table {
-    margin: 13px 0 0;
-  }
-
-  .DayPicker_weekHeader {
-    top: 50px;
-  }
-
-  .DayPicker_weekHeader_ul {
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 20px;
-    ${({ theme }) => {
-      return css`
-        color: ${theme.colors.darkGrey};
-      `;
-    }}
-
-    small {
-      font-size: 13px;
-    }
-  }
-`;
-
-const StyledPrevIcon = styled.div`
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  top: 16px;
-  left: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const StyledNextIcon = styled.div`
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  top: 16px;
-  right: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const StyledDay = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
 
   span {
     font-size: 10px;
@@ -398,147 +113,117 @@ export const DateRangeWrapper: React.FC<Props> = ({
   numberOfMonths = 2,
   startDatePlaceholderText,
   endDatePlaceholderText,
-  hideKeyboardShortcutsPanel = true,
-  monthFormat = "MMMM YYYY",
-  displayFormat = "dddd D MMMM YYYY",
-  weekDayFormat = "dd",
-  verticalSpacing = 6,
-  daySize = 40,
-  transitionDuration = 0,
-  regular = true,
   id,
   handlers,
   additionalData,
 }) => {
   const { t, i18n } = useTranslation(["booking"]);
   const isMobile = useMedia("(max-width: 1200px)");
-  const [dateTimeFrom, setDateTimeFrom] = useState<any | null>(null);
-  const [dateTimeTo, setDateTimeTo] = useState<any | null>(null);
-  const [focusedInput, setFocusedInput] = useState<any | null>(null);
+  const [range, setRange] = useState<DateRange | undefined>();
+  const [isOpen, setIsOpen] = useState(false);
+
   const duration = additionalData.service.viewConfig.calendar.maxRange
     ? parse(additionalData.service.viewConfig.calendar.maxRange).days
     : null;
   const hasQuantity = additionalData.service.viewConfig.calendar.quantity;
   const rangeSelect = additionalData.service.viewConfig.calendar.rangeSelect;
 
-  useEffect(() => {
-    moment.locale(i18n.language);
-  }, [i18n.language]);
-
-  const handleChangeDate = ({ dateTimeFrom, dateTimeTo }: { dateTimeFrom: any; dateTimeTo: any }) => {
-    dateTimeFrom && setDateTimeFrom(dateTimeFrom);
-    dateTimeTo && setDateTimeTo(dateTimeTo);
-
+  const handleSelect = (newRange: DateRange | undefined) => {
+    setRange(newRange);
     handlers.setSelectedDateRange({
-      dateTimeFrom: dateTimeFrom ? dateTimeFrom.toISOString() : null,
-      dateTimeTo: dateTimeTo ? dateTimeTo.toISOString() : null,
+      dateTimeFrom: newRange?.from ? newRange.from.toISOString() : null,
+      dateTimeTo: newRange?.to ? newRange.to.toISOString() : null,
     });
   };
 
-  const handleFocusedInput = (focusedInput: any) => {
-    setFocusedInput(focusedInput);
+  const handleDiscardCalendar = () => {
+    setRange(undefined);
+    setIsOpen(false);
+    handlers.setSelectedDateRange({ dateTimeFrom: null, dateTimeTo: null });
   };
 
   const handleCloseCalendar = () => {
-    setFocusedInput(null);
+    setIsOpen(false);
   };
 
-  const handleDiscardCalendar = () => {
-    setDateTimeFrom(null);
-    setDateTimeTo(null);
-    handleCloseCalendar();
-  };
-
-  const renderDayContents = (day: any) => {
+  const DayContent = (props: any) => {
+    const { date } = props;
     let quantity;
-    additionalData.slots.some((slot: { quantity: any; dateTimeFrom: moment.MomentInput }) => {
-      const isSameDay = moment(slot.dateTimeFrom).format("DD-MM-YYYY") === day.format("DD-MM-YYYY");
-      if (isSameDay) quantity = slot.quantity;
-      return isSameDay;
+    additionalData.slots.some((slot: { quantity: any; dateTimeFrom: string }) => {
+      const slotDate = new Date(slot.dateTimeFrom);
+      const isSame = isSameDay(slotDate, date);
+      if (isSame) quantity = slot.quantity;
+      return isSame;
     });
 
     return (
       <StyledDay>
-        {day.format("D")}
+        {format(date, "d")}
         {hasQuantity && <span>{`${t(`avl`)} ${quantity ?? 0}`}</span>}
       </StyledDay>
     );
   };
 
-  const isDayBlocked = (day: any) => {
-    let isSameDay, quantity;
-
-    const hasSlot = additionalData.slots.some((slot: { quantity: any; dateTimeFrom: moment.MomentInput }) => {
-      isSameDay = moment(slot.dateTimeFrom).format("DD-MM-YYYY") === day.format("DD-MM-YYYY");
+  const isDayDisabled = (date: Date) => {
+    let isSame, quantity;
+    const hasSlot = additionalData.slots.some((slot: { quantity: any; dateTimeFrom: string }) => {
+      const slotDate = new Date(slot.dateTimeFrom);
+      isSame = isSameDay(slotDate, date);
       quantity = slot.quantity;
-      return isSameDay && !!quantity;
+      return isSame && !!quantity;
     });
-
     return !hasSlot;
   };
 
-  const isOutsideRange = (day: { isBefore: (arg0: any) => any; isAfter: (arg0: any) => any }) =>
-    dateTimeFrom &&
-    duration &&
-    rangeSelect &&
-    focusedInput === "endDate" &&
-    (day.isBefore(dateTimeFrom) || day.isAfter(dateTimeFrom.clone().add(duration - 1, "days")));
-
-  const PrevIcon = () => (
-    <StyledPrevIcon>
-      <IconArrowNarrowLeft />
-    </StyledPrevIcon>
-  );
-
-  const NextIcon = () => (
-    <StyledNextIcon>
-      <IconArrowNarrowRight />
-    </StyledNextIcon>
-  );
-
   return (
     <StyledWrapper translations={t}>
-      <DateRangePicker
-        startDate={dateTimeFrom}
-        startDateId={`startDate-${id}`}
-        endDate={dateTimeTo}
-        endDateId={`endDate-${id}`}
-        onDatesChange={({ startDate, endDate }) => handleChangeDate({ dateTimeFrom: startDate, dateTimeTo: endDate })}
-        focusedInput={focusedInput}
-        keepOpenOnDateSelect
-        onFocusChange={handleFocusedInput}
-        numberOfMonths={numberOfMonths}
-        startDatePlaceholderText={startDatePlaceholderText}
-        endDatePlaceholderText={endDatePlaceholderText}
-        hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
-        monthFormat={monthFormat}
-        displayFormat={displayFormat}
-        firstDayOfWeek={1}
-        weekDayFormat={weekDayFormat}
-        noBorder
-        verticalSpacing={verticalSpacing}
-        navPrev={<PrevIcon />}
-        navNext={<NextIcon />}
-        daySize={daySize}
-        transitionDuration={transitionDuration}
-        regular={regular}
-        isOutsideRange={isOutsideRange}
-        orientation={isMobile ? "vertical" : "horizontal"}
-        //withFullScreenPortal
-
-        renderDayContents={renderDayContents}
-        isDayBlocked={isDayBlocked}
-        renderCalendarInfo={() => (
-          <DateRangeFooter
-            duration={duration}
-            handleDiscardCalendar={handleDiscardCalendar}
-            handleCloseCalendar={handleCloseCalendar}
-            dateTimeFrom={dateTimeFrom}
-            dateTimeTo={dateTimeTo}
-            rangeSelect={rangeSelect}
+      <div className="DateRangePickerInput">
+        <div className="DateInput" onClick={() => setIsOpen(true)}>
+          <label>{t("start-date")}</label>
+          <input
+            className="DateInput_input"
+            placeholder={startDatePlaceholderText}
+            value={range?.from ? format(range.from, "dd-MM-yyyy") : ""}
+            readOnly
           />
-        )}
-      />
+        </div>
+        <div className="DateInput" onClick={() => setIsOpen(true)}>
+          <label>{t("end-date")}</label>
+          <input
+            className="DateInput_input"
+            placeholder={endDatePlaceholderText}
+            value={range?.to ? format(range.to, "dd-MM-yyyy") : ""}
+            readOnly
+          />
+        </div>
+      </div>
+
+      {isOpen && (
+        <div>
+          <DayPicker
+            mode="range"
+            selected={range}
+            onSelect={handleSelect}
+            numberOfMonths={isMobile ? 1 : numberOfMonths}
+            disabled={isDayDisabled}
+            components={
+              {
+                DayContent: DayContent,
+              } as any
+            }
+            footer={
+              <DateRangeFooter
+                duration={duration}
+                handleDiscardCalendar={handleDiscardCalendar}
+                handleCloseCalendar={handleCloseCalendar}
+                dateTimeFrom={range?.from}
+                dateTimeTo={range?.to}
+                rangeSelect={rangeSelect}
+              />
+            }
+          />
+        </div>
+      )}
     </StyledWrapper>
   );
 };

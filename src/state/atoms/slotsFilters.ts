@@ -1,4 +1,4 @@
-import formatInTimeZone from "date-fns-tz/formatInTimeZone";
+import { formatInTimeZone } from "date-fns-tz";
 import { atom } from "recoil";
 
 export interface SlotsFiltersAtom {

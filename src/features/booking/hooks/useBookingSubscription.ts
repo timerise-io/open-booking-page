@@ -8,7 +8,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { bookingAtom } from "state/atoms/booking";
 import { LOADERS, loaderAtom } from "state/atoms/loader";
 import { serviceAtom } from "state/atoms/service";
-import { useSubscription } from "@apollo/client";
+import { useSubscription } from "@apollo/client/react";
 import { BookingQueryResult, BookingQueryVariables } from "../api/queries/models";
 import { BOOKING_SUBSCRIPTION } from "../api/subscriptions/booking";
 

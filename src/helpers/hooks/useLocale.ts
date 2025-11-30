@@ -1,4 +1,4 @@
-import { bg, cs, de, el, enGB, es, fi, fr, hu, it, nb, nl, pl, pt, sk, sv, tr, uk } from "date-fns/esm/locale";
+import { bg, cs, de, el, enGB, es, fi, fr, hu, it, nb, nl, pl, pt, sk, sv, tr, uk } from "date-fns/locale";
 import { useRecoilValue } from "recoil";
 import { dateLocaleSelector } from "state/selectors/dateLocale";
 

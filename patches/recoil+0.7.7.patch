@@ -1,0 +1,26 @@
+diff --git a/node_modules/recoil/cjs/index.js b/node_modules/recoil/cjs/index.js
+index 5d1263a..d7696ac 100644
+--- a/node_modules/recoil/cjs/index.js
++++ b/node_modules/recoil/cjs/index.js
+@@ -514,7 +514,7 @@ function currentRendererSupportsUseSyncExternalStore() {
+   /* $FlowFixMe[prop-missing] This workaround was approved as a safer mechanism
+    * to detect if the current renderer supports useSyncExternalStore()
+    * https://fb.workplace.com/groups/reactjs/posts/9558682330846963/ */
+-  react.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
++  react.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED || react.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_OPT_OUT || { ReactCurrentDispatcher: { current: { useSyncExternalStore: true } } };
+   const dispatcher = (_ReactCurrentDispatch = ReactCurrentDispatcher === null || ReactCurrentDispatcher === void 0 ? void 0 : ReactCurrentDispatcher.current) !== null && _ReactCurrentDispatch !== void 0 ? _ReactCurrentDispatch : ReactCurrentOwner.currentDispatcher;
+   const isUseSyncExternalStoreSupported = dispatcher.useSyncExternalStore != null;
+ 
+diff --git a/node_modules/recoil/es/index.js b/node_modules/recoil/es/index.js
+index 0b9060c..1f38224 100644
+--- a/node_modules/recoil/es/index.js
++++ b/node_modules/recoil/es/index.js
+@@ -508,7 +508,7 @@ function currentRendererSupportsUseSyncExternalStore() {
+   /* $FlowFixMe[prop-missing] This workaround was approved as a safer mechanism
+    * to detect if the current renderer supports useSyncExternalStore()
+    * https://fb.workplace.com/groups/reactjs/posts/9558682330846963/ */
+-  react.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
++  react.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED || react.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_OPT_OUT || { ReactCurrentDispatcher: { current: { useSyncExternalStore: true } } };
+   const dispatcher = (_ReactCurrentDispatch = ReactCurrentDispatcher === null || ReactCurrentDispatcher === void 0 ? void 0 : ReactCurrentDispatcher.current) !== null && _ReactCurrentDispatch !== void 0 ? _ReactCurrentDispatch : ReactCurrentOwner.currentDispatcher;
+   const isUseSyncExternalStoreSupported = dispatcher.useSyncExternalStore != null;
+ 

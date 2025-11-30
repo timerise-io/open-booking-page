@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import useOnClickOutside from "helpers/hooks/useOnClickOutside";
 import styled from "styled-components";
-import { IconCheck, IconChevronDown } from "@tabler/icons";
+import { IconCheck, IconChevronDown } from "@tabler/icons-react";
 import { Typography } from "./Typography";
 import { Column } from "./layout/Column";
 import { Row } from "./layout/Row";
@@ -98,7 +98,7 @@ export const Select: React.FC<SelectProps> = ({ label, value, options, onChange 
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const memoizedCallback = useCallback(() => setIsOpen(false), []);
-  useOnClickOutside(ref, memoizedCallback);
+  useOnClickOutside(ref as any, memoizedCallback);
 
   const handleChange = (newSelectedKey: string) => {
     setIsOpen(false);

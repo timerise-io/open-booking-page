@@ -1,6 +1,6 @@
 import { VERSION } from "enums";
 import { useParams } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
 import { CancelBookingMutationResult, CancelBookingMutationVariables } from "../api/mutations/models";
 import { CANCEL_BOOKING } from "../api/mutations/mutations";
 

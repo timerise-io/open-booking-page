@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IconButton } from "components/IconButton";
 import styled, { css } from "styled-components";
-import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
 const MainWrapper = styled.div`
   min-height: inherit;

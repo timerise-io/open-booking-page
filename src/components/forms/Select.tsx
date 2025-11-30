@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import styled, { css } from "styled-components";
-import { IconChevronDown } from "@tabler/icons";
+import { IconChevronDown } from "@tabler/icons-react";
 
 const SelectBase = styled.select`
   margin: 0;

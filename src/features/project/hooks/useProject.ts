@@ -5,7 +5,7 @@ import { Project } from "models/project";
 import { useSetRecoilState } from "recoil";
 import { LOADERS, loaderAtom } from "state/atoms/loader";
 import { projectAtom } from "state/atoms/project";
-import { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import { ProjectVariables } from "../api/queries/models";
 import { GET_PROJECT } from "../api/queries/queries";
 

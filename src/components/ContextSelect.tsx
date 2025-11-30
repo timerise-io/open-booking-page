@@ -5,7 +5,7 @@ import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
 import useOnClickOutside from "helpers/hooks/useOnClickOutside";
 import styled, { css } from "styled-components";
-import { IconCheck, IconChevronDown } from "@tabler/icons";
+import { IconCheck, IconChevronDown } from "@tabler/icons-react";
 
 const SelectWrapper = styled(Column)`
   position: relative;
@@ -177,7 +177,7 @@ export const ContextSelect: React.FC<ContextSelectProps> = ({
     setIsOpen(false);
   }, []);
 
-  useOnClickOutside(ref, memoizedCallback);
+  useOnClickOutside(ref as any, memoizedCallback);
 
   const handleChange = (newSelectedKey: string) => {
     if (typeof value === "string") {

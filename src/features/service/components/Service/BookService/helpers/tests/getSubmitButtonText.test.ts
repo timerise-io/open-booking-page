@@ -24,7 +24,7 @@ describe("getSubmitButtonText", () => {
     const buttonText = getSubmitButtonText({
       selectedSlotValue: "",
       selectedSlotsValue: [],
-      t: tMock,
+      t: tMock as any,
       serviceConfig: serviceConfigMock,
       service: serviceMock,
     });
@@ -37,7 +37,7 @@ describe("getSubmitButtonText", () => {
     const buttonText = getSubmitButtonText({
       selectedSlotValue: "slot1",
       selectedSlotsValue: ["slot1", "slot2"],
-      t: tMock,
+      t: tMock as any,
       serviceConfig: serviceConfigMock,
       service: serviceMock,
     });
@@ -49,7 +49,7 @@ describe("getSubmitButtonText", () => {
     const buttonText = getSubmitButtonText({
       selectedSlotValue: "slot1",
       selectedSlotsValue: [],
-      t: tMock,
+      t: tMock as any,
       serviceConfig: serviceConfigMock,
       service: serviceMock,
     });

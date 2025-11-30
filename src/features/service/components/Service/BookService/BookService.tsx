@@ -14,7 +14,7 @@ import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import _ from "lodash";
 import { FormField, filterFormFields, filterHiddenFields } from "models/formFields";
 import { BOOKING_FORM_TYPES } from "models/service";
-import moment from "moment";
+import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -29,7 +29,7 @@ import { slotsFiltersAtom } from "state/atoms/slotsFilters";
 import { timeZoneAtom } from "state/atoms/timeZone";
 import { uploadAttachmentsAtom } from "state/atoms/uploadAttachments";
 import styled from "styled-components";
-import { IconInfoCircle } from "@tabler/icons";
+import { IconInfoCircle } from "@tabler/icons-react";
 import { BookingServiceFormContent } from "../BookingServiceFormContent/BookingServiceFormContent";
 import { HOURS_SYSTEMS } from "../HoursSystem/enums/HoursSystem.enum";
 import { getSubmitButtonText } from "./helpers";
@@ -119,7 +119,7 @@ const BookService = () => {
 
   const selectedSlot = slots.find((slot) => slot.slotId === selectedSlotsValue[0])!;
 
-  const now = moment().format("YYYY-MM-DDTHH:mm:ss");
+  const now = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
 
   const formattedDate = selectedSlot
     ? convertSourceDateTimeToTargetDateTime({

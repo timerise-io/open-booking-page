@@ -1,14 +1,10 @@
 import { FormField, filterFormFields } from "models/formFields";
-import { TFunction } from "react-i18next";
+import { type TFunction } from "i18next";
 import * as Yup from "yup";
 import { getCustomFieldsValidation } from "./customFields";
 import { getEmailFieldValidation, getPhoneFieldValidation, getStringFieldValidation } from "./systemFields";
 
-export const generateValidationSchema = (
-  t: TFunction<"forms"[]>,
-  formFields: Array<FormField>,
-  isAcceptRequired: boolean,
-) => {
+export const generateValidationSchema = (t: TFunction, formFields: Array<FormField>, isAcceptRequired: boolean) => {
   if (formFields.length === 0) return Yup.object({});
 
   const systemFullName = formFields.find((item) => item.fieldType === "SYSTEM_FULL_NAME");

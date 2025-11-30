@@ -1,13 +1,12 @@
 import { ContextButton } from "components/ContextButton";
 import { Row } from "components/layout/Row";
 import { addMonths } from "date-fns";
-import { addDays, addMinutes, isAfter, isSameDay, set } from "date-fns/esm";
-import isBefore from "date-fns/isBefore";
+import { addDays, addMinutes, isAfter, isSameDay, set, isBefore } from "date-fns";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { serviceAtom } from "state/atoms/service";
 import { slotsFiltersAtom } from "state/atoms/slotsFilters";
 import styled, { css } from "styled-components";
-import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from "@tabler/icons";
+import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from "@tabler/icons-react";
 
 const Wrapper = styled.div`
   width: 100%;

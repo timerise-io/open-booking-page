@@ -78,8 +78,8 @@ const Header: React.FC = () => {
   if (isEmbeddedPage) return null;
   if (isBrandedPage && data === undefined) return <HeaderLoader />;
 
-  const logoUrl = isBrandedPage ? data?.logoUrl : undefined ?? TIMERISE_LOGO_URL;
-  const headerTitle = isBrandedPage ? data?.title : undefined ?? t("solution-name");
+  const logoUrl = (isBrandedPage && data?.logoUrl) || TIMERISE_LOGO_URL;
+  const headerTitle = (isBrandedPage && data?.title) || t("solution-name");
 
   if (location.pathname === "/") {
     return <ErrorHeader />;

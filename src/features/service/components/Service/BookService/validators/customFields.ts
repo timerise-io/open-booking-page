@@ -1,8 +1,8 @@
 import { FormField, FormFieldFileUpload, FormFieldNumber, FormFieldText } from "models/formFields";
-import { TFunction } from "react-i18next";
+import { type TFunction } from "i18next";
 import * as Yup from "yup";
 
-export const getCustomFieldsValidation = (item: FormField, t: TFunction<"forms"[]>) => {
+export const getCustomFieldsValidation = (item: FormField, t: TFunction) => {
   if (item.fieldType === "CHECKBOX") return getCheckBoxCustomFieldsValidation(item, t);
   if (item.fieldType === "NUMBER") return getNumberCustomFieldsValidation(item, t);
   if (item.fieldType === "SELECT") return getSelectCustomFieldsValidation(item, t);
@@ -11,7 +11,7 @@ export const getCustomFieldsValidation = (item: FormField, t: TFunction<"forms"[
   return {};
 };
 
-const getFileUploadValidation = (item: FormFieldFileUpload, t: TFunction<"forms"[]>) => {
+const getFileUploadValidation = (item: FormFieldFileUpload, t: TFunction) => {
   let schema = Yup.string();
 
   if (item.required) {
@@ -23,11 +23,11 @@ const getFileUploadValidation = (item: FormFieldFileUpload, t: TFunction<"forms"
   };
 };
 
-const getCheckBoxCustomFieldsValidation = (item: FormField, t: TFunction<"forms"[]>) => {
+const getCheckBoxCustomFieldsValidation = (item: FormField, t: TFunction) => {
   let schema = Yup.boolean();
 
   if (item.required) {
-    schema = schema.isTrue(t("common:validation.required"));
+    schema = (schema as any).isTrue(t("common:validation.required"));
   }
 
   return {
@@ -35,7 +35,7 @@ const getCheckBoxCustomFieldsValidation = (item: FormField, t: TFunction<"forms"
   };
 };
 
-const getSelectCustomFieldsValidation = (item: FormField, t: TFunction<"forms"[]>) => {
+const getSelectCustomFieldsValidation = (item: FormField, t: TFunction) => {
   let schema = Yup.array();
 
   if (item.required) {
@@ -47,7 +47,7 @@ const getSelectCustomFieldsValidation = (item: FormField, t: TFunction<"forms"[]
   };
 };
 
-const getTextCustomFieldsValidation = (item: FormFieldText, t: TFunction<"forms"[]>) => {
+const getTextCustomFieldsValidation = (item: FormFieldText, t: TFunction) => {
   let schema = Yup.string();
 
   if (item.required) {
@@ -63,7 +63,7 @@ const getTextCustomFieldsValidation = (item: FormFieldText, t: TFunction<"forms"
   };
 };
 
-const getNumberCustomFieldsValidation = (item: FormFieldNumber, t: TFunction<"forms"[]>) => {
+const getNumberCustomFieldsValidation = (item: FormFieldNumber, t: TFunction) => {
   let schema = Yup.number();
 
   if (item.required) {

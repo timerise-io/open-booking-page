@@ -8,7 +8,7 @@ import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
 import { ButtonType } from "models/theme";
 import styled from "styled-components";
-import { IconX } from "@tabler/icons";
+import { IconX } from "@tabler/icons-react";
 
 const Wrapper = styled.div`
   background-color: #00000073;

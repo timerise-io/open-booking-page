@@ -16,7 +16,7 @@ import { bookingAtom } from "state/atoms/booking";
 import { locationAtom } from "state/atoms/location";
 import { serviceAtom } from "state/atoms/service";
 import styled, { css } from "styled-components";
-import { IconCreditCard, IconMapPin, IconUser } from "@tabler/icons";
+import { IconCreditCard, IconMapPin, IconUser } from "@tabler/icons-react";
 
 const StyledMD = styled.div`
   .md-wrapper {
@@ -184,15 +184,20 @@ const ServiceDetails = () => {
       </>
     ) : (
       <StyledMD>
-        <ReactMarkdown className="md-wrapper" rehypePlugins={[rehypeRaw]} children={serviceData.description} />
+        <div className="md-wrapper">
+          <ReactMarkdown rehypePlugins={[rehypeRaw]} children={serviceData.description} />
+        </div>
       </StyledMD>
     );
 
   const locationsOptions =
-    serviceData?.serviceLocations.reduce((acc, { title, locationId }) => {
-      acc[locationId] = title;
-      return acc;
-    }, {} as Record<string, string>) ?? {};
+    serviceData?.serviceLocations.reduce(
+      (acc, { title, locationId }) => {
+        acc[locationId] = title;
+        return acc;
+      },
+      {} as Record<string, string>,
+    ) ?? {};
 
   return (
     <>
