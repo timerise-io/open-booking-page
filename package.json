@@ -2,6 +2,7 @@
   "name": "booking-page",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@apollo/client": "^4.0.9",
     "@tabler/icons-react": "^3.35.0",
@@ -43,19 +44,13 @@
     "start": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext .jsx --ext .js --ext .ts --ext .tsx src && npm run check-types",
+    "lint": "eslint src && npm run check-types",
     "check-types": "tsc",
     "prettier": "prettier --check \"src/**/*.tsx\" \"src/**/*.ts\"",
     "prettier:fix": "prettier --write \"src/**/*.tsx\" \"src/**/*.ts\"",
     "prepare": "husky",
     "test": "jest",
     "postinstall": "patch-package"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -70,6 +65,7 @@
     ]
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.1",
     "@testing-library/dom": "^10.0.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
@@ -82,12 +78,16 @@
     "@types/react-helmet": "^6.1.11",
     "@vitejs/plugin-react": "^5.1.1",
     "env-cmd": "^11.0.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "globals": "^16.5.0",
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
     "patch-package": "^8.0.1",
     "postinstall-postinstall": "^2.1.0",
     "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
+    "typescript-eslint": "^8.48.0",
     "vite": "^7.2.4",
     "vite-tsconfig-paths": "^5.1.4"
   },
