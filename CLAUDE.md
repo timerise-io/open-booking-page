@@ -65,10 +65,10 @@ Uses **i18next** with HTTP backend for translations. Language detection from URL
 
 ## Environment Variables
 
-Prefix with `REACT_APP_` (Vite config maps this prefix):
-- `REACT_APP_TIMERISE_API` - GraphQL API endpoint
-- `REACT_APP_TIMERISE_WS` - WebSocket endpoint for subscriptions
-- `REACT_APP_TIMERISE_TOOLS_API` - Tools API endpoint
+Prefix with `VITE_` (Vite config maps this prefix):
+- `VITE_TIMERISE_API` - GraphQL API endpoint
+- `VITE_TIMERISE_WS` - WebSocket endpoint for subscriptions
+- `VITE_TIMERISE_TOOLS_API` - Tools API endpoint
 - `GENERATE_SOURCEMAP` - Build config for source maps
 
 ## Key Models

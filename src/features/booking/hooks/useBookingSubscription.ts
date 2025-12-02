@@ -15,12 +15,22 @@ export const useBookingSubscription = (bookingId: string) => {
   const setServiceLoader = useUiStore((state) => state.setLoader);
 
   const { loading, data, error } = useSubscription<BookingQueryResult, BookingQueryVariables>(BOOKING_SUBSCRIPTION, {
-    fetchPolicy: "no-cache",
     variables: {
       bookingId,
     },
     context: {
       version: VERSION.V1,
+    },
+    onData: ({ client, data }) => {
+      if (data.data?.booking) {
+        // Update cache directly - propagates to all components
+        const { GET_BOOKING } = require("../api/queries/queries");
+        client.cache.writeQuery({
+          query: GET_BOOKING,
+          variables: { bookingId },
+          data: { booking: data.data.booking },
+        });
+      }
     },
   });
 

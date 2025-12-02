@@ -59,10 +59,10 @@ jobs:
     needs: quality
     runs-on: ubuntu-latest
     env:
-      GENERATE_SOURCEMAP: false
-      REACT_APP_TIMERISE_API: "${{ secrets.SANDBOX_REACT_APP_TIMERISE_API }}"
-      REACT_APP_TIMERISE_WS: "${{ secrets.SANDBOX_REACT_APP_TIMERISE_WS }}"
-      REACT_APP_TIMERISE_TOOLS_API: "${{ secrets.SANDBOX_REACT_APP_TIMERISE_TOOLS_API }}"
+      GENERATE_SOURCEMAP: true
+      VITE_TIMERISE_API: "${{ secrets.SANDBOX_VITE_TIMERISE_API }}"
+      VITE_TIMERISE_WS: "${{ secrets.SANDBOX_VITE_TIMERISE_WS }}"
+      VITE_TIMERISE_TOOLS_API: "${{ secrets.SANDBOX_VITE_TIMERISE_TOOLS_API }}"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -126,7 +126,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: sandbox
-      url: https://booking-timerise-sandbox.web.app
+      url: https://sandbox-booking.timerise.io
     steps:
       - uses: actions/checkout@v4
 
@@ -164,7 +164,7 @@ jobs:
           retry_wait_seconds: 10
           command: |
             curl -f -s -o /dev/null -w "%{http_code}" \
-              "https://booking-timerise-sandbox.web.app/service/E95rBw4j9Thhts2vzY1Y" | grep -q "200"
+              "https://sandbox-booking.timerise.io/service/E95rBw4j9Thhts2vzY1Y" | grep -q "200"
 
       - name: Create deployment summary
         if: success()
@@ -172,7 +172,7 @@ jobs:
           echo "## Deployment Successful ✓" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- **Environment:** Sandbox" >> $GITHUB_STEP_SUMMARY
-          echo "- **URL:** https://booking-timerise-sandbox.web.app" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL:** https://sandbox-booking.timerise.io" >> $GITHUB_STEP_SUMMARY
           echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Deployed by:** ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY

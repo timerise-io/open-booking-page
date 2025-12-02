@@ -11,5 +11,5 @@ export default defineConfig({
         outDir: 'build',
         chunkSizeWarningLimit: 1000,
     },
-    envPrefix: 'REACT_APP_',
+    envPrefix: 'VITE_',
 });

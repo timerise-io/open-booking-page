@@ -178,9 +178,9 @@ Verify the table matches `.env`:
 
 | Variable | Description |
 |----------|-------------|
-| `REACT_APP_TIMERISE_API` | GraphQL API endpoint |
-| `REACT_APP_TIMERISE_WS` | WebSocket endpoint for subscriptions |
-| `REACT_APP_TIMERISE_TOOLS_API` | Tools API endpoint |
+| `VITE_TIMERISE_API` | GraphQL API endpoint |
+| `VITE_TIMERISE_WS` | WebSocket endpoint for subscriptions |
+| `VITE_TIMERISE_TOOLS_API` | Tools API endpoint |
 | `GENERATE_SOURCEMAP` | Build config for source maps |
 
 ## CLAUDE.md Update Sections

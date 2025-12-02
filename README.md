@@ -56,6 +56,10 @@ Builds the app for production to the `build` folder. Runs TypeScript compilation
 
 Requires `.env` file in root directory.
 
+### `npm run preview`
+
+Locally preview the production build.
+
 ### `npm test`
 
 Runs Jest tests.
@@ -76,20 +80,28 @@ Checks code formatting with Prettier.
 
 Fixes code formatting with Prettier.
 
+## Code Quality
+
+This project uses several tools to ensure code quality:
+
+- **Husky**: Runs pre-commit hooks to ensure that linting and type checking pass before committing.
+- **Prettier**: Enforces consistent code formatting.
+- **ESLint**: Catches errors and enforces coding standards.
+
 ## Environment Variables
 
 | Variable | Description |
 |----------|-------------|
-| `REACT_APP_TIMERISE_API` | GraphQL API endpoint |
-| `REACT_APP_TIMERISE_WS` | WebSocket endpoint for subscriptions |
-| `REACT_APP_TIMERISE_TOOLS_API` | Tools API endpoint |
+| `VITE_TIMERISE_API` | GraphQL API endpoint |
+| `VITE_TIMERISE_WS` | WebSocket endpoint for subscriptions |
+| `VITE_TIMERISE_TOOLS_API` | Tools API endpoint |
 | `GENERATE_SOURCEMAP` | Build config for source maps |
 
 ## Project Structure
 
 ```
 src/
-├── features/           # Feature-based modules (7 modules)
+├── features/           # Feature-based modules
 │   ├── analytics/      # Google Analytics integration
 │   ├── booking/        # Booking management and confirmation
 │   ├── confirmation/   # Confirmation modals
@@ -97,10 +109,10 @@ src/
 │   ├── project/        # Project configuration
 │   ├── service/        # Service browsing and booking UI
 │   └── theme/          # Theme provider (dark/light)
-├── components/         # Shared UI components (21 components)
-├── pages/              # Route page components (9 pages)
+├── components/         # Shared UI components
+├── pages/              # Route page components
 ├── state/              # State management
-│   └── stores/         # Zustand stores (6 stores)
+│   └── stores/         # Zustand stores
 ├── api/                # Apollo client setup
 ├── models/             # TypeScript interfaces
 ├── helpers/            # Utility functions and hooks

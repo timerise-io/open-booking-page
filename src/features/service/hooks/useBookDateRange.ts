@@ -31,15 +31,22 @@ export const useBookDateRange = () => {
 
   useEffect(() => {
     if (data?.bookingCreate.bookingId) {
-      navigate(
-        getPath({
-          url: `${PAGES.BOOKING}:query`,
-          params: {
-            id: data.bookingCreate.bookingId,
-            query: `?${createSearchParams(urlSearchParams).toString()}`,
-          },
-        }),
-      );
+      const queryString = createSearchParams(urlSearchParams).toString();
+      const path = queryString
+        ? getPath({
+            url: `${PAGES.BOOKING}:query`,
+            params: {
+              id: data.bookingCreate.bookingId,
+              query: `?${queryString}`,
+            },
+          })
+        : getPath({
+            url: PAGES.BOOKING,
+            params: {
+              id: data.bookingCreate.bookingId,
+            },
+          });
+      navigate(path);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);

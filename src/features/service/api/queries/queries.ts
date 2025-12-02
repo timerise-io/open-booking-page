@@ -342,6 +342,7 @@ export const GET_SERVICE = gql`
 export const GET_SERVICE_SLOTS = gql`
   query GetServiceSlots($serviceId: ID!, $from: DateTime, $to: DateTime, $locations: [ID!]) {
     service(serviceId: $serviceId) {
+      serviceId
       slots(dateTimeTo: $to, dateTimeFrom: $from, slotType: AVAILABLE, locations: $locations) {
         slotId
         quantity

@@ -46,7 +46,8 @@ export const useServiceSlotsState = (serviceId: string) => {
       },
       version: VERSION.V1,
     },
-    fetchPolicy: "no-cache",
+    fetchPolicy: "network-only",
+    nextFetchPolicy: "cache-first",
     variables: {
       serviceId: serviceId,
       from: fetchFrom,
@@ -72,6 +73,8 @@ export const useServiceSlotsState = (serviceId: string) => {
   }, [slotsData, setServiceSlots, setAllSlots]);
 
   useEffect(() => {
+    if ((slotsError as any)?.networkError?.name === "AbortError") return;
+
     if (slotsError || slotsData?.service === null) navigate("/");
   }, [slotsError, navigate, slotsData]);
 
@@ -99,7 +102,8 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
       },
       version: VERSION.V1,
     },
-    fetchPolicy: "no-cache",
+    fetchPolicy: "cache-and-network",
+    nextFetchPolicy: "cache-first",
     variables: {
       serviceId: serviceId,
     },

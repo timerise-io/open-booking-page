@@ -32,15 +32,22 @@ export const useRescheduleBooking = () => {
   useEffect(() => {
     if (data?.bookingReschedule.bookingId) {
       setSelectedSlot("");
-      navigate(
-        getPath({
-          url: `${PAGES.BOOKING}:query`,
-          params: {
-            id: data.bookingReschedule.bookingId,
-            query: `?${createSearchParams(urlSearchParams).toString()}`,
-          },
-        }),
-      );
+      const queryString = createSearchParams(urlSearchParams).toString();
+      const path = queryString
+        ? getPath({
+            url: `${PAGES.BOOKING}:query`,
+            params: {
+              id: data.bookingReschedule.bookingId,
+              query: `?${queryString}`,
+            },
+          })
+        : getPath({
+            url: PAGES.BOOKING,
+            params: {
+              id: data.bookingReschedule.bookingId,
+            },
+          });
+      navigate(path);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);

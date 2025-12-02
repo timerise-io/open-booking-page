@@ -13,6 +13,23 @@ export const useDeleteBooking = () => {
       },
       version: VERSION.V1,
     },
+    update: (cache, { data }) => {
+      if (data?.bookingDelete && id) {
+        // Update booking status in cache
+        cache.modify({
+          id: cache.identify({
+            __typename: "Booking",
+            bookingId: id,
+          }),
+          fields: {
+            status: () => "CANCELED",
+          },
+        });
+        // Evict slots to show returned availability
+        cache.evict({ fieldName: "slots" });
+        cache.gc();
+      }
+    },
   });
 
   const deleteBooking = () => id && bookSlotMutation({ variables: { bookingId: id } });

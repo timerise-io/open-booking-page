@@ -10,6 +10,7 @@ import { GET_PROJECT } from "../api/queries/queries";
 export const useProjectState = (projectId: string) => {
   const isBrandedPage = useIsBrandedPageFlag();
   const { loading, data } = useQuery<{ project: Project }, ProjectVariables>(GET_PROJECT, {
+    fetchPolicy: "cache-first",
     context: {
       headers: {
         "x-api-client-name": "booking-page",

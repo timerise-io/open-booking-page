@@ -14,26 +14,20 @@ export const useBookingState = (bookingId: string) => {
   const setBooking = useBookingStore((state) => state.setBooking);
   const setServiceLoader = useUiStore((state) => state.setLoader);
 
-  const { loading, data, error, startPolling, stopPolling } = useQuery<BookingQueryResult, BookingQueryVariables>(
-    GET_BOOKING,
-    {
-      fetchPolicy: "no-cache",
-      context: {
-        headers: {
-          "x-api-client-name": "booking-page",
-        },
-        version: VERSION.V1,
+  const { loading, data, error, stopPolling } = useQuery<BookingQueryResult, BookingQueryVariables>(GET_BOOKING, {
+    fetchPolicy: "cache-and-network",
+    nextFetchPolicy: "cache-first",
+    pollInterval: 10000,
+    context: {
+      headers: {
+        "x-api-client-name": "booking-page",
       },
-      variables: {
-        bookingId,
-      },
+      version: VERSION.V1,
     },
-  );
-
-  useEffect(() => {
-    startPolling(2000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    variables: {
+      bookingId,
+    },
+  });
 
   useEffect(() => {
     if (data && data.booking) {

@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Migrated from Create React App to Vite build system
+- Updated environment variable prefix from `REACT_APP_` to `VITE_`
+- Enhanced Apollo Client with advanced caching, error handling, and cache persistence
+- Optimized query fetch policies for better performance (cache-first, cache-and-network)
+- Updated GitHub workflows with new production and sandbox URLs
+- Improved navigation to handle empty query strings correctly
+
+### Added
+
+- Apollo Client cache persistence to localStorage with automatic eviction
+- Type policies for normalized caching of services, bookings, and projects
+- Error link for consistent GraphQL error monitoring
+- Cache updates for mutations (booking deletion, creation)
+- Poll interval for booking queries (10s) replacing manual polling
+
+### Fixed
+
+- Default phone prefix now uses country code from service locale instead of hardcoded US
+- Navigation with empty query parameters no longer appends "?" to URLs
+- Slot cache merging to prevent duplicates
+
 ## [1.2.2] - 2025-12-02
 
 ### Changed

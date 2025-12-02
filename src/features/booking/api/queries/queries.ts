@@ -24,6 +24,11 @@ export const GET_BOOKING = gql`
         locationId
         title
       }
+      slots {
+        slotId
+        dateTimeFrom
+        dateTimeTo
+      }
     }
   }
 `;

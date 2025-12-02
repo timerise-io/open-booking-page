@@ -26,20 +26,34 @@ export const useBookSlot = () => {
         },
         version: VERSION.V1,
       },
+      update: (cache, { data }) => {
+        if (data?.bookingCreate.bookingId) {
+          // Evict slots to trigger refetch (availability changed after booking)
+          cache.evict({ fieldName: "slots" });
+          cache.gc();
+        }
+      },
     },
   );
 
   useEffect(() => {
     if (data?.bookingCreate.bookingId) {
-      navigate(
-        getPath({
-          url: `${PAGES.BOOKING}:query`,
-          params: {
-            id: data.bookingCreate.bookingId,
-            query: `?${createSearchParams(urlSearchParams).toString()}`,
-          },
-        }),
-      );
+      const queryString = createSearchParams(urlSearchParams).toString();
+      const path = queryString
+        ? getPath({
+            url: `${PAGES.BOOKING}:query`,
+            params: {
+              id: data.bookingCreate.bookingId,
+              query: `?${queryString}`,
+            },
+          })
+        : getPath({
+            url: PAGES.BOOKING,
+            params: {
+              id: data.bookingCreate.bookingId,
+            },
+          });
+      navigate(path);
     }
   }, [data?.bookingCreate.bookingId, navigate, PAGES, urlSearchParams]);
 
