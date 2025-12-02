@@ -151,18 +151,20 @@ jobs:
             exit 1
           fi
 
+      - name: Debug - List Build Directory
+        run: ls -R build
+
+      - name: Debug - Verify Firebase Access
+        run: firebase projects:list --token "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_SANDBOX }}"
+
       - name: Deploy to Firebase
         id: deploy
-        uses: nick-fields/retry@v3
-        with:
-          timeout_minutes: 10
-          max_attempts: 3
-          retry_wait_seconds: 30
-          command: |
-            firebase deploy \
-              --only hosting:service-app \
-              --project timerise-sandbox \
-              --token "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_SANDBOX }}"
+        run: |
+          firebase deploy \
+            --only hosting:service-app \
+            --project timerise-sandbox \
+            --token "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_SANDBOX }}" \
+            --debug
 
       - name: Health check
         uses: nick-fields/retry@v3
