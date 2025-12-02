@@ -6,16 +6,14 @@ import { getPath } from "helpers/functions";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { useTranslation } from "react-i18next";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { bookingAtom } from "state/atoms/booking";
-import { serviceAtom } from "state/atoms/service";
+import { useBookingStore } from "state/stores";
 
 const BackToServiceButton = () => {
   const { t } = useTranslation(["booking"]);
   const navigate = useNavigate();
   const { PAGES } = useIsEmbeddedPage();
-  const setBooking = useSetRecoilState(bookingAtom);
-  const service = useRecoilValue(serviceAtom);
+  const setBooking = useBookingStore((state) => state.setBooking);
+  const service = useBookingStore((state) => state.service);
   const [searchParams] = useSearchParams();
   const urlSearchParams = Object.fromEntries(searchParams.entries());
   const { sendEvent } = useContext(AnalyticsContext);

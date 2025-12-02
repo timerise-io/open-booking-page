@@ -1,10 +1,9 @@
 import { SkeletonBox } from "components/layout/SkeletonBox";
-import { useRecoilValue } from "recoil";
-import { LOADERS, loaderAtom } from "state/atoms/loader";
+import { LOADERS, useUiStore } from "state/stores";
 import ServiceCalendarWrapper from "./ServiceCalendarWrapper";
 
 const ServiceCalendar = () => {
-  const loading = useRecoilValue(loaderAtom(LOADERS.SERVICE_SLOTS));
+  const loading = useUiStore((state) => state.loaders[LOADERS.SERVICE_SLOTS] ?? true);
 
   if (loading)
     return (

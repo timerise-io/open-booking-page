@@ -8,11 +8,7 @@ import { useLocale } from "helpers/hooks/useLocale";
 import { Booking } from "models/booking";
 import { useTranslation } from "react-i18next";
 import { useParams, useSearchParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { hoursSystemAtom } from "state/atoms";
-import { bookingAtom } from "state/atoms/booking";
-import { serviceAtom } from "state/atoms/service";
-import { timeZoneAtom } from "state/atoms/timeZone";
+import { useBookingStore, useUiStore } from "state/stores";
 import styled from "styled-components";
 import { IconCalendarEvent } from "@tabler/icons-react";
 import { StyledRow } from "./BookingCardSummary.styled";
@@ -40,10 +36,10 @@ const BookingCardTitle = ({
 }: BookingCardTitleProps) => {
   const locale = useLocale();
   const { t } = useTranslation(["booking"]);
-  const timeZone = useRecoilValue(timeZoneAtom);
-  const service = useRecoilValue(serviceAtom)!;
-  const booking = useRecoilValue(bookingAtom);
-  const hoursSystem = useRecoilValue(hoursSystemAtom);
+  const timeZone = useUiStore((state) => state.timeZone);
+  const service = useBookingStore((state) => state.service)!;
+  const booking = useBookingStore((state) => state.booking);
+  const hoursSystem = useUiStore((state) => state.hoursSystem);
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
   const bookingPaymentStatus = booking?.paymentStatus;
   const { paymentStatus } = useParams<{ paymentStatus: string }>();

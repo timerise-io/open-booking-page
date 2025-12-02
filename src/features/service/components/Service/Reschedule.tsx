@@ -9,8 +9,7 @@ import {
 import { useBooking } from "features/booking/hooks/useBooking";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { BOOKING_FORM_TYPES } from "models/service";
-import { useRecoilValue } from "recoil";
-import { serviceAtom } from "state/atoms/service";
+import { useBookingStore } from "state/stores";
 import RescheduleService from "./RescheduleService/RescheduleService";
 import { ServiceDateEvent } from "./ServiceDateEvent";
 import { ServiceDateRange } from "./ServiceDateRange";
@@ -25,7 +24,7 @@ const BookingHook = () => {
 };
 
 const Reschedule = () => {
-  const service = useRecoilValue(serviceAtom);
+  const service = useBookingStore((state) => state.service);
   const serviceType = service?.viewConfig.displayType;
 
   const { isEmbeddedPage } = useIsEmbeddedPage();

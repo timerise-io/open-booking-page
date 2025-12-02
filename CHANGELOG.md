@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- Recoil state management completely removed in favor of Zustand
+- Removed `src/state/atoms/` directory with all Recoil atoms
+- Removed `src/state/selectors/` directory with all Recoil selectors
+- Removed Recoil patch for React 19 compatibility (no longer needed)
+- Removed dependencies: `recoil`, `patch-package`, `postinstall-postinstall`
+
+### Changed
+
+- Completed Recoil to Zustand migration across all 50+ components
+- Created custom hooks to replace complex Recoil selectors
+- Updated migration documentation with completion status
+
 ## [0.2.0] - 2025-11-30
 
 ### Added

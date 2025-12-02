@@ -18,16 +18,7 @@ import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { hoursSystemAtom } from "state/atoms";
-import { locationAtom } from "state/atoms/location";
-import { selectedDateRange } from "state/atoms/selectedDateRange";
-import { selectedSlots } from "state/atoms/selectedSlots";
-import { serviceAtom } from "state/atoms/service";
-import { slotsAtom } from "state/atoms/slots";
-import { slotsFiltersAtom } from "state/atoms/slotsFilters";
-import { timeZoneAtom } from "state/atoms/timeZone";
-import { uploadAttachmentsAtom } from "state/atoms/uploadAttachments";
+import { useBookingStore, useFilterStore, useProjectStore, useUiStore, useUploadStore } from "state/stores";
 import styled from "styled-components";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { BookingServiceFormContent } from "../BookingServiceFormContent/BookingServiceFormContent";
@@ -92,25 +83,25 @@ const BookService = () => {
   const [searchParams] = useSearchParams();
   const locale = useLocale();
   const { t } = useTranslation(["forms"]);
-  const selectedDateRangeValue = useRecoilValue(selectedDateRange);
-  const selectedSlotsValue = useRecoilValue(selectedSlots);
-  const service = useRecoilValue(serviceAtom)!;
+  const selectedDateRangeValue = useBookingStore((state) => state.selectedDateRange);
+  const selectedSlotsValue = useBookingStore((state) => state.selectedSlots);
+  const service = useBookingStore((state) => state.service)!;
   const serviceType = service?.viewConfig.displayType;
   const serviceConfig = service && getServiceConfigByType({ service });
   const { formFields }: { formFields: Array<FormField> } = service ?? {
     formFields: [],
   };
-  const showWarning = useRecoilValue(slotsFiltersAtom).triggerId !== 0;
+  const showWarning = useFilterStore((state) => state.slotsFilters).triggerId !== 0;
   const { bookSlotMutation, loading, error } = useBookSlot();
   const { bookDateRangeMutation, loadingDateRange, errorDateRange } = useBookDateRange();
   const { id } = useParams<{ id: string }>();
-  const uploadState = useRecoilValue(uploadAttachmentsAtom);
-  const timeZone = useRecoilValue(timeZoneAtom);
-  const hoursSystem = useRecoilValue(hoursSystemAtom);
+  const uploadState = useUploadStore((state) => state.uploadAttachments);
+  const timeZone = useUiStore((state) => state.timeZone);
+  const hoursSystem = useUiStore((state) => state.hoursSystem);
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
-  const [, setSelectedSlots] = useRecoilState(selectedSlots);
-  const slots = useRecoilValue(slotsAtom)!;
-  const locations = useRecoilValue(locationAtom);
+  const setSelectedSlots = useBookingStore((state) => state.setSelectedSlots);
+  const slots = useBookingStore((state) => state.slots)!;
+  const locations = useProjectStore((state) => state.location);
   const { sendEvent } = useContext(AnalyticsContext);
 
   const isUploading = Object.values(uploadState).filter((item) => item.isLoading).length > 0;
@@ -222,7 +213,8 @@ const BookService = () => {
           serviceId: id!,
           formFields: json,
           timeZone: timeZone,
-          ...selectedDateRangeValue,
+          dateTimeFrom: selectedDateRangeValue.dateTimeFrom!,
+          dateTimeTo: selectedDateRangeValue.dateTimeTo!,
           ...(service?.paymentProviders.length && {
             paymentProvider: service.paymentProviders[0],
           }),

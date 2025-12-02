@@ -2,8 +2,7 @@ import React, { useContext } from "react";
 import { Typography } from "components/Typography";
 import { Row } from "components/layout/Row";
 import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { hoursSystemAtom } from "state/atoms";
+import { useUiStore } from "state/stores";
 import styled, { css } from "styled-components";
 import { HOURS_SYSTEMS } from "./enums/HoursSystem.enum";
 
@@ -30,8 +29,8 @@ const HoursSystemButton = styled(Typography)<{ isBold: boolean }>`
 `;
 
 export const HoursSystem = () => {
-  const hoursSystem = useRecoilValue(hoursSystemAtom);
-  const setHoursSystem = useSetRecoilState(hoursSystemAtom);
+  const hoursSystem = useUiStore((state) => state.hoursSystem);
+  const setHoursSystem = useUiStore((state) => state.setHoursSystem);
   const { sendEvent } = useContext(AnalyticsContext);
 
   const handleHoursSystemChange = () => {

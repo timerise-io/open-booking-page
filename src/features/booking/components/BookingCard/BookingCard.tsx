@@ -3,8 +3,7 @@ import { Card } from "components/Card";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { SkeletonBox } from "components/layout/SkeletonBox";
-import { useRecoilValue } from "recoil";
-import { bookingAtom } from "state/atoms/booking";
+import { useBookingStore } from "state/stores";
 import BookingCardBottom from "./BookingCardBottom/BookingCardBottom";
 import BookingCardSummary from "./BookingCardSummary/BookingCardSummary";
 import ShortId from "./ShortId";
@@ -29,7 +28,7 @@ const BookingCardLoader = (
 );
 
 const BookingCard = () => {
-  const bookingValue = useRecoilValue(bookingAtom);
+  const bookingValue = useBookingStore((state) => state.booking);
 
   if (bookingValue === undefined) return BookingCardLoader;
 

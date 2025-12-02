@@ -7,12 +7,9 @@ import { Slot } from "models/slots";
 import { TimeSlotButtonType } from "models/theme";
 import { type TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { selectedSlots } from "state/atoms/selectedSlots";
-import { serviceAtom } from "state/atoms/service";
-import { timeZoneAtom } from "state/atoms/timeZone";
-import { slotsViewConfiguration } from "state/selectors/slotsViewConfiguration";
-import { timeSlot } from "state/selectors/timeSlot";
+import { useSlotsViewConfiguration } from "features/service/hooks/useSlotsViewConfiguration";
+import { useTimeSlotByDate } from "state/hooks";
+import { useBookingStore, useUiStore } from "state/stores";
 import styled, { css } from "styled-components";
 
 type TimeSlotButtonState = "available" | "unavailable" | "selected";
@@ -295,13 +292,14 @@ const getDurationSlotContent = (
 };
 
 const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, is12HoursSystem }) => {
-  const slot = useRecoilValue(timeSlot({ from: dateFrom, to: dateTo }));
+  const slot = useTimeSlotByDate(dateFrom, dateTo);
   const slotId = slot?.slotId!;
-  const { showDuration, showQuantity } = useRecoilValue(slotsViewConfiguration);
+  const { showDuration, showQuantity } = useSlotsViewConfiguration();
   const { t } = useTranslation();
-  const timeZone = useRecoilValue(timeZoneAtom);
-  const service = useRecoilValue(serviceAtom)!;
-  const [selectedSlotsValue, setSelectedSlots] = useRecoilState(selectedSlots);
+  const timeZone = useUiStore((state) => state.timeZone);
+  const service = useBookingStore((state) => state.service)!;
+  const selectedSlotsValue = useBookingStore((state) => state.selectedSlots);
+  const setSelectedSlots = useBookingStore((state) => state.setSelectedSlots);
   const selected = selectedSlotsValue.includes(slotId);
 
   const handleSlotClick = () => {

@@ -3,9 +3,7 @@ import { Row } from "components/layout/Row";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { userPreferenceAtom } from "state/atoms/userPreference";
-import { themeSelector } from "state/selectors/theme";
+import { useTheme, useUiStore } from "state/stores";
 import styled, { css } from "styled-components";
 
 const Wrapper = styled(Row)`
@@ -109,8 +107,8 @@ const ErrorFooter = () => {
 const Footer = () => {
   const location = useLocation();
   const { t } = useTranslation();
-  const themeType = useRecoilValue(themeSelector);
-  const setUserPreference = useSetRecoilState(userPreferenceAtom);
+  const themeType = useTheme();
+  const setUserPreference = useUiStore((state) => state.setUserPreference);
   const { isEmbeddedPage } = useIsEmbeddedPage();
 
   if (isEmbeddedPage) return null;

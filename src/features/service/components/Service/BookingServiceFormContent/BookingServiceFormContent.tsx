@@ -1,6 +1,5 @@
 import { Row } from "components/layout/Row";
-import { useRecoilValue } from "recoil";
-import { serviceAtom } from "state/atoms/service";
+import { useBookingStore } from "state/stores";
 import styled from "styled-components";
 import FormComponent from "./FormComponent";
 import { splitFormConfigIntoRows } from "./splitFormConfigIntoRow";
@@ -17,7 +16,7 @@ const FormRow = styled(Row)`
 `;
 
 export const BookingServiceFormContent = () => {
-  const service = useRecoilValue(serviceAtom);
+  const service = useBookingStore((state) => state.service);
   const formFields: any = service?.formFields || {};
 
   if (formFields === undefined || formFields?.length === 0) return null;

@@ -5,10 +5,7 @@ import { Typography } from "components/Typography";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
 import { useTranslation } from "react-i18next";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { selectedDateRange } from "state/atoms/selectedDateRange";
-import { serviceAtom } from "state/atoms/service";
-import { serviceSlotsAtom } from "state/atoms/serviceSlots";
+import { useBookingStore } from "state/stores";
 import styled from "styled-components";
 import TimezoneInfo from "../TimezoneInfo";
 
@@ -31,9 +28,9 @@ const TimezoneStyledRow = styled(Row)`
 
 export const ServiceDateRange = () => {
   const { t } = useTranslation(["booking"]);
-  const service = useRecoilValue(serviceAtom);
-  const slots = useRecoilValue(serviceSlotsAtom);
-  const [, setSelectedDateRange] = useRecoilState(selectedDateRange);
+  const service = useBookingStore((state) => state.service);
+  const slots = useBookingStore((state) => state.serviceSlots);
+  const setSelectedDateRange = useBookingStore((state) => state.setSelectedDateRange);
   const handlers = {
     setSelectedDateRange,
   };

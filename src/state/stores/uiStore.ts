@@ -2,6 +2,15 @@ import { create } from "zustand";
 import { HOURS_SYSTEMS } from "features/service/components/Service/HoursSystem/enums/HoursSystem.enum";
 import { getAllTimezones, TimezoneName } from "countries-and-timezones";
 
+export const LOADERS = {
+  SERVICE: "SERVICE",
+  SERVICE_SLOTS: "SERVICE_SLOTS",
+  SERVICES: "SERVICES",
+  PROJECT: "PROJECT",
+  BOOKING: "BOOKING",
+  BOOK_SERVICE: "BOOK_SERVICE",
+};
+
 const localeUses24HourTime = (langCode: string) => {
   return (new Intl.DateTimeFormat(langCode, {
     hour: "numeric",

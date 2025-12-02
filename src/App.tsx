@@ -8,31 +8,28 @@ import "features/i18n";
 import ThemeWrapper from "features/theme/components/ThemeWrapper";
 import PageSwitcher from "pages/PageSwitcher";
 import { BrowserRouter as Router } from "react-router-dom";
-import { RecoilRoot } from "recoil";
 import GlobalStyles from "styles/GlobalStyles";
 import { ApolloProvider } from "@apollo/client/react";
 import { AppLayoutWrapper } from "./components/layout/AppLayoutWrapper";
 
 function App() {
   return (
-    <RecoilRoot>
-      <AnalyticsWrapper>
-        <Router>
-          <ApolloProvider client={apolloClient}>
-            <ThemeWrapper>
-              <GlobalStyles />
-              <AppLayoutWrapper>
-                <Header />
-                <PageSwitcher>
-                  <StateModal />
-                </PageSwitcher>
-                <Footer />
-              </AppLayoutWrapper>
-            </ThemeWrapper>
-          </ApolloProvider>
-        </Router>
-      </AnalyticsWrapper>
-    </RecoilRoot>
+    <AnalyticsWrapper>
+      <Router>
+        <ApolloProvider client={apolloClient}>
+          <ThemeWrapper>
+            <GlobalStyles />
+            <AppLayoutWrapper>
+              <Header />
+              <PageSwitcher>
+                <StateModal />
+              </PageSwitcher>
+              <Footer />
+            </AppLayoutWrapper>
+          </ThemeWrapper>
+        </ApolloProvider>
+      </Router>
+    </AnalyticsWrapper>
   );
 }
 

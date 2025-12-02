@@ -10,11 +10,8 @@ import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { Booking } from "models/booking";
 import { Service } from "models/service";
 import ReactMarkdown from "react-markdown";
-import { useRecoilState, useRecoilValue } from "recoil";
 import rehypeRaw from "rehype-raw";
-import { bookingAtom } from "state/atoms/booking";
-import { locationAtom } from "state/atoms/location";
-import { serviceAtom } from "state/atoms/service";
+import { useBookingStore, useProjectStore } from "state/stores";
 import styled, { css } from "styled-components";
 import { IconCreditCard, IconMapPin, IconUser } from "@tabler/icons-react";
 
@@ -156,9 +153,10 @@ const LocationDetailsRow: React.FC<LocationDetailsRowProps> = ({
 };
 
 const ServiceDetails = () => {
-  const serviceData = useRecoilValue(serviceAtom);
-  const [location, setLocation] = useRecoilState(locationAtom);
-  const booking = useRecoilValue(bookingAtom);
+  const serviceData = useBookingStore((state) => state.service);
+  const location = useProjectStore((state) => state.location);
+  const setLocation = useProjectStore((state) => state.setLocation);
+  const booking = useBookingStore((state) => state.booking);
 
   useEffect(() => {
     setLocation(serviceData?.serviceLocations[0]?.locationId ?? "");

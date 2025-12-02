@@ -2,8 +2,7 @@ import React from "react";
 import { Typography } from "components/Typography";
 import TimezoneInfo from "features/service/components/Service/TimezoneInfo";
 import { BOOKING_FORM_TYPES } from "models/service";
-import { useRecoilValue } from "recoil";
-import { serviceAtom } from "state/atoms/service";
+import { useBookingStore } from "state/stores";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -14,7 +13,7 @@ const Wrapper = styled.div`
 `;
 
 const ShortId: React.FC<{ shortId: string }> = ({ shortId }) => {
-  const service = useRecoilValue(serviceAtom)!;
+  const service = useBookingStore((state) => state.service)!;
   const showTimezone = service?.viewConfig?.displayType !== BOOKING_FORM_TYPES.PREORDER;
 
   return (

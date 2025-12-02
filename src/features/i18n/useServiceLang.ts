@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { langAtom } from "state/atoms/langAtom";
-import { serviceAtom } from "state/atoms/service";
+import { useBookingStore, useUiStore } from "state/stores";
 import { useLangParam } from "./useLangParam";
 
 const UITranslation = [
@@ -27,8 +25,8 @@ const UITranslation = [
 ];
 
 export const useServiceLang = () => {
-  const serviceLang = useRecoilValue(serviceAtom)?.project.defaultLocale;
-  const setLang = useSetRecoilState(langAtom);
+  const serviceLang = useBookingStore((state) => state.service)?.project.defaultLocale;
+  const setLang = useUiStore((state) => state.setLang);
   const { i18n } = useTranslation();
   const paramLang = useLangParam();
 

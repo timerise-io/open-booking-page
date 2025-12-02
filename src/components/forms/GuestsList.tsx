@@ -8,8 +8,7 @@ import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
 import { useField } from "formik";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
-import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
+import { useBookingStore } from "state/stores";
 import styled from "styled-components";
 
 const StyledColumn = styled(Column)`
@@ -37,7 +36,7 @@ interface GuestsListFieldProps {
 }
 
 const GuestsList: React.FC<GuestsListFieldProps> = ({ name, label, minGuests = 1, maxGuests = 10 }) => {
-  const selectedSlot = useRecoilValue(selectedSlotSelector);
+  const selectedSlot = useBookingStore((state) => state.getSelectedSlotData());
   const { t } = useTranslation(["forms"]);
 
   const guestsLimit: number = maxGuests ? maxGuests - 1 : 0;

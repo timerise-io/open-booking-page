@@ -2,9 +2,7 @@ import { ContextButton } from "components/ContextButton";
 import { Row } from "components/layout/Row";
 import { addMonths } from "date-fns";
 import { addDays, addMinutes, isAfter, isSameDay, set, isBefore } from "date-fns";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { serviceAtom } from "state/atoms/service";
-import { slotsFiltersAtom } from "state/atoms/slotsFilters";
+import { useBookingStore, useFilterStore } from "state/stores";
 import styled, { css } from "styled-components";
 import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from "@tabler/icons-react";
 
@@ -44,8 +42,9 @@ const PaginationButton = styled(ContextButton)`
 const Loader = <Wrapper></Wrapper>;
 
 const ServiceCalendarActionRow = () => {
-  const service = useRecoilValue(serviceAtom);
-  const [serviceFilters, setServiceFilters] = useRecoilState(slotsFiltersAtom);
+  const service = useBookingStore((state) => state.service);
+  const serviceFilters = useFilterStore((state) => state.slotsFilters);
+  const setServiceFilters = useFilterStore((state) => state.setSlotsFilters);
 
   if (service === undefined) {
     return Loader;

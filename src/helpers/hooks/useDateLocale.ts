@@ -1,5 +1,4 @@
-import { selector } from "recoil";
-import { langAtom } from "state/atoms/langAtom";
+import { useUiStore } from "state/stores";
 
 const KEY_TO_LOCALE: Record<string, string> = {
   bg: "bg",
@@ -22,10 +21,7 @@ const KEY_TO_LOCALE: Record<string, string> = {
   nb: "nb",
 };
 
-export const dateLocaleSelector = selector({
-  key: "dateLocaleSelector",
-  get: ({ get }) => {
-    const key = get(langAtom);
-    return KEY_TO_LOCALE[key] ?? "en-gb";
-  },
-});
+export const useDateLocale = () => {
+  const lang = useUiStore((state) => state.lang);
+  return KEY_TO_LOCALE[lang] ?? "en-gb";
+};

@@ -7,8 +7,7 @@ import {
 } from "components/layout/ContentWithDetails";
 import { useService } from "features/service/hooks/useService";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
-import { useRecoilValue } from "recoil";
-import { serviceAtom } from "state/atoms/service";
+import { useBookingStore } from "state/stores";
 import BookService from "./BookService/BookService";
 import ServiceDetails from "./ServiceDetails";
 import { ServiceFactory } from "./ServiceFactory";
@@ -20,7 +19,7 @@ const ServiceHook = () => {
 };
 
 const Service = () => {
-  const serviceData = useRecoilValue(serviceAtom);
+  const serviceData = useBookingStore((state) => state.service);
   const { isEmbeddedPage } = useIsEmbeddedPage();
 
   return (

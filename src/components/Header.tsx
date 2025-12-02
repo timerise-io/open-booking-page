@@ -8,9 +8,7 @@ import { useIsBrandedPageFlag } from "helpers/hooks/useIsBrandedPageFlag";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { headerSelector } from "state/selectors/headerSelector";
-import { themeSelector } from "state/selectors/theme";
+import { useBookingStore, useTheme } from "state/stores";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -60,7 +58,7 @@ const TimeRiseLogo = styled.img`
 `;
 
 const ErrorHeader = () => {
-  const themeType = useRecoilValue(themeSelector);
+  const themeType = useTheme();
   return (
     <ErrorHeaderWrapper>
       <TimeRiseLogo src={footerLogo[themeType]} alt="timerise logo" data-cy="time-rise-footer-logo" />
@@ -70,7 +68,8 @@ const ErrorHeader = () => {
 
 const Header: React.FC = () => {
   const location = useLocation();
-  const data = useRecoilValue(headerSelector);
+  const service = useBookingStore((state) => state.service);
+  const data = service ? { title: service.project.title, logoUrl: service.project.logoUrl } : undefined;
   const isBrandedPage = useIsBrandedPageFlag();
   const { isEmbeddedPage } = useIsEmbeddedPage();
   const { t } = useTranslation();

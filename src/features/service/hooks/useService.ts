@@ -4,15 +4,9 @@ import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { TIMERISE_LOGO_URL } from "helpers/constans";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { LOADERS, loaderAtom } from "state/atoms/loader";
-import { serviceAtom } from "state/atoms/service";
-import { serviceSlotsAtom } from "state/atoms/serviceSlots";
-import { slotsAtom } from "state/atoms/slots";
-import { slotsFiltersAtom } from "state/atoms/slotsFilters";
-import { timeZoneAtom } from "state/atoms/timeZone";
-import { slotsFilterSelector } from "state/selectors/slotFilterSelector";
-import { slotsViewConfiguration } from "state/selectors/slotsViewConfiguration";
+import { useBookingStore, useUiStore, useFilterStore, LOADERS } from "state/stores";
+import { useSlotFilter } from "state/stores";
+import { useSlotsViewConfiguration } from "./useSlotsViewConfiguration";
 import { useQuery } from "@apollo/client/react";
 import {
   ServiceQueryResult,
@@ -23,16 +17,16 @@ import {
 import { GET_SERVICE, GET_SERVICE_SLOTS } from "../api/queries/queries";
 
 export const useServiceSlotsState = (serviceId: string) => {
-  const isServiceLoaded = !!useRecoilValue(serviceAtom);
+  const isServiceLoaded = !!useBookingStore((state) => state.service);
   const navigate = useNavigate();
-  const setServiceSlots = useSetRecoilState(serviceSlotsAtom);
-  const { firstDayDate, fetchDate: fetchFrom, triggerId, locations } = useRecoilValue(slotsFilterSelector);
+  const setServiceSlots = useBookingStore((state) => state.setServiceSlots);
+  const { firstDayDate, fetchDate: fetchFrom, triggerId, locations } = useSlotFilter();
 
-  const { maxDaysPerPage } = useRecoilValue(slotsViewConfiguration);
+  const { maxDaysPerPage } = useSlotsViewConfiguration();
 
-  const setServiceSlotsLoader = useSetRecoilState(loaderAtom(LOADERS.SERVICE_SLOTS));
-  const setSlotsFilter = useSetRecoilState(slotsFiltersAtom);
-  const [, setAllSlots] = useRecoilState(slotsAtom);
+  const setServiceSlotsLoader = useUiStore((state) => state.setLoader);
+  const setSlotsFilter = useFilterStore((state) => state.setSlotsFilters);
+  const setAllSlots = useBookingStore((state) => state.setSlots);
 
   const fetchTo = `${
     addDays(new Date(fetchFrom), maxDaysPerPage - 1)
@@ -82,7 +76,7 @@ export const useServiceSlotsState = (serviceId: string) => {
   }, [slotsError, navigate, slotsData]);
 
   useEffect(() => {
-    setServiceSlotsLoader(slotsLoading);
+    setServiceSlotsLoader(LOADERS.SERVICE_SLOTS, slotsLoading);
     if (fetchFrom !== firstDayDate)
       setSlotsFilter({
         pageSize: 7,
@@ -112,10 +106,11 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
     skip: serviceId === "",
   });
 
-  const setTimeZone = useSetRecoilState(timeZoneAtom);
-  const setService = useSetRecoilState(serviceAtom);
-  const setServiceLoader = useSetRecoilState(loaderAtom(LOADERS.SERVICE));
-  const [slotsFilter, setSlotsFilter] = useRecoilState(slotsFiltersAtom);
+  const setTimeZone = useUiStore((state) => state.setTimeZone);
+  const setService = useBookingStore((state) => state.setService);
+  const setServiceLoader = useUiStore((state) => state.setLoader);
+  const slotsFilter = useFilterStore((state) => state.slotsFilters);
+  const setSlotsFilter = useFilterStore((state) => state.setSlotsFilters);
 
   useEffect(() => {
     if (data && data.service) {
@@ -204,7 +199,7 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
   }, [error, navigate, data]);
 
   useEffect(() => {
-    setServiceLoader(loading);
+    setServiceLoader(LOADERS.SERVICE, loading);
   }, [loading, setServiceLoader]);
 };
 

@@ -1,8 +1,7 @@
 import React from "react";
 import Select from "components/forms/Select";
 import { zonesSelectObject } from "helpers/timeZones";
-import { useRecoilState } from "recoil";
-import { timeZoneAtom } from "state/atoms/timeZone";
+import { useUiStore } from "state/stores";
 import styled from "styled-components";
 
 const SelectWrapper = styled.div`
@@ -18,7 +17,8 @@ const SelectWrapper = styled.div`
 `;
 
 const TimeZoneSelect = () => {
-  const [timeZone, setTimeZone] = useRecoilState(timeZoneAtom);
+  const timeZone = useUiStore((state) => state.timeZone);
+  const setTimeZone = useUiStore((state) => state.setTimeZone);
   return (
     <SelectWrapper>
       <Select

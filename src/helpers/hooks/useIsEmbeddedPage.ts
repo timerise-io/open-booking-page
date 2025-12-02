@@ -1,8 +1,7 @@
 import { getIsEmbeddedPage } from "helpers/functions";
 import { EMBEDDED_PAGES, PAGES as ROUTES } from "pages/constans";
 import { useLocation } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import { userPreferenceAtom } from "state/atoms/userPreference";
+import { useUiStore } from "state/stores";
 
 type UseIsEmbeddedPage = () => {
   isEmbeddedPage: boolean;
@@ -11,7 +10,7 @@ type UseIsEmbeddedPage = () => {
 
 export const useIsEmbeddedPage: UseIsEmbeddedPage = () => {
   const location = useLocation();
-  const setUserPreference = useSetRecoilState(userPreferenceAtom);
+  const setUserPreference = useUiStore((state) => state.setUserPreference);
   const isEmbeddedPage = Boolean(getIsEmbeddedPage(location.pathname));
   const PAGES = isEmbeddedPage ? EMBEDDED_PAGES : ROUTES;
 

@@ -8,8 +8,7 @@ import { Service } from "models/service";
 import { Slot } from "models/slots";
 import { TimeSlotButtonType } from "models/theme";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
-import { hoursSystemAtom } from "state/atoms";
+import { useUiStore } from "state/stores";
 import styled, { css } from "styled-components";
 
 interface EventSlotButtonProps {
@@ -65,7 +64,7 @@ interface Props {
 }
 
 export const EventMultiSlot: React.FC<Props> = ({ targetTimeZone, sourceTimeZone, locale, service, slots }) => {
-  const hoursSystem = useRecoilValue(hoursSystemAtom);
+  const hoursSystem = useUiStore((state) => state.hoursSystem);
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
   const { t } = useTranslation();
 

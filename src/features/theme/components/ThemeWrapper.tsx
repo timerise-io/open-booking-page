@@ -1,6 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { useRecoilValue } from "recoil";
-import { themeSelector } from "state/selectors/theme";
+import { useTheme } from "state/stores";
 import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "styles/appTheme";
 
@@ -10,7 +9,7 @@ const themes = {
 };
 
 const ThemeWrapper: React.FC<PropsWithChildren> = ({ children }) => {
-  const themeMode = useRecoilValue(themeSelector);
+  const themeMode = useTheme();
 
   return <ThemeProvider theme={themes[themeMode]}>{children}</ThemeProvider>;
 };

@@ -5,13 +5,12 @@ import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { useDeleteBooking } from "features/booking/hooks/useDeleteBooking";
 import useConfirmation from "features/confirmation/hooks/useConfirmation";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
-import { bookingAtom } from "state/atoms/booking";
+import { useBookingStore } from "state/stores";
 
 const CancelBookingButton = () => {
   const { t } = useTranslation(["booking"]);
   const deleteBooking = useDeleteBooking();
-  const bookingValue = useRecoilValue(bookingAtom);
+  const bookingValue = useBookingStore((state) => state.booking);
   const { sendEvent } = useContext(AnalyticsContext);
 
   const showConfirmation = useConfirmation({

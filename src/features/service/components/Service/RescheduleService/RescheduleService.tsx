@@ -12,15 +12,7 @@ import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import { BOOKING_FORM_TYPES } from "models/service";
 import { useTranslation } from "react-i18next";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { hoursSystemAtom } from "state/atoms";
-import { bookingAtom } from "state/atoms/booking";
-import { selectedDateRange } from "state/atoms/selectedDateRange";
-import { selectedSlots } from "state/atoms/selectedSlots";
-import { serviceAtom } from "state/atoms/service";
-import { slotsAtom } from "state/atoms/slots";
-import { timeZoneAtom } from "state/atoms/timeZone";
-import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
+import { useBookingStore, useUiStore } from "state/stores";
 import styled from "styled-components";
 import { getSubmitButtonText } from "../BookService/helpers";
 import { HOURS_SYSTEMS } from "../HoursSystem/enums/HoursSystem.enum";
@@ -46,16 +38,16 @@ const StyledButtonsWrapper = styled(Box)`
 const RescheduleService = () => {
   const locale = useLocale();
   const navigate = useNavigate();
-  const bookingValue = useRecoilValue(bookingAtom);
+  const bookingValue = useBookingStore((state) => state.booking);
   const { t } = useTranslation(["forms"]);
-  const selectedDateRangeValue = useRecoilValue(selectedDateRange);
-  const selectedSlotsValue = useRecoilValue(selectedSlots);
-  const service = useRecoilValue(serviceAtom)!;
+  const selectedDateRangeValue = useBookingStore((state) => state.selectedDateRange);
+  const selectedSlotsValue = useBookingStore((state) => state.selectedSlots);
+  const service = useBookingStore((state) => state.service)!;
   const serviceConfig = service && getServiceConfigByType({ service });
-  const slot = useRecoilValue(selectedSlotSelector);
+  const slot = useBookingStore((state) => state.getSelectedSlotData());
   const { rescheduleBookingMutation, loading } = useRescheduleBooking();
-  const timeZone = useRecoilValue(timeZoneAtom);
-  const slots = useRecoilValue(slotsAtom)!;
+  const timeZone = useUiStore((state) => state.timeZone);
+  const slots = useBookingStore((state) => state.slots)!;
   const { PAGES } = useIsEmbeddedPage();
   const [searchParams] = useSearchParams();
   const urlSearchParams = Object.fromEntries(searchParams.entries());
@@ -67,7 +59,7 @@ const RescheduleService = () => {
   const isDateRangeType = serviceType === BOOKING_FORM_TYPES.CALENDAR;
   const isEventType = serviceType === BOOKING_FORM_TYPES.LIST || serviceType === BOOKING_FORM_TYPES.MULTILIST;
 
-  const hoursSystem = useRecoilValue(hoursSystemAtom);
+  const hoursSystem = useUiStore((state) => state.hoursSystem);
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
   const dateFormat = is12HoursSystem ? "iiii dd MMM, h:mm a" : "iiii dd MMM, H:mm";
 

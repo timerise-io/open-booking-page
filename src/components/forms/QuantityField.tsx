@@ -6,8 +6,7 @@ import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { useField } from "formik";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
-import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
+import { useBookingStore } from "state/stores";
 import styled from "styled-components";
 
 const StyledColumn = styled(Column)`
@@ -27,7 +26,7 @@ interface QuantityFieldProps {
 }
 
 const QuantityField: React.FC<QuantityFieldProps> = ({ name, label, maxQuantity = 1 }) => {
-  const selectedSlot = useRecoilValue(selectedSlotSelector);
+  const selectedSlot = useBookingStore((state) => state.getSelectedSlotData());
   const { t } = useTranslation(["forms"]);
   const labelToDisplay = label === undefined ? t(`${name}Field`) : label;
 

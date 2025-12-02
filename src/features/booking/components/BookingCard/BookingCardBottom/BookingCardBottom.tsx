@@ -1,6 +1,5 @@
 import { Row } from "components/layout/Row";
-import { useRecoilValue } from "recoil";
-import { bookingCardViewConfig } from "state/selectors/bookingCardViewConfig";
+import { useBookingCardViewConfig } from "features/booking/hooks/useBookingCardViewConfig";
 import styled, { css } from "styled-components";
 import BackToServiceButton from "./BackToServiceButton";
 import CancelBookingButton from "./CancelBookingButton";
@@ -21,7 +20,7 @@ const StyledDualButtonWrapper = styled.div<{ showRescheduleButton?: boolean; sho
 `;
 
 const BookingCardBottom = () => {
-  const cardConfig = useRecoilValue(bookingCardViewConfig);
+  const cardConfig = useBookingCardViewConfig();
 
   const {
     cancel: showCancelButton,

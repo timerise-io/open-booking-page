@@ -3,16 +3,15 @@ import { VERSION } from "enums";
 import { getPath } from "helpers/functions";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { selectedSlot } from "state/atoms/selectedSlot";
-import { slotsFiltersAtom } from "state/atoms/slotsFilters";
+import { useBookingStore, useFilterStore } from "state/stores";
 import { useMutation } from "@apollo/client/react";
 import { BookDateRangeMutationRespons, BookDateRangeMutationVariables } from "../api/mutations/models";
 import { BOOK_DATE_RANGE } from "../api/mutations/mutations";
 
 export const useBookDateRange = () => {
-  const [filters, setFilters] = useRecoilState(slotsFiltersAtom);
-  const setSelectedSlot = useSetRecoilState(selectedSlot);
+  const filters = useFilterStore((state) => state.slotsFilters);
+  const setFilters = useFilterStore((state) => state.setSlotsFilters);
+  const setSelectedSlot = useBookingStore((state) => state.setSelectedSlot);
   const navigate = useNavigate();
   const { PAGES } = useIsEmbeddedPage();
   const [searchParams] = useSearchParams();

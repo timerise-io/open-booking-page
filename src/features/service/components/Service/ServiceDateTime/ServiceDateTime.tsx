@@ -6,8 +6,7 @@ import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
-import { slotsDayPattern } from "state/selectors/slotsDayPattern";
+import { useSlotsDayPattern } from "state/stores";
 import styled, { css } from "styled-components";
 import { HoursSystem } from "../HoursSystem";
 import ServiceCalendarActionRow from "../ServiceCalendarActionRow";
@@ -67,7 +66,8 @@ const FULL_HEIGHT_COUNT = 10;
 
 const ServiceDateTime = () => {
   const { t } = useTranslation();
-  const numberOfSlotsPerDay = useRecoilValue(slotsDayPattern).length;
+  const slotsDayPattern = useSlotsDayPattern();
+  const numberOfSlotsPerDay = slotsDayPattern.length;
   const [isFullHeight, setIsFullHeight] = useState(numberOfSlotsPerDay < FULL_HEIGHT_COUNT + 1);
 
   useEffect(() => {

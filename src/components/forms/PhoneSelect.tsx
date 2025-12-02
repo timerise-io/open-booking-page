@@ -11,8 +11,7 @@ import useOnClickOutside from "helpers/hooks/useOnClickOutside";
 import ReactCountryFlag from "react-country-flag";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { defaultPhonePrefixSelector } from "state/selectors/defaultPhonePrefix";
+import { useDefaultPhonePrefix } from "state/stores";
 import styled, { css } from "styled-components";
 import { IconChevronDown } from "@tabler/icons-react";
 
@@ -126,7 +125,7 @@ const ListWrapper = styled.div`
 const PhoneSelect: React.FC<PhoneSelectProps> = ({ name, label }) => {
   const [searchParams] = useSearchParams();
   const paramLang = useLangParam();
-  const serviceDefaultCountryCode = useRecoilValue(defaultPhonePrefixSelector);
+  const serviceDefaultCountryCode = useDefaultPhonePrefix();
   const defaultCountryCode =
     paramLang !== null && paramLang.split("-").length > 1 ? paramLang.split("-")[1] : serviceDefaultCountryCode;
   const [focused, setFocused] = useState(false);

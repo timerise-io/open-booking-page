@@ -7,8 +7,7 @@ import { SkeletonBox } from "components/layout/SkeletonBox";
 import ServiceDetails from "features/service/components/Service/ServiceDetails";
 import ServiceImageCarousel from "features/service/components/Service/ServiceImageCarousel";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
-import { serviceAtom } from "state/atoms/service";
+import { useBookingStore } from "state/stores";
 import styled from "styled-components";
 import { IconChevronRight } from "@tabler/icons-react";
 
@@ -65,7 +64,7 @@ const FullDetailsWrapper = styled(Column)`
 `;
 
 const FullDetails = () => {
-  const serviceData = useRecoilValue(serviceAtom);
+  const serviceData = useBookingStore((state) => state.service);
 
   return (
     <FullDetailsWrapper ai="stretch">
@@ -94,7 +93,7 @@ const StyledIconChevronRight = styled(IconChevronRight)`
 `;
 
 const SmallDetails = () => {
-  const serviceData = useRecoilValue(serviceAtom);
+  const serviceData = useBookingStore((state) => state.service);
   const { t } = useTranslation(["booking"]);
   const [isOpen, setIsOpen] = useState(false);
 
