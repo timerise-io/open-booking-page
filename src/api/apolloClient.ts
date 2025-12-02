@@ -1,10 +1,12 @@
 import { VERSION } from "enums";
+import { GraphQLFormattedError } from "graphql";
 import { createClient } from "graphql-ws";
-import { ApolloClient, HttpLink, InMemoryCache, ApolloLink } from "@apollo/client/core";
+import { Reference } from "@apollo/client/cache";
+import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from "@apollo/client/core";
+import { CombinedGraphQLErrors } from "@apollo/client/errors";
+import { ErrorLink } from "@apollo/client/link/error";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getMainDefinition } from "@apollo/client/utilities";
-import { ErrorLink } from "@apollo/client/link/error";
-import { CombinedGraphQLErrors } from "@apollo/client/errors";
 import { persistCache, restoreCache, shouldEvictCache } from "./cacheConfig";
 
 // Enhanced InMemoryCache with type policies for normalized caching
@@ -40,8 +42,8 @@ const cache = new InMemoryCache({
           merge(existing = [], incoming = [], { readField }) {
             // Merge slots by slotId, avoiding duplicates
             const merged = existing.slice(0);
-            const existingIdSet = new Set(merged.map((slot: any) => readField("slotId", slot)));
-            incoming.forEach((slot: any) => {
+            const existingIdSet = new Set(merged.map((slot: Reference) => readField("slotId", slot)));
+            incoming.forEach((slot: Reference) => {
               const slotId = readField("slotId", slot);
               if (!existingIdSet.has(slotId)) {
                 merged.push(slot);
@@ -83,7 +85,7 @@ if (typeof window !== "undefined") {
 // Error link for monitoring and consistent error handling
 const errorLink = new ErrorLink(({ error, operation }) => {
   if (CombinedGraphQLErrors.is(error)) {
-    error.errors.forEach(({ message }: any) => {
+    error.errors.forEach(({ message }: GraphQLFormattedError) => {
       console.error(`[GraphQL error]: Message: ${message}, Operation: ${operation.operationName}`);
     });
   } else if (error) {

@@ -1,5 +1,5 @@
-import { useBookingStore } from "state/stores";
 import { BOOKING_FORM_TYPES } from "models/service";
+import { useBookingStore } from "state/stores";
 
 export const useSlotsViewConfiguration = () => {
   const service = useBookingStore((state) => state.service);

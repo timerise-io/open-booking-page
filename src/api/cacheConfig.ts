@@ -11,10 +11,13 @@ export const persistCache = (cache: InMemoryCache) => {
     // Filter to only persist stable data (Service and Project)
     const filtered = Object.keys(data)
       .filter((key) => PERSISTABLE_TYPES.some((type) => key.startsWith(type)))
-      .reduce((obj, key) => {
-        obj[key] = data[key];
-        return obj;
-      }, {} as any);
+      .reduce(
+        (obj, key) => {
+          obj[key] = data[key];
+          return obj;
+        },
+        {} as Record<string, unknown>,
+      );
 
     localStorage.setItem(CACHE_KEY, JSON.stringify(filtered));
     localStorage.setItem(`${CACHE_KEY}-timestamp`, Date.now().toString());

@@ -1,8 +1,8 @@
 import React from "react";
 import { Box } from "components/layout/Box";
+import { useBookingCardViewConfig } from "features/booking/hooks/useBookingCardViewConfig";
 import { BOOKING_FORM_TYPES } from "models/service";
 import { useBookingStore } from "state/stores";
-import { useBookingCardViewConfig } from "features/booking/hooks/useBookingCardViewConfig";
 import Space from "../Space";
 import BookingCardContent from "./BookingCardContent";
 import { StyledColumn } from "./BookingCardSummary.styled";

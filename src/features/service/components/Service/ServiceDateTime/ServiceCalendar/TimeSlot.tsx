@@ -1,13 +1,13 @@
 import React from "react";
 import { Typography } from "components/Typography";
 import { Column } from "components/layout/Column";
+import { useSlotsViewConfiguration } from "features/service/hooks/useSlotsViewConfiguration";
 import { convertSourceDateTimeToTargetDateTimeWithHoursSystem } from "helpers/timeFormat";
+import { type TFunction } from "i18next";
 import { Service } from "models/service";
 import { Slot } from "models/slots";
 import { TimeSlotButtonType } from "models/theme";
-import { type TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
-import { useSlotsViewConfiguration } from "features/service/hooks/useSlotsViewConfiguration";
 import { useTimeSlotByDate } from "state/hooks";
 import { useBookingStore, useUiStore } from "state/stores";
 import styled, { css } from "styled-components";

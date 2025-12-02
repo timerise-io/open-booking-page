@@ -1,5 +1,5 @@
-import { BOOKING_FORM_TYPES, Service } from "models/service";
 import { type TFunction } from "i18next";
+import { BOOKING_FORM_TYPES, Service } from "models/service";
 
 type GetSubmitButtonText = ({
   selectedSlotValue,

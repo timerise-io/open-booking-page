@@ -1,5 +1,5 @@
-import { create } from "zustand";
 import { Project } from "models/project";
+import { create } from "zustand";
 
 interface ProjectState {
   project: Project | undefined;

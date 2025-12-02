@@ -1,5 +1,5 @@
-import { FormField, filterFormFields } from "models/formFields";
 import { type TFunction } from "i18next";
+import { FormField, filterFormFields } from "models/formFields";
 import * as Yup from "yup";
 import { getCustomFieldsValidation } from "./customFields";
 import { getEmailFieldValidation, getPhoneFieldValidation, getStringFieldValidation } from "./systemFields";

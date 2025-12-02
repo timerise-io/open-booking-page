@@ -4,9 +4,8 @@ import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { TIMERISE_LOGO_URL } from "helpers/constans";
 import { useNavigate, useParams } from "react-router-dom";
-import { useBookingStore, useUiStore, useFilterStore, LOADERS } from "state/stores";
+import { LOADERS, useBookingStore, useFilterStore, useUiStore } from "state/stores";
 import { useSlotFilter } from "state/stores";
-import { useSlotsViewConfiguration } from "./useSlotsViewConfiguration";
 import { useQuery } from "@apollo/client/react";
 import {
   ServiceQueryResult,
@@ -15,6 +14,7 @@ import {
   ServiceSlotsQueryVariables,
 } from "../api/queries/models";
 import { GET_SERVICE, GET_SERVICE_SLOTS } from "../api/queries/queries";
+import { useSlotsViewConfiguration } from "./useSlotsViewConfiguration";
 
 export const useServiceSlotsState = (serviceId: string) => {
   const isServiceLoaded = !!useBookingStore((state) => state.service);
@@ -73,7 +73,15 @@ export const useServiceSlotsState = (serviceId: string) => {
   }, [slotsData, setServiceSlots, setAllSlots]);
 
   useEffect(() => {
-    if ((slotsError as any)?.networkError?.name === "AbortError") return;
+    if (
+      slotsError &&
+      "networkError" in slotsError &&
+      slotsError.networkError &&
+      typeof slotsError.networkError === "object" &&
+      "name" in slotsError.networkError &&
+      slotsError.networkError.name === "AbortError"
+    )
+      return;
 
     if (slotsError || slotsData?.service === null) navigate("/");
   }, [slotsError, navigate, slotsData]);

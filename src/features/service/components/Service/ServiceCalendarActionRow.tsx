@@ -1,7 +1,7 @@
 import { ContextButton } from "components/ContextButton";
 import { Row } from "components/layout/Row";
 import { addMonths } from "date-fns";
-import { addDays, addMinutes, isAfter, isSameDay, set, isBefore } from "date-fns";
+import { addDays, addMinutes, isAfter, isBefore, isSameDay, set } from "date-fns";
 import { useBookingStore, useFilterStore } from "state/stores";
 import styled, { css } from "styled-components";
 import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from "@tabler/icons-react";

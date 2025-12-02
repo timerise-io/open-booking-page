@@ -1,13 +1,13 @@
-import { useBookingStore } from "./stores/bookingStore";
-import { useUiStore } from "./stores/uiStore";
-import { useProjectStore } from "./stores/projectStore";
-import { useFilterStore } from "./stores/filterStore";
-import { addDays, isAfter, format as formatDate } from "date-fns";
+import { useMemo } from "react";
+import { addDays, format as formatDate, isAfter } from "date-fns";
 import { format } from "date-fns-tz";
 import { getDateInTimezone } from "helpers/timeFormat";
-import { SlotsFilters } from "./stores/filterStore";
 import { Slot } from "models/slots";
-import { useMemo } from "react";
+import { useBookingStore } from "./stores/bookingStore";
+import { useFilterStore } from "./stores/filterStore";
+import { SlotsFilters } from "./stores/filterStore";
+import { useProjectStore } from "./stores/projectStore";
+import { useUiStore } from "./stores/uiStore";
 
 /**
  * Hook for theme selector (depends on service from bookingStore and userPreference from uiStore)

@@ -1,6 +1,6 @@
-import { create } from "zustand";
+import { TimezoneName, getAllTimezones } from "countries-and-timezones";
 import { HOURS_SYSTEMS } from "features/service/components/Service/HoursSystem/enums/HoursSystem.enum";
-import { getAllTimezones, TimezoneName } from "countries-and-timezones";
+import { create } from "zustand";
 
 export const LOADERS = {
   SERVICE: "SERVICE",

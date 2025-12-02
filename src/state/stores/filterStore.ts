@@ -1,5 +1,5 @@
-import { create } from "zustand";
 import { formatInTimeZone } from "date-fns-tz";
+import { create } from "zustand";
 
 export interface SlotsFilters {
   firstDayDate: string;

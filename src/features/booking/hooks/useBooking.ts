@@ -4,7 +4,7 @@ import { useLangParam } from "features/i18n/useLangParam";
 import { useProjectState } from "features/project/hooks/useProject";
 import { useServiceSlotsState, useServiceState } from "features/service/hooks/useService";
 import { useNavigate, useParams } from "react-router-dom";
-import { useBookingStore, useUiStore, LOADERS } from "state/stores";
+import { LOADERS, useBookingStore, useUiStore } from "state/stores";
 import { useQuery } from "@apollo/client/react";
 import { BookingQueryResult, BookingQueryVariables } from "../api/queries/models";
 import { GET_BOOKING } from "../api/queries/queries";

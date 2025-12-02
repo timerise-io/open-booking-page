@@ -1,14 +1,14 @@
 import React, { useState } from "react";
+import { format, isSameDay } from "date-fns";
 import { useMedia } from "helpers/hooks";
 import { parse } from "iso8601-duration";
-import { format, isSameDay } from "date-fns";
-import { DayPicker, DateRange } from "react-day-picker";
+import { Service } from "models/service";
+import { Slot } from "models/slots";
+import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 import { DateRangeFooter } from "./components";
-import { Service } from "models/service";
-import { Slot } from "models/slots";
 
 const StyledWrapper = styled.div`
   position: relative;

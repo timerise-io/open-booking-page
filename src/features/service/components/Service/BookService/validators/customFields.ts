@@ -1,5 +1,5 @@
-import { FormField, FormFieldFileUpload, FormFieldNumber, FormFieldText } from "models/formFields";
 import { type TFunction } from "i18next";
+import { FormField, FormFieldFileUpload, FormFieldNumber, FormFieldText } from "models/formFields";
 import * as Yup from "yup";
 
 export const getCustomFieldsValidation = (item: FormField, t: TFunction) => {

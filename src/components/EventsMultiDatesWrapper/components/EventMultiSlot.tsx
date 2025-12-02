@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from "react";
-import { Locale } from "date-fns";
 import { Typography } from "components/Typography";
 import { Column } from "components/layout/Column";
+import { Locale } from "date-fns";
 import { HOURS_SYSTEMS } from "features/service/components/Service/HoursSystem/enums/HoursSystem.enum";
 import { getDatesValue } from "helpers/functions";
 import { Service } from "models/service";

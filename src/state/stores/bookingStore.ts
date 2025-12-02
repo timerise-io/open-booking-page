@@ -1,9 +1,9 @@
-import { create } from "zustand";
 import { Booking } from "models/booking";
 import { ConfirmationType } from "models/confirmation";
-import { ButtonType } from "models/theme";
-import { Slot } from "models/slots";
 import { Service } from "models/service";
+import { Slot } from "models/slots";
+import { ButtonType } from "models/theme";
+import { create } from "zustand";
 
 interface Confirmation {
   type: ConfirmationType;

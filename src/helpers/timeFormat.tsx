@@ -1,6 +1,6 @@
-import { formatInTimeZone, toZonedTime, fromZonedTime } from "date-fns-tz";
-import { parseISO, Locale } from "date-fns";
 import React from "react";
+import { Locale, parseISO } from "date-fns";
+import { formatInTimeZone, fromZonedTime, toZonedTime } from "date-fns-tz";
 import styled from "styled-components";
 
 export const getDateInTimezone = (isoDate: string) => {

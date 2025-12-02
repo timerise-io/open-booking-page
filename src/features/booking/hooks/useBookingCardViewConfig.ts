@@ -1,5 +1,5 @@
-import { useBookingStore } from "state/stores";
 import { PAYMENT_TYPES } from "models/service";
+import { useBookingStore } from "state/stores";
 
 export const useBookingCardViewConfig = () => {
   const booking = useBookingStore((state) => state.booking);
