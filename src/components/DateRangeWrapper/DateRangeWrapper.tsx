@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useMedia } from "helpers/hooks";
 import { parse } from "iso8601-duration";
-import { addDays, format, isAfter, isBefore, isSameDay, parseISO } from "date-fns";
+import { format, isSameDay } from "date-fns";
 import { DayPicker, DateRange } from "react-day-picker";
 import "react-day-picker/style.css";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
-import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
 import { DateRangeFooter } from "./components";
+import { Service } from "models/service";
+import { Slot } from "models/slots";
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -104,20 +105,22 @@ interface Props {
   regular?: boolean;
   id: string;
   handlers: {
-    setSelectedDateRange: Function;
+    setSelectedDateRange: (range: { dateTimeFrom: string | null; dateTimeTo: string | null }) => void;
   };
-  additionalData: any;
+  additionalData: {
+    service: Service;
+    slots: Slot[];
+  };
 }
 
 export const DateRangeWrapper: React.FC<Props> = ({
   numberOfMonths = 2,
   startDatePlaceholderText,
   endDatePlaceholderText,
-  id,
   handlers,
   additionalData,
 }) => {
-  const { t, i18n } = useTranslation(["booking"]);
+  const { t } = useTranslation(["booking"]);
   const isMobile = useMedia("(max-width: 1200px)");
   const [range, setRange] = useState<DateRange | undefined>();
   const [isOpen, setIsOpen] = useState(false);
@@ -146,10 +149,10 @@ export const DateRangeWrapper: React.FC<Props> = ({
     setIsOpen(false);
   };
 
-  const DayContent = (props: any) => {
+  const DayContent = (props: { date: Date }) => {
     const { date } = props;
-    let quantity;
-    additionalData.slots.some((slot: { quantity: any; dateTimeFrom: string }) => {
+    let quantity: number | undefined;
+    additionalData.slots.some((slot) => {
       const slotDate = new Date(slot.dateTimeFrom);
       const isSame = isSameDay(slotDate, date);
       if (isSame) quantity = slot.quantity;
@@ -165,11 +168,10 @@ export const DateRangeWrapper: React.FC<Props> = ({
   };
 
   const isDayDisabled = (date: Date) => {
-    let isSame, quantity;
-    const hasSlot = additionalData.slots.some((slot: { quantity: any; dateTimeFrom: string }) => {
+    const hasSlot = additionalData.slots.some((slot) => {
       const slotDate = new Date(slot.dateTimeFrom);
-      isSame = isSameDay(slotDate, date);
-      quantity = slot.quantity;
+      const isSame = isSameDay(slotDate, date);
+      const quantity = slot.quantity;
       return isSame && !!quantity;
     });
     return !hasSlot;
@@ -206,11 +208,9 @@ export const DateRangeWrapper: React.FC<Props> = ({
             onSelect={handleSelect}
             numberOfMonths={isMobile ? 1 : numberOfMonths}
             disabled={isDayDisabled}
-            components={
-              {
-                DayContent: DayContent,
-              } as any
-            }
+            components={{
+              DayButton: DayContent as never,
+            }}
             footer={
               <DateRangeFooter
                 duration={duration}

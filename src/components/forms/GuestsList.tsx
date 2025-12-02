@@ -35,7 +35,7 @@ interface GuestsListFieldProps {
   maxGuests?: number | null;
 }
 
-const GuestsList: React.FC<GuestsListFieldProps> = ({ name, label, minGuests = 1, maxGuests = 10 }) => {
+const GuestsList: React.FC<GuestsListFieldProps> = ({ name, label, maxGuests = 10 }) => {
   const selectedSlot = useBookingStore((state) => state.getSelectedSlotData());
   const { t } = useTranslation(["forms"]);
 
@@ -51,17 +51,16 @@ const GuestsList: React.FC<GuestsListFieldProps> = ({ name, label, minGuests = 1
     const index = event.target.getAttribute("data-index");
     const field = event.target.getAttribute("data-field");
     const newValue = event.target.value;
-    let tmpGuests: any[] = guests;
+    const tmpGuests = [...guests];
     if (index && field) {
-      tmpGuests[parseInt(index)][field] = newValue;
+      tmpGuests[parseInt(index)][field as keyof typeof guest] = newValue;
       setGuests(tmpGuests);
       setValue(tmpGuests);
     }
   };
 
   const handleClick = () => {
-    let tmpGuests: any[] = guests;
-    tmpGuests.push(guest);
+    const tmpGuests = [...guests, guest];
     setGuests(tmpGuests);
     setValue(tmpGuests);
   };

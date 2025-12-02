@@ -140,7 +140,7 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({ name, label }) => {
   const [isDefaultSetted, setIsDefaultSetted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const memoizedCallback = useCallback(() => setIsMenuOpen(false), []);
-  useOnClickOutside(ref as any, memoizedCallback);
+  useOnClickOutside(ref, memoizedCallback);
 
   const labelToDisplay = label === undefined ? t("phone-field") : label;
 
@@ -170,7 +170,7 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({ name, label }) => {
     if (!isDefaultSetted) {
       const phoneNumber = searchParams.get("phoneNumber") ?? "";
       inputRef.current.value = phoneNumber;
-      handlePhoneNumberChange({ target: { value: phoneNumber } } as any);
+      handlePhoneNumberChange({ target: { value: phoneNumber } } as ChangeEvent<HTMLInputElement>);
       setIsDefaultSetted(true);
     }
     if (focused === false) return;

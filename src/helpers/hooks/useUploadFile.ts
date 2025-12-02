@@ -36,7 +36,7 @@ export const useUploadFile = (fieldId: string) => {
       .then((response) => {
         setFilePath(response.data.filePath);
       })
-      .catch((err) => {})
+      .catch(() => {})
       .finally(() => {
         setUploadState(fieldId, { isLoading: false });
       });

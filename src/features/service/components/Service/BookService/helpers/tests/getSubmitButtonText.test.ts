@@ -2,12 +2,12 @@ import { Service } from "models/service";
 import { getSubmitButtonText } from "../";
 
 describe("getSubmitButtonText", () => {
-  const tMock = (key: string) => {
+  const tMock = ((key: string) => {
     if (key === "book-free-button") {
       return "Book now";
     }
     return "";
-  };
+  }) as unknown as import("i18next").TFunction;
 
   const serviceMock = {
     title: "Service name",
@@ -24,7 +24,7 @@ describe("getSubmitButtonText", () => {
     const buttonText = getSubmitButtonText({
       selectedSlotValue: "",
       selectedSlotsValue: [],
-      t: tMock as any,
+      t: tMock,
       serviceConfig: serviceConfigMock,
       service: serviceMock,
     });
@@ -37,7 +37,7 @@ describe("getSubmitButtonText", () => {
     const buttonText = getSubmitButtonText({
       selectedSlotValue: "slot1",
       selectedSlotsValue: ["slot1", "slot2"],
-      t: tMock as any,
+      t: tMock,
       serviceConfig: serviceConfigMock,
       service: serviceMock,
     });
@@ -49,7 +49,7 @@ describe("getSubmitButtonText", () => {
     const buttonText = getSubmitButtonText({
       selectedSlotValue: "slot1",
       selectedSlotsValue: [],
-      t: tMock as any,
+      t: tMock,
       serviceConfig: serviceConfigMock,
       service: serviceMock,
     });

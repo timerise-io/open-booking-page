@@ -28,7 +28,7 @@ const TimezoneStyledRow = styled(Row)`
 
 export const ServiceDateRange = () => {
   const { t } = useTranslation(["booking"]);
-  const service = useBookingStore((state) => state.service);
+  const service = useBookingStore((state) => state.service)!;
   const slots = useBookingStore((state) => state.serviceSlots);
   const setSelectedDateRange = useBookingStore((state) => state.setSelectedDateRange);
   const handlers = {

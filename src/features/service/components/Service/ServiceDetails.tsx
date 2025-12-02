@@ -75,7 +75,7 @@ const StyledContextSelect = styled(ContextSelect)`
   width: calc(100% - 20px);
 }`;
 
-const DetailsRow: React.FC<DetailsRowProps> = ({ name, value, icon }) => {
+const DetailsRow: React.FC<DetailsRowProps> = ({ value, icon }) => {
   return (
     <Row $mb={0.5} $w="100%" $jc="flex-start" $ai="flex-start">
       <IconWrapper>{icon}</IconWrapper>

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import InfoBox from "components/InfoBox";
 import { useLocale } from "helpers/hooks/useLocale";
+import { Service } from "models/service";
 import { Slot } from "models/slots";
 import { useTranslation } from "react-i18next";
 import { useBookingStore, useUiStore } from "state/stores";
@@ -14,9 +15,12 @@ const StyledInfoBox = styled.div`
 
 interface Props {
   handlers: {
-    setSelectedSlots: Function;
+    setSelectedSlots: (slotIds: string[]) => void;
   };
-  additionalData: any;
+  additionalData: {
+    service: Service;
+    slots: Slot[];
+  };
 }
 
 export const EventsWrapper: React.FC<Props> = ({ handlers, additionalData }) => {

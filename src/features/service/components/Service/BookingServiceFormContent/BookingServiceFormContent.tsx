@@ -17,7 +17,7 @@ const FormRow = styled(Row)`
 
 export const BookingServiceFormContent = () => {
   const service = useBookingStore((state) => state.service);
-  const formFields: any = service?.formFields || {};
+  const formFields = service?.formFields || [];
 
   if (formFields === undefined || formFields?.length === 0) return null;
 

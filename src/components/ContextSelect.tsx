@@ -173,17 +173,17 @@ export const ContextSelect: React.FC<ContextSelectProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const memoizedCallback = useCallback((event: Event) => {
+  const memoizedCallback = useCallback(() => {
     setIsOpen(false);
   }, []);
 
-  useOnClickOutside(ref as any, memoizedCallback);
+  useOnClickOutside(ref, memoizedCallback);
 
   const handleChange = (newSelectedKey: string) => {
     if (typeof value === "string") {
       setIsOpen(false);
-      onChange && onChange(newSelectedKey);
-      closeAfterChange && setIsOpen(false);
+      onChange?.(newSelectedKey);
+      if (closeAfterChange) setIsOpen(false);
       return;
     }
     //multiselect below
@@ -191,11 +191,11 @@ export const ContextSelect: React.FC<ContextSelectProps> = ({
     if (index > -1) {
       const newValues = [...value];
       newValues.splice(index, 1);
-      onChange && onChange([...newValues]);
+      onChange?.([...newValues]);
     } else {
-      onChange && onChange([...value, newSelectedKey]);
+      onChange?.([...value, newSelectedKey]);
     }
-    closeAfterChange && setIsOpen(false);
+    if (closeAfterChange) setIsOpen(false);
   };
 
   const selectedValue = typeof value === "string" ? options[value] : getMultiValue(value, options);

@@ -40,7 +40,7 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
   padding: 6px 0;
 
   ${({ theme, $state, $showDuration, $showQuantity }) => {
-    const colorSchema = theme.colorSchemas.timeSlotButton[$state] as any;
+    const colorSchema = theme.colorSchemas.timeSlotButton[$state];
 
     return css`
       color: ${colorSchema.text};
@@ -87,7 +87,7 @@ const DummySlotWrapper = styled.div<DummySlotProps>`
   justify-content: center;
 
   ${({ theme, $showDuration, $showQuantity }) => {
-    const colorSchema = theme.colorSchemas.timeSlotButton.unavailable as any;
+    const colorSchema = theme.colorSchemas.timeSlotButton.unavailable;
     return css`
       color: ${colorSchema.text};
       height: ${dummyTimeSlotHeight[`${$showDuration}-${$showQuantity}`] ?? "38px"};
@@ -293,7 +293,7 @@ const getDurationSlotContent = (
 
 const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, is12HoursSystem }) => {
   const slot = useTimeSlotByDate(dateFrom, dateTo);
-  const slotId = slot?.slotId!;
+  const slotId = slot?.slotId ?? "";
   const { showDuration, showQuantity } = useSlotsViewConfiguration();
   const { t } = useTranslation();
   const timeZone = useUiStore((state) => state.timeZone);

@@ -2,7 +2,7 @@ import { useBookingStore } from "./stores/bookingStore";
 import { useUiStore } from "./stores/uiStore";
 import { useProjectStore } from "./stores/projectStore";
 import { useFilterStore } from "./stores/filterStore";
-import { addDays, isAfter, startOfDay, format as formatDate } from "date-fns";
+import { addDays, isAfter, format as formatDate } from "date-fns";
 import { format } from "date-fns-tz";
 import { getDateInTimezone } from "helpers/timeFormat";
 import { SlotsFilters } from "./stores/filterStore";
@@ -100,7 +100,6 @@ export const useSlotsDayPattern = (): DayPattern[] => {
  */
 export const usePageDates = (): string[] => {
   const filters = useFilterStore((state) => state.slotsFilters);
-  const service = useBookingStore((state) => state.service);
 
   return useMemo(() => {
     const startDate = new Date(filters.firstDayDate);
@@ -120,12 +119,10 @@ export const usePageDates = (): string[] => {
  * Hook for default phone prefix based on service location
  */
 export const useDefaultPhonePrefix = (): string => {
-  const service = useBookingStore((state) => state.service);
-
   return useMemo(() => {
     // Default to US prefix if no service data
     return "+1";
-  }, [service]);
+  }, []);
 };
 
 /**

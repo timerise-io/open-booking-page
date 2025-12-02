@@ -132,7 +132,7 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
         price: service.price ?? 0,
         promoPrice: service.promoPrice,
         currency: service.currency,
-        locations: (service.locations ?? [{ title: "" }]).map((item: any) => item.title),
+        locations: (service.locations ?? [{ title: "" }]).map((item: { title: string }) => item.title),
         serviceLocations: service.locations,
         hostedBy:
           service.hosts.length > 1
@@ -140,7 +140,7 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
             : (service.hosts?.[0]?.fullName ?? "-"),
         dateTimeTo: service.dateTimeTo,
         dateTimeFrom: service.dateTimeFrom,
-        images: service.media.map((item: any) => item.url),
+        images: service.media.map((item: { url: string }) => item.url),
         formFields: [...service.formFields],
         viewConfig: {
           bookingStatus: { ...service.viewConfig.bookingStatus },

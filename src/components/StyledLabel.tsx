@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 interface StyledLabelProps {
   htmlFor?: string;
-  children: any;
+  children: React.ReactNode;
 }
 
 const Label = styled.label`
@@ -33,7 +33,7 @@ const StyledLabel: React.FC<StyledLabelProps> = ({ htmlFor, children }) => {
   }, [htmlFor, children]);
 
   return (
-    <Label htmlFor={htmlFor} ref={labelRef} title={isEllipsis ? children : null}>
+    <Label htmlFor={htmlFor} ref={labelRef} title={isEllipsis && typeof children === "string" ? children : undefined}>
       {children}
     </Label>
   );

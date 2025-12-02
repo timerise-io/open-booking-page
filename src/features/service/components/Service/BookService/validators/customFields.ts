@@ -24,10 +24,10 @@ const getFileUploadValidation = (item: FormFieldFileUpload, t: TFunction) => {
 };
 
 const getCheckBoxCustomFieldsValidation = (item: FormField, t: TFunction) => {
-  let schema = Yup.boolean();
+  let schema: Yup.BooleanSchema = Yup.boolean();
 
   if (item.required) {
-    schema = (schema as any).isTrue(t("common:validation.required"));
+    schema = schema.test("is-true", t("common:validation.required"), (value) => value === true);
   }
 
   return {

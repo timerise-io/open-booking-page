@@ -55,10 +55,10 @@ const StyledDoneButton = styled(Button)`
 
 interface Props {
   duration?: number | null | undefined;
-  handleDiscardCalendar: Function;
-  handleCloseCalendar: Function;
-  dateTimeFrom: any;
-  dateTimeTo: any;
+  handleDiscardCalendar: () => void;
+  handleCloseCalendar: () => void;
+  dateTimeFrom: Date | undefined;
+  dateTimeTo: Date | undefined;
   rangeSelect: boolean;
 }
 

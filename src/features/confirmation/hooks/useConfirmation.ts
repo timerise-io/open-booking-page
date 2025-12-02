@@ -4,9 +4,9 @@ import { ButtonType } from "models/theme";
 import { useBookingStore } from "state/stores";
 
 interface UseContextProps {
-  onAbort?: Function;
+  onAbort?: () => void;
   confirmButtonType: ButtonType;
-  onConfirm?: Function;
+  onConfirm?: () => void;
   type: ConfirmationType;
 }
 
@@ -29,11 +29,11 @@ const useConfirmation = ({ onAbort, confirmButtonType, onConfirm, type }: UseCon
     if (isOpen && confirmation?.state === "aborted") {
       setIsOpen(false);
       setConfirmation(undefined);
-      onAbort && onAbort();
+      onAbort?.();
     } else if (isOpen && confirmation?.state === "confirmed") {
       setIsOpen(false);
       setConfirmation(undefined);
-      onConfirm && onConfirm();
+      onConfirm?.();
     }
   }, [confirmation, isOpen, onAbort, onConfirm, setConfirmation]);
 

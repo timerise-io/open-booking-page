@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 
-import { addDays, format, isAfter, isBefore, isSameDay, parseISO, Locale } from "date-fns";
+import { Locale } from "date-fns";
 import { Typography } from "components/Typography";
 import { Column } from "components/layout/Column";
 import { HOURS_SYSTEMS } from "features/service/components/Service/HoursSystem/enums/HoursSystem.enum";
@@ -23,7 +23,7 @@ const EventSlotButton = styled.button<EventSlotButtonProps>`
   height: 100%;
   padding: 16px;
   ${({ theme, $state }) => {
-    const colorSchema = theme.colorSchemas.timeSlotButton[$state] as any;
+    const colorSchema = theme.colorSchemas.timeSlotButton[$state];
 
     return css`
       color: ${colorSchema.text};
@@ -36,7 +36,7 @@ const EventSlotButton = styled.button<EventSlotButtonProps>`
 
   &:hover {
     ${({ theme, $state }) => {
-      const colorSchema = theme.colorSchemas.timeSlotButton[$state] as any;
+      const colorSchema = theme.colorSchemas.timeSlotButton[$state];
       return css`
         background-color: ${colorSchema.backgroundHover};
       `;
@@ -47,7 +47,7 @@ const EventSlotButton = styled.button<EventSlotButtonProps>`
     text-decoration: line-through;
 
     ${({ theme, $state }) => {
-      const colorSchema = theme.colorSchemas.timeSlotButton[$state] as any;
+      const colorSchema = theme.colorSchemas.timeSlotButton[$state];
       return css`
         color: ${colorSchema.text};
       `;
@@ -61,7 +61,7 @@ interface Props {
   dateTimeTo: string;
   quantity: number;
   handlers: {
-    setSelectedSlots: Function;
+    setSelectedSlots: (slotIds: string[]) => void;
   };
   targetTimeZone: string;
   sourceTimeZone: string;

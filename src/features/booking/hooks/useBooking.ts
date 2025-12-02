@@ -61,6 +61,6 @@ export const useBooking = () => {
   const bookingValue = useBookingStore((state) => state.booking);
   const serviceValue = useBookingStore((state) => state.service);
   useServiceState(bookingValue?.service.serviceId ?? "", lang);
-  useServiceSlotsState(serviceValue?.serviceId! ?? "");
+  useServiceSlotsState(serviceValue?.serviceId ?? "");
   useProjectState(serviceValue?.project.projectId ?? "");
 };

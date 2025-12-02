@@ -98,11 +98,11 @@ export const Select: React.FC<SelectProps> = ({ label, value, options, onChange 
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const memoizedCallback = useCallback(() => setIsOpen(false), []);
-  useOnClickOutside(ref as any, memoizedCallback);
+  useOnClickOutside(ref, memoizedCallback);
 
   const handleChange = (newSelectedKey: string) => {
     setIsOpen(false);
-    onChange && onChange(newSelectedKey);
+    onChange?.(newSelectedKey);
   };
 
   return (

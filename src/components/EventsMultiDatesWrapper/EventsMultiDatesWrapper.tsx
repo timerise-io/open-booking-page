@@ -15,7 +15,7 @@ const StyledInfoBox = styled.div`
 
 interface Props {
   handlers: {
-    setSelectedSlots: Function;
+    setSelectedSlots: (slotIds: string[]) => void;
   };
   additionalData: {
     service: Service;

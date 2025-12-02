@@ -146,7 +146,7 @@ const BookService = () => {
     selectedSlotsValue,
   ]);
 
-  const handleSubmit = (value: Record<string, any>) => {
+  const handleSubmit = (value: Record<string, unknown>) => {
     const fullName = _.find(formFields, { fieldType: "SYSTEM_FULL_NAME" });
     const quantity = _.find(formFields, { fieldType: "SYSTEM_SLOT_QUANTITY" });
     const message = _.find(formFields, { fieldType: "SYSTEM_MESSAGE" });
@@ -158,13 +158,13 @@ const BookService = () => {
 
     const customFormFields = filterFormFields(formFields, false).map((item) => {
       return {
-        [item.fieldId]: value[item.fieldId] as any,
+        [item.fieldId]: value[item.fieldId],
       };
     });
 
     const hiddenFields = filterHiddenFields(formFields).map((item) => {
       return {
-        [item.fieldId]: value[item.fieldId] as any,
+        [item.fieldId]: value[item.fieldId],
       };
     });
 

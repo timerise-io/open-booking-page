@@ -51,7 +51,7 @@ const FileUpload = ({ label, accept, fieldId }: FormFieldFileUpload) => {
   };
 
   useEffect(() => {
-    if (!!filePath) {
+    if (filePath) {
       setIsLoading(false);
       setValue(filePath);
     }

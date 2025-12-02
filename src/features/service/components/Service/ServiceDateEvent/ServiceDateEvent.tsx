@@ -34,7 +34,7 @@ const TimezoneHourSystemStyledContainer = styled.div`
 
 export const ServiceDateEvent = () => {
   const { t } = useTranslation(["booking"]);
-  const service = useBookingStore((state) => state.service);
+  const service = useBookingStore((state) => state.service)!;
   const slots = useBookingStore((state) => state.serviceSlots);
   const setSelectedSlots = useBookingStore((state) => state.setSelectedSlots);
   const handlers = {
