@@ -33,7 +33,7 @@ const BookingCard = () => {
   if (bookingValue === undefined) return BookingCardLoader;
 
   return (
-    <Card padding="8px 20px 20px 20px">
+    <Card $padding="8px 20px 20px 20px">
       <ShortId shortId={bookingValue.shortId} />
       <BookingCardSummary dateTimeFrom={bookingValue.dateTimeFrom} dateTimeTo={bookingValue.dateTimeTo} />
       <BookingCardBottom />

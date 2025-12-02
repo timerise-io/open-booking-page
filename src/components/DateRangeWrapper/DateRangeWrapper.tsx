@@ -9,7 +9,7 @@ import styled, { css } from "styled-components";
 import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
 import { DateRangeFooter } from "./components";
 
-const StyledWrapper = styled.div<{ translations: any }>`
+const StyledWrapper = styled.div`
   position: relative;
   width: 100%;
 
@@ -176,7 +176,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
   };
 
   return (
-    <StyledWrapper translations={t}>
+    <StyledWrapper>
       <div className="DateRangePickerInput">
         <div className="DateInput" onClick={() => setIsOpen(true)}>
           <label>{t("start-date")}</label>

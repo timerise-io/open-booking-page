@@ -10,11 +10,11 @@ const Wrapper = styled(Row)`
   padding-top: 20px;
 `;
 
-const StyledDualButtonWrapper = styled.div<{ showRescheduleButton?: boolean; showCancelButton?: boolean }>`
+const StyledDualButtonWrapper = styled.div<{ $showRescheduleButton?: boolean; $showCancelButton?: boolean }>`
   gap: 8px;
-  ${({ showRescheduleButton, showCancelButton }) => {
+  ${({ $showRescheduleButton, $showCancelButton }) => {
     return css`
-      display: ${!!showRescheduleButton || !!showCancelButton ? "flex" : "none"};
+      display: ${!!$showRescheduleButton || !!$showCancelButton ? "flex" : "none"};
     `;
   }}
 `;
@@ -39,7 +39,7 @@ const BookingCardBottom = () => {
       }
     >
       {!!showBackToServiceButton && <BackToServiceButton />}
-      <StyledDualButtonWrapper showRescheduleButton={showRescheduleButton} showCancelButton={showCancelButton}>
+      <StyledDualButtonWrapper $showRescheduleButton={showRescheduleButton} $showCancelButton={showCancelButton}>
         {!!showRescheduleButton && <RescheduleBookingButton />}
         {!!showCancelButton && <CancelBookingButton />}
       </StyledDualButtonWrapper>

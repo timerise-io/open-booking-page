@@ -11,8 +11,8 @@ const MainWrapper = styled.div`
 `;
 
 interface StyledImgProps {
-  index: number;
-  currentIndex: number;
+  $index: number;
+  $currentIndex: number;
 }
 
 const StyledImg = styled.img<StyledImgProps>`
@@ -21,9 +21,9 @@ const StyledImg = styled.img<StyledImgProps>`
   object-fit: cover;
   position: absolute;
 
-  ${({ index, currentIndex }) => {
+  ${({ $index, $currentIndex }) => {
     return css`
-      right: calc(-100% * ${index - currentIndex});
+      right: calc(-100% * ${$index - $currentIndex});
     `;
   }}
 `;
@@ -123,7 +123,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
         </>
       )}
       {images.map((url, index) => {
-        return <StyledImg key={`image-carousel-${index}`} src={url} index={index} currentIndex={currentIndex} />;
+        return <StyledImg key={`image-carousel-${index}`} src={url} $index={index} $currentIndex={currentIndex} />;
       })}
     </MainWrapper>
   );
