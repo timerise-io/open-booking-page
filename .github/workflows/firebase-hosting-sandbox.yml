@@ -151,20 +151,26 @@ jobs:
             exit 1
           fi
 
-      - name: Debug - List Build Directory
-        run: ls -R build
+      - name: Debug - Show Secret
+        run: echo "Secret length:${#SECRET_VAR} Content:${SECRET_VAR}"
+        env:
+          SECRET_VAR: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_SANDBOX }}
 
       - name: Debug - Verify Firebase Access
         run: firebase projects:list --token "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_SANDBOX }}"
 
       - name: Deploy to Firebase
         id: deploy
-        run: |
-          firebase deploy \
-            --only hosting:service-app \
-            --project timerise-sandbox \
-            --token "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_SANDBOX }}" \
-            --debug
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          retry_wait_seconds: 30
+          command: |
+            firebase deploy \
+              --only hosting:service-app \
+              --project timerise-sandbox \
+              --token "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_SANDBOX }}"
 
       - name: Health check
         uses: nick-fields/retry@v3
