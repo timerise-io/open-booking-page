@@ -33,21 +33,11 @@ export const useRescheduleBooking = () => {
     if (data?.bookingReschedule.bookingId) {
       setSelectedSlot("");
       const queryString = createSearchParams(urlSearchParams).toString();
-      const path = queryString
-        ? getPath({
-            url: `${PAGES.BOOKING}:query`,
-            params: {
-              id: data.bookingReschedule.bookingId,
-              query: `?${queryString}`,
-            },
-          })
-        : getPath({
-            url: PAGES.BOOKING,
-            params: {
-              id: data.bookingReschedule.bookingId,
-            },
-          });
-      navigate(path);
+      const path = getPath({
+        url: PAGES.BOOKING_CONFIRMATION,
+        params: { id: data.bookingReschedule.bookingId },
+      });
+      navigate(queryString ? `${path}?${queryString}` : path);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);

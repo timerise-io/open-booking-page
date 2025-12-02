@@ -25,15 +25,12 @@ export const RescheduleBookingButton = () => {
     <ContextButton
       $colorType="primary"
       onClick={() => {
-        navigate(
-          getPath({
-            url: `${PAGES.RESCHEDULE}:query`,
-            params: {
-              id: bookingValue.bookingId,
-              query: `?${createSearchParams(urlSearchParams).toString()}`,
-            },
-          }),
-        );
+        const queryString = createSearchParams(urlSearchParams).toString();
+        const path = getPath({
+          url: PAGES.RESCHEDULE,
+          params: { id: bookingValue.bookingId },
+        });
+        navigate(queryString ? `${path}?${queryString}` : path);
         sendEvent({
           category: "navigation",
           action: "Reschedule Booking Button",

@@ -7,7 +7,7 @@ import {
   DetailsTextWrapper,
   SliderWrapper,
 } from "components/layout/ContentWithDetails";
-import { useBooking } from "features/booking/hooks/useBooking";
+import { useBooking } from "features/booking/hooks/useBookingSubscription";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { BOOKING_FORM_TYPES } from "models/service";
 import { useBookingStore, useErrorStore } from "state/stores";

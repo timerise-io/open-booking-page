@@ -197,21 +197,11 @@ const RescheduleService = () => {
             data-cy="book-now-button"
             onClick={() => {
               const queryString = createSearchParams(urlSearchParams).toString();
-              const path = queryString
-                ? getPath({
-                    url: `${PAGES.BOOKING}:query`,
-                    params: {
-                      id: bookingValue.bookingId,
-                      query: `?${queryString}`,
-                    },
-                  })
-                : getPath({
-                    url: PAGES.BOOKING,
-                    params: {
-                      id: bookingValue.bookingId,
-                    },
-                  });
-              navigate(path);
+              const path = getPath({
+                url: PAGES.BOOKING,
+                params: { id: bookingValue.bookingId },
+              });
+              navigate(queryString ? `${path}?${queryString}` : path);
             }}
           >
             {t("back")}

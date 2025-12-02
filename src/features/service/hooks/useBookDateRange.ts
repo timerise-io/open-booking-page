@@ -32,21 +32,11 @@ export const useBookDateRange = () => {
   useEffect(() => {
     if (data?.bookingCreate.bookingId) {
       const queryString = createSearchParams(urlSearchParams).toString();
-      const path = queryString
-        ? getPath({
-            url: `${PAGES.BOOKING}:query`,
-            params: {
-              id: data.bookingCreate.bookingId,
-              query: `?${queryString}`,
-            },
-          })
-        : getPath({
-            url: PAGES.BOOKING,
-            params: {
-              id: data.bookingCreate.bookingId,
-            },
-          });
-      navigate(path);
+      const path = getPath({
+        url: PAGES.BOOKING,
+        params: { id: data.bookingCreate.bookingId },
+      });
+      navigate(queryString ? `${path}?${queryString}` : path);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { useProjectState } from "features/project/hooks/useProject";
-import { useServiceState } from "features/service/hooks/useService";
+import { useServiceSlotsState, useServiceState } from "features/service/hooks/useService";
 import { isNetworkError } from "helpers/functions";
 import { useParams } from "react-router-dom";
 import { LOADERS, useBookingStore, useErrorStore, useUiStore } from "state/stores";
@@ -64,5 +64,6 @@ export const useBooking = () => {
   const bookingValue = useBookingStore((state) => state.booking);
   const serviceValue = useBookingStore((state) => state.service);
   useServiceState(bookingValue?.service.serviceId ?? "", lang);
+  useServiceSlotsState(bookingValue?.service.serviceId ?? "");
   useProjectState(serviceValue?.project.projectId ?? "");
 };

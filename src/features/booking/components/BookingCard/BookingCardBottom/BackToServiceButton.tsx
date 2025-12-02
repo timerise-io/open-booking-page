@@ -25,15 +25,12 @@ const BackToServiceButton = () => {
       $colorType="primary"
       onClick={() => {
         setBooking(undefined);
-        navigate(
-          getPath({
-            url: `${PAGES.SERVICE}:query`,
-            params: {
-              id: service.serviceId,
-              query: `?${createSearchParams(urlSearchParams).toString()}`,
-            },
-          }),
-        );
+        const queryString = createSearchParams(urlSearchParams).toString();
+        const path = getPath({
+          url: PAGES.SERVICE,
+          params: { id: service.serviceId },
+        });
+        navigate(queryString ? `${path}?${queryString}` : path);
         sendEvent({
           category: "navigation",
           action: "Back To Service Button",
