@@ -72,7 +72,7 @@ const QuantityField: React.FC<QuantityFieldProps> = ({ name, label, maxQuantity 
   }, [maxValue, selectedSlot?.quantity]);
 
   return (
-    <StyledColumn ai="stretch">
+    <StyledColumn $ai="stretch">
       <StyledLabel htmlFor={name}>{labelToDisplay}</StyledLabel>
       <StyledInput
         id={name}
@@ -89,7 +89,7 @@ const QuantityField: React.FC<QuantityFieldProps> = ({ name, label, maxQuantity 
         </StyledHint>
       )}
 
-      <Box h="13px" mt={0.5} mb={1}>
+      <Box $h="13px" $mt={0.5} $mb={1}>
         {meta.error && meta.touched && (
           <Typography $typographyType="label" as="span" $color="error">
             {meta.error}

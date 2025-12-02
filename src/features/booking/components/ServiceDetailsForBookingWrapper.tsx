@@ -67,7 +67,7 @@ const FullDetails = () => {
   const serviceData = useBookingStore((state) => state.service);
 
   return (
-    <FullDetailsWrapper ai="stretch">
+    <FullDetailsWrapper $ai="stretch">
       {serviceData?.images[0] && (
         <SliderWrapper>
           <ServiceImageCarousel />
@@ -98,7 +98,7 @@ const SmallDetails = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const smallServiceData = serviceData ? (
-    <SmallDetailsRow jc="flex-start" onClick={() => setIsOpen(!isOpen)}>
+    <SmallDetailsRow $jc="flex-start" onClick={() => setIsOpen(!isOpen)}>
       {serviceData.images[0] && <SmallDetailsImage src={serviceData.images[0]} alt="service cover" />}
       <SmallServiceName $typographyType="body" as="h2" $displayType="contents">
         {serviceData.title}
@@ -110,10 +110,10 @@ const SmallDetails = () => {
   );
 
   return (
-    <Column ai="stretch">
+    <Column $ai="stretch">
       {isOpen ? <FullDetails /> : smallServiceData}
       {isOpen ? (
-        <Column ai="center">
+        <Column $ai="center">
           <OpenButton onClick={() => setIsOpen(!isOpen)}>
             <Typography $typographyType="body" as="span" $color="primary">
               {t("hide-service-details")}

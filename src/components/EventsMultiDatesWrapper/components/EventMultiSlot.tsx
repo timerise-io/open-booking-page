@@ -86,7 +86,7 @@ export const EventMultiSlot: React.FC<Props> = ({ targetTimeZone, sourceTimeZone
   const showQuantity = useMemo(() => service?.viewConfig?.multiList?.quantity, [service]);
 
   return (
-    <Column mt={0.5} mb={0.5} w="100%">
+    <Column $mt={0.5} $mb={0.5} $w="100%">
       <EventSlotButton $state={"selected"}>
         {slots.map((slot: Slot) => (
           <Typography

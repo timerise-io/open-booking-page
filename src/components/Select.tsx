@@ -106,9 +106,9 @@ export const Select: React.FC<SelectProps> = ({ label, value, options, onChange 
   };
 
   return (
-    <SelectWrapper ai="flex-start">
+    <SelectWrapper $ai="flex-start">
       <OpenListButton onClick={() => setIsOpen(!isOpen)}>
-        <Row className="label-value" jc="flex-start">
+        <Row className="label-value" $jc="flex-start">
           {label && <StyledLabel $typographyType="body">{label}:</StyledLabel>}
           <StyledValue $typographyType="body" $weight="700">
             {options[value]}

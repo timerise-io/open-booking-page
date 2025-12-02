@@ -148,9 +148,9 @@ const RescheduleService = () => {
   if (service === undefined || bookingValue === undefined) return null;
 
   return (
-    <Box mt={1.125}>
+    <Box $mt={1.125}>
       <WrapperCard>
-        <Box mb={2.5}>
+        <Box $mb={2.5}>
           <Typography $typographyType="h3" as="h3" $displayType="contents">
             {t("headers.reschedule-booking")}
           </Typography>
@@ -164,7 +164,7 @@ const RescheduleService = () => {
           </StyledDateValue>
         </Box>
         {slot && (
-          <Box mt={0.5}>
+          <Box $mt={0.5}>
             <Typography $typographyType="label" $displayType="contents">
               {t("to")}:
             </Typography>
@@ -174,7 +174,7 @@ const RescheduleService = () => {
           </Box>
         )}
 
-        <StyledButtonsWrapper mt={4}>
+        <StyledButtonsWrapper $mt={4}>
           <Button
             type="submit"
             $buttonType="primary"

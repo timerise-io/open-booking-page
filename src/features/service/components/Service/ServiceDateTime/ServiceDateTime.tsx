@@ -76,8 +76,8 @@ const ServiceDateTime = () => {
 
   return (
     <WrapperCard padding="20px 12px" $fullHeight={isFullHeight}>
-      <Column ai="flex-start">
-        <TimezoneStyledRow mb={2.5} ml={1} mr={1} w="100%" pr={2}>
+      <Column $ai="flex-start">
+        <TimezoneStyledRow $mb={2.5} $ml={1} $mr={1} $w="100%" $pr={2}>
           <Typography $typographyType="h3" as="h3" $displayType="contents">
             {t(`select-date-and-time`)}
           </Typography>
@@ -89,7 +89,7 @@ const ServiceDateTime = () => {
         <ServiceCalendarActionRow />
         <ServiceCalendar />
       </Column>
-      {numberOfSlotsPerDay > FULL_HEIGHT_COUNT && <Box mb={10}></Box>}
+      {numberOfSlotsPerDay > FULL_HEIGHT_COUNT && <Box $mb={10}></Box>}
       {numberOfSlotsPerDay > FULL_HEIGHT_COUNT && (
         <ShowMoreWrapper>
           <ContextButton

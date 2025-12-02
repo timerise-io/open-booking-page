@@ -28,10 +28,10 @@ const NumberField: React.FC<NumberFieldProps> = ({ label, name }) => {
   const [field, meta] = useField({ name });
 
   return (
-    <Column ai="stretch">
+    <Column $ai="stretch">
       <StyledLabel htmlFor={name}>{labelToDisplay}</StyledLabel>
       <StyledNumberInput id={name} {...field} type="number" />
-      <Box h="13px" mt={0.5} mb={1}>
+      <Box $h="13px" $mt={0.5} $mb={1}>
         {meta.error && meta.touched && (
           <Typography $typographyType="label" as="span" $color="error">
             {meta.error}

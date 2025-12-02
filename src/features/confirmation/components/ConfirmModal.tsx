@@ -60,15 +60,15 @@ const ConfirmModal: React.FC<PropsWithChildren<ConfirmModalProps>> = ({
   return (
     <Wrapper>
       <StyledCard>
-        <Column ai="stretch">
-          <Row mb={1.5}>
+        <Column $ai="stretch">
+          <Row $mb={1.5}>
             <Typography $typographyType="h3">{title}</Typography>
             <IconButton onClick={() => onClose && onClose()}>
               <IconX />
             </IconButton>
           </Row>
-          <Box mr={1.25}>{children}</Box>
-          <Row jc="flex-end" mt={2.5}>
+          <Box $mr={1.25}>{children}</Box>
+          <Row $jc="flex-end" $mt={2.5}>
             <StyledButton onClick={() => onAbort && onAbort()} $buttonType="secondary">
               {abortText}
             </StyledButton>

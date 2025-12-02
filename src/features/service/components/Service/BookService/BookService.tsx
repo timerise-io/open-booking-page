@@ -275,10 +275,10 @@ const BookService = () => {
   if (!service) return null;
 
   return (
-    <Box mt={serviceType === BOOKING_FORM_TYPES.PREORDER ? 0 : 1.125}>
+    <Box $mt={serviceType === BOOKING_FORM_TYPES.PREORDER ? 0 : 1.125}>
       <WrapperCard>
         {formFields && formFields.length > 0 && (
-          <Box mb={2.5}>
+          <Box $mb={2.5}>
             <Typography $typographyType="h3" as="h3" $displayType="contents">
               {t("headers.leave-details")}
             </Typography>
@@ -291,7 +291,7 @@ const BookService = () => {
         >
           {() => (
             <Form>
-              <Column ai="stretch">
+              <Column $ai="stretch">
                 <BookingServiceFormContent />
                 {(showWarning || error || errorDateRange) && (
                   <StyledWarning>

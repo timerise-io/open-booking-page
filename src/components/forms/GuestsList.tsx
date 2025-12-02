@@ -67,16 +67,16 @@ const GuestsList: React.FC<GuestsListFieldProps> = ({ name, label, minGuests = 1
   };
 
   return (
-    <StyledColumn ai="stretch">
-      <Box mb={2.5}>
+    <StyledColumn $ai="stretch">
+      <Box $mb={2.5}>
         <Typography $typographyType="h3" as="h3" $displayType="contents">
           {label}
         </Typography>
       </Box>
       <input id={name} type="hidden"></input>
       {guests.map((guest, index) => (
-        <Row ai="stretch" key={"guest" + index} gap="10px">
-          <StyledColumn ai="stretch" style={{ width: "100%", marginBottom: "10px" }}>
+        <Row $ai="stretch" key={"guest" + index} $gap="10px">
+          <StyledColumn $ai="stretch" style={{ width: "100%", marginBottom: "10px" }}>
             <StyledLabel htmlFor={name}>Full name</StyledLabel>
             <StyledInput
               data-index={index}
@@ -89,7 +89,7 @@ const GuestsList: React.FC<GuestsListFieldProps> = ({ name, label, minGuests = 1
               onChange={handleChange}
             />
           </StyledColumn>
-          <StyledColumn ai="stretch" style={{ width: "100%", marginBottom: "10px" }}>
+          <StyledColumn $ai="stretch" style={{ width: "100%", marginBottom: "10px" }}>
             <StyledLabel htmlFor={name}>E-mail</StyledLabel>
             <StyledInput
               data-index={index}
@@ -106,7 +106,7 @@ const GuestsList: React.FC<GuestsListFieldProps> = ({ name, label, minGuests = 1
       ))}
 
       {guests.length < guestsLimit && (
-        <StyledButtonsWrapper mt={1} mb={1}>
+        <StyledButtonsWrapper $mt={1} $mb={1}>
           <Button
             style={{ boxShadow: "none", padding: 0, fontWeight: 400, width: "auto" }}
             type="button"
@@ -125,7 +125,7 @@ const GuestsList: React.FC<GuestsListFieldProps> = ({ name, label, minGuests = 1
         </StyledHint>
       )}
 
-      <Box h="13px" mt={0.5} mb={1}>
+      <Box $h="13px" $mt={0.5} $mb={1}>
         {meta.error && meta.touched && (
           <Typography $typographyType="label" as="span" $color="error">
             {meta.error}

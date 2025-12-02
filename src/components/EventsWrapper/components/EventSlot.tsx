@@ -133,7 +133,7 @@ export const EventSlot: React.FC<Props> = ({
   const showQuantity = useMemo(() => service?.viewConfig?.list?.quantity, [service]);
 
   return (
-    <Column mt={0.5} mb={0.5} w="100%">
+    <Column $mt={0.5} $mb={0.5} $w="100%">
       <EventSlotButton $state={getEventSlotButtonState()} onClick={handleSlotClick} disabled={quantity === 0}>
         <Typography
           $typographyType="body"

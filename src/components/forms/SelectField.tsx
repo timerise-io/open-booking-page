@@ -36,7 +36,7 @@ const SelectField = ({
         disabled={disabled}
       />
       {hideErrors === false && (
-        <Box h="13px" mt={0.5} mb={1}>
+        <Box $h="13px" $mt={0.5} $mb={1}>
           {meta.error && meta.touched && (
             <Typography $typographyType="label" as="span" $color="error">
               {meta.error}

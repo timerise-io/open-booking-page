@@ -77,11 +77,11 @@ const StyledContextSelect = styled(ContextSelect)`
 
 const DetailsRow: React.FC<DetailsRowProps> = ({ name, value, icon }) => {
   return (
-    <Row mb={0.5} w="100%" jc="flex-start" ai="flex-start">
+    <Row $mb={0.5} $w="100%" $jc="flex-start" $ai="flex-start">
       <IconWrapper>{icon}</IconWrapper>
-      <Box ml={0.5} w="100%">
+      <Box $ml={0.5} $w="100%">
         {value === null ? (
-          <SkeletonBox w="100%" h="12px" style={{ minWidth: "-webkit-fill-available" }} />
+          <SkeletonBox $w="100%" $h="12px" style={{ minWidth: "-webkit-fill-available" }} />
         ) : (
           <Typography $typographyType="body" $weight="700" $displayType="contents">
             {value}
@@ -165,7 +165,7 @@ const ServiceDetails = () => {
 
   const title =
     serviceData === undefined ? (
-      <SkeletonBox h="25px" w="100%" />
+      <SkeletonBox $h="25px" $w="100%" />
     ) : (
       <Typography $typographyType="h2" as="h2" $displayType="contents">
         {serviceData.title}
@@ -175,10 +175,10 @@ const ServiceDetails = () => {
   const description =
     serviceData === undefined ? (
       <>
-        <SkeletonBox mt={1.75} h="12px" w="100%" />
-        <SkeletonBox mt={0.5} h="12px" w="100%" />
-        <SkeletonBox mt={0.5} h="12px" w="100%" />
-        <SkeletonBox mt={0.5} h="12px" w="100%" />
+        <SkeletonBox $mt={1.75} $h="12px" $w="100%" />
+        <SkeletonBox $mt={0.5} $h="12px" $w="100%" />
+        <SkeletonBox $mt={0.5} $h="12px" $w="100%" />
+        <SkeletonBox $mt={0.5} $h="12px" $w="100%" />
       </>
     ) : (
       <StyledMD>
@@ -201,7 +201,7 @@ const ServiceDetails = () => {
     <>
       {title}
       {description}
-      <Column ai="flex-start">
+      <Column $ai="flex-start">
         {serviceData && serviceData.price > 0 && (
           <DetailsRow
             name="Payment"

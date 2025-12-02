@@ -43,8 +43,8 @@ export const ServiceDateEvent = () => {
 
   return (
     <WrapperCard padding="20px">
-      <Column ai="flex-start">
-        <TimezoneStyledRow mb={2.5} w="100%">
+      <Column $ai="flex-start">
+        <TimezoneStyledRow $mb={2.5} $w="100%">
           <Typography $typographyType="h3" as="h3" $displayType="contents">
             {t(`date-and-time`)}
           </Typography>

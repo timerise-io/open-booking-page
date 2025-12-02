@@ -34,7 +34,7 @@ const BookingCardBottom = () => {
 
   return (
     <Wrapper
-      jc={
+      $jc={
         !!showBackToServiceButton && (!!showCancelButton || !!showRescheduleButton) ? "space-between" : "space-around"
       }
     >

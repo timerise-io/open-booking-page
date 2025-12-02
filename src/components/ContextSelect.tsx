@@ -201,7 +201,7 @@ export const ContextSelect: React.FC<ContextSelectProps> = ({
   const selectedValue = typeof value === "string" ? options[value] : getMultiValue(value, options);
 
   return (
-    <SelectWrapper ai="flex-start" ref={ref} className={className}>
+    <SelectWrapper $ai="flex-start" ref={ref} className={className}>
       {label !== "" && <StyledLabel>{label}</StyledLabel>}
       <OpenListButton
         onClick={() => {
@@ -210,7 +210,7 @@ export const ContextSelect: React.FC<ContextSelectProps> = ({
         type="button"
         disabled={disabled}
       >
-        <Row className="label-value" jc="flex-start" w="100% ">
+        <Row className="label-value" $jc="flex-start" $w="100% ">
           <StyledValue className="disabled-text" $typographyType="body" title={fixedDisplay || selectedValue}>
             {fixedDisplay || selectedValue}
           </StyledValue>

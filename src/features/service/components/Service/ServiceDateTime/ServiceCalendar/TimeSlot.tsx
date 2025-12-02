@@ -317,7 +317,7 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, is12HoursSystem }
   };
 
   return (
-    <Column mt={0.5} mb={0.5} w="100%">
+    <Column $mt={0.5} $mb={0.5} $w="100%">
       {!slot ? (
         <DummySlot $showDuration={showDuration} $showQuantity={showQuantity} />
       ) : (

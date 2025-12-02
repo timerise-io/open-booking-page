@@ -79,7 +79,7 @@ const BookingCardTitle = ({
         booking?.slots &&
         booking?.slots.length > 0 &&
         booking.slots.map((slot) => (
-          <StyledRow jc="center" gap="6px" key={`${slot.dateTimeFrom}-${slot.dateTimeTo}`}>
+          <StyledRow $jc="center" $gap="6px" key={`${slot.dateTimeFrom}-${slot.dateTimeTo}`}>
             <IconCalendarEvent />
             <Typography $typographyType="body" $align="center" $weight="700" $displayType="contents">
               {`${getDatesValue({
@@ -95,7 +95,7 @@ const BookingCardTitle = ({
           </StyledRow>
         ))}
       {showPayButton && paymentLink && (
-        <Box mt={3.5}>
+        <Box $mt={3.5}>
           <LinkButton href={paymentLink} target="_blank">
             {t("pay")}
           </LinkButton>

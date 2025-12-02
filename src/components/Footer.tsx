@@ -118,7 +118,7 @@ const Footer = () => {
   }
 
   return (
-    <Wrapper mb={1.5} mt={5} jc="space-between">
+    <Wrapper $mb={1.5} $mt={5} $jc="space-between">
       <Row className="left-column">
         <Typography
           $typographyType="label"
@@ -139,7 +139,7 @@ const Footer = () => {
           {t(`theme.${themeType === "dark" ? "light" : "dark"}`)}
         </StyledButton>
       </Row>
-      <Row ai="flex-start" style={{ marginTop: "8px" }}>
+      <Row $ai="flex-start" style={{ marginTop: "8px" }}>
         <Typography $typographyType="label" as="div" $color="darkGrey">
           {t("footer.powered-by")}
         </Typography>

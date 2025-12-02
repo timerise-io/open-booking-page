@@ -26,7 +26,7 @@ const DeleteBooking = () => {
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
 
   return (
-    <Column ai="flex-start">
+    <Column $ai="flex-start">
       <StyledTypography
         $typographyType="body"
         $displayType="contents"
@@ -34,14 +34,14 @@ const DeleteBooking = () => {
           __html: t("want-to-delete"),
         }}
       ></StyledTypography>
-      <Box mt={2.5}>
+      <Box $mt={2.5}>
         <Typography $typographyType="body" $displayType="contents">
           {service.title}
         </Typography>
       </Box>
       <Row>
         <Typography $typographyType="body">{t("date-and-time")}:</Typography>
-        <Box ml={0.5}>
+        <Box $ml={0.5}>
           <Typography $typographyType="body" $weight="700">
             {" "}
             {getDatesValue({

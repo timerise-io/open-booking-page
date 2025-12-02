@@ -25,7 +25,7 @@ const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({ dateTimeFrom, d
   const showQRButton = !!cardConfig.actions?.qr && service?.viewConfig?.displayType !== BOOKING_FORM_TYPES.PREORDER;
 
   return (
-    <StyledColumn mb={5}>
+    <StyledColumn $mb={5}>
       <BookingCardTitle
         dateTimeFrom={dateTimeFrom}
         dateTimeTo={dateTimeTo}
@@ -37,7 +37,7 @@ const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({ dateTimeFrom, d
         showPayButton={!!cardConfig.actions?.pay}
       />
       {!!cardConfig.actions?.spaces && booking.service.spaces && booking.service.spaces.length > 0 && (
-        <Box mt={5} w="100%">
+        <Box $mt={5} $w="100%">
           {booking.service.spaces.map((item) => (
             <Space key={item.spaceId} space={item} />
           ))}

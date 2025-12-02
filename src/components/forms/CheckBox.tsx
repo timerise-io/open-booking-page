@@ -77,7 +77,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({ name, label }) => {
   const { setValue } = helpers;
 
   return (
-    <Column ai="flex-start">
+    <Column $ai="flex-start">
       <CheckboxWrapper>
         <CheckboxInput
           type="radio"
@@ -100,7 +100,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({ name, label }) => {
           {getUrlFromString(label)}
         </CheckboxLabel>
       </CheckboxWrapper>
-      <Box h="13px" mt={0.5} mb={1}>
+      <Box $h="13px" $mt={0.5} $mb={1}>
         {meta.error && meta.touched && (
           <Typography $typographyType="label" as="span" $color="error">
             {meta.error}

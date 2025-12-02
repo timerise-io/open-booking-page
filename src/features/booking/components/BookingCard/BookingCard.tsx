@@ -11,17 +11,17 @@ import ShortId from "./ShortId";
 const BookingCardLoader = (
   <Card>
     <Column>
-      <Box mt={3.25}>
-        <SkeletonBox w="36px" h="36px" />
+      <Box $mt={3.25}>
+        <SkeletonBox $w="36px" $h="36px" />
       </Box>
-      <Box mt={2} w="100%">
-        <SkeletonBox w="100%" h="26px" />
+      <Box $mt={2} $w="100%">
+        <SkeletonBox $w="100%" $h="26px" />
       </Box>
-      <Box mt={3.5} w="100%">
-        <SkeletonBox w="100%" h="40px" />
+      <Box $mt={3.5} $w="100%">
+        <SkeletonBox $w="100%" $h="40px" />
       </Box>
-      <Box mt={3.25} w="100%">
-        <SkeletonBox w="100%" h="20px" />
+      <Box $mt={3.25} $w="100%">
+        <SkeletonBox $w="100%" $h="20px" />
       </Box>
     </Column>
   </Card>

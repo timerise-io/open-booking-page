@@ -73,7 +73,7 @@ export const DateRangeFooter: React.FC<Props> = ({
   const { t } = useTranslation(["booking"]);
 
   return (
-    <StyledCalendarFooter ai="center" w="100%" p={2.5} hasDuration={Boolean(duration && rangeSelect)}>
+    <StyledCalendarFooter $ai="center" $w="100%" $p={2.5} hasDuration={Boolean(duration && rangeSelect)}>
       <Typography $typographyType="body" $displayType="contents">
         {duration && rangeSelect && t("select-date-range-up-to", { duration })}
       </Typography>

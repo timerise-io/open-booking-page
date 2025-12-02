@@ -32,9 +32,9 @@ const HeaderLoader = () => {
   return (
     <Wrapper>
       <Row>
-        <SkeletonBox w="40px" h="40px" />
-        <Box ml={1.25}>
-          <SkeletonBox w="200px" h="24px" />
+        <SkeletonBox $w="40px" $h="40px" />
+        <Box $ml={1.25}>
+          <SkeletonBox $w="200px" $h="24px" />
         </Box>
       </Row>
     </Wrapper>
@@ -89,7 +89,7 @@ const Header: React.FC = () => {
       <Row className="full-row-wrap">
         <Row>
           <CompanyLogo src={logoUrl} alt="logo" />
-          <Box ml={1.25}>
+          <Box $ml={1.25}>
             <Typography $typographyType="h1" as="h1" $displayType="contents" data-cy="company-name">
               {headerTitle}
             </Typography>
