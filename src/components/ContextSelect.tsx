@@ -211,7 +211,7 @@ export const ContextSelect: React.FC<ContextSelectProps> = ({
         disabled={disabled}
       >
         <Row className="label-value" jc="flex-start" w="100% ">
-          <StyledValue className="disabled-text" typographyType="body" title={fixedDisplay || selectedValue}>
+          <StyledValue className="disabled-text" $typographyType="body" title={fixedDisplay || selectedValue}>
             {fixedDisplay || selectedValue}
           </StyledValue>
         </Row>
@@ -229,7 +229,7 @@ export const ContextSelect: React.FC<ContextSelectProps> = ({
                 type="button"
                 title={itemValue}
               >
-                <Typography typographyType="body" weight={isMarked ? "700" : "400"} as="span">
+                <Typography $typographyType="body" $weight={isMarked ? "700" : "400"} as="span">
                   {itemValue}
                 </Typography>
                 {isMarked && <IconCheck size={20} />}

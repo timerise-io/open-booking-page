@@ -96,7 +96,7 @@ const FileUpload = ({ label, accept, fieldId }: FormFieldFileUpload) => {
       <StyledRow>{fileName === "" ? noFileContent : fileContent}</StyledRow>
       <Box h="13px" mt={0.5} mb={1}>
         {meta.error && meta.touched && (
-          <Typography typographyType="label" as="span" color="error">
+          <Typography $typographyType="label" as="span" $color="error">
             {meta.error}
           </Typography>
         )}

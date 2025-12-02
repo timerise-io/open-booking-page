@@ -91,7 +91,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({ name, label }) => {
         />
         {value && <IconCheck className="icon-check" size={12} />}
         <CheckboxLabel
-          typographyType="body"
+          $typographyType="body"
           as="label"
           onClick={() => {
             setValue(!value);
@@ -102,7 +102,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({ name, label }) => {
       </CheckboxWrapper>
       <Box h="13px" mt={0.5} mb={1}>
         {meta.error && meta.touched && (
-          <Typography typographyType="label" as="span" color="error">
+          <Typography $typographyType="label" as="span" $color="error">
             {meta.error}
           </Typography>
         )}

@@ -12,7 +12,7 @@ import { useUiStore } from "state/stores";
 import styled, { css } from "styled-components";
 
 interface EventSlotButtonProps {
-  state: TimeSlotButtonType;
+  $state: TimeSlotButtonType;
 }
 
 const EventSlotButton = styled.button<EventSlotButtonProps>`
@@ -22,8 +22,8 @@ const EventSlotButton = styled.button<EventSlotButtonProps>`
   width: 100%;
   height: 100%;
   padding: 16px;
-  ${({ theme, state }) => {
-    const colorSchema = theme.colorSchemas.timeSlotButton[state] as any;
+  ${({ theme, $state }) => {
+    const colorSchema = theme.colorSchemas.timeSlotButton[$state] as any;
 
     return css`
       color: ${colorSchema.text};
@@ -35,8 +35,8 @@ const EventSlotButton = styled.button<EventSlotButtonProps>`
   }}
 
   &:hover {
-    ${({ theme, state }) => {
-      const colorSchema = theme.colorSchemas.timeSlotButton[state] as any;
+    ${({ theme, $state }) => {
+      const colorSchema = theme.colorSchemas.timeSlotButton[$state] as any;
       return css`
         background-color: ${colorSchema.backgroundHover};
       `;
@@ -46,8 +46,8 @@ const EventSlotButton = styled.button<EventSlotButtonProps>`
   & > .unavailable-time-slot {
     text-decoration: line-through;
 
-    ${({ theme, state }) => {
-      const colorSchema = theme.colorSchemas.timeSlotButton[state] as any;
+    ${({ theme, $state }) => {
+      const colorSchema = theme.colorSchemas.timeSlotButton[$state] as any;
       return css`
         color: ${colorSchema.text};
       `;
@@ -87,11 +87,11 @@ export const EventMultiSlot: React.FC<Props> = ({ targetTimeZone, sourceTimeZone
 
   return (
     <Column mt={0.5} mb={0.5} w="100%">
-      <EventSlotButton state={"selected"}>
+      <EventSlotButton $state={"selected"}>
         {slots.map((slot: Slot) => (
           <Typography
-            typographyType="body"
-            weight="500"
+            $typographyType="body"
+            $weight="500"
             as="span"
             className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
             style={{ color: "inherit" }}
@@ -102,8 +102,8 @@ export const EventMultiSlot: React.FC<Props> = ({ targetTimeZone, sourceTimeZone
 
         {showQuantity && (
           <Typography
-            typographyType="body"
-            weight="500"
+            $typographyType="body"
+            $weight="500"
             as="span"
             className={slots[0].quantity > 0 ? "" : "unavailable-time-slot"}
             style={{ color: "inherit", marginTop: "8px" }}

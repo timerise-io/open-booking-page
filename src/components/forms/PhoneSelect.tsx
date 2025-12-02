@@ -197,7 +197,7 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({ name, label }) => {
                   type="button"
                 >
                   <ReactCountryFlag className="flag" svg countryCode={countryCode} />
-                  <Typography typographyType="body" as="span">
+                  <Typography $typographyType="body" as="span">
                     {`${countryCode} ${prefix ? `+${prefix}` : ``}`}{" "}
                   </Typography>
                 </ChooseCountryButton>
@@ -220,7 +220,7 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({ name, label }) => {
       </SelectWrapper>
       <Box h="13px" mt={0.5} mb={1}>
         {meta.error && meta.touched && (
-          <Typography typographyType="label" as="span" color="error">
+          <Typography $typographyType="label" as="span" $color="error">
             {meta.error}
           </Typography>
         )}

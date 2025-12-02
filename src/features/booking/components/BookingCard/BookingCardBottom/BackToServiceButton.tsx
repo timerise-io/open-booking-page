@@ -22,7 +22,7 @@ const BackToServiceButton = () => {
 
   return (
     <ContextButton
-      colorType="primary"
+      $colorType="primary"
       onClick={() => {
         setBooking(undefined);
         navigate(
@@ -41,7 +41,7 @@ const BackToServiceButton = () => {
         });
       }}
     >
-      <Typography typographyType="body" align="center" as="span" color="inherit" weight="700">
+      <Typography $typographyType="body" $align="center" as="span" $color="inherit" $weight="700">
         {t("go-back")}
       </Typography>
     </ContextButton>

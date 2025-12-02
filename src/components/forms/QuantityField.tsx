@@ -84,14 +84,14 @@ const QuantityField: React.FC<QuantityFieldProps> = ({ name, label, maxQuantity 
       />
 
       {selectedSlot !== undefined && (
-        <StyledHint typographyType="body" as="span">
+        <StyledHint $typographyType="body" as="span">
           {t("out-of", { maxValue })}
         </StyledHint>
       )}
 
       <Box h="13px" mt={0.5} mb={1}>
         {meta.error && meta.touched && (
-          <Typography typographyType="label" as="span" color="error">
+          <Typography $typographyType="label" as="span" $color="error">
             {meta.error}
           </Typography>
         )}

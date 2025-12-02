@@ -62,7 +62,7 @@ const ErrorPage = () => {
         address or...
       </StyledInfo>
       <StyledButton
-        buttonType="primary"
+        $buttonType="primary"
         onClick={() => {
           window.open("https://timerise.io/", "_blank")?.focus();
         }}

@@ -59,7 +59,7 @@ const Space = ({ space }: SpaceProps) => {
     <Wrapper>
       {space.instructions && (
         <Box mb={2}>
-          <Typography typographyType="body" as="span" align="center">
+          <Typography $typographyType="body" as="span" $align="center">
             {space.instructions}
           </Typography>
         </Box>
@@ -79,7 +79,7 @@ const Space = ({ space }: SpaceProps) => {
           Copy
         </CardButton>
       </Row>
-      <LinkPreview typographyType="label" as="span">
+      <LinkPreview $typographyType="label" as="span">
         {space.url}
       </LinkPreview>
     </Wrapper>

@@ -13,12 +13,12 @@ import ServiceCalendarActionRow from "../ServiceCalendarActionRow";
 import TimezoneInfo from "../TimezoneInfo";
 import ServiceCalendar from "./ServiceCalendar/ServiceCalendar";
 
-const WrapperCard = styled(Card)<{ fullHeight: boolean } & CardProps>`
+const WrapperCard = styled(Card)<{ $fullHeight: boolean } & CardProps>`
   overflow: hidden;
   position: relative;
 
-  ${({ fullHeight }) => {
-    if (fullHeight)
+  ${({ $fullHeight }) => {
+    if ($fullHeight)
       return css`
         max-height: unset;
       `;
@@ -75,10 +75,10 @@ const ServiceDateTime = () => {
   }, [numberOfSlotsPerDay]);
 
   return (
-    <WrapperCard padding="20px 12px" fullHeight={isFullHeight}>
+    <WrapperCard padding="20px 12px" $fullHeight={isFullHeight}>
       <Column ai="flex-start">
         <TimezoneStyledRow mb={2.5} ml={1} mr={1} w="100%" pr={2}>
-          <Typography typographyType="h3" as="h3" displayType="contents">
+          <Typography $typographyType="h3" as="h3" $displayType="contents">
             {t(`select-date-and-time`)}
           </Typography>
           <TimezoneHourSystemStyledContainer>
@@ -93,12 +93,12 @@ const ServiceDateTime = () => {
       {numberOfSlotsPerDay > FULL_HEIGHT_COUNT && (
         <ShowMoreWrapper>
           <ContextButton
-            colorType="primary"
+            $colorType="primary"
             onClick={() => {
               setIsFullHeight(!isFullHeight);
             }}
           >
-            <Typography typographyType="body" align="center" as="span" color="inherit" weight="700">
+            <Typography $typographyType="body" $align="center" as="span" $color="inherit" $weight="700">
               {t(isFullHeight === false ? "show-more" : "show-less")}
             </Typography>
           </ContextButton>

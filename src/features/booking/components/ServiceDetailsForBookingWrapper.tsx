@@ -100,7 +100,7 @@ const SmallDetails = () => {
   const smallServiceData = serviceData ? (
     <SmallDetailsRow jc="flex-start" onClick={() => setIsOpen(!isOpen)}>
       {serviceData.images[0] && <SmallDetailsImage src={serviceData.images[0]} alt="service cover" />}
-      <SmallServiceName typographyType="body" as="h2" displayType="contents">
+      <SmallServiceName $typographyType="body" as="h2" $displayType="contents">
         {serviceData.title}
       </SmallServiceName>
       <StyledIconChevronRight size={24} />
@@ -115,7 +115,7 @@ const SmallDetails = () => {
       {isOpen ? (
         <Column ai="center">
           <OpenButton onClick={() => setIsOpen(!isOpen)}>
-            <Typography typographyType="body" as="span" color="primary">
+            <Typography $typographyType="body" as="span" $color="primary">
               {t("hide-service-details")}
             </Typography>
           </OpenButton>

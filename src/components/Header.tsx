@@ -90,7 +90,7 @@ const Header: React.FC = () => {
         <Row>
           <CompanyLogo src={logoUrl} alt="logo" />
           <Box ml={1.25}>
-            <Typography typographyType="h1" as="h1" displayType="contents" data-cy="company-name">
+            <Typography $typographyType="h1" as="h1" $displayType="contents" data-cy="company-name">
               {headerTitle}
             </Typography>
           </Box>

@@ -23,7 +23,7 @@ const TimezoneInfo: React.FC<TimezoneInfoProps> = ({ showTimezone = true }) => {
 
   return (
     <Wrapper>
-      <Typography className="timezone-info" typographyType="label" color="inherit" as="span" weight="700">
+      <Typography className="timezone-info" $typographyType="label" $color="inherit" as="span" $weight="700">
         {timeZone.replace("_", " ")}
       </Typography>
     </Wrapper>

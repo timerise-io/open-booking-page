@@ -109,8 +109,8 @@ export const Select: React.FC<SelectProps> = ({ label, value, options, onChange 
     <SelectWrapper ai="flex-start">
       <OpenListButton onClick={() => setIsOpen(!isOpen)}>
         <Row className="label-value" jc="flex-start">
-          {label && <StyledLabel typographyType="body">{label}:</StyledLabel>}
-          <StyledValue typographyType="body" weight="700">
+          {label && <StyledLabel $typographyType="body">{label}:</StyledLabel>}
+          <StyledValue $typographyType="body" $weight="700">
             {options[value]}
           </StyledValue>
         </Row>
@@ -121,7 +121,7 @@ export const Select: React.FC<SelectProps> = ({ label, value, options, onChange 
           {Object.entries(options).map(([itemKey, itemValue]) => {
             return (
               <OptionButton key={`select-popup-option-${itemKey}`} onClick={() => handleChange(itemKey)}>
-                <Typography typographyType="body" weight={itemKey === value ? "700" : "400"} as="span">
+                <Typography $typographyType="body" $weight={itemKey === value ? "700" : "400"} as="span">
                   {itemValue}
                 </Typography>
                 {itemKey === value && <IconCheck size={20} />}

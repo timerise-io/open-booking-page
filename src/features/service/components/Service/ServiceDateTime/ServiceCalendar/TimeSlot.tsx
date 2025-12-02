@@ -15,9 +15,9 @@ import styled, { css } from "styled-components";
 type TimeSlotButtonState = "available" | "unavailable" | "selected";
 
 interface TimeSlotButtonProps {
-  state: TimeSlotButtonType;
-  showDuration: boolean;
-  showQuantity: boolean;
+  $state: TimeSlotButtonType;
+  $showDuration: boolean;
+  $showQuantity: boolean;
 }
 
 const timeSlotHeight: Record<string, string> = {
@@ -39,22 +39,22 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
   justify-content: center;
   padding: 6px 0;
 
-  ${({ theme, state, showDuration, showQuantity }) => {
-    const colorSchema = theme.colorSchemas.timeSlotButton[state] as any;
+  ${({ theme, $state, $showDuration, $showQuantity }) => {
+    const colorSchema = theme.colorSchemas.timeSlotButton[$state] as any;
 
     return css`
       color: ${colorSchema.text};
-      cursor: ${state === "unavailable" ? "unset" : "pointer"};
+      cursor: ${$state === "unavailable" ? "unset" : "pointer"};
       border-radius: ${({ theme }) => theme.borderRadius};
       background-color: ${colorSchema.background} !important;
       border: 1px solid ${colorSchema.border};
-      min-height: ${timeSlotHeight[`${showDuration}-${showQuantity}`] ?? "unset"};
+      min-height: ${timeSlotHeight[`${$showDuration}-${$showQuantity}`] ?? "unset"};
     `;
   }}
 
   &:hover {
-    ${({ theme, state }) => {
-      const colorSchema = theme.colorSchemas.timeSlotButton[state];
+    ${({ theme, $state }) => {
+      const colorSchema = theme.colorSchemas.timeSlotButton[$state];
       return css`
         background-color: ${colorSchema.backgroundHover} !important;
       `;
@@ -67,8 +67,8 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
 `;
 
 interface DummySlotProps {
-  showDuration: boolean;
-  showQuantity: boolean;
+  $showDuration: boolean;
+  $showQuantity: boolean;
 }
 
 const dummyTimeSlotHeight: Record<string, string> = {
@@ -86,19 +86,19 @@ const DummySlotWrapper = styled.div<DummySlotProps>`
   align-items: center;
   justify-content: center;
 
-  ${({ theme, showDuration, showQuantity }) => {
+  ${({ theme, $showDuration, $showQuantity }) => {
     const colorSchema = theme.colorSchemas.timeSlotButton.unavailable as any;
     return css`
       color: ${colorSchema.text};
-      height: ${dummyTimeSlotHeight[`${showDuration}-${showQuantity}`] ?? "38px"};
+      height: ${dummyTimeSlotHeight[`${$showDuration}-${$showQuantity}`] ?? "38px"};
     `;
   }}
 `;
 
-const DummySlot: React.FC<DummySlotProps> = ({ showDuration, showQuantity }) => {
+const DummySlot: React.FC<DummySlotProps> = ({ $showDuration, $showQuantity }) => {
   return (
-    <DummySlotWrapper showDuration={showDuration} showQuantity={showQuantity}>
-      <Typography typographyType="h3" weight="500" as="span" align="center" color="inherit">
+    <DummySlotWrapper $showDuration={$showDuration} $showQuantity={$showQuantity}>
+      <Typography $typographyType="h3" $weight="500" as="span" $align="center" $color="inherit">
         -
       </Typography>
     </DummySlotWrapper>
@@ -130,10 +130,10 @@ const getBaseSlotContent = (
 
   return (
     <Typography
-      typographyType="h3"
-      weight="500"
+      $typographyType="h3"
+      $weight="500"
       as="span"
-      align="center"
+      $align="center"
       className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
       color="inherit"
     >
@@ -180,10 +180,10 @@ const getDurationQuantitySlotContent = (
   return (
     <Column>
       <DurationText
-        typographyType="body"
-        weight="500"
+        $typographyType="body"
+        $weight="500"
         as="span"
-        align="center"
+        $align="center"
         className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
         color="inherit"
       >
@@ -207,7 +207,7 @@ const getDurationQuantitySlotContent = (
           </span>
         </WrapperWithDuration>
       </DurationText>
-      <QuantityText typographyType="body" weight="500" as="span" align="center" color="inherit">
+      <QuantityText $typographyType="body" $weight="500" as="span" $align="center" $color="inherit">
         {slot.quantity > 0 ? (slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)) : "-"}
       </QuantityText>
     </Column>
@@ -226,10 +226,10 @@ const getQuantitySlotContent = (
   return (
     <Column>
       <DurationText
-        typographyType="body"
-        weight="500"
+        $typographyType="body"
+        $weight="500"
         as="span"
-        align="center"
+        $align="center"
         className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
         color="inherit"
       >
@@ -240,7 +240,7 @@ const getQuantitySlotContent = (
           is12HoursSystem,
         })}
       </DurationText>
-      <QuantityText typographyType="body" weight="500" as="span" align="center" color="inherit">
+      <QuantityText $typographyType="body" $weight="500" as="span" $align="center" $color="inherit">
         {slot.quantity > 0 ? (slot.quantity > 999 ? "999+" : slot.quantity.toFixed(0)) : "-"}
       </QuantityText>
     </Column>
@@ -260,10 +260,10 @@ const getDurationSlotContent = (
   return (
     <Column>
       <DurationText
-        typographyType="body"
-        weight="500"
+        $typographyType="body"
+        $weight="500"
         as="span"
-        align="center"
+        $align="center"
         className={slot.quantity > 0 ? "" : "unavailable-time-slot"}
         color="inherit"
       >
@@ -319,12 +319,12 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, is12HoursSystem }
   return (
     <Column mt={0.5} mb={0.5} w="100%">
       {!slot ? (
-        <DummySlot showDuration={showDuration} showQuantity={showQuantity} />
+        <DummySlot $showDuration={showDuration} $showQuantity={showQuantity} />
       ) : (
         <TimeSlotButton
-          showDuration={showDuration}
-          showQuantity={showQuantity}
-          state={getTimeSlotButtonState(selected, slot.quantity > 0)}
+          $showDuration={showDuration}
+          $showQuantity={showQuantity}
+          $state={getTimeSlotButtonState(selected, slot.quantity > 0)}
           disabled={slot.quantity === 0}
           onClick={handleSlotClick}
         >

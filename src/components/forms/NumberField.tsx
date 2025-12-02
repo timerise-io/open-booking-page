@@ -33,7 +33,7 @@ const NumberField: React.FC<NumberFieldProps> = ({ label, name }) => {
       <StyledNumberInput id={name} {...field} type="number" />
       <Box h="13px" mt={0.5} mb={1}>
         {meta.error && meta.touched && (
-          <Typography typographyType="label" as="span" color="error">
+          <Typography $typographyType="label" as="span" $color="error">
             {meta.error}
           </Typography>
         )}

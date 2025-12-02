@@ -23,7 +23,7 @@ export const RescheduleBookingButton = () => {
 
   return (
     <ContextButton
-      colorType="primary"
+      $colorType="primary"
       onClick={() => {
         navigate(
           getPath({
@@ -41,7 +41,7 @@ export const RescheduleBookingButton = () => {
         });
       }}
     >
-      <Typography typographyType="body" align="center" as="span" color="inherit" weight="700">
+      <Typography $typographyType="body" $align="center" as="span" $color="inherit" $weight="700">
         {t("reschedule")}
       </Typography>
     </ContextButton>

@@ -33,8 +33,8 @@ const CancelBookingButton = () => {
   if (bookingValue === undefined) return null;
 
   return (
-    <ContextButton colorType="danger" onClick={handleDelete}>
-      <Typography typographyType="body" align="center" as="span" color="inherit" weight="700">
+    <ContextButton $colorType="danger" onClick={handleDelete}>
+      <Typography $typographyType="body" $align="center" as="span" $color="inherit" $weight="700">
         {t("cancel-booking")}
       </Typography>
     </ContextButton>

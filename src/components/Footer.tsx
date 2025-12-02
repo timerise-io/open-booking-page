@@ -97,7 +97,7 @@ const ErrorFooter = () => {
   const { t } = useTranslation();
   return (
     <ErrorFooterWrapper>
-      <Typography typographyType="label" color="darkGrey" as="div" style={{ whiteSpace: "nowrap", marginTop: "8px" }}>
+      <Typography $typographyType="label" $color="darkGrey" as="div" style={{ whiteSpace: "nowrap", marginTop: "8px" }}>
         {t("footer.copyright")}
       </Typography>
     </ErrorFooterWrapper>
@@ -120,7 +120,12 @@ const Footer = () => {
   return (
     <Wrapper mb={1.5} mt={5} jc="space-between">
       <Row className="left-column">
-        <Typography typographyType="label" color="darkGrey" as="div" style={{ whiteSpace: "nowrap", marginTop: "8px" }}>
+        <Typography
+          $typographyType="label"
+          $color="darkGrey"
+          as="div"
+          style={{ whiteSpace: "nowrap", marginTop: "8px" }}
+        >
           {t("footer.copyright")}
         </Typography>
         <VerticalLine />
@@ -135,7 +140,7 @@ const Footer = () => {
         </StyledButton>
       </Row>
       <Row ai="flex-start" style={{ marginTop: "8px" }}>
-        <Typography typographyType="label" as="div" color="darkGrey">
+        <Typography $typographyType="label" as="div" $color="darkGrey">
           {t("footer.powered-by")}
         </Typography>
         <StyledLink href="https://timerise.io/" target="_blank">

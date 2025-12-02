@@ -2,7 +2,7 @@ import { ButtonType } from "models/theme";
 import styled, { css } from "styled-components";
 
 interface ButtonProps {
-  buttonType: ButtonType;
+  $buttonType: ButtonType;
 }
 
 export const Button = styled.button<ButtonProps>`
@@ -12,8 +12,8 @@ export const Button = styled.button<ButtonProps>`
   cursor: pointer;
   font-weight: 700;
   box-shadow: rgba(0, 0, 0, 0.28) 0px 1px 2px;
-  ${({ theme, buttonType, disabled }) => {
-    const colors = theme.colorSchemas.button[buttonType];
+  ${({ theme, $buttonType, disabled }) => {
+    const colors = theme.colorSchemas.button[$buttonType];
     const textColor = disabled ? (colors.textDisabled ?? colors.text) : colors.text;
 
     const border = colors.border ?? "unset";

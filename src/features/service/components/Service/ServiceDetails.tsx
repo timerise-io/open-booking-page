@@ -83,7 +83,7 @@ const DetailsRow: React.FC<DetailsRowProps> = ({ name, value, icon }) => {
         {value === null ? (
           <SkeletonBox w="100%" h="12px" style={{ minWidth: "-webkit-fill-available" }} />
         ) : (
-          <Typography typographyType="body" weight="700" displayType="contents">
+          <Typography $typographyType="body" $weight="700" $displayType="contents">
             {value}
           </Typography>
         )}
@@ -167,7 +167,7 @@ const ServiceDetails = () => {
     serviceData === undefined ? (
       <SkeletonBox h="25px" w="100%" />
     ) : (
-      <Typography typographyType="h2" as="h2" displayType="contents">
+      <Typography $typographyType="h2" as="h2" $displayType="contents">
         {serviceData.title}
       </Typography>
     );

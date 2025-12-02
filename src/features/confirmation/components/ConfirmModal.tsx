@@ -62,17 +62,17 @@ const ConfirmModal: React.FC<PropsWithChildren<ConfirmModalProps>> = ({
       <StyledCard>
         <Column ai="stretch">
           <Row mb={1.5}>
-            <Typography typographyType="h3">{title}</Typography>
+            <Typography $typographyType="h3">{title}</Typography>
             <IconButton onClick={() => onClose && onClose()}>
               <IconX />
             </IconButton>
           </Row>
           <Box mr={1.25}>{children}</Box>
           <Row jc="flex-end" mt={2.5}>
-            <StyledButton onClick={() => onAbort && onAbort()} buttonType="secondary">
+            <StyledButton onClick={() => onAbort && onAbort()} $buttonType="secondary">
               {abortText}
             </StyledButton>
-            <StyledButton onClick={() => onConfirm && onConfirm()} buttonType={confirmButtonType}>
+            <StyledButton onClick={() => onConfirm && onConfirm()} $buttonType={confirmButtonType}>
               {confirmText}
             </StyledButton>
           </Row>

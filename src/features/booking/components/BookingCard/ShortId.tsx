@@ -18,7 +18,7 @@ const ShortId: React.FC<{ shortId: string }> = ({ shortId }) => {
 
   return (
     <Wrapper>
-      <Typography typographyType="body" as="span">
+      <Typography $typographyType="body" as="span">
         ID: <strong>{shortId}</strong>
       </Typography>
 

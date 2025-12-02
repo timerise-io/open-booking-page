@@ -114,18 +114,18 @@ const ServiceCalendarActionRow = () => {
   return (
     <Wrapper>
       <Row gap="8px">
-        <PaginationButton colorType="primary" onClick={handlePrevMonthClick} disabled={isPrevMonthDisabled}>
+        <PaginationButton $colorType="primary" onClick={handlePrevMonthClick} disabled={isPrevMonthDisabled}>
           <IconChevronsLeft />
         </PaginationButton>
-        <PaginationButton colorType="primary" onClick={handlePrevClick} disabled={isPrevDisabled}>
+        <PaginationButton $colorType="primary" onClick={handlePrevClick} disabled={isPrevDisabled}>
           <IconChevronLeft />
         </PaginationButton>
       </Row>
       <Row gap="8px">
-        <PaginationButton colorType="primary" onClick={handleNextClick} disabled={isNextDisabled}>
+        <PaginationButton $colorType="primary" onClick={handleNextClick} disabled={isNextDisabled}>
           <IconChevronRight />
         </PaginationButton>
-        <PaginationButton colorType="primary" onClick={handleNextMonthClick} disabled={isNextMonthDisabled}>
+        <PaginationButton $colorType="primary" onClick={handleNextMonthClick} disabled={isNextMonthDisabled}>
           <IconChevronsRight />
         </PaginationButton>
       </Row>

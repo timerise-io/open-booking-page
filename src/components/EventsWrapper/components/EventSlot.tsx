@@ -12,7 +12,7 @@ import { useBookingStore, useUiStore } from "state/stores";
 import styled, { css } from "styled-components";
 
 interface EventSlotButtonProps {
-  state: TimeSlotButtonType;
+  $state: TimeSlotButtonType;
 }
 
 const EventSlotButton = styled.button<EventSlotButtonProps>`
@@ -22,12 +22,12 @@ const EventSlotButton = styled.button<EventSlotButtonProps>`
   width: 100%;
   height: 100%;
   padding: 16px;
-  ${({ theme, state }) => {
-    const colorSchema = theme.colorSchemas.timeSlotButton[state] as any;
+  ${({ theme, $state }) => {
+    const colorSchema = theme.colorSchemas.timeSlotButton[$state] as any;
 
     return css`
       color: ${colorSchema.text};
-      cursor: ${state === "unavailable" ? "unset" : "pointer"};
+      cursor: ${$state === "unavailable" ? "unset" : "pointer"};
       border: 1px solid ${colorSchema.border};
       border-radius: ${({ theme }) => theme.borderRadius};
       background-color: ${colorSchema.background};
@@ -35,8 +35,8 @@ const EventSlotButton = styled.button<EventSlotButtonProps>`
   }}
 
   &:hover {
-    ${({ theme, state }) => {
-      const colorSchema = theme.colorSchemas.timeSlotButton[state] as any;
+    ${({ theme, $state }) => {
+      const colorSchema = theme.colorSchemas.timeSlotButton[$state] as any;
       return css`
         background-color: ${colorSchema.backgroundHover};
       `;
@@ -46,8 +46,8 @@ const EventSlotButton = styled.button<EventSlotButtonProps>`
   & > .unavailable-time-slot {
     text-decoration: line-through;
 
-    ${({ theme, state }) => {
-      const colorSchema = theme.colorSchemas.timeSlotButton[state] as any;
+    ${({ theme, $state }) => {
+      const colorSchema = theme.colorSchemas.timeSlotButton[$state] as any;
       return css`
         color: ${colorSchema.text};
       `;
@@ -134,10 +134,10 @@ export const EventSlot: React.FC<Props> = ({
 
   return (
     <Column mt={0.5} mb={0.5} w="100%">
-      <EventSlotButton state={getEventSlotButtonState()} onClick={handleSlotClick} disabled={quantity === 0}>
+      <EventSlotButton $state={getEventSlotButtonState()} onClick={handleSlotClick} disabled={quantity === 0}>
         <Typography
-          typographyType="body"
-          weight="700"
+          $typographyType="body"
+          $weight="700"
           as="span"
           className={quantity > 0 ? "" : "unavailable-time-slot"}
           style={{ color: "inherit" }}
@@ -146,8 +146,8 @@ export const EventSlot: React.FC<Props> = ({
         </Typography>
         {showQuantity && (
           <Typography
-            typographyType="body"
-            weight="500"
+            $typographyType="body"
+            $weight="500"
             as="span"
             className={quantity > 0 ? "" : "unavailable-time-slot"}
             style={{ color: "inherit" }}

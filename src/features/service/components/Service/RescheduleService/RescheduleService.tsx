@@ -151,24 +151,24 @@ const RescheduleService = () => {
     <Box mt={1.125}>
       <WrapperCard>
         <Box mb={2.5}>
-          <Typography typographyType="h3" as="h3" displayType="contents">
+          <Typography $typographyType="h3" as="h3" $displayType="contents">
             {t("headers.reschedule-booking")}
           </Typography>
         </Box>
         <Box>
-          <Typography typographyType="label" displayType="contents">
+          <Typography $typographyType="label" $displayType="contents">
             {t("from")}:
           </Typography>
-          <StyledDateValue typographyType="label" weight="700" displayType="contents">
+          <StyledDateValue $typographyType="label" $weight="700" $displayType="contents">
             {formattedDateFrom}
           </StyledDateValue>
         </Box>
         {slot && (
           <Box mt={0.5}>
-            <Typography typographyType="label" displayType="contents">
+            <Typography $typographyType="label" $displayType="contents">
               {t("to")}:
             </Typography>
-            <StyledDateValue typographyType="label" weight="700" displayType="contents">
+            <StyledDateValue $typographyType="label" $weight="700" $displayType="contents">
               {formattedDateTo}
             </StyledDateValue>
           </Box>
@@ -177,7 +177,7 @@ const RescheduleService = () => {
         <StyledButtonsWrapper mt={4}>
           <Button
             type="submit"
-            buttonType="primary"
+            $buttonType="primary"
             disabled={checkDisableButton()}
             data-cy="book-now-button"
             onClick={() => handleSubmit()}
@@ -193,7 +193,7 @@ const RescheduleService = () => {
 
           <Button
             type="submit"
-            buttonType="secondary"
+            $buttonType="secondary"
             data-cy="book-now-button"
             onClick={() => {
               navigate(

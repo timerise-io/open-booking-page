@@ -279,7 +279,7 @@ const BookService = () => {
       <WrapperCard>
         {formFields && formFields.length > 0 && (
           <Box mb={2.5}>
-            <Typography typographyType="h3" as="h3" displayType="contents">
+            <Typography $typographyType="h3" as="h3" $displayType="contents">
               {t("headers.leave-details")}
             </Typography>
           </Box>
@@ -296,14 +296,14 @@ const BookService = () => {
                 {(showWarning || error || errorDateRange) && (
                   <StyledWarning>
                     <IconInfoCircle size={20} color="#EA4335" />
-                    <Typography className="info-text" typographyType="body" as="span" color="inherit">
+                    <Typography className="info-text" $typographyType="body" as="span" $color="inherit">
                       {error && t(error)}
                       {errorDateRange && t(errorDateRange)}
                       {!error && t("slot-already-booked")}
                     </Typography>
                   </StyledWarning>
                 )}
-                <Button type="submit" buttonType="primary" disabled={checkDisableButton()} data-cy="book-now-button">
+                <Button type="submit" $buttonType="primary" disabled={checkDisableButton()} data-cy="book-now-button">
                   {getSubmitButtonText({
                     selectedSlotValue: formattedDate,
                     selectedSlotsValue,

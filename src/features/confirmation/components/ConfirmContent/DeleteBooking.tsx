@@ -28,21 +28,21 @@ const DeleteBooking = () => {
   return (
     <Column ai="flex-start">
       <StyledTypography
-        typographyType="body"
-        displayType="contents"
+        $typographyType="body"
+        $displayType="contents"
         dangerouslySetInnerHTML={{
           __html: t("want-to-delete"),
         }}
       ></StyledTypography>
       <Box mt={2.5}>
-        <Typography typographyType="body" displayType="contents">
+        <Typography $typographyType="body" $displayType="contents">
           {service.title}
         </Typography>
       </Box>
       <Row>
-        <Typography typographyType="body">{t("date-and-time")}:</Typography>
+        <Typography $typographyType="body">{t("date-and-time")}:</Typography>
         <Box ml={0.5}>
-          <Typography typographyType="body" weight="700">
+          <Typography $typographyType="body" $weight="700">
             {" "}
             {getDatesValue({
               service,

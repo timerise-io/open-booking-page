@@ -35,12 +35,12 @@ const ServiceCalendarDay: React.FC<ServiceCalendarDayProps> = ({ day }) => {
   return (
     <ServiceCalendarDayWrapper>
       <Box mb={1.5}>
-        <Typography typographyType="body" weight="bold" as="div" align="center">
+        <Typography $typographyType="body" $weight="bold" as="div" $align="center">
           {formatInTimeZone(day, "UTC", "iii", {
             locale: locale,
           }).replace(/[.]$/, "")}
         </Typography>
-        <DateTypography className="date-text" typographyType="body" as="div" align="center">
+        <DateTypography className="date-text" $typographyType="body" as="div" $align="center">
           {formatInTimeZone(day, "UTC", "dd MMM", {
             locale: locale,
           })}

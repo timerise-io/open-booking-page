@@ -68,10 +68,10 @@ const BookingCardTitle = ({
   return (
     <>
       <StyledImg src={iconUrl} alt="status icon" />
-      <Typography typographyType="h2" as="h2" className="status-info">
+      <Typography $typographyType="h2" as="h2" className="status-info">
         {title}
       </Typography>
-      <Typography typographyType="body" align="center" className="status-description">
+      <Typography $typographyType="body" $align="center" className="status-description">
         {description}
       </Typography>
 
@@ -81,7 +81,7 @@ const BookingCardTitle = ({
         booking.slots.map((slot) => (
           <StyledRow jc="center" gap="6px" key={`${slot.dateTimeFrom}-${slot.dateTimeTo}`}>
             <IconCalendarEvent />
-            <Typography typographyType="body" align="center" weight="700" displayType="contents">
+            <Typography $typographyType="body" $align="center" $weight="700" $displayType="contents">
               {`${getDatesValue({
                 service,
                 dateTimeFrom: slot.dateTimeFrom,

@@ -30,7 +30,7 @@ const InfoBox: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <StyledInfo>
       <IconInfoCircle size={20} />
-      <Typography className="info-text" typographyType="body" as="span">
+      <Typography className="info-text" $typographyType="body" as="span">
         {children}
       </Typography>
     </StyledInfo>
