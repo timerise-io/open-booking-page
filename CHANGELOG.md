@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2025-12-02
+
+### Changed
+
+- Completed transient props migration for styled-components v6+ compatibility
+- Migrated Card, ImageCarousel, BookingCardBottom components to transient props
+- Migrated Box, Row, Column layout components to transient props across 35 files
+- Updated copyright year to 2025 across all locale files
+- Updated documentation to reflect completed Zustand migration
+
+### Fixed
+
+- Eliminated React DOM warnings about unknown props in styled-components
+- Fixed Husky pre-commit hook to use update-browserslist-db package
+
 ### Removed
 
 - Recoil state management completely removed in favor of Zustand
@@ -14,12 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed `src/state/selectors/` directory with all Recoil selectors
 - Removed Recoil patch for React 19 compatibility (no longer needed)
 - Removed dependencies: `recoil`, `patch-package`, `postinstall-postinstall`
-
-### Changed
-
-- Completed Recoil to Zustand migration across all 50+ components
-- Created custom hooks to replace complex Recoil selectors
-- Updated migration documentation with completion status
+- Removed test files and Jest setup
 
 ## [0.2.0] - 2025-11-30
 
