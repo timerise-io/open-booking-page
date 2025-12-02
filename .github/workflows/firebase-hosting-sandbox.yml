@@ -151,17 +151,14 @@ jobs:
             exit 1
           fi
 
-      - name: Debug - Show Secret
-        run: echo "Secret length:${#SECRET_VAR} Content:${SECRET_VAR}"
-        env:
-          SECRET_VAR: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_SANDBOX }}
-
-      - name: Debug - Verify Firebase Access
-        run: firebase projects:list --token "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_SANDBOX }}"
+      - name: Create Service Account File
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_SANDBOX }}' > service-account.json
 
       - name: Deploy to Firebase
         id: deploy
         uses: nick-fields/retry@v3
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: service-account.json
         with:
           timeout_minutes: 10
           max_attempts: 3
@@ -169,8 +166,7 @@ jobs:
           command: |
             firebase deploy \
               --only hosting:service-app \
-              --project timerise-sandbox \
-              --token "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_SANDBOX }}"
+              --project timerise-sandbox
 
       - name: Health check
         uses: nick-fields/retry@v3
