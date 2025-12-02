@@ -3,16 +3,18 @@ import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { useProjectState } from "features/project/hooks/useProject";
 import { useServiceState } from "features/service/hooks/useService";
-import { useNavigate, useParams } from "react-router-dom";
-import { LOADERS, useBookingStore, useUiStore } from "state/stores";
+import { isNetworkError } from "helpers/functions";
+import { useParams } from "react-router-dom";
+import { LOADERS, useBookingStore, useErrorStore, useUiStore } from "state/stores";
 import { useSubscription } from "@apollo/client/react";
 import { BookingQueryResult, BookingQueryVariables } from "../api/queries/models";
+import { GET_BOOKING } from "../api/queries/queries";
 import { BOOKING_SUBSCRIPTION } from "../api/subscriptions/booking";
 
 export const useBookingSubscription = (bookingId: string) => {
-  const navigate = useNavigate();
   const setBooking = useBookingStore((state) => state.setBooking);
   const setServiceLoader = useUiStore((state) => state.setLoader);
+  const setBookingError = useErrorStore((state) => state.setBookingError);
 
   const { loading, data, error } = useSubscription<BookingQueryResult, BookingQueryVariables>(BOOKING_SUBSCRIPTION, {
     variables: {
@@ -24,7 +26,6 @@ export const useBookingSubscription = (bookingId: string) => {
     onData: ({ client, data }) => {
       if (data.data?.booking) {
         // Update cache directly - propagates to all components
-        const { GET_BOOKING } = require("../api/queries/queries");
         client.cache.writeQuery({
           query: GET_BOOKING,
           variables: { bookingId },
@@ -38,14 +39,18 @@ export const useBookingSubscription = (bookingId: string) => {
     if (data && data.booking) {
       const { booking } = data;
       setBooking({ ...booking });
+      setBookingError(null); // Clear error on success
     }
-  }, [data, setBooking]);
+  }, [data, setBooking, setBookingError]);
 
   useEffect(() => {
     if (error || data?.booking === null) {
-      navigate("/");
+      setBookingError({
+        type: isNetworkError(error) ? "NETWORK_ERROR" : "BOOKING_NOT_FOUND",
+        canRetry: false, // Subscriptions don't support manual retry
+      });
     }
-  }, [error, navigate, data]);
+  }, [error, data, setBookingError]);
 
   useEffect(() => {
     setServiceLoader(LOADERS.BOOKING, loading);

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { getIsEmbeddedPage } from "helpers/functions";
 import { EMBEDDED_PAGES, PAGES as ROUTES } from "pages/constans";
 import { useLocation } from "react-router-dom";
@@ -14,9 +15,11 @@ export const useIsEmbeddedPage: UseIsEmbeddedPage = () => {
   const isEmbeddedPage = Boolean(getIsEmbeddedPage(location.pathname));
   const PAGES = isEmbeddedPage ? EMBEDDED_PAGES : ROUTES;
 
-  if (isEmbeddedPage) {
-    setUserPreference({ theme: "light" });
-  }
+  useEffect(() => {
+    if (isEmbeddedPage) {
+      setUserPreference({ theme: "light" });
+    }
+  }, [isEmbeddedPage, setUserPreference]);
 
   return {
     isEmbeddedPage,

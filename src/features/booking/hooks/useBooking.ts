@@ -3,45 +3,54 @@ import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { useProjectState } from "features/project/hooks/useProject";
 import { useServiceSlotsState, useServiceState } from "features/service/hooks/useService";
-import { useNavigate, useParams } from "react-router-dom";
-import { LOADERS, useBookingStore, useUiStore } from "state/stores";
+import { isNetworkError } from "helpers/functions";
+import { useParams } from "react-router-dom";
+import { LOADERS, useBookingStore, useErrorStore, useUiStore } from "state/stores";
 import { useQuery } from "@apollo/client/react";
 import { BookingQueryResult, BookingQueryVariables } from "../api/queries/models";
 import { GET_BOOKING } from "../api/queries/queries";
 
 export const useBookingState = (bookingId: string) => {
-  const navigate = useNavigate();
   const setBooking = useBookingStore((state) => state.setBooking);
   const setServiceLoader = useUiStore((state) => state.setLoader);
+  const setBookingError = useErrorStore((state) => state.setBookingError);
 
-  const { loading, data, error, stopPolling } = useQuery<BookingQueryResult, BookingQueryVariables>(GET_BOOKING, {
-    fetchPolicy: "cache-and-network",
-    nextFetchPolicy: "cache-first",
-    pollInterval: 10000,
-    context: {
-      headers: {
-        "x-api-client-name": "booking-page",
+  const { loading, data, error, stopPolling, refetch } = useQuery<BookingQueryResult, BookingQueryVariables>(
+    GET_BOOKING,
+    {
+      fetchPolicy: "cache-and-network",
+      nextFetchPolicy: "cache-first",
+      pollInterval: 10000,
+      context: {
+        headers: {
+          "x-api-client-name": "booking-page",
+        },
+        version: VERSION.V1,
       },
-      version: VERSION.V1,
+      variables: {
+        bookingId,
+      },
     },
-    variables: {
-      bookingId,
-    },
-  });
+  );
 
   useEffect(() => {
     if (data && data.booking) {
       const { booking } = data;
       setBooking({ ...booking });
+      setBookingError(null); // Clear error on success
     }
-  }, [data, setBooking]);
+  }, [data, setBooking, setBookingError]);
 
   useEffect(() => {
     if (error || data?.booking === null) {
       stopPolling();
-      navigate("/");
+      setBookingError({
+        type: isNetworkError(error) ? "NETWORK_ERROR" : "BOOKING_NOT_FOUND",
+        canRetry: isNetworkError(error),
+        refetch,
+      });
     }
-  }, [error, navigate, data, stopPolling]);
+  }, [error, data, stopPolling, setBookingError, refetch]);
 
   useEffect(() => {
     setServiceLoader(LOADERS.BOOKING, loading);

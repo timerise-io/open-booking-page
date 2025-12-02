@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { BookingNotFound, ServiceNotFound } from "components/errors";
 import {
   ContentSection,
   ContentWithDetails,
@@ -9,7 +10,7 @@ import {
 import { useBooking } from "features/booking/hooks/useBooking";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { BOOKING_FORM_TYPES } from "models/service";
-import { useBookingStore } from "state/stores";
+import { useBookingStore, useErrorStore } from "state/stores";
 import RescheduleService from "./RescheduleService/RescheduleService";
 import { ServiceDateEvent } from "./ServiceDateEvent";
 import { ServiceDateRange } from "./ServiceDateRange";
@@ -25,10 +26,13 @@ const BookingHook = () => {
 
 const Reschedule = () => {
   const service = useBookingStore((state) => state.service);
+  const bookingError = useErrorStore((state) => state.bookingError);
+  const serviceError = useErrorStore((state) => state.serviceError);
   const serviceType = service?.viewConfig.displayType;
 
   const { isEmbeddedPage } = useIsEmbeddedPage();
 
+  // useMemo must be called before any early returns
   const getService = useMemo(() => {
     if (serviceType === BOOKING_FORM_TYPES.DAYS) {
       return <ServiceDateTime />;
@@ -40,6 +44,27 @@ const Reschedule = () => {
       return <ServiceMultiDateEvent />;
     }
   }, [serviceType]);
+
+  // Show error if present
+  if (bookingError) {
+    return (
+      <ContentWithDetails>
+        <ContentSection>
+          <BookingNotFound error={bookingError} />
+        </ContentSection>
+      </ContentWithDetails>
+    );
+  }
+
+  if (serviceError) {
+    return (
+      <ContentWithDetails>
+        <ContentSection>
+          <ServiceNotFound error={serviceError} />
+        </ContentSection>
+      </ContentWithDetails>
+    );
+  }
 
   return (
     <>

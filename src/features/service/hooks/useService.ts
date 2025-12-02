@@ -3,8 +3,9 @@ import { addDays } from "date-fns";
 import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { TIMERISE_LOGO_URL } from "helpers/constans";
-import { useNavigate, useParams } from "react-router-dom";
-import { LOADERS, useBookingStore, useFilterStore, useUiStore } from "state/stores";
+import { isNetworkError } from "helpers/functions";
+import { useParams } from "react-router-dom";
+import { LOADERS, useBookingStore, useErrorStore, useFilterStore, useUiStore } from "state/stores";
 import { useSlotFilter } from "state/stores";
 import { useQuery } from "@apollo/client/react";
 import {
@@ -18,8 +19,8 @@ import { useSlotsViewConfiguration } from "./useSlotsViewConfiguration";
 
 export const useServiceSlotsState = (serviceId: string) => {
   const isServiceLoaded = !!useBookingStore((state) => state.service);
-  const navigate = useNavigate();
   const setServiceSlots = useBookingStore((state) => state.setServiceSlots);
+  const setServiceError = useErrorStore((state) => state.setServiceError);
   const { firstDayDate, fetchDate: fetchFrom, triggerId, locations } = useSlotFilter();
 
   const { maxDaysPerPage } = useSlotsViewConfiguration();
@@ -69,8 +70,9 @@ export const useServiceSlotsState = (serviceId: string) => {
       const { slots } = slotsData.service;
       setAllSlots(slots);
       setServiceSlots(slots);
+      setServiceError(null); // Clear error on success
     }
-  }, [slotsData, setServiceSlots, setAllSlots]);
+  }, [slotsData, setServiceSlots, setAllSlots, setServiceError]);
 
   useEffect(() => {
     if (
@@ -83,8 +85,14 @@ export const useServiceSlotsState = (serviceId: string) => {
     )
       return;
 
-    if (slotsError || slotsData?.service === null) navigate("/");
-  }, [slotsError, navigate, slotsData]);
+    if (slotsError || slotsData?.service === null) {
+      setServiceError({
+        type: isNetworkError(slotsError) ? "NETWORK_ERROR" : "SERVICE_NOT_FOUND",
+        canRetry: isNetworkError(slotsError),
+        refetch,
+      });
+    }
+  }, [slotsError, slotsData, setServiceError, refetch]);
 
   useEffect(() => {
     setServiceSlotsLoader(LOADERS.SERVICE_SLOTS, slotsLoading);
@@ -100,23 +108,26 @@ export const useServiceSlotsState = (serviceId: string) => {
 };
 
 export const useServiceState = (serviceId: string, lang: string | null) => {
-  const navigate = useNavigate();
+  const setServiceError = useErrorStore((state) => state.setServiceError);
 
-  const { loading, data, error } = useQuery<{ service?: ServiceQueryResult }, ServiceQueryVariables>(GET_SERVICE, {
-    context: {
-      headers: {
-        ...(lang && { "Accept-Language": lang }),
-        "x-api-client-name": "booking-page",
+  const { loading, data, error, refetch } = useQuery<{ service?: ServiceQueryResult }, ServiceQueryVariables>(
+    GET_SERVICE,
+    {
+      context: {
+        headers: {
+          ...(lang && { "Accept-Language": lang }),
+          "x-api-client-name": "booking-page",
+        },
+        version: VERSION.V1,
       },
-      version: VERSION.V1,
+      fetchPolicy: "cache-and-network",
+      nextFetchPolicy: "cache-first",
+      variables: {
+        serviceId: serviceId,
+      },
+      skip: serviceId === "",
     },
-    fetchPolicy: "cache-and-network",
-    nextFetchPolicy: "cache-first",
-    variables: {
-      serviceId: serviceId,
-    },
-    skip: serviceId === "",
-  });
+  );
 
   const setTimeZone = useUiStore((state) => state.setTimeZone);
   const setService = useBookingStore((state) => state.setService);
@@ -202,13 +213,21 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
         ...slotsFilter,
         fetchDate: service.dateTimeFrom,
       });
+
+      setServiceError(null); // Clear error on success
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, setService, setTimeZone, setSlotsFilter]);
+  }, [data, setService, setTimeZone, setSlotsFilter, setServiceError]);
 
   useEffect(() => {
-    if (error || data?.service === null) navigate("/");
-  }, [error, navigate, data]);
+    if (error || data?.service === null) {
+      setServiceError({
+        type: isNetworkError(error) ? "NETWORK_ERROR" : "SERVICE_NOT_FOUND",
+        canRetry: isNetworkError(error),
+        refetch,
+      });
+    }
+  }, [error, data, setServiceError, refetch]);
 
   useEffect(() => {
     setServiceLoader(LOADERS.SERVICE, loading);
