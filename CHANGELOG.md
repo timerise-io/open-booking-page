@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.3] - 2025-12-02
+
 ### Changed
 
 - Migrated from Create React App to Vite build system
@@ -15,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optimized query fetch policies for better performance (cache-first, cache-and-network)
 - Updated GitHub workflows with new production and sandbox URLs
 - Improved navigation to handle empty query strings correctly
+- Simplified pre-commit hook to run linting only for faster commits
+- Replaced CommonJS require() with ES6 imports in useBookingSubscription
 
 ### Added
 
@@ -23,12 +27,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Error link for consistent GraphQL error monitoring
 - Cache updates for mutations (booking deletion, creation)
 - Poll interval for booking queries (10s) replacing manual polling
+- Centralized error state management with Zustand errorStore
+- Error display components (ServiceNotFound, BookingNotFound, NetworkError)
+- Context-aware navigation with useSmartNavigation hook
+- Error helper functions to detect network errors and filter AbortErrors
+- Husky configuration documentation
 
 ### Fixed
 
 - Default phone prefix now uses country code from service locale instead of hardcoded US
 - Navigation with empty query parameters no longer appends "?" to URLs
 - Slot cache merging to prevent duplicates
+- Reschedule URL construction with proper query parameter handling
+- Added useServiceSlotsState hook for fetching available booking slots in reschedule flow
+- Navigation to confirmation page after successful reschedule
+- Error handling by replacing navigate redirects with error state management
+- Infinite render loop in useIsEmbeddedPage by moving setUserPreference to useEffect
+- TypeScript type safety improvements across apolloClient, cacheConfig, and components
 
 ## [1.2.2] - 2025-12-02
 

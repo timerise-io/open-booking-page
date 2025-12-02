@@ -26,13 +26,21 @@ npm test            # Run Jest tests
 ## Architecture
 
 ### State Management
-Uses **Zustand** for global state. Stores are in `src/state/stores/`. Key stores: `bookingStore`, `projectStore`, `uiStore`, `filterStore`, `uploadStore`.
+Uses **Zustand** for global state. Stores are in `src/state/stores/`. Key stores: `bookingStore`, `projectStore`, `uiStore`, `filterStore`, `uploadStore`, `errorStore`.
 
 ### API Layer
 - **Apollo Client** with GraphQL for all API communication
 - Supports both HTTP and WebSocket connections (for subscriptions)
 - API versioning (V1/V2) handled via operation context
+- Cache persistence to localStorage with automatic eviction
+- Advanced caching with type policies for normalized data
 - Config: `src/api/apolloClient.ts`
+
+### Error Handling
+- Centralized error state management with `errorStore` (Zustand)
+- Error display components: `ServiceNotFound`, `BookingNotFound`, `NetworkError`
+- Context-aware navigation with `useSmartNavigation` hook
+- Network error detection and AbortError filtering
 
 ### Feature Module Structure
 Each feature follows this pattern:
@@ -79,4 +87,4 @@ Prefix with `VITE_` (Vite config maps this prefix):
 
 ## Pre-commit Hooks
 
-Husky runs on commit: prettier check, tests, and lint. All must pass.
+Husky runs linting on commit (see `docs/HUSKY_CONFIG.md` for rationale).
