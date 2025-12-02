@@ -1,13 +1,14 @@
 name: Deploy to prod
 on:
-  workflow_dispatch:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - main
 
 jobs:
   # Run quality checks in parallel
   quality:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -130,6 +131,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Firebase Tools
+        run: npm install -g firebase-tools
+
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
@@ -143,18 +152,22 @@ jobs:
             exit 1
           fi
 
+      - name: Create Service Account File
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_PROD }}' > service-account.json
+
       - name: Deploy to Firebase
         id: deploy
         uses: nick-fields/retry@v3
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: service-account.json
         with:
           timeout_minutes: 10
           max_attempts: 3
           retry_wait_seconds: 30
           command: |
-            npx firebase-tools deploy \
+            firebase deploy \
               --only hosting:service-app \
-              --project timerise-prod \
-              --token "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_PROD }}"
+              --project timerise-prod
 
       - name: Health check
         uses: nick-fields/retry@v3
