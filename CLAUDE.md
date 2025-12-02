@@ -26,7 +26,7 @@ npm test            # Run Jest tests
 ## Architecture
 
 ### State Management
-Uses **Recoil** for global state. Atoms are in `src/state/atoms/` and selectors in `src/state/selectors/`. Key atoms: `serviceAtom`, `bookingAtom`, `slotsAtom`, `timeZoneAtom`.
+Uses **Zustand** for global state. Stores are in `src/state/stores/`. Key stores: `bookingStore`, `projectStore`, `uiStore`, `filterStore`, `uploadStore`.
 
 ### API Layer
 - **Apollo Client** with GraphQL for all API communication
@@ -68,6 +68,8 @@ Uses **i18next** with HTTP backend for translations. Language detection from URL
 Prefix with `REACT_APP_` (Vite config maps this prefix):
 - `REACT_APP_TIMERISE_API` - GraphQL API endpoint
 - `REACT_APP_TIMERISE_WS` - WebSocket endpoint for subscriptions
+- `REACT_APP_TIMERISE_TOOLS_API` - Tools API endpoint
+- `GENERATE_SOURCEMAP` - Build config for source maps
 
 ## Key Models
 

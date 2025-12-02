@@ -83,25 +83,24 @@ Fixes code formatting with Prettier.
 | `REACT_APP_TIMERISE_API` | GraphQL API endpoint |
 | `REACT_APP_TIMERISE_WS` | WebSocket endpoint for subscriptions |
 | `REACT_APP_TIMERISE_TOOLS_API` | Tools API endpoint |
+| `GENERATE_SOURCEMAP` | Build config for source maps |
 
 ## Project Structure
 
 ```
 src/
-├── features/           # Feature-based modules
-│   ├── booking/        # Booking management and confirmation
-│   ├── service/        # Service browsing and booking UI
-│   ├── project/        # Project configuration
-│   ├── confirmation/   # Confirmation modals
-│   ├── theme/          # Theme provider (dark/light)
+├── features/           # Feature-based modules (7 modules)
 │   ├── analytics/      # Google Analytics integration
-│   └── i18n/           # Internationalization
-├── components/         # Shared UI components
-├── pages/              # Route page components
+│   ├── booking/        # Booking management and confirmation
+│   ├── confirmation/   # Confirmation modals
+│   ├── i18n/           # Internationalization
+│   ├── project/        # Project configuration
+│   ├── service/        # Service browsing and booking UI
+│   └── theme/          # Theme provider (dark/light)
+├── components/         # Shared UI components (21 components)
+├── pages/              # Route page components (9 pages)
 ├── state/              # State management
-│   ├── stores/         # Zustand stores
-│   ├── atoms/          # Recoil atoms (legacy)
-│   └── selectors/      # Recoil selectors (legacy)
+│   └── stores/         # Zustand stores (6 stores)
 ├── api/                # Apollo client setup
 ├── models/             # TypeScript interfaces
 ├── helpers/            # Utility functions and hooks
