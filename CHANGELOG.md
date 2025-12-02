@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.4] - 2025-12-02
+
 ### Added
 
 - Comprehensive CI/CD workflow documentation in docs/GITHUB_WORKFLOWS.md
@@ -14,7 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Production workflow now triggers only on merged pull requests to enforce code review
-- Updated Firebase deployment to use service account file authentication instead of token-based auth
+- Updated Firebase deployment to use service account file authentication for improved security
+- Enhanced Firebase deployment workflow with retry logic and improved reliability
+- Optimized CI/CD performance with Node.js caching and direct Firebase Tools installation
 
 ## [1.2.3] - 2025-12-02
 
