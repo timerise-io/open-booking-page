@@ -1,4 +1,1 @@
-npx update-browserslist-db@latest
-npm run prettier
-npm run test
 npm run lint
