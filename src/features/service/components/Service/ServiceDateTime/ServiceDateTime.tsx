@@ -6,20 +6,19 @@ import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
-import { slotsDayPattern } from "state/selectors/slotsDayPattern";
+import { useSlotsDayPattern } from "state/stores";
 import styled, { css } from "styled-components";
 import { HoursSystem } from "../HoursSystem";
 import ServiceCalendarActionRow from "../ServiceCalendarActionRow";
 import TimezoneInfo from "../TimezoneInfo";
 import ServiceCalendar from "./ServiceCalendar/ServiceCalendar";
 
-const WrapperCard = styled(Card)<{ fullHeight: boolean } & CardProps>`
+const WrapperCard = styled(Card)<{ $fullHeight: boolean } & CardProps>`
   overflow: hidden;
   position: relative;
 
-  ${({ fullHeight }) => {
-    if (fullHeight)
+  ${({ $fullHeight }) => {
+    if ($fullHeight)
       return css`
         max-height: unset;
       `;
@@ -67,7 +66,8 @@ const FULL_HEIGHT_COUNT = 10;
 
 const ServiceDateTime = () => {
   const { t } = useTranslation();
-  const numberOfSlotsPerDay = useRecoilValue(slotsDayPattern).length;
+  const slotsDayPattern = useSlotsDayPattern();
+  const numberOfSlotsPerDay = slotsDayPattern.length;
   const [isFullHeight, setIsFullHeight] = useState(numberOfSlotsPerDay < FULL_HEIGHT_COUNT + 1);
 
   useEffect(() => {
@@ -75,10 +75,10 @@ const ServiceDateTime = () => {
   }, [numberOfSlotsPerDay]);
 
   return (
-    <WrapperCard padding="20px 12px" fullHeight={isFullHeight}>
-      <Column ai="flex-start">
-        <TimezoneStyledRow mb={2.5} ml={1} mr={1} w="100%" pr={2}>
-          <Typography typographyType="h3" as="h3" displayType="contents">
+    <WrapperCard $padding="20px 12px" $fullHeight={isFullHeight}>
+      <Column $ai="flex-start">
+        <TimezoneStyledRow $mb={2.5} $ml={1} $mr={1} $w="100%" $pr={2}>
+          <Typography $typographyType="h3" as="h3" $displayType="contents">
             {t(`select-date-and-time`)}
           </Typography>
           <TimezoneHourSystemStyledContainer>
@@ -89,16 +89,16 @@ const ServiceDateTime = () => {
         <ServiceCalendarActionRow />
         <ServiceCalendar />
       </Column>
-      {numberOfSlotsPerDay > FULL_HEIGHT_COUNT && <Box mb={10}></Box>}
+      {numberOfSlotsPerDay > FULL_HEIGHT_COUNT && <Box $mb={10}></Box>}
       {numberOfSlotsPerDay > FULL_HEIGHT_COUNT && (
         <ShowMoreWrapper>
           <ContextButton
-            colorType="primary"
+            $colorType="primary"
             onClick={() => {
               setIsFullHeight(!isFullHeight);
             }}
           >
-            <Typography typographyType="body" align="center" as="span" color="inherit" weight="700">
+            <Typography $typographyType="body" $align="center" as="span" $color="inherit" $weight="700">
               {t(isFullHeight === false ? "show-more" : "show-less")}
             </Typography>
           </ContextButton>

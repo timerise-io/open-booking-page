@@ -1,10 +1,8 @@
 import React from "react";
 import { Box } from "components/layout/Box";
+import { useBookingCardViewConfig } from "features/booking/hooks/useBookingCardViewConfig";
 import { BOOKING_FORM_TYPES } from "models/service";
-import { useRecoilValue } from "recoil";
-import { bookingAtom } from "state/atoms/booking";
-import { serviceAtom } from "state/atoms/service";
-import { bookingCardViewConfig } from "state/selectors/bookingCardViewConfig";
+import { useBookingStore } from "state/stores";
 import Space from "../Space";
 import BookingCardContent from "./BookingCardContent";
 import { StyledColumn } from "./BookingCardSummary.styled";
@@ -16,9 +14,9 @@ interface BookingCardSummaryProps {
 }
 
 const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({ dateTimeFrom, dateTimeTo }) => {
-  const cardConfig = useRecoilValue(bookingCardViewConfig);
-  const booking = useRecoilValue(bookingAtom);
-  const service = useRecoilValue(serviceAtom);
+  const cardConfig = useBookingCardViewConfig();
+  const booking = useBookingStore((state) => state.booking);
+  const service = useBookingStore((state) => state.service);
 
   if (!cardConfig || !booking) return null;
 
@@ -27,7 +25,7 @@ const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({ dateTimeFrom, d
   const showQRButton = !!cardConfig.actions?.qr && service?.viewConfig?.displayType !== BOOKING_FORM_TYPES.PREORDER;
 
   return (
-    <StyledColumn mb={5}>
+    <StyledColumn $mb={5}>
       <BookingCardTitle
         dateTimeFrom={dateTimeFrom}
         dateTimeTo={dateTimeTo}
@@ -39,7 +37,7 @@ const BookingCardSummary: React.FC<BookingCardSummaryProps> = ({ dateTimeFrom, d
         showPayButton={!!cardConfig.actions?.pay}
       />
       {!!cardConfig.actions?.spaces && booking.service.spaces && booking.service.spaces.length > 0 && (
-        <Box mt={5} w="100%">
+        <Box $mt={5} $w="100%">
           {booking.service.spaces.map((item) => (
             <Space key={item.spaceId} space={item} />
           ))}

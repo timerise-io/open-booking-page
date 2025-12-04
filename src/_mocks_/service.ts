@@ -8,6 +8,7 @@ export const service = {
     theme: "DARK" as const,
     defaultLocale: "en-PL",
     localTimeZone: "Europe/Warsaw",
+    googleTagId: null,
   },
   title: "event single",
   description: "",
@@ -15,12 +16,11 @@ export const service = {
   promoPrice: 0,
   currency: "EUR",
   locations: [],
+  serviceLocations: [],
   hostedBy: "host",
   dateTimeTo: "2023-08-25T17:00:00.000Z",
   dateTimeFrom: "2023-08-20T09:00:00.000Z",
   images: [],
-  media: [],
-  hosts: [],
   viewConfig: {
     bookingStatus: {
       ACCEPTED: {
@@ -174,6 +174,14 @@ export const service = {
       duration: false,
       quantity: false,
       showTime: false,
+      multiSelect: false,
+    },
+    preorder: {
+      duration: false,
+      quantity: false,
+      showDate: true,
+      showTime: true,
+      multiSelect: false,
     },
   },
   paymentProviders: ["OFFLINE"],

@@ -3,24 +3,24 @@ import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { useProjectState } from "features/project/hooks/useProject";
 import { useServiceSlotsState, useServiceState } from "features/service/hooks/useService";
-import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { bookingAtom } from "state/atoms/booking";
-import { LOADERS, loaderAtom } from "state/atoms/loader";
-import { serviceAtom } from "state/atoms/service";
-import { useQuery } from "@apollo/client";
+import { isNetworkError } from "helpers/functions";
+import { useParams } from "react-router-dom";
+import { LOADERS, useBookingStore, useErrorStore, useUiStore } from "state/stores";
+import { useQuery } from "@apollo/client/react";
 import { BookingQueryResult, BookingQueryVariables } from "../api/queries/models";
 import { GET_BOOKING } from "../api/queries/queries";
 
 export const useBookingState = (bookingId: string) => {
-  const navigate = useNavigate();
-  const setBooking = useSetRecoilState(bookingAtom);
-  const setServiceLoader = useSetRecoilState(loaderAtom(LOADERS.BOOKING));
+  const setBooking = useBookingStore((state) => state.setBooking);
+  const setServiceLoader = useUiStore((state) => state.setLoader);
+  const setBookingError = useErrorStore((state) => state.setBookingError);
 
-  const { loading, data, error, startPolling, stopPolling } = useQuery<BookingQueryResult, BookingQueryVariables>(
+  const { loading, data, error, stopPolling, refetch } = useQuery<BookingQueryResult, BookingQueryVariables>(
     GET_BOOKING,
     {
-      fetchPolicy: "no-cache",
+      fetchPolicy: "cache-and-network",
+      nextFetchPolicy: "cache-first",
+      pollInterval: 10000,
       context: {
         headers: {
           "x-api-client-name": "booking-page",
@@ -34,26 +34,26 @@ export const useBookingState = (bookingId: string) => {
   );
 
   useEffect(() => {
-    startPolling(2000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
     if (data && data.booking) {
       const { booking } = data;
       setBooking({ ...booking });
+      setBookingError(null); // Clear error on success
     }
-  }, [data, setBooking]);
+  }, [data, setBooking, setBookingError]);
 
   useEffect(() => {
     if (error || data?.booking === null) {
       stopPolling();
-      navigate("/");
+      setBookingError({
+        type: isNetworkError(error) ? "NETWORK_ERROR" : "BOOKING_NOT_FOUND",
+        canRetry: isNetworkError(error),
+        refetch,
+      });
     }
-  }, [error, navigate, data, stopPolling]);
+  }, [error, data, stopPolling, setBookingError, refetch]);
 
   useEffect(() => {
-    setServiceLoader(loading);
+    setServiceLoader(LOADERS.BOOKING, loading);
   }, [loading, setServiceLoader]);
 };
 
@@ -61,9 +61,9 @@ export const useBooking = () => {
   const { id } = useParams<{ id: string }>();
   const lang = useLangParam();
   useBookingState(id!);
-  const bookingValue = useRecoilValue(bookingAtom);
-  const serviceValue = useRecoilValue(serviceAtom);
+  const bookingValue = useBookingStore((state) => state.booking);
+  const serviceValue = useBookingStore((state) => state.service);
   useServiceState(bookingValue?.service.serviceId ?? "", lang);
-  useServiceSlotsState(serviceValue?.serviceId! ?? "");
+  useServiceSlotsState(serviceValue?.serviceId ?? "");
   useProjectState(serviceValue?.project.projectId ?? "");
 };

@@ -1,6 +1,5 @@
 import { Row } from "components/layout/Row";
-import { useRecoilValue } from "recoil";
-import { bookingCardViewConfig } from "state/selectors/bookingCardViewConfig";
+import { useBookingCardViewConfig } from "features/booking/hooks/useBookingCardViewConfig";
 import styled, { css } from "styled-components";
 import BackToServiceButton from "./BackToServiceButton";
 import CancelBookingButton from "./CancelBookingButton";
@@ -11,17 +10,17 @@ const Wrapper = styled(Row)`
   padding-top: 20px;
 `;
 
-const StyledDualButtonWrapper = styled.div<{ showRescheduleButton?: boolean; showCancelButton?: boolean }>`
+const StyledDualButtonWrapper = styled.div<{ $showRescheduleButton?: boolean; $showCancelButton?: boolean }>`
   gap: 8px;
-  ${({ showRescheduleButton, showCancelButton }) => {
+  ${({ $showRescheduleButton, $showCancelButton }) => {
     return css`
-      display: ${!!showRescheduleButton || !!showCancelButton ? "flex" : "none"};
+      display: ${!!$showRescheduleButton || !!$showCancelButton ? "flex" : "none"};
     `;
   }}
 `;
 
 const BookingCardBottom = () => {
-  const cardConfig = useRecoilValue(bookingCardViewConfig);
+  const cardConfig = useBookingCardViewConfig();
 
   const {
     cancel: showCancelButton,
@@ -35,12 +34,12 @@ const BookingCardBottom = () => {
 
   return (
     <Wrapper
-      jc={
+      $jc={
         !!showBackToServiceButton && (!!showCancelButton || !!showRescheduleButton) ? "space-between" : "space-around"
       }
     >
       {!!showBackToServiceButton && <BackToServiceButton />}
-      <StyledDualButtonWrapper showRescheduleButton={showRescheduleButton} showCancelButton={showCancelButton}>
+      <StyledDualButtonWrapper $showRescheduleButton={showRescheduleButton} $showCancelButton={showCancelButton}>
         {!!showRescheduleButton && <RescheduleBookingButton />}
         {!!showCancelButton && <CancelBookingButton />}
       </StyledDualButtonWrapper>

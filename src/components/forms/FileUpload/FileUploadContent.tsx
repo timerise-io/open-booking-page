@@ -13,7 +13,7 @@ const FileUploadContent = ({ fileName, isLoading, onClick }: FileUploadContentPr
   const { t } = useTranslation("forms");
   return (
     <>
-      <Typography className="file-name" typographyType="body" as="span">
+      <Typography className="file-name" $typographyType="body" as="span">
         {fileName} {isLoading && ` - ${t("uploading")}`}
       </Typography>
       <FileUploadStyledButton
@@ -23,7 +23,7 @@ const FileUploadContent = ({ fileName, isLoading, onClick }: FileUploadContentPr
         }}
         disabled={isLoading}
       >
-        <Typography className="button-text" typographyType="body" as="span">
+        <Typography className="button-text" $typographyType="body" as="span">
           {t(isLoading ? "cancel" : "delete")}
         </Typography>
       </FileUploadStyledButton>

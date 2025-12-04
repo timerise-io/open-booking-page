@@ -1,13 +1,10 @@
 import { ContextButton } from "components/ContextButton";
 import { Row } from "components/layout/Row";
 import { addMonths } from "date-fns";
-import { addDays, addMinutes, isAfter, isSameDay, set } from "date-fns/esm";
-import isBefore from "date-fns/isBefore";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { serviceAtom } from "state/atoms/service";
-import { slotsFiltersAtom } from "state/atoms/slotsFilters";
+import { addDays, addMinutes, isAfter, isBefore, isSameDay, set } from "date-fns";
+import { useBookingStore, useFilterStore } from "state/stores";
 import styled, { css } from "styled-components";
-import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from "@tabler/icons";
+import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from "@tabler/icons-react";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -45,8 +42,9 @@ const PaginationButton = styled(ContextButton)`
 const Loader = <Wrapper></Wrapper>;
 
 const ServiceCalendarActionRow = () => {
-  const service = useRecoilValue(serviceAtom);
-  const [serviceFilters, setServiceFilters] = useRecoilState(slotsFiltersAtom);
+  const service = useBookingStore((state) => state.service);
+  const serviceFilters = useFilterStore((state) => state.slotsFilters);
+  const setServiceFilters = useFilterStore((state) => state.setSlotsFilters);
 
   if (service === undefined) {
     return Loader;
@@ -115,19 +113,19 @@ const ServiceCalendarActionRow = () => {
 
   return (
     <Wrapper>
-      <Row gap="8px">
-        <PaginationButton colorType="primary" onClick={handlePrevMonthClick} disabled={isPrevMonthDisabled}>
+      <Row $gap="8px">
+        <PaginationButton $colorType="primary" onClick={handlePrevMonthClick} disabled={isPrevMonthDisabled}>
           <IconChevronsLeft />
         </PaginationButton>
-        <PaginationButton colorType="primary" onClick={handlePrevClick} disabled={isPrevDisabled}>
+        <PaginationButton $colorType="primary" onClick={handlePrevClick} disabled={isPrevDisabled}>
           <IconChevronLeft />
         </PaginationButton>
       </Row>
-      <Row gap="8px">
-        <PaginationButton colorType="primary" onClick={handleNextClick} disabled={isNextDisabled}>
+      <Row $gap="8px">
+        <PaginationButton $colorType="primary" onClick={handleNextClick} disabled={isNextDisabled}>
           <IconChevronRight />
         </PaginationButton>
-        <PaginationButton colorType="primary" onClick={handleNextMonthClick} disabled={isNextMonthDisabled}>
+        <PaginationButton $colorType="primary" onClick={handleNextMonthClick} disabled={isNextMonthDisabled}>
           <IconChevronsRight />
         </PaginationButton>
       </Row>

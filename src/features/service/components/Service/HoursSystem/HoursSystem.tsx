@@ -2,8 +2,7 @@ import React, { useContext } from "react";
 import { Typography } from "components/Typography";
 import { Row } from "components/layout/Row";
 import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { hoursSystemAtom } from "state/atoms";
+import { useUiStore } from "state/stores";
 import styled, { css } from "styled-components";
 import { HOURS_SYSTEMS } from "./enums/HoursSystem.enum";
 
@@ -18,20 +17,20 @@ const Wrapper = styled(Row)`
   }
 `;
 
-const HoursSystemButton = styled(Typography)<{ isBold: boolean }>`
+const HoursSystemButton = styled(Typography)<{ $isBold: boolean }>`
   cursor: pointer;
 
-  ${({ isBold }) => {
+  ${({ $isBold }) => {
     return css`
-      font-weight: ${isBold ? "700" : "normal"};
-      text-decoration: ${isBold ? "underline" : "none"};
+      font-weight: ${$isBold ? "700" : "normal"};
+      text-decoration: ${$isBold ? "underline" : "none"};
     `;
   }}
 `;
 
 export const HoursSystem = () => {
-  const hoursSystem = useRecoilValue(hoursSystemAtom);
-  const setHoursSystem = useSetRecoilState(hoursSystemAtom);
+  const hoursSystem = useUiStore((state) => state.hoursSystem);
+  const setHoursSystem = useUiStore((state) => state.setHoursSystem);
   const { sendEvent } = useContext(AnalyticsContext);
 
   const handleHoursSystemChange = () => {
@@ -50,19 +49,19 @@ export const HoursSystem = () => {
     <Wrapper onClick={handleHoursSystemChange}>
       <HoursSystemButton
         className="timezone-info"
-        typographyType="label"
+        $typographyType="label"
         color="inherit"
         as="span"
-        isBold={hoursSystem === HOURS_SYSTEMS.h12}
+        $isBold={hoursSystem === HOURS_SYSTEMS.h12}
       >
         12h
       </HoursSystemButton>
       <HoursSystemButton
         className="timezone-info"
-        typographyType="label"
+        $typographyType="label"
         color="inherit"
         as="span"
-        isBold={hoursSystem === HOURS_SYSTEMS.h24}
+        $isBold={hoursSystem === HOURS_SYSTEMS.h24}
       >
         24h
       </HoursSystemButton>

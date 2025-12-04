@@ -15,7 +15,7 @@ const BookingCardContent = ({ iCalUrl, qrUrl, showCalendarButton, showQRButton }
   if (!showCalendarButton && !showQRButton) return null;
 
   return (
-    <Column w="100%" mt={2.5}>
+    <Column $w="100%" $mt={2.5}>
       <Row>
         {showCalendarButton && (
           <LinkButton href={iCalUrl} download>

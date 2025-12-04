@@ -8,13 +8,9 @@ import { useLocale } from "helpers/hooks/useLocale";
 import { Booking } from "models/booking";
 import { useTranslation } from "react-i18next";
 import { useParams, useSearchParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { hoursSystemAtom } from "state/atoms";
-import { bookingAtom } from "state/atoms/booking";
-import { serviceAtom } from "state/atoms/service";
-import { timeZoneAtom } from "state/atoms/timeZone";
+import { useBookingStore, useUiStore } from "state/stores";
 import styled from "styled-components";
-import { IconCalendarEvent } from "@tabler/icons";
+import { IconCalendarEvent } from "@tabler/icons-react";
 import { StyledRow } from "./BookingCardSummary.styled";
 
 const StyledImg = styled.img`
@@ -40,10 +36,10 @@ const BookingCardTitle = ({
 }: BookingCardTitleProps) => {
   const locale = useLocale();
   const { t } = useTranslation(["booking"]);
-  const timeZone = useRecoilValue(timeZoneAtom);
-  const service = useRecoilValue(serviceAtom)!;
-  const booking = useRecoilValue(bookingAtom);
-  const hoursSystem = useRecoilValue(hoursSystemAtom);
+  const timeZone = useUiStore((state) => state.timeZone);
+  const service = useBookingStore((state) => state.service)!;
+  const booking = useBookingStore((state) => state.booking);
+  const hoursSystem = useUiStore((state) => state.hoursSystem);
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
   const bookingPaymentStatus = booking?.paymentStatus;
   const { paymentStatus } = useParams<{ paymentStatus: string }>();
@@ -72,10 +68,10 @@ const BookingCardTitle = ({
   return (
     <>
       <StyledImg src={iconUrl} alt="status icon" />
-      <Typography typographyType="h2" as="h2" className="status-info">
+      <Typography $typographyType="h2" as="h2" className="status-info">
         {title}
       </Typography>
-      <Typography typographyType="body" align="center" className="status-description">
+      <Typography $typographyType="body" $align="center" className="status-description">
         {description}
       </Typography>
 
@@ -83,9 +79,9 @@ const BookingCardTitle = ({
         booking?.slots &&
         booking?.slots.length > 0 &&
         booking.slots.map((slot) => (
-          <StyledRow jc="center" gap="6px" key={`${slot.dateTimeFrom}-${slot.dateTimeTo}`}>
+          <StyledRow $jc="center" $gap="6px" key={`${slot.dateTimeFrom}-${slot.dateTimeTo}`}>
             <IconCalendarEvent />
-            <Typography typographyType="body" align="center" weight="700" displayType="contents">
+            <Typography $typographyType="body" $align="center" $weight="700" $displayType="contents">
               {`${getDatesValue({
                 service,
                 dateTimeFrom: slot.dateTimeFrom,
@@ -99,7 +95,7 @@ const BookingCardTitle = ({
           </StyledRow>
         ))}
       {showPayButton && paymentLink && (
-        <Box mt={3.5}>
+        <Box $mt={3.5}>
           <LinkButton href={paymentLink} target="_blank">
             {t("pay")}
           </LinkButton>

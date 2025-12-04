@@ -1,7 +1,7 @@
 {
   "solution-name": "Timerise",
   "footer": {
-    "copyright": "Timerise © 2024",
+    "copyright": "Timerise © 2025",
     "terms-and-conditions": "Terms & Conditions",
     "privacy-policy": "Privacy Policy",
     "powered-by": "powered by"
@@ -36,5 +36,16 @@
   "timezone": "Timezone",
   "format": "Format",
   "quantity-slots-available": "{{quantity}} slots available",
-  "no-event-slots-available": "No event slots available"
+  "no-event-slots-available": "No event slots available",
+  "errors": {
+    "service-not-found-title": "Service Not Found",
+    "service-not-found-message": "The service you're looking for doesn't exist or is no longer available.",
+    "booking-not-found-title": "Booking Not Found",
+    "booking-not-found-message": "The booking you're looking for doesn't exist or may have been cancelled.",
+    "network-error-title": "Connection Error",
+    "network-error-message": "Unable to load data. Please check your internet connection.",
+    "retry": "Try Again",
+    "return-home": "Return to Home",
+    "contact-website-owner": "Please contact the website owner for assistance."
+  }
 }

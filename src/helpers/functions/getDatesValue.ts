@@ -1,3 +1,4 @@
+import { Locale } from "date-fns";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import { BOOKING_FORM_TYPES, Service } from "models/service";
 

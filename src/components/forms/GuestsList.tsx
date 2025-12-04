@@ -8,8 +8,7 @@ import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
 import { useField } from "formik";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
-import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
+import { useBookingStore } from "state/stores";
 import styled from "styled-components";
 
 const StyledColumn = styled(Column)`
@@ -36,8 +35,8 @@ interface GuestsListFieldProps {
   maxGuests?: number | null;
 }
 
-const GuestsList: React.FC<GuestsListFieldProps> = ({ name, label, minGuests = 1, maxGuests = 10 }) => {
-  const selectedSlot = useRecoilValue(selectedSlotSelector);
+const GuestsList: React.FC<GuestsListFieldProps> = ({ name, label, maxGuests = 10 }) => {
+  const selectedSlot = useBookingStore((state) => state.getSelectedSlotData());
   const { t } = useTranslation(["forms"]);
 
   const guestsLimit: number = maxGuests ? maxGuests - 1 : 0;
@@ -52,32 +51,31 @@ const GuestsList: React.FC<GuestsListFieldProps> = ({ name, label, minGuests = 1
     const index = event.target.getAttribute("data-index");
     const field = event.target.getAttribute("data-field");
     const newValue = event.target.value;
-    let tmpGuests: any[] = guests;
+    const tmpGuests = [...guests];
     if (index && field) {
-      tmpGuests[parseInt(index)][field] = newValue;
+      tmpGuests[parseInt(index)][field as keyof typeof guest] = newValue;
       setGuests(tmpGuests);
       setValue(tmpGuests);
     }
   };
 
   const handleClick = () => {
-    let tmpGuests: any[] = guests;
-    tmpGuests.push(guest);
+    const tmpGuests = [...guests, guest];
     setGuests(tmpGuests);
     setValue(tmpGuests);
   };
 
   return (
-    <StyledColumn ai="stretch">
-      <Box mb={2.5}>
-        <Typography typographyType="h3" as="h3" displayType="contents">
+    <StyledColumn $ai="stretch">
+      <Box $mb={2.5}>
+        <Typography $typographyType="h3" as="h3" $displayType="contents">
           {label}
         </Typography>
       </Box>
       <input id={name} type="hidden"></input>
       {guests.map((guest, index) => (
-        <Row ai="stretch" key={"guest" + index} gap="10px">
-          <StyledColumn ai="stretch" style={{ width: "100%", marginBottom: "10px" }}>
+        <Row $ai="stretch" key={"guest" + index} $gap="10px">
+          <StyledColumn $ai="stretch" style={{ width: "100%", marginBottom: "10px" }}>
             <StyledLabel htmlFor={name}>Full name</StyledLabel>
             <StyledInput
               data-index={index}
@@ -90,7 +88,7 @@ const GuestsList: React.FC<GuestsListFieldProps> = ({ name, label, minGuests = 1
               onChange={handleChange}
             />
           </StyledColumn>
-          <StyledColumn ai="stretch" style={{ width: "100%", marginBottom: "10px" }}>
+          <StyledColumn $ai="stretch" style={{ width: "100%", marginBottom: "10px" }}>
             <StyledLabel htmlFor={name}>E-mail</StyledLabel>
             <StyledInput
               data-index={index}
@@ -107,11 +105,11 @@ const GuestsList: React.FC<GuestsListFieldProps> = ({ name, label, minGuests = 1
       ))}
 
       {guests.length < guestsLimit && (
-        <StyledButtonsWrapper mt={1} mb={1}>
+        <StyledButtonsWrapper $mt={1} $mb={1}>
           <Button
             style={{ boxShadow: "none", padding: 0, fontWeight: 400, width: "auto" }}
             type="button"
-            buttonType="text"
+            $buttonType="text"
             data-cy="add-guest-button"
             onClick={handleClick}
           >
@@ -121,14 +119,14 @@ const GuestsList: React.FC<GuestsListFieldProps> = ({ name, label, minGuests = 1
       )}
 
       {selectedSlot !== undefined && (
-        <StyledHint typographyType="body" as="span">
+        <StyledHint $typographyType="body" as="span">
           {t("out-of", { maxGuests })}
         </StyledHint>
       )}
 
-      <Box h="13px" mt={0.5} mb={1}>
+      <Box $h="13px" $mt={0.5} $mb={1}>
         {meta.error && meta.touched && (
-          <Typography typographyType="label" as="span" color="error">
+          <Typography $typographyType="label" as="span" $color="error">
             {meta.error}
           </Typography>
         )}

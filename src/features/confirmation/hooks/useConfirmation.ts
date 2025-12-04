@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
 import { ConfirmationType } from "models/confirmation";
 import { ButtonType } from "models/theme";
-import { useRecoilState, useResetRecoilState } from "recoil";
-import confirmationAtom from "state/atoms/confirmation";
+import { useBookingStore } from "state/stores";
 
 interface UseContextProps {
-  onAbort?: Function;
+  onAbort?: () => void;
   confirmButtonType: ButtonType;
-  onConfirm?: Function;
+  onConfirm?: () => void;
   type: ConfirmationType;
 }
 
 const useConfirmation = ({ onAbort, confirmButtonType, onConfirm, type }: UseContextProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [confirmation, setConfirmation] = useRecoilState(confirmationAtom);
-  const resetConfirmation = useResetRecoilState(confirmationAtom);
+  const confirmation = useBookingStore((state) => state.confirmation);
+  const setConfirmation = useBookingStore((state) => state.setConfirmation);
 
   useEffect(() => {
     if (isOpen) {
@@ -29,14 +28,14 @@ const useConfirmation = ({ onAbort, confirmButtonType, onConfirm, type }: UseCon
   useEffect(() => {
     if (isOpen && confirmation?.state === "aborted") {
       setIsOpen(false);
-      resetConfirmation();
-      onAbort && onAbort();
+      setConfirmation(undefined);
+      onAbort?.();
     } else if (isOpen && confirmation?.state === "confirmed") {
       setIsOpen(false);
-      resetConfirmation();
-      onConfirm && onConfirm();
+      setConfirmation(undefined);
+      onConfirm?.();
     }
-  }, [confirmation, isOpen, onAbort, onConfirm, resetConfirmation]);
+  }, [confirmation, isOpen, onAbort, onConfirm, setConfirmation]);
 
   const handleOpen = () => setIsOpen(true);
 

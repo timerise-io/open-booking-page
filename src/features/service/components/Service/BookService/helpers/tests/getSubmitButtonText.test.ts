@@ -2,12 +2,12 @@ import { Service } from "models/service";
 import { getSubmitButtonText } from "../";
 
 describe("getSubmitButtonText", () => {
-  const tMock = (key: string) => {
+  const tMock = ((key: string) => {
     if (key === "book-free-button") {
       return "Book now";
     }
     return "";
-  };
+  }) as unknown as import("i18next").TFunction;
 
   const serviceMock = {
     title: "Service name",

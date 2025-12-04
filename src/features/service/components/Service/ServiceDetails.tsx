@@ -10,13 +10,10 @@ import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { Booking } from "models/booking";
 import { Service } from "models/service";
 import ReactMarkdown from "react-markdown";
-import { useRecoilState, useRecoilValue } from "recoil";
 import rehypeRaw from "rehype-raw";
-import { bookingAtom } from "state/atoms/booking";
-import { locationAtom } from "state/atoms/location";
-import { serviceAtom } from "state/atoms/service";
+import { useBookingStore, useProjectStore } from "state/stores";
 import styled, { css } from "styled-components";
-import { IconCreditCard, IconMapPin, IconUser } from "@tabler/icons";
+import { IconCreditCard, IconMapPin, IconUser } from "@tabler/icons-react";
 
 const StyledMD = styled.div`
   .md-wrapper {
@@ -78,15 +75,15 @@ const StyledContextSelect = styled(ContextSelect)`
   width: calc(100% - 20px);
 }`;
 
-const DetailsRow: React.FC<DetailsRowProps> = ({ name, value, icon }) => {
+const DetailsRow: React.FC<DetailsRowProps> = ({ value, icon }) => {
   return (
-    <Row mb={0.5} w="100%" jc="flex-start" ai="flex-start">
+    <Row $mb={0.5} $w="100%" $jc="flex-start" $ai="flex-start">
       <IconWrapper>{icon}</IconWrapper>
-      <Box ml={0.5} w="100%">
+      <Box $ml={0.5} $w="100%">
         {value === null ? (
-          <SkeletonBox w="100%" h="12px" style={{ minWidth: "-webkit-fill-available" }} />
+          <SkeletonBox $w="100%" $h="12px" style={{ minWidth: "-webkit-fill-available" }} />
         ) : (
-          <Typography typographyType="body" weight="700" displayType="contents">
+          <Typography $typographyType="body" $weight="700" $displayType="contents">
             {value}
           </Typography>
         )}
@@ -156,9 +153,10 @@ const LocationDetailsRow: React.FC<LocationDetailsRowProps> = ({
 };
 
 const ServiceDetails = () => {
-  const serviceData = useRecoilValue(serviceAtom);
-  const [location, setLocation] = useRecoilState(locationAtom);
-  const booking = useRecoilValue(bookingAtom);
+  const serviceData = useBookingStore((state) => state.service);
+  const location = useProjectStore((state) => state.location);
+  const setLocation = useProjectStore((state) => state.setLocation);
+  const booking = useBookingStore((state) => state.booking);
 
   useEffect(() => {
     setLocation(serviceData?.serviceLocations[0]?.locationId ?? "");
@@ -167,9 +165,9 @@ const ServiceDetails = () => {
 
   const title =
     serviceData === undefined ? (
-      <SkeletonBox h="25px" w="100%" />
+      <SkeletonBox $h="25px" $w="100%" />
     ) : (
-      <Typography typographyType="h2" as="h2" displayType="contents">
+      <Typography $typographyType="h2" as="h2" $displayType="contents">
         {serviceData.title}
       </Typography>
     );
@@ -177,28 +175,33 @@ const ServiceDetails = () => {
   const description =
     serviceData === undefined ? (
       <>
-        <SkeletonBox mt={1.75} h="12px" w="100%" />
-        <SkeletonBox mt={0.5} h="12px" w="100%" />
-        <SkeletonBox mt={0.5} h="12px" w="100%" />
-        <SkeletonBox mt={0.5} h="12px" w="100%" />
+        <SkeletonBox $mt={1.75} $h="12px" $w="100%" />
+        <SkeletonBox $mt={0.5} $h="12px" $w="100%" />
+        <SkeletonBox $mt={0.5} $h="12px" $w="100%" />
+        <SkeletonBox $mt={0.5} $h="12px" $w="100%" />
       </>
     ) : (
       <StyledMD>
-        <ReactMarkdown className="md-wrapper" rehypePlugins={[rehypeRaw]} children={serviceData.description} />
+        <div className="md-wrapper">
+          <ReactMarkdown rehypePlugins={[rehypeRaw]} children={serviceData.description} />
+        </div>
       </StyledMD>
     );
 
   const locationsOptions =
-    serviceData?.serviceLocations.reduce((acc, { title, locationId }) => {
-      acc[locationId] = title;
-      return acc;
-    }, {} as Record<string, string>) ?? {};
+    serviceData?.serviceLocations.reduce(
+      (acc, { title, locationId }) => {
+        acc[locationId] = title;
+        return acc;
+      },
+      {} as Record<string, string>,
+    ) ?? {};
 
   return (
     <>
       {title}
       {description}
-      <Column ai="flex-start">
+      <Column $ai="flex-start">
         {serviceData && serviceData.price > 0 && (
           <DetailsRow
             name="Payment"

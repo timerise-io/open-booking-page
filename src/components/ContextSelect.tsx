@@ -5,7 +5,7 @@ import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
 import useOnClickOutside from "helpers/hooks/useOnClickOutside";
 import styled, { css } from "styled-components";
-import { IconCheck, IconChevronDown } from "@tabler/icons";
+import { IconCheck, IconChevronDown } from "@tabler/icons-react";
 
 const SelectWrapper = styled(Column)`
   position: relative;
@@ -173,7 +173,7 @@ export const ContextSelect: React.FC<ContextSelectProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const memoizedCallback = useCallback((event: Event) => {
+  const memoizedCallback = useCallback(() => {
     setIsOpen(false);
   }, []);
 
@@ -182,8 +182,8 @@ export const ContextSelect: React.FC<ContextSelectProps> = ({
   const handleChange = (newSelectedKey: string) => {
     if (typeof value === "string") {
       setIsOpen(false);
-      onChange && onChange(newSelectedKey);
-      closeAfterChange && setIsOpen(false);
+      onChange?.(newSelectedKey);
+      if (closeAfterChange) setIsOpen(false);
       return;
     }
     //multiselect below
@@ -191,17 +191,17 @@ export const ContextSelect: React.FC<ContextSelectProps> = ({
     if (index > -1) {
       const newValues = [...value];
       newValues.splice(index, 1);
-      onChange && onChange([...newValues]);
+      onChange?.([...newValues]);
     } else {
-      onChange && onChange([...value, newSelectedKey]);
+      onChange?.([...value, newSelectedKey]);
     }
-    closeAfterChange && setIsOpen(false);
+    if (closeAfterChange) setIsOpen(false);
   };
 
   const selectedValue = typeof value === "string" ? options[value] : getMultiValue(value, options);
 
   return (
-    <SelectWrapper ai="flex-start" ref={ref} className={className}>
+    <SelectWrapper $ai="flex-start" ref={ref} className={className}>
       {label !== "" && <StyledLabel>{label}</StyledLabel>}
       <OpenListButton
         onClick={() => {
@@ -210,8 +210,8 @@ export const ContextSelect: React.FC<ContextSelectProps> = ({
         type="button"
         disabled={disabled}
       >
-        <Row className="label-value" jc="flex-start" w="100% ">
-          <StyledValue className="disabled-text" typographyType="body" title={fixedDisplay || selectedValue}>
+        <Row className="label-value" $jc="flex-start" $w="100% ">
+          <StyledValue className="disabled-text" $typographyType="body" title={fixedDisplay || selectedValue}>
             {fixedDisplay || selectedValue}
           </StyledValue>
         </Row>
@@ -229,7 +229,7 @@ export const ContextSelect: React.FC<ContextSelectProps> = ({
                 type="button"
                 title={itemValue}
               >
-                <Typography typographyType="body" weight={isMarked ? "700" : "400"} as="span">
+                <Typography $typographyType="body" $weight={isMarked ? "700" : "400"} as="span">
                   {itemValue}
                 </Typography>
                 {isMarked && <IconCheck size={20} />}

@@ -1,6 +1,6 @@
 import { VERSION } from "enums";
 import { useParams } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
 import { CancelBookingMutationResult, CancelBookingMutationVariables } from "../api/mutations/models";
 import { CANCEL_BOOKING } from "../api/mutations/mutations";
 
@@ -12,6 +12,23 @@ export const useDeleteBooking = () => {
         "x-api-client-name": "booking-page",
       },
       version: VERSION.V1,
+    },
+    update: (cache, { data }) => {
+      if (data?.bookingDelete && id) {
+        // Update booking status in cache
+        cache.modify({
+          id: cache.identify({
+            __typename: "Booking",
+            bookingId: id,
+          }),
+          fields: {
+            status: () => "CANCELED",
+          },
+        });
+        // Evict slots to show returned availability
+        cache.evict({ fieldName: "slots" });
+        cache.gc();
+      }
     },
   });
 

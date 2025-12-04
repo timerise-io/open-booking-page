@@ -4,9 +4,8 @@ import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { formatInTimeZone } from "date-fns-tz";
 import { useLocale } from "helpers/hooks/useLocale";
-import { useRecoilValue } from "recoil";
-import { hoursSystemAtom } from "state/atoms";
-import { slotsDayPattern } from "state/selectors/slotsDayPattern";
+import { useSlotsDayPattern } from "state/hooks";
+import { useUiStore } from "state/stores";
 import styled from "styled-components";
 import { HOURS_SYSTEMS } from "../../HoursSystem/enums/HoursSystem.enum";
 import TimeSlot from "./TimeSlot";
@@ -29,19 +28,19 @@ interface ServiceCalendarDayProps {
 const ServiceCalendarDay: React.FC<ServiceCalendarDayProps> = ({ day }) => {
   const locale = useLocale();
   const dayPart = day.split("T")[0];
-  const pattern = useRecoilValue(slotsDayPattern);
-  const hoursSystem = useRecoilValue(hoursSystemAtom);
+  const pattern = useSlotsDayPattern();
+  const hoursSystem = useUiStore((state) => state.hoursSystem);
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
 
   return (
     <ServiceCalendarDayWrapper>
-      <Box mb={1.5}>
-        <Typography typographyType="body" weight="bold" as="div" align="center">
+      <Box $mb={1.5}>
+        <Typography $typographyType="body" $weight="bold" as="div" $align="center">
           {formatInTimeZone(day, "UTC", "iii", {
             locale: locale,
           }).replace(/[.]$/, "")}
         </Typography>
-        <DateTypography className="date-text" typographyType="body" as="div" align="center">
+        <DateTypography className="date-text" $typographyType="body" as="div" $align="center">
           {formatInTimeZone(day, "UTC", "dd MMM", {
             locale: locale,
           })}

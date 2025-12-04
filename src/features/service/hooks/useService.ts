@@ -1,19 +1,13 @@
 import { useEffect } from "react";
-import addDays from "date-fns/addDays";
+import { addDays } from "date-fns";
 import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { TIMERISE_LOGO_URL } from "helpers/constans";
-import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { LOADERS, loaderAtom } from "state/atoms/loader";
-import { serviceAtom } from "state/atoms/service";
-import { serviceSlotsAtom } from "state/atoms/serviceSlots";
-import { slotsAtom } from "state/atoms/slots";
-import { slotsFiltersAtom } from "state/atoms/slotsFilters";
-import { timeZoneAtom } from "state/atoms/timeZone";
-import { slotsFilterSelector } from "state/selectors/slotFilterSelector";
-import { slotsViewConfiguration } from "state/selectors/slotsViewConfiguration";
-import { useQuery } from "@apollo/client";
+import { isNetworkError } from "helpers/functions";
+import { useParams } from "react-router-dom";
+import { LOADERS, useBookingStore, useErrorStore, useFilterStore, useUiStore } from "state/stores";
+import { useSlotFilter } from "state/stores";
+import { useQuery } from "@apollo/client/react";
 import {
   ServiceQueryResult,
   ServiceQueryVariables,
@@ -21,18 +15,19 @@ import {
   ServiceSlotsQueryVariables,
 } from "../api/queries/models";
 import { GET_SERVICE, GET_SERVICE_SLOTS } from "../api/queries/queries";
+import { useSlotsViewConfiguration } from "./useSlotsViewConfiguration";
 
 export const useServiceSlotsState = (serviceId: string) => {
-  const isServiceLoaded = !!useRecoilValue(serviceAtom);
-  const navigate = useNavigate();
-  const setServiceSlots = useSetRecoilState(serviceSlotsAtom);
-  const { firstDayDate, fetchDate: fetchFrom, triggerId, locations } = useRecoilValue(slotsFilterSelector);
+  const isServiceLoaded = !!useBookingStore((state) => state.service);
+  const setServiceSlots = useBookingStore((state) => state.setServiceSlots);
+  const setServiceError = useErrorStore((state) => state.setServiceError);
+  const { firstDayDate, fetchDate: fetchFrom, triggerId, locations } = useSlotFilter();
 
-  const { maxDaysPerPage } = useRecoilValue(slotsViewConfiguration);
+  const { maxDaysPerPage } = useSlotsViewConfiguration();
 
-  const setServiceSlotsLoader = useSetRecoilState(loaderAtom(LOADERS.SERVICE_SLOTS));
-  const setSlotsFilter = useSetRecoilState(slotsFiltersAtom);
-  const [, setAllSlots] = useRecoilState(slotsAtom);
+  const setServiceSlotsLoader = useUiStore((state) => state.setLoader);
+  const setSlotsFilter = useFilterStore((state) => state.setSlotsFilters);
+  const setAllSlots = useBookingStore((state) => state.setSlots);
 
   const fetchTo = `${
     addDays(new Date(fetchFrom), maxDaysPerPage - 1)
@@ -52,7 +47,8 @@ export const useServiceSlotsState = (serviceId: string) => {
       },
       version: VERSION.V1,
     },
-    fetchPolicy: "no-cache",
+    fetchPolicy: "network-only",
+    nextFetchPolicy: "cache-first",
     variables: {
       serviceId: serviceId,
       from: fetchFrom,
@@ -74,15 +70,32 @@ export const useServiceSlotsState = (serviceId: string) => {
       const { slots } = slotsData.service;
       setAllSlots(slots);
       setServiceSlots(slots);
+      setServiceError(null); // Clear error on success
     }
-  }, [slotsData, setServiceSlots, setAllSlots]);
+  }, [slotsData, setServiceSlots, setAllSlots, setServiceError]);
 
   useEffect(() => {
-    if (slotsError || slotsData?.service === null) navigate("/");
-  }, [slotsError, navigate, slotsData]);
+    if (
+      slotsError &&
+      "networkError" in slotsError &&
+      slotsError.networkError &&
+      typeof slotsError.networkError === "object" &&
+      "name" in slotsError.networkError &&
+      slotsError.networkError.name === "AbortError"
+    )
+      return;
+
+    if (slotsError || slotsData?.service === null) {
+      setServiceError({
+        type: isNetworkError(slotsError) ? "NETWORK_ERROR" : "SERVICE_NOT_FOUND",
+        canRetry: isNetworkError(slotsError),
+        refetch,
+      });
+    }
+  }, [slotsError, slotsData, setServiceError, refetch]);
 
   useEffect(() => {
-    setServiceSlotsLoader(slotsLoading);
+    setServiceSlotsLoader(LOADERS.SERVICE_SLOTS, slotsLoading);
     if (fetchFrom !== firstDayDate)
       setSlotsFilter({
         pageSize: 7,
@@ -95,27 +108,32 @@ export const useServiceSlotsState = (serviceId: string) => {
 };
 
 export const useServiceState = (serviceId: string, lang: string | null) => {
-  const navigate = useNavigate();
+  const setServiceError = useErrorStore((state) => state.setServiceError);
 
-  const { loading, data, error } = useQuery<{ service?: ServiceQueryResult }, ServiceQueryVariables>(GET_SERVICE, {
-    context: {
-      headers: {
-        ...(lang && { "Accept-Language": lang }),
-        "x-api-client-name": "booking-page",
+  const { loading, data, error, refetch } = useQuery<{ service?: ServiceQueryResult }, ServiceQueryVariables>(
+    GET_SERVICE,
+    {
+      context: {
+        headers: {
+          ...(lang && { "Accept-Language": lang }),
+          "x-api-client-name": "booking-page",
+        },
+        version: VERSION.V1,
       },
-      version: VERSION.V1,
+      fetchPolicy: "cache-and-network",
+      nextFetchPolicy: "cache-first",
+      variables: {
+        serviceId: serviceId,
+      },
+      skip: serviceId === "",
     },
-    fetchPolicy: "no-cache",
-    variables: {
-      serviceId: serviceId,
-    },
-    skip: serviceId === "",
-  });
+  );
 
-  const setTimeZone = useSetRecoilState(timeZoneAtom);
-  const setService = useSetRecoilState(serviceAtom);
-  const setServiceLoader = useSetRecoilState(loaderAtom(LOADERS.SERVICE));
-  const [slotsFilter, setSlotsFilter] = useRecoilState(slotsFiltersAtom);
+  const setTimeZone = useUiStore((state) => state.setTimeZone);
+  const setService = useBookingStore((state) => state.setService);
+  const setServiceLoader = useUiStore((state) => state.setLoader);
+  const slotsFilter = useFilterStore((state) => state.slotsFilters);
+  const setSlotsFilter = useFilterStore((state) => state.setSlotsFilters);
 
   useEffect(() => {
     if (data && data.service) {
@@ -137,15 +155,15 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
         price: service.price ?? 0,
         promoPrice: service.promoPrice,
         currency: service.currency,
-        locations: (service.locations ?? [{ title: "" }]).map((item) => item.title),
+        locations: (service.locations ?? [{ title: "" }]).map((item: { title: string }) => item.title),
         serviceLocations: service.locations,
         hostedBy:
           service.hosts.length > 1
             ? `${service.hosts[0].fullName} +${service.hosts.length - 1}`
-            : service.hosts?.[0]?.fullName ?? "-",
+            : (service.hosts?.[0]?.fullName ?? "-"),
         dateTimeTo: service.dateTimeTo,
         dateTimeFrom: service.dateTimeFrom,
-        images: service.media.map((item) => item.url),
+        images: service.media.map((item: { url: string }) => item.url),
         formFields: [...service.formFields],
         viewConfig: {
           bookingStatus: { ...service.viewConfig.bookingStatus },
@@ -195,16 +213,24 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
         ...slotsFilter,
         fetchDate: service.dateTimeFrom,
       });
+
+      setServiceError(null); // Clear error on success
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, setService, setTimeZone, setSlotsFilter]);
+  }, [data, setService, setTimeZone, setSlotsFilter, setServiceError]);
 
   useEffect(() => {
-    if (error || data?.service === null) navigate("/");
-  }, [error, navigate, data]);
+    if (error || data?.service === null) {
+      setServiceError({
+        type: isNetworkError(error) ? "NETWORK_ERROR" : "SERVICE_NOT_FOUND",
+        canRetry: isNetworkError(error),
+        refetch,
+      });
+    }
+  }, [error, data, setServiceError, refetch]);
 
   useEffect(() => {
-    setServiceLoader(loading);
+    setServiceLoader(LOADERS.SERVICE, loading);
   }, [loading, setServiceLoader]);
 };
 

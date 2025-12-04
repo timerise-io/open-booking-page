@@ -6,7 +6,7 @@ import { Row } from "components/layout/Row";
 import { useField } from "formik";
 import { getUrlFromString } from "helpers/functions";
 import styled, { css } from "styled-components";
-import { IconCheck } from "@tabler/icons";
+import { IconCheck } from "@tabler/icons-react";
 
 const CheckboxInput = styled.input`
   margin: 0 6px 0 0;
@@ -77,7 +77,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({ name, label }) => {
   const { setValue } = helpers;
 
   return (
-    <Column ai="flex-start">
+    <Column $ai="flex-start">
       <CheckboxWrapper>
         <CheckboxInput
           type="radio"
@@ -91,7 +91,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({ name, label }) => {
         />
         {value && <IconCheck className="icon-check" size={12} />}
         <CheckboxLabel
-          typographyType="body"
+          $typographyType="body"
           as="label"
           onClick={() => {
             setValue(!value);
@@ -100,9 +100,9 @@ const CheckBox: React.FC<CheckBoxProps> = ({ name, label }) => {
           {getUrlFromString(label)}
         </CheckboxLabel>
       </CheckboxWrapper>
-      <Box h="13px" mt={0.5} mb={1}>
+      <Box $h="13px" $mt={0.5} $mb={1}>
         {meta.error && meta.touched && (
-          <Typography typographyType="label" as="span" color="error">
+          <Typography $typographyType="label" as="span" $color="error">
             {meta.error}
           </Typography>
         )}

@@ -24,6 +24,7 @@ export const BOOKING_SUBSCRIPTION = gql`
       paymentLink
       paymentStatus
       slots {
+        slotId
         dateTimeFrom
         dateTimeTo
       }

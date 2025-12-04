@@ -7,11 +7,7 @@ import { HOURS_SYSTEMS } from "features/service/components/Service/HoursSystem/e
 import { getDatesValue } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
-import { hoursSystemAtom } from "state/atoms";
-import { bookingAtom } from "state/atoms/booking";
-import { serviceAtom } from "state/atoms/service";
-import { timeZoneAtom } from "state/atoms/timeZone";
+import { useBookingStore, useUiStore } from "state/stores";
 import styled from "styled-components";
 
 const StyledTypography = styled(Typography)`
@@ -23,30 +19,30 @@ const StyledTypography = styled(Typography)`
 const DeleteBooking = () => {
   const locale = useLocale();
   const { t } = useTranslation(["booking"]);
-  const booking = useRecoilValue(bookingAtom)!;
-  const service = useRecoilValue(serviceAtom)!;
-  const timeZone = useRecoilValue(timeZoneAtom);
-  const hoursSystem = useRecoilValue(hoursSystemAtom);
+  const booking = useBookingStore((state) => state.booking)!;
+  const service = useBookingStore((state) => state.service)!;
+  const timeZone = useUiStore((state) => state.timeZone);
+  const hoursSystem = useUiStore((state) => state.hoursSystem);
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
 
   return (
-    <Column ai="flex-start">
+    <Column $ai="flex-start">
       <StyledTypography
-        typographyType="body"
-        displayType="contents"
+        $typographyType="body"
+        $displayType="contents"
         dangerouslySetInnerHTML={{
           __html: t("want-to-delete"),
         }}
       ></StyledTypography>
-      <Box mt={2.5}>
-        <Typography typographyType="body" displayType="contents">
+      <Box $mt={2.5}>
+        <Typography $typographyType="body" $displayType="contents">
           {service.title}
         </Typography>
       </Box>
       <Row>
-        <Typography typographyType="body">{t("date-and-time")}:</Typography>
-        <Box ml={0.5}>
-          <Typography typographyType="body" weight="700">
+        <Typography $typographyType="body">{t("date-and-time")}:</Typography>
+        <Box $ml={0.5}>
+          <Typography $typographyType="body" $weight="700">
             {" "}
             {getDatesValue({
               service,

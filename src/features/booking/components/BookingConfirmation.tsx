@@ -11,7 +11,7 @@ function BookingConfirmation() {
 
   return (
     <div>
-      <Typography typographyType="h2" weight="400">
+      <Typography $typographyType="h2" $weight="400">
         {t("loading-info")}
       </Typography>
     </div>

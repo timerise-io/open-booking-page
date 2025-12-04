@@ -1,13 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { useRecoilValue } from "recoil";
-import { serviceAtom } from "state/atoms/service";
-import { headerSelector } from "state/selectors/headerSelector";
+import { useBookingStore } from "state/stores";
 
 const ServiceHeaders = () => {
-  const icon = useRecoilValue(headerSelector)?.logoUrl;
-  const service = useRecoilValue(serviceAtom);
+  const service = useBookingStore((state) => state.service);
+  const icon = service?.project?.logoUrl;
   const { init, send } = useContext(AnalyticsContext);
 
   useEffect(() => {

@@ -58,13 +58,13 @@ const Space = ({ space }: SpaceProps) => {
   return (
     <Wrapper>
       {space.instructions && (
-        <Box mb={2}>
-          <Typography typographyType="body" as="span" align="center">
+        <Box $mb={2}>
+          <Typography $typographyType="body" as="span" $align="center">
             {space.instructions}
           </Typography>
         </Box>
       )}
-      <Row mb={0.75}>
+      <Row $mb={0.75}>
         <ProviderButton href={space.url} target="_blank">
           <ProviderLogo src={`https://cdn.timerise.io/admin/${space.provider}.png`} alt={`${space.provider} logo`} />
           {space.title || SPACE_PROVIDERS_NAMES[space.provider]}
@@ -79,7 +79,7 @@ const Space = ({ space }: SpaceProps) => {
           Copy
         </CardButton>
       </Row>
-      <LinkPreview typographyType="label" as="span">
+      <LinkPreview $typographyType="label" as="span">
         {space.url}
       </LinkPreview>
     </Wrapper>

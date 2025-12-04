@@ -3,16 +3,15 @@ import { VERSION } from "enums";
 import { getPath } from "helpers/functions";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { selectedSlot } from "state/atoms/selectedSlot";
-import { slotsFiltersAtom } from "state/atoms/slotsFilters";
-import { useMutation } from "@apollo/client";
+import { useBookingStore, useFilterStore } from "state/stores";
+import { useMutation } from "@apollo/client/react";
 import { BookSlotMutationRespons, BookSlotMutationVariables } from "../api/mutations/models";
 import { BOOK_SLOT } from "../api/mutations/mutations";
 
 export const useBookSlot = () => {
-  const [filters, setFilters] = useRecoilState(slotsFiltersAtom);
-  const setSelectedSlot = useSetRecoilState(selectedSlot);
+  const filters = useFilterStore((state) => state.slotsFilters);
+  const setFilters = useFilterStore((state) => state.setSlotsFilters);
+  const setSelectedSlot = useBookingStore((state) => state.setSelectedSlot);
   const navigate = useNavigate();
   const { PAGES } = useIsEmbeddedPage();
   const [searchParams] = useSearchParams();
@@ -27,20 +26,24 @@ export const useBookSlot = () => {
         },
         version: VERSION.V1,
       },
+      update: (cache, { data }) => {
+        if (data?.bookingCreate.bookingId) {
+          // Evict slots to trigger refetch (availability changed after booking)
+          cache.evict({ fieldName: "slots" });
+          cache.gc();
+        }
+      },
     },
   );
 
   useEffect(() => {
     if (data?.bookingCreate.bookingId) {
-      navigate(
-        getPath({
-          url: `${PAGES.BOOKING}:query`,
-          params: {
-            id: data.bookingCreate.bookingId,
-            query: `?${createSearchParams(urlSearchParams).toString()}`,
-          },
-        }),
-      );
+      const queryString = createSearchParams(urlSearchParams).toString();
+      const path = getPath({
+        url: PAGES.BOOKING,
+        params: { id: data.bookingCreate.bookingId },
+      });
+      navigate(queryString ? `${path}?${queryString}` : path);
     }
   }, [data?.bookingCreate.bookingId, navigate, PAGES, urlSearchParams]);
 

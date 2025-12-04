@@ -7,7 +7,7 @@ const StyledLink = styled.a`
   word-break: break-word;
 `;
 
-export const getUrlFromString = (text: any) => {
+export const getUrlFromString = (text: string) => {
   const regex = /(https?:\/\/[^\s]+)/g;
 
   const openUrl = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, url: string) => {
@@ -16,7 +16,7 @@ export const getUrlFromString = (text: any) => {
     window.open(url, "_blank");
   };
 
-  return text.split(regex).map((word: any, index: any) => {
+  return text.split(regex).map((word: string, index: number) => {
     let hasLastBracket = false;
 
     if (word.match(regex)) {

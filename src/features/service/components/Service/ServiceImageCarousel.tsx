@@ -1,13 +1,11 @@
 import React from "react";
 import ImageCarousel from "components/ImageCarousel/ImageCarousel";
 import { SkeletonBox } from "components/layout/SkeletonBox";
-import { useRecoilValue } from "recoil";
-import { serviceAtom } from "state/atoms/service";
-import { themeSelector } from "state/selectors/theme";
+import { useBookingStore, useTheme } from "state/stores";
 
 const ServiceImageCarousel = () => {
-  const serviceData = useRecoilValue(serviceAtom);
-  const themeMode = useRecoilValue(themeSelector);
+  const serviceData = useBookingStore((state) => state.service);
+  const themeMode = useTheme();
 
   if (!serviceData) {
     return <SkeletonBox style={{ flexGrow: 1 }} />;

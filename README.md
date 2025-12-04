@@ -7,66 +7,131 @@
 
 We are pleased to provide our booking page in open-source. We hope it will be useful in your use case. It can be embedded on websites and applications, under buttons, and in popups - on desktop and mobile. Happy booking!
 
-Timerise open source booking page was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-
 ## Make it yours
 Adjust the appearance and content of the booking pages to your brand and services.
 
 ![image](https://cdn.timerise.io/landing-page/section-make-it-yours.png)
 
+## Tech Stack
+
+- **React** 19.2.0
+- **TypeScript** 5.9.3
+- **Vite** 7.2.4
+- **Apollo Client** 4.0.9 (GraphQL)
+- **Zustand** 5.0.9 (state management)
+- **styled-components** 6.1.19
+- **React Router** 7.9.6
+- **i18next** 25.6.3 (internationalization)
+- **Formik** 2.4.9 + **Yup** 1.7.1 (forms)
+
+## Prerequisites
+
+- Node.js >= 22.0.0
+
 ## Installation
 
-Run following script in the root directory:
+Run the following script in the root directory:
 
-```
+```bash
 npm ci
 ```
 
 ## Available Scripts
 
-In the project directory, you can run:
-
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Runs the app in development mode at [http://localhost:3000](http://localhost:3000).
 
-Developer mode is by default connected to the sandbox environment. If you want to connect to a different environment during development please edit `.env.development` file in the root folder.
+Developer mode is by default connected to the sandbox environment. If you want to connect to a different environment during development, edit the `.env` file in the root folder.
 
-To open the service page on localhost use link [http://localhost:3000/service/{replace-with-service-id}](http://localhost:3000/service/{replace-with-service-id})
+To open the service page on localhost use: [http://localhost:3000/service/{service-id}](http://localhost:3000/service/{replace-with-service-id})
 
-To make your life easier we prepared a default service on the sandbox environment which you can use for testing [http://localhost:3000/service/E95rBw4j9Thhts2vzY1Y](http://localhost:3000/service/E95rBw4j9Thhts2vzY1Y).
+Test service on sandbox: [http://localhost:3000/service/E95rBw4j9Thhts2vzY1Y](http://localhost:3000/service/E95rBw4j9Thhts2vzY1Y)
 
-We encourage you to create your own services on the sandbox environment via [user interface](https://sandbox.timerise.io/) or [api](https://studio.apollographql.com/public/TIMERISE-API/explorer?variant=sandbox). Of course you can do it for free.
+Create your own services on the sandbox environment via [user interface](https://sandbox.timerise.io/) or [API](https://studio.apollographql.com/public/TIMERISE-API/explorer?variant=sandbox).
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Builds the app for production to the `build` folder. Runs TypeScript compilation and Vite build.
 
-Please remember that build command requires `.env` file in root directory.
+Requires `.env` file in root directory.
 
-The build is minified and the filenames include the hashes.\
-For more information click [here](https://create-react-app.dev/docs/production-build/).
+### `npm run preview`
 
-## Folders structure
+Locally preview the production build.
+
+### `npm test`
+
+Runs Jest tests.
+
+### `npm run lint`
+
+Runs ESLint and TypeScript type checking.
+
+### `npm run check-types`
+
+Runs TypeScript type checking only.
+
+### `npm run prettier`
+
+Checks code formatting with Prettier.
+
+### `npm run prettier:fix`
+
+Fixes code formatting with Prettier.
+
+## Code Quality
+
+This project uses several tools to ensure code quality:
+
+- **Husky**: Runs pre-commit hooks to ensure that linting and type checking pass before committing.
+- **Prettier**: Enforces consistent code formatting.
+- **ESLint**: Catches errors and enforces coding standards.
+
+## Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `VITE_TIMERISE_API` | GraphQL API endpoint |
+| `VITE_TIMERISE_WS` | WebSocket endpoint for subscriptions |
+| `VITE_TIMERISE_TOOLS_API` | Tools API endpoint |
+| `GENERATE_SOURCEMAP` | Build config for source maps |
+
+## Project Structure
 
 ```
-root folder
-├── components
-├── features
-│   └── feature
-│       ├── api
-│       │   ├── mutations
-│       │   └── queries
-│       ├── components
-│       └── hooks
-├── models
-├── pages
-└── state
+src/
+├── features/           # Feature-based modules
+│   ├── analytics/      # Google Analytics integration
+│   ├── booking/        # Booking management and confirmation
+│   ├── confirmation/   # Confirmation modals
+│   ├── i18n/           # Internationalization
+│   ├── project/        # Project configuration
+│   ├── service/        # Service browsing and booking UI
+│   └── theme/          # Theme provider (dark/light)
+├── components/         # Shared UI components
+├── pages/              # Route page components
+├── state/              # State management
+│   └── stores/         # Zustand stores
+├── api/                # Apollo client setup
+├── models/             # TypeScript interfaces
+├── helpers/            # Utility functions and hooks
+├── styles/             # Global styles and theme
+└── enums/              # Constants and enums
 ```
 
+### Feature Module Structure
+
+Each feature follows this pattern:
+
+```
+feature/
+├── api/
+│   ├── mutations/      # GraphQL mutations
+│   └── queries/        # GraphQL queries
+├── components/         # Feature-specific components
+└── hooks/              # Custom hooks
+```
 
 # See how Timerise works
 [![Vimeo](https://cdn.timerise.io/landing-page/video-placeholder.png?w=2048)](https://vimeo.com/703918323)

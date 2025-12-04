@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import styled, { css } from "styled-components";
-import { IconInfoCircle } from "@tabler/icons";
+import { IconInfoCircle } from "@tabler/icons-react";
 import { Typography } from "./Typography";
 
 const StyledInfo = styled.div`
@@ -30,7 +30,7 @@ const InfoBox: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <StyledInfo>
       <IconInfoCircle size={20} />
-      <Typography className="info-text" typographyType="body" as="span">
+      <Typography className="info-text" $typographyType="body" as="span">
         {children}
       </Typography>
     </StyledInfo>

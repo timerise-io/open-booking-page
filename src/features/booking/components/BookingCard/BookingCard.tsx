@@ -3,8 +3,7 @@ import { Card } from "components/Card";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { SkeletonBox } from "components/layout/SkeletonBox";
-import { useRecoilValue } from "recoil";
-import { bookingAtom } from "state/atoms/booking";
+import { useBookingStore } from "state/stores";
 import BookingCardBottom from "./BookingCardBottom/BookingCardBottom";
 import BookingCardSummary from "./BookingCardSummary/BookingCardSummary";
 import ShortId from "./ShortId";
@@ -12,29 +11,29 @@ import ShortId from "./ShortId";
 const BookingCardLoader = (
   <Card>
     <Column>
-      <Box mt={3.25}>
-        <SkeletonBox w="36px" h="36px" />
+      <Box $mt={3.25}>
+        <SkeletonBox $w="36px" $h="36px" />
       </Box>
-      <Box mt={2} w="100%">
-        <SkeletonBox w="100%" h="26px" />
+      <Box $mt={2} $w="100%">
+        <SkeletonBox $w="100%" $h="26px" />
       </Box>
-      <Box mt={3.5} w="100%">
-        <SkeletonBox w="100%" h="40px" />
+      <Box $mt={3.5} $w="100%">
+        <SkeletonBox $w="100%" $h="40px" />
       </Box>
-      <Box mt={3.25} w="100%">
-        <SkeletonBox w="100%" h="20px" />
+      <Box $mt={3.25} $w="100%">
+        <SkeletonBox $w="100%" $h="20px" />
       </Box>
     </Column>
   </Card>
 );
 
 const BookingCard = () => {
-  const bookingValue = useRecoilValue(bookingAtom);
+  const bookingValue = useBookingStore((state) => state.booking);
 
   if (bookingValue === undefined) return BookingCardLoader;
 
   return (
-    <Card padding="8px 20px 20px 20px">
+    <Card $padding="8px 20px 20px 20px">
       <ShortId shortId={bookingValue.shortId} />
       <BookingCardSummary dateTimeFrom={bookingValue.dateTimeFrom} dateTimeTo={bookingValue.dateTimeTo} />
       <BookingCardBottom />

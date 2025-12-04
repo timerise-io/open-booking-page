@@ -11,10 +11,9 @@ import useOnClickOutside from "helpers/hooks/useOnClickOutside";
 import ReactCountryFlag from "react-country-flag";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { defaultPhonePrefixSelector } from "state/selectors/defaultPhonePrefix";
+import { useDefaultPhonePrefix } from "state/stores";
 import styled, { css } from "styled-components";
-import { IconChevronDown } from "@tabler/icons";
+import { IconChevronDown } from "@tabler/icons-react";
 
 const countryList = Object.entries(COUNTRY_PHONE_PREFIXES).sort(([aKey], [bKey]) => (aKey < bKey ? -1 : 1));
 
@@ -126,7 +125,7 @@ const ListWrapper = styled.div`
 const PhoneSelect: React.FC<PhoneSelectProps> = ({ name, label }) => {
   const [searchParams] = useSearchParams();
   const paramLang = useLangParam();
-  const serviceDefaultCountryCode = useRecoilValue(defaultPhonePrefixSelector);
+  const serviceDefaultCountryCode = useDefaultPhonePrefix();
   const defaultCountryCode =
     paramLang !== null && paramLang.split("-").length > 1 ? paramLang.split("-")[1] : serviceDefaultCountryCode;
   const [focused, setFocused] = useState(false);
@@ -171,7 +170,7 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({ name, label }) => {
     if (!isDefaultSetted) {
       const phoneNumber = searchParams.get("phoneNumber") ?? "";
       inputRef.current.value = phoneNumber;
-      handlePhoneNumberChange({ target: { value: phoneNumber } } as any);
+      handlePhoneNumberChange({ target: { value: phoneNumber } } as ChangeEvent<HTMLInputElement>);
       setIsDefaultSetted(true);
     }
     if (focused === false) return;
@@ -180,9 +179,9 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({ name, label }) => {
   }, [value, focused, searchParams]);
 
   return (
-    <StyledColumn ai="stretch">
+    <StyledColumn $ai="stretch">
       <StyledLabel htmlFor="phone-number-select">{labelToDisplay}</StyledLabel>
-      <SelectWrapper ai="stretch">
+      <SelectWrapper $ai="stretch">
         <OpenListButton onClick={() => setIsMenuOpen(!isMenuOpen)} type="button">
           <ReactCountryFlag className="flag" svg countryCode={countryCode} />
           <IconChevronDown className="chevron" />
@@ -198,7 +197,7 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({ name, label }) => {
                   type="button"
                 >
                   <ReactCountryFlag className="flag" svg countryCode={countryCode} />
-                  <Typography typographyType="body" as="span">
+                  <Typography $typographyType="body" as="span">
                     {`${countryCode} ${prefix ? `+${prefix}` : ``}`}{" "}
                   </Typography>
                 </ChooseCountryButton>
@@ -219,9 +218,9 @@ const PhoneSelect: React.FC<PhoneSelectProps> = ({ name, label }) => {
           type="tel"
         />
       </SelectWrapper>
-      <Box h="13px" mt={0.5} mb={1}>
+      <Box $h="13px" $mt={0.5} $mb={1}>
         {meta.error && meta.touched && (
-          <Typography typographyType="label" as="span" color="error">
+          <Typography $typographyType="label" as="span" $color="error">
             {meta.error}
           </Typography>
         )}

@@ -16,7 +16,7 @@ export const useGoogleAnalytics: UseGoogleAnalytics = () => {
     ReactGA.event(event);
   };
 
-  const send = (path: any) => {
+  const send = (path: unknown) => {
     if (!trackingId) return;
     ReactGA.send(path);
   };

@@ -3,7 +3,7 @@ import { VERSION } from "enums";
 import { getPath } from "helpers/functions";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { useNavigate } from "react-router";
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
 import { ConfirmBookingMutationResult, ConfirmBookingMutationVariables } from "../api/mutations/models";
 import { CONFIRM_BOOKING } from "../api/mutations/mutations";
 
@@ -21,13 +21,10 @@ export const useConfirmBooking = (bookingId: string) => {
       },
       version: VERSION.V1,
     },
-    variables: {
-      bookingId,
-    },
   });
 
   useEffect(() => {
-    confirmBooking();
+    confirmBooking({ variables: { bookingId } });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

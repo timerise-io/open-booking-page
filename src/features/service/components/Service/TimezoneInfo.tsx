@@ -1,8 +1,7 @@
 import React from "react";
 import { Typography } from "components/Typography";
 import { Row } from "components/layout/Row";
-import { useRecoilValue } from "recoil";
-import { timeZoneAtom } from "state/atoms/timeZone";
+import { useUiStore } from "state/stores";
 import styled from "styled-components";
 
 const Wrapper = styled(Row)`
@@ -18,13 +17,13 @@ interface TimezoneInfoProps {
 }
 
 const TimezoneInfo: React.FC<TimezoneInfoProps> = ({ showTimezone = true }) => {
-  const timeZone = useRecoilValue(timeZoneAtom);
+  const timeZone = useUiStore((state) => state.timeZone);
 
   if (!showTimezone) return null;
 
   return (
     <Wrapper>
-      <Typography className="timezone-info" typographyType="label" color="inherit" as="span" weight="700">
+      <Typography className="timezone-info" $typographyType="label" $color="inherit" as="span" $weight="700">
         {timeZone.replace("_", " ")}
       </Typography>
     </Wrapper>

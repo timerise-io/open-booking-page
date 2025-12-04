@@ -2,13 +2,11 @@ import React, { useEffect, useMemo } from "react";
 import InfoBox from "components/InfoBox";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
+import { useSlotsViewConfiguration } from "features/service/hooks/useSlotsViewConfiguration";
 import useDimensions from "react-cool-dimensions";
 import { useTranslation } from "react-i18next";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { serviceSlotsAtom } from "state/atoms/serviceSlots";
-import { slotsFiltersAtom } from "state/atoms/slotsFilters";
-import { pageDates } from "state/selectors/pageDates";
-import { slotsViewConfiguration } from "state/selectors/slotsViewConfiguration";
+import { usePageDates } from "state/hooks";
+import { useBookingStore, useFilterStore } from "state/stores";
 import styled from "styled-components";
 import ServiceCalendarDay from "./ServiceCalendarDay";
 
@@ -25,11 +23,12 @@ const Wrapper = styled(Column)`
 
 const ServiceCalendarWrapper = () => {
   const { observe, width } = useDimensions();
-  const days = useRecoilValue(pageDates);
-  const noTimeSlots = useRecoilValue(serviceSlotsAtom).length === 0;
-  const [serviceCalendarFilters, setServiceCalendarFilters] = useRecoilState(slotsFiltersAtom);
+  const days = usePageDates();
+  const noTimeSlots = useBookingStore((state) => state.serviceSlots).length === 0;
+  const serviceCalendarFilters = useFilterStore((state) => state.slotsFilters);
+  const setServiceCalendarFilters = useFilterStore((state) => state.setSlotsFilters);
   const { t } = useTranslation();
-  const slotsViewConfig = useRecoilValue(slotsViewConfiguration);
+  const slotsViewConfig = useSlotsViewConfiguration();
   const pageSize = Math.min(slotsViewConfig.maxDaysPerPage, Math.trunc(width / slotsViewConfig.slotsColumnWidth));
   const daysToRender = useMemo(
     () => days.slice(0, pageSize === 0 ? slotsViewConfig.minDaysPerPage : pageSize),

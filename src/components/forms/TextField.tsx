@@ -53,12 +53,12 @@ const TextField: React.FC<TextFieldProps> = ({ label, name, multiline = false, p
   );
 
   return (
-    <Column ai="stretch" hidden={hidden}>
+    <Column $ai="stretch" $hidden={hidden}>
       <StyledLabel htmlFor={name}>{labelToDisplay}</StyledLabel>
       {input}
-      <Box h="13px" mt={0.5} mb={1}>
+      <Box $h="13px" $mt={0.5} $mb={1}>
         {meta.error && meta.touched && (
-          <Typography typographyType="label" as="span" color="error">
+          <Typography $typographyType="label" as="span" $color="error">
             {meta.error}
           </Typography>
         )}

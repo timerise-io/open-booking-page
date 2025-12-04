@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import InfoBox from "components/InfoBox";
 import { useLocale } from "helpers/hooks/useLocale";
+import { Service } from "models/service";
 import { Slot } from "models/slots";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
-import { serviceAtom } from "state/atoms/service";
-import { timeZoneAtom } from "state/atoms/timeZone";
+import { useBookingStore, useUiStore } from "state/stores";
 import styled from "styled-components";
 import { EventSlot } from "./components";
 
@@ -16,15 +15,18 @@ const StyledInfoBox = styled.div`
 
 interface Props {
   handlers: {
-    setSelectedSlots: Function;
+    setSelectedSlots: (slotIds: string[]) => void;
   };
-  additionalData: any;
+  additionalData: {
+    service: Service;
+    slots: Slot[];
+  };
 }
 
 export const EventsWrapper: React.FC<Props> = ({ handlers, additionalData }) => {
   const { t } = useTranslation();
-  const timeZone = useRecoilValue(timeZoneAtom);
-  const service = useRecoilValue(serviceAtom)!;
+  const timeZone = useUiStore((state) => state.timeZone);
+  const service = useBookingStore((state) => state.service)!;
   const locale = useLocale();
 
   useEffect(() => {

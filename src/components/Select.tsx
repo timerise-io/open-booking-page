@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import useOnClickOutside from "helpers/hooks/useOnClickOutside";
 import styled from "styled-components";
-import { IconCheck, IconChevronDown } from "@tabler/icons";
+import { IconCheck, IconChevronDown } from "@tabler/icons-react";
 import { Typography } from "./Typography";
 import { Column } from "./layout/Column";
 import { Row } from "./layout/Row";
@@ -102,15 +102,15 @@ export const Select: React.FC<SelectProps> = ({ label, value, options, onChange 
 
   const handleChange = (newSelectedKey: string) => {
     setIsOpen(false);
-    onChange && onChange(newSelectedKey);
+    onChange?.(newSelectedKey);
   };
 
   return (
-    <SelectWrapper ai="flex-start">
+    <SelectWrapper $ai="flex-start">
       <OpenListButton onClick={() => setIsOpen(!isOpen)}>
-        <Row className="label-value" jc="flex-start">
-          {label && <StyledLabel typographyType="body">{label}:</StyledLabel>}
-          <StyledValue typographyType="body" weight="700">
+        <Row className="label-value" $jc="flex-start">
+          {label && <StyledLabel $typographyType="body">{label}:</StyledLabel>}
+          <StyledValue $typographyType="body" $weight="700">
             {options[value]}
           </StyledValue>
         </Row>
@@ -121,7 +121,7 @@ export const Select: React.FC<SelectProps> = ({ label, value, options, onChange 
           {Object.entries(options).map(([itemKey, itemValue]) => {
             return (
               <OptionButton key={`select-popup-option-${itemKey}`} onClick={() => handleChange(itemKey)}>
-                <Typography typographyType="body" weight={itemKey === value ? "700" : "400"} as="span">
+                <Typography $typographyType="body" $weight={itemKey === value ? "700" : "400"} as="span">
                   {itemValue}
                 </Typography>
                 {itemKey === value && <IconCheck size={20} />}

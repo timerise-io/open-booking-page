@@ -6,8 +6,7 @@ import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { useField } from "formik";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
-import { selectedSlotSelector } from "state/selectors/selectedSlotSelector";
+import { useBookingStore } from "state/stores";
 import styled from "styled-components";
 
 const StyledColumn = styled(Column)`
@@ -27,7 +26,7 @@ interface QuantityFieldProps {
 }
 
 const QuantityField: React.FC<QuantityFieldProps> = ({ name, label, maxQuantity = 1 }) => {
-  const selectedSlot = useRecoilValue(selectedSlotSelector);
+  const selectedSlot = useBookingStore((state) => state.getSelectedSlotData());
   const { t } = useTranslation(["forms"]);
   const labelToDisplay = label === undefined ? t(`${name}Field`) : label;
 
@@ -37,7 +36,9 @@ const QuantityField: React.FC<QuantityFieldProps> = ({ name, label, maxQuantity 
   const { setValue, setTouched } = helpers;
 
   const maxValue =
-    selectedSlot !== undefined && (maxQuantity ?? 1) > selectedSlot.quantity ? selectedSlot.quantity : maxQuantity ?? 1;
+    selectedSlot !== undefined && (maxQuantity ?? 1) > selectedSlot.quantity
+      ? selectedSlot.quantity
+      : (maxQuantity ?? 1);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
@@ -71,7 +72,7 @@ const QuantityField: React.FC<QuantityFieldProps> = ({ name, label, maxQuantity 
   }, [maxValue, selectedSlot?.quantity]);
 
   return (
-    <StyledColumn ai="stretch">
+    <StyledColumn $ai="stretch">
       <StyledLabel htmlFor={name}>{labelToDisplay}</StyledLabel>
       <StyledInput
         id={name}
@@ -83,14 +84,14 @@ const QuantityField: React.FC<QuantityFieldProps> = ({ name, label, maxQuantity 
       />
 
       {selectedSlot !== undefined && (
-        <StyledHint typographyType="body" as="span">
+        <StyledHint $typographyType="body" as="span">
           {t("out-of", { maxValue })}
         </StyledHint>
       )}
 
-      <Box h="13px" mt={0.5} mb={1}>
+      <Box $h="13px" $mt={0.5} $mb={1}>
         {meta.error && meta.touched && (
-          <Typography typographyType="label" as="span" color="error">
+          <Typography $typographyType="label" as="span" $color="error">
             {meta.error}
           </Typography>
         )}

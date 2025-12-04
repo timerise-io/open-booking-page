@@ -1,9 +1,8 @@
-import { bg, cs, de, el, enGB, es, fi, fr, hu, it, nb, nl, pl, pt, sk, sv, tr, uk } from "date-fns/esm/locale";
-import { useRecoilValue } from "recoil";
-import { dateLocaleSelector } from "state/selectors/dateLocale";
+import { bg, cs, de, el, enGB, es, fi, fr, hu, it, nb, nl, pl, pt, sk, sv, tr, uk } from "date-fns/locale";
+import { useDateLocale } from "./useDateLocale";
 
 export const useLocale = () => {
-  const locale = useRecoilValue(dateLocaleSelector);
+  const locale = useDateLocale();
   switch (locale) {
     case "bg":
       return bg;

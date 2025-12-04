@@ -33,8 +33,8 @@ export const SkeletonBox = styled(Box)<SkeletonBoxProps>`
         theme.themeType === "light"
           ? `#e7e7e7 0, #f6f6f6 45%, #f6f6f6 55%, #e7e7e7`
           : version === "secondary"
-          ? "#202020 0, #0d0d0d 45%, #0d0d0d 55%, #202020"
-          : `#0a0a0a 0, #1a1a1a 45%, #1a1a1a 55%, #0a0a0a`;
+            ? "#202020 0, #0d0d0d 45%, #0d0d0d 55%, #202020"
+            : `#0a0a0a 0, #1a1a1a 45%, #1a1a1a 55%, #0a0a0a`;
       return css`
         background-image: linear-gradient(90deg, ${gradient});
       `;

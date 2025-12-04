@@ -1,23 +1,191 @@
 name: Deploy to prod
 on:
-  workflow_dispatch:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - main
+
 jobs:
-  build_and_deploy:
+  # Run quality checks in parallel
+  quality:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        check: [lint, test, types]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      # Cache node_modules for faster dependency installation
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Cache tool-specific artifacts
+      - name: Cache tool artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            .eslintcache
+            .tsbuildinfo
+            .jest-cache
+          key: ${{ runner.os }}-${{ matrix.check }}-${{ hashFiles('eslint.config.js', 'tsconfig.json', 'jest.config.cjs', 'src/**/*.ts', 'src/**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.check }}-
+
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          retry_wait_seconds: 30
+          command: npm ci --prefer-offline --no-audit --progress=false
+
+      - name: Run ${{ matrix.check }}
+        run: npm run ci:${{ matrix.check }}
+
+  # Build after quality checks pass
+  build:
+    needs: quality
     runs-on: ubuntu-latest
     env:
       GENERATE_SOURCEMAP: false
-      REACT_APP_TIMERISE_API: "${{ secrets.PROD_REACT_APP_TIMERISE_API }}"
-      REACT_APP_TIMERISE_WS: "${{ secrets.PROD_REACT_APP_TIMERISE_WS }}"
-      REACT_APP_TIMERISE_TOOLS_API: "${{ secrets.PROD_REACT_APP_TIMERISE_TOOLS_API }}"
+      VITE_TIMERISE_API: "${{ secrets.PROD_VITE_TIMERISE_API }}"
+      VITE_TIMERISE_WS: "${{ secrets.PROD_VITE_TIMERISE_WS }}"
+      VITE_TIMERISE_TOOLS_API: "${{ secrets.PROD_VITE_TIMERISE_TOOLS_API }}"
     steps:
-      - uses: actions/checkout@v2
-      - run: npm ci && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_PROD }}"
-          channelId: live
-          projectId: timerise-prod
+          node-version: '22'
+          cache: 'npm'
+
+      # Cache node_modules for faster dependency installation
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Cache Vite build artifacts
+      - name: Cache Vite
+        uses: actions/cache@v4
+        with:
+          path: node_modules/.vite
+          key: ${{ runner.os }}-vite-${{ hashFiles('vite.config.ts', 'package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vite-
+
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          retry_wait_seconds: 30
+          command: npm ci --prefer-offline --no-audit --progress=false
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify build
+        run: |
+          if [ ! -d "build" ] || [ -z "$(ls -A build)" ]; then
+            echo "Build directory is empty or missing!"
+            exit 1
+          fi
+          if [ ! -f "build/index.html" ]; then
+            echo "index.html not found in build directory!"
+            exit 1
+          fi
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ github.sha }}
+          path: build/
+          retention-days: 7
+          if-no-files-found: error
+
+  # Deploy after build completes
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://booking.timerise.io
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Firebase Tools
+        run: npm install -g firebase-tools
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-${{ github.sha }}
+          path: build/
+
+      - name: Verify downloaded build
+        run: |
+          if [ ! -d "build" ] || [ -z "$(ls -A build)" ]; then
+            echo "Downloaded build directory is empty or missing!"
+            exit 1
+          fi
+
+      - name: Create Service Account File
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMERISE_PROD }}' > service-account.json
+
+      - name: Deploy to Firebase
+        id: deploy
+        uses: nick-fields/retry@v3
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: service-account.json
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          retry_wait_seconds: 30
+          command: |
+            firebase deploy \
+              --only hosting:service-app \
+              --project timerise-prod
+
+      - name: Health check
+        uses: nick-fields/retry@v3
+        with:
+          timeout_seconds: 30
+          max_attempts: 5
+          retry_wait_seconds: 10
+          command: |
+            curl -f -s -o /dev/null -w "%{http_code}" \
+              "https://booking.timerise.io/service/Y1FFTLuSUtppw30QaRh8" | grep -q "200"
+
+      - name: Create deployment summary
+        if: success()
+        run: |
+          echo "## Deployment Successful ✓" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment:** Production" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL:** https://booking.timerise.io" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Deployed by:** ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY

@@ -3,8 +3,7 @@ import ConfirmModal from "features/confirmation/components/ConfirmModal";
 import { ConfirmationType } from "models/confirmation";
 import ReactDOM from "react-dom";
 import { useTranslation } from "react-i18next";
-import { useRecoilState } from "recoil";
-import confirmationAtom from "state/atoms/confirmation";
+import { useBookingStore } from "state/stores";
 import DeleteBooking from "./ConfirmContent/DeleteBooking";
 
 const getContent = (type: ConfirmationType) => {
@@ -15,7 +14,8 @@ const getContent = (type: ConfirmationType) => {
 
 const StateModal = () => {
   const { t } = useTranslation(["confirmation"]);
-  const [confirmation, setConfirmation] = useRecoilState(confirmationAtom);
+  const confirmation = useBookingStore((state) => state.confirmation);
+  const setConfirmation = useBookingStore((state) => state.setConfirmation);
 
   if (confirmation === undefined) return null;
 

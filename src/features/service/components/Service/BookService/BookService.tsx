@@ -4,6 +4,7 @@ import { Card } from "components/Card";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
+import { format } from "date-fns";
 import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { useBookDateRange } from "features/service/hooks/useBookDateRange";
 import { useBookSlot } from "features/service/hooks/useBookSlot";
@@ -14,22 +15,12 @@ import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import _ from "lodash";
 import { FormField, filterFormFields, filterHiddenFields } from "models/formFields";
 import { BOOKING_FORM_TYPES } from "models/service";
-import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { hoursSystemAtom } from "state/atoms";
-import { locationAtom } from "state/atoms/location";
-import { selectedDateRange } from "state/atoms/selectedDateRange";
-import { selectedSlots } from "state/atoms/selectedSlots";
-import { serviceAtom } from "state/atoms/service";
-import { slotsAtom } from "state/atoms/slots";
-import { slotsFiltersAtom } from "state/atoms/slotsFilters";
-import { timeZoneAtom } from "state/atoms/timeZone";
-import { uploadAttachmentsAtom } from "state/atoms/uploadAttachments";
+import { useBookingStore, useFilterStore, useProjectStore, useUiStore, useUploadStore } from "state/stores";
 import styled from "styled-components";
-import { IconInfoCircle } from "@tabler/icons";
+import { IconInfoCircle } from "@tabler/icons-react";
 import { BookingServiceFormContent } from "../BookingServiceFormContent/BookingServiceFormContent";
 import { HOURS_SYSTEMS } from "../HoursSystem/enums/HoursSystem.enum";
 import { getSubmitButtonText } from "./helpers";
@@ -92,25 +83,25 @@ const BookService = () => {
   const [searchParams] = useSearchParams();
   const locale = useLocale();
   const { t } = useTranslation(["forms"]);
-  const selectedDateRangeValue = useRecoilValue(selectedDateRange);
-  const selectedSlotsValue = useRecoilValue(selectedSlots);
-  const service = useRecoilValue(serviceAtom)!;
+  const selectedDateRangeValue = useBookingStore((state) => state.selectedDateRange);
+  const selectedSlotsValue = useBookingStore((state) => state.selectedSlots);
+  const service = useBookingStore((state) => state.service)!;
   const serviceType = service?.viewConfig.displayType;
   const serviceConfig = service && getServiceConfigByType({ service });
   const { formFields }: { formFields: Array<FormField> } = service ?? {
     formFields: [],
   };
-  const showWarning = useRecoilValue(slotsFiltersAtom).triggerId !== 0;
+  const showWarning = useFilterStore((state) => state.slotsFilters).triggerId !== 0;
   const { bookSlotMutation, loading, error } = useBookSlot();
   const { bookDateRangeMutation, loadingDateRange, errorDateRange } = useBookDateRange();
   const { id } = useParams<{ id: string }>();
-  const uploadState = useRecoilValue(uploadAttachmentsAtom);
-  const timeZone = useRecoilValue(timeZoneAtom);
-  const hoursSystem = useRecoilValue(hoursSystemAtom);
+  const uploadState = useUploadStore((state) => state.uploadAttachments);
+  const timeZone = useUiStore((state) => state.timeZone);
+  const hoursSystem = useUiStore((state) => state.hoursSystem);
   const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
-  const [, setSelectedSlots] = useRecoilState(selectedSlots);
-  const slots = useRecoilValue(slotsAtom)!;
-  const locations = useRecoilValue(locationAtom);
+  const setSelectedSlots = useBookingStore((state) => state.setSelectedSlots);
+  const slots = useBookingStore((state) => state.slots)!;
+  const locations = useProjectStore((state) => state.location);
   const { sendEvent } = useContext(AnalyticsContext);
 
   const isUploading = Object.values(uploadState).filter((item) => item.isLoading).length > 0;
@@ -119,7 +110,7 @@ const BookService = () => {
 
   const selectedSlot = slots.find((slot) => slot.slotId === selectedSlotsValue[0])!;
 
-  const now = moment().format("YYYY-MM-DDTHH:mm:ss");
+  const now = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
 
   const formattedDate = selectedSlot
     ? convertSourceDateTimeToTargetDateTime({
@@ -155,7 +146,7 @@ const BookService = () => {
     selectedSlotsValue,
   ]);
 
-  const handleSubmit = (value: Record<string, any>) => {
+  const handleSubmit = (value: Record<string, unknown>) => {
     const fullName = _.find(formFields, { fieldType: "SYSTEM_FULL_NAME" });
     const quantity = _.find(formFields, { fieldType: "SYSTEM_SLOT_QUANTITY" });
     const message = _.find(formFields, { fieldType: "SYSTEM_MESSAGE" });
@@ -167,13 +158,13 @@ const BookService = () => {
 
     const customFormFields = filterFormFields(formFields, false).map((item) => {
       return {
-        [item.fieldId]: value[item.fieldId] as any,
+        [item.fieldId]: value[item.fieldId],
       };
     });
 
     const hiddenFields = filterHiddenFields(formFields).map((item) => {
       return {
-        [item.fieldId]: value[item.fieldId] as any,
+        [item.fieldId]: value[item.fieldId],
       };
     });
 
@@ -222,7 +213,8 @@ const BookService = () => {
           serviceId: id!,
           formFields: json,
           timeZone: timeZone,
-          ...selectedDateRangeValue,
+          dateTimeFrom: selectedDateRangeValue.dateTimeFrom!,
+          dateTimeTo: selectedDateRangeValue.dateTimeTo!,
           ...(service?.paymentProviders.length && {
             paymentProvider: service.paymentProviders[0],
           }),
@@ -283,11 +275,11 @@ const BookService = () => {
   if (!service) return null;
 
   return (
-    <Box mt={serviceType === BOOKING_FORM_TYPES.PREORDER ? 0 : 1.125}>
+    <Box $mt={serviceType === BOOKING_FORM_TYPES.PREORDER ? 0 : 1.125}>
       <WrapperCard>
         {formFields && formFields.length > 0 && (
-          <Box mb={2.5}>
-            <Typography typographyType="h3" as="h3" displayType="contents">
+          <Box $mb={2.5}>
+            <Typography $typographyType="h3" as="h3" $displayType="contents">
               {t("headers.leave-details")}
             </Typography>
           </Box>
@@ -299,19 +291,19 @@ const BookService = () => {
         >
           {() => (
             <Form>
-              <Column ai="stretch">
+              <Column $ai="stretch">
                 <BookingServiceFormContent />
                 {(showWarning || error || errorDateRange) && (
                   <StyledWarning>
                     <IconInfoCircle size={20} color="#EA4335" />
-                    <Typography className="info-text" typographyType="body" as="span" color="inherit">
+                    <Typography className="info-text" $typographyType="body" as="span" $color="inherit">
                       {error && t(error)}
                       {errorDateRange && t(errorDateRange)}
                       {!error && t("slot-already-booked")}
                     </Typography>
                   </StyledWarning>
                 )}
-                <Button type="submit" buttonType="primary" disabled={checkDisableButton()} data-cy="book-now-button">
+                <Button type="submit" $buttonType="primary" disabled={checkDisableButton()} data-cy="book-now-button">
                   {getSubmitButtonText({
                     selectedSlotValue: formattedDate,
                     selectedSlotsValue,
