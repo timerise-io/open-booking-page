@@ -10,6 +10,7 @@ const WHITE = "#FFFFFF";
 const WARNING = "#FE852F";
 const SECONDARY_DARK = "#E7E7E7";
 const PRIMARY_LIGHT_GRAY = "#F2F2F2";
+const PAGE_BACKGROUND = "#F5F5F7";
 
 const appTheme: DefaultTheme = {
   themeType: "light",
@@ -78,7 +79,7 @@ const appTheme: DefaultTheme = {
         color: WHITE,
       },
       secondary: {
-        color: LIGHT_GREY,
+        color: PAGE_BACKGROUND,
       },
     },
     input: {
