@@ -26,9 +26,11 @@ npm test            # Run Jest tests
 ## Architecture
 
 ### State Management
+
 Uses **Zustand** for global state. Stores are in `src/state/stores/`. Key stores: `bookingStore`, `projectStore`, `uiStore`, `filterStore`, `uploadStore`, `errorStore`.
 
 ### API Layer
+
 - **Apollo Client** with GraphQL for all API communication
 - Supports both HTTP and WebSocket connections (for subscriptions)
 - API versioning (V1/V2) handled via operation context
@@ -37,13 +39,16 @@ Uses **Zustand** for global state. Stores are in `src/state/stores/`. Key stores
 - Config: `src/api/apolloClient.ts`
 
 ### Error Handling
+
 - Centralized error state management with `errorStore` (Zustand)
 - Error display components: `ServiceNotFound`, `BookingNotFound`, `NetworkError`
 - Context-aware navigation with `useSmartNavigation` hook
 - Network error detection and AbortError filtering
 
 ### Feature Module Structure
+
 Each feature follows this pattern:
+
 ```
 src/features/{feature}/
 ├── api/
@@ -54,29 +59,33 @@ src/features/{feature}/
 ```
 
 ### Service Types (Display Types)
+
 The `ServiceFactory` (`src/features/service/components/Service/ServiceFactory/`) renders different booking UIs based on `displayType`:
+
 - `DAYS` → `ServiceDateTime` (calendar with time slots)
 - `CALENDAR` → `ServiceDateRange` (date range picker)
 - `LIST` → `ServiceDateEvent` (event list)
 - `MULTILIST` → `ServiceMultiDateEvent` (multi-select events)
 
 ### Routing
+
 React Router v7 with lazy-loaded pages. Routes defined in `src/pages/PageSwitcher.tsx`. Supports embedded mode (different URL prefixes).
 
 ### Styling
+
 - **styled-components** for component styling
 - Global styles in `src/styles/GlobalStyles.ts`
 - Theme support (dark/light) via `ThemeWrapper`
 
 ### i18n
+
 Uses **i18next** with HTTP backend for translations. Language detection from URL params and service configuration.
 
 ## Environment Variables
 
 Prefix with `VITE_` (Vite config maps this prefix):
-- `VITE_TIMERISE_API` - GraphQL API endpoint
-- `VITE_TIMERISE_WS` - WebSocket endpoint for subscriptions
-- `VITE_TIMERISE_TOOLS_API` - Tools API endpoint
+
+- `VITE_TIMERISE_API_DOMAIN` - Timerise API domain
 - `GENERATE_SOURCEMAP` - Build config for source maps
 
 ## Key Models

@@ -1,6 +1,5 @@
 [![GitHub](https://img.shields.io/github/license/timerise-io/open-booking-page)](https://github.com/timerise-io/open-booking-page/blob/main/LICENSE.md) [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/gugo.svg)](https://status.timerise.io)
 
-
 [![Product Hunt](https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=349830&theme=light)](https://www.producthunt.com/posts/timerise)
 
 # Timerise open source booking page
@@ -8,6 +7,7 @@
 We are pleased to provide our booking page in open-source. We hope it will be useful in your use case. It can be embedded on websites and applications, under buttons, and in popups - on desktop and mobile. Happy booking!
 
 ## Make it yours
+
 Adjust the appearance and content of the booking pages to your brand and services.
 
 ![image](https://cdn.timerise.io/landing-page/section-make-it-yours.png)
@@ -90,12 +90,10 @@ This project uses several tools to ensure code quality:
 
 ## Environment Variables
 
-| Variable | Description |
-|----------|-------------|
-| `VITE_TIMERISE_API` | GraphQL API endpoint |
-| `VITE_TIMERISE_WS` | WebSocket endpoint for subscriptions |
-| `VITE_TIMERISE_TOOLS_API` | Tools API endpoint |
-| `GENERATE_SOURCEMAP` | Build config for source maps |
+| Variable                   | Description                  |
+| -------------------------- | ---------------------------- |
+| `VITE_TIMERISE_API_DOMAIN` | GraphQL API endpoint         |
+| `GENERATE_SOURCEMAP`       | Build config for source maps |
 
 ## Project Structure
 
@@ -134,4 +132,5 @@ feature/
 ```
 
 # See how Timerise works
+
 [![Vimeo](https://cdn.timerise.io/landing-page/video-placeholder.png?w=2048)](https://vimeo.com/703918323)

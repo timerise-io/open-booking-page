@@ -1,6 +1,6 @@
 ---
-description: 'Sync documentation files with actual codebase state'
-allowed-tools: ['Bash', 'Read', 'Edit', 'Grep', 'Glob']
+description: "Sync documentation files with actual codebase state"
+allowed-tools: ["Bash", "Read", "Edit", "Grep", "Glob"]
 ---
 
 # Update Documentation Command
@@ -10,6 +10,7 @@ This command synchronizes documentation files (README.md, CLAUDE.md) with the ac
 ## Project Context
 
 This is the **Timerise Open Booking Page** - a public-facing booking widget:
+
 - Frontend SPA built with React 19 + Vite
 - Apollo Client for GraphQL API consumption
 - Zustand for state management (primary), Recoil (legacy)
@@ -135,15 +136,15 @@ Update these with actual versions from package.json:
 
 Verify all npm scripts match package.json:
 
-| Command | Description |
-|---------|-------------|
-| `npm start` | Start Vite dev server |
-| `npm run build` | TypeScript + Vite production build |
-| `npm test` | Run Jest tests |
-| `npm run lint` | ESLint + type checking |
-| `npm run check-types` | TypeScript type checking only |
-| `npm run prettier` | Check formatting |
-| `npm run prettier:fix` | Fix formatting |
+| Command                | Description                        |
+| ---------------------- | ---------------------------------- |
+| `npm start`            | Start Vite dev server              |
+| `npm run build`        | TypeScript + Vite production build |
+| `npm test`             | Run Jest tests                     |
+| `npm run lint`         | ESLint + type checking             |
+| `npm run check-types`  | TypeScript type checking only      |
+| `npm run prettier`     | Check formatting                   |
+| `npm run prettier:fix` | Fix formatting                     |
 
 ### Project Structure
 
@@ -176,12 +177,10 @@ src/
 
 Verify the table matches `.env`:
 
-| Variable | Description |
-|----------|-------------|
-| `VITE_TIMERISE_API` | GraphQL API endpoint |
-| `VITE_TIMERISE_WS` | WebSocket endpoint for subscriptions |
-| `VITE_TIMERISE_TOOLS_API` | Tools API endpoint |
-| `GENERATE_SOURCEMAP` | Build config for source maps |
+| Variable                   | Description                  |
+| -------------------------- | ---------------------------- |
+| `VITE_TIMERISE_API_DOMAIN` | Timerise API domain          |
+| `GENERATE_SOURCEMAP`       | Build config for source maps |
 
 ## CLAUDE.md Update Sections
 
@@ -240,33 +239,23 @@ Verify patterns match actual code:
 
 ### 1. Feature Module List
 
-**Issue**: Documentation shows outdated module list
-**Check**: `ls src/features/`
-**Fix**: Update feature module list in both files
+**Issue**: Documentation shows outdated module list **Check**: `ls src/features/` **Fix**: Update feature module list in both files
 
 ### 2. Dependency Versions
 
-**Issue**: Documentation shows outdated versions
-**Check**: `cat package.json`
-**Fix**: Sync all version numbers with package.json
+**Issue**: Documentation shows outdated versions **Check**: `cat package.json` **Fix**: Sync all version numbers with package.json
 
 ### 3. npm Scripts
 
-**Issue**: Documentation lists scripts that don't exist or misses new ones
-**Check**: `cat package.json | grep -A 20 '"scripts"'`
-**Fix**: Update commands section with actual scripts
+**Issue**: Documentation lists scripts that don't exist or misses new ones **Check**: `cat package.json | grep -A 20 '"scripts"'` **Fix**: Update commands section with actual scripts
 
 ### 4. Environment Variables
 
-**Issue**: Documentation doesn't match .env
-**Check**: `cat .env`
-**Fix**: Update environment variables table
+**Issue**: Documentation doesn't match .env **Check**: `cat .env` **Fix**: Update environment variables table
 
 ### 5. State Management
 
-**Issue**: Documentation doesn't reflect Zustand migration
-**Check**: `ls src/state/stores/` and `ls src/state/atoms/`
-**Fix**: Document Zustand as primary, Recoil as legacy
+**Issue**: Documentation doesn't reflect Zustand migration **Check**: `ls src/state/stores/` and `ls src/state/atoms/` **Fix**: Document Zustand as primary, Recoil as legacy
 
 ## Analysis Process
 

@@ -93,10 +93,10 @@ const errorLink = new ErrorLink(({ error, operation }) => {
   }
 });
 
-const httpLink = new HttpLink({ uri: `${import.meta.env.VITE_TIMERISE_API}/${VERSION.V1}` });
+const httpLink = new HttpLink({ uri: `https://${import.meta.env.VITE_TIMERISE_API_DOMAIN}/${VERSION.V1}` });
 
 const wsLink = new GraphQLWsLink(
-  createClient({ url: `${import.meta.env.VITE_TIMERISE_WS}/${VERSION.V1}`, connectionParams: {} }),
+  createClient({ url: `wss://${import.meta.env.VITE_TIMERISE_API_DOMAIN}/${VERSION.V1}`, connectionParams: {} }),
 );
 
 const splitLink = ApolloLink.split(
