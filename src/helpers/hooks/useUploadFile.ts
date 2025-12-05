@@ -24,7 +24,7 @@ export const useUploadFile = (fieldId: string) => {
 
     axios
       .post<{ filePath: string }>(
-        `${import.meta.env.VITE_TIMERISE_TOOLS_API}/upload?extension=${fileToUploadExtension}&projectId=${service.project.projectId}`,
+        `https://${import.meta.env.VITE_TIMERISE_API_DOMAIN}/upload?extension=${fileToUploadExtension}&projectId=${service.project.projectId}`,
         fileToUpload,
         {
           headers: {

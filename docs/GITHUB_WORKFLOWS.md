@@ -7,7 +7,7 @@ This document describes the Continuous Integration and Continuous Deployment (CI
 The project uses **GitHub Actions** for automated testing, building, and deployment to Firebase Hosting. There are two workflows:
 
 | Workflow | File | Trigger | Environment | URL |
-|----------|------|---------|-------------|-----|
+| --- | --- | --- | --- | --- |
 | **Production** | `firebase-hosting-main.yml` | PR merged to `main` | Production | https://booking.timerise.io |
 | **Sandbox** | `firebase-hosting-sandbox.yml` | Push to `sandbox` or manual | Sandbox | https://sandbox-booking.timerise.io |
 
@@ -48,16 +48,19 @@ Each workflow consists of **3 sequential jobs** with parallel quality checks:
 **Purpose:** Ensure code quality before building and deploying.
 
 **Strategy:** Uses a matrix to run three checks in parallel:
+
 - `lint` - ESLint + TypeScript type checking
 - `test` - Jest test suite
 - `types` - TypeScript type checking only
 
 **Key Features:**
+
 - `fail-fast: false` - All checks run even if one fails
 - Caches node_modules and tool-specific artifacts (.eslintcache, .tsbuildinfo, .jest-cache)
 - Uses retry logic (3 attempts, 30s wait) for `npm ci` to handle transient network issues
 
 **Commands:**
+
 ```bash
 npm run ci:lint   # ESLint with cache
 npm run ci:test   # Jest with cache
@@ -73,13 +76,12 @@ npm run ci:types  # TypeScript compiler
 **Environment Variables:**
 
 | Variable | Production | Sandbox |
-|----------|-----------|---------|
+| --- | --- | --- |
 | `GENERATE_SOURCEMAP` | `false` | `true` |
-| `VITE_TIMERISE_API` | `${{ secrets.PROD_VITE_TIMERISE_API }}` | `${{ secrets.SANDBOX_VITE_TIMERISE_API }}` |
-| `VITE_TIMERISE_WS` | `${{ secrets.PROD_VITE_TIMERISE_WS }}` | `${{ secrets.SANDBOX_VITE_TIMERISE_WS }}` |
-| `VITE_TIMERISE_TOOLS_API` | `${{ secrets.PROD_VITE_TIMERISE_TOOLS_API }}` | `${{ secrets.SANDBOX_VITE_TIMERISE_TOOLS_API }}` |
+| `VITE_TIMERISE_API_DOMAIN` | `${{ secrets.PROD_VITE_TIMERISE_API_DOMAIN }}` | `${{ secrets.SANDBOX_VITE_TIMERISE_API_DOMAIN }}` |
 
 **Steps:**
+
 1. **Install dependencies** with retry logic
 2. **Build** via `npm run build` (TypeScript compilation + Vite build)
 3. **Verify build** - Checks that:
@@ -88,6 +90,7 @@ npm run ci:types  # TypeScript compiler
 4. **Upload artifact** - Stores build for 7 days with unique name `build-${{ github.sha }}`
 
 **Caching Strategy:**
+
 - `node_modules` - Keyed by `package-lock.json`
 - Vite artifacts (`node_modules/.vite`) - Keyed by `vite.config.ts` + `package-lock.json`
 
@@ -98,10 +101,12 @@ npm run ci:types  # TypeScript compiler
 **Dependencies:** Requires `build` job to pass.
 
 **Environment:**
+
 - Production: `production` environment → https://booking.timerise.io
 - Sandbox: `sandbox` environment → https://sandbox-booking.timerise.io
 
 **Steps:**
+
 1. **Download build artifact** from previous job
 2. **Verify downloaded build** - Ensures artifact was downloaded correctly
 3. **Create Service Account File** from GitHub secret
@@ -115,6 +120,7 @@ npm run ci:types  # TypeScript compiler
 6. **Create deployment summary** with deployment details
 
 **Firebase Projects:**
+
 - Production: `timerise-prod` → `booking-timerise-prod` hosting site
 - Sandbox: `timerise-sandbox` → `booking-timerise-sandbox` hosting site
 
@@ -122,16 +128,12 @@ npm run ci:types  # TypeScript compiler
 
 Configure these secrets in **Settings → Secrets and variables → Actions**:
 
-| Secret Name | Description | Required For |
-|-------------|-------------|--------------|
-| `PROD_VITE_TIMERISE_API` | Production GraphQL API endpoint | Production workflow |
-| `PROD_VITE_TIMERISE_WS` | Production WebSocket endpoint | Production workflow |
-| `PROD_VITE_TIMERISE_TOOLS_API` | Production Tools API endpoint | Production workflow |
-| `FIREBASE_SERVICE_ACCOUNT_TIMERISE_PROD` | Firebase service account JSON for production | Production workflow |
-| `SANDBOX_VITE_TIMERISE_API` | Sandbox GraphQL API endpoint | Sandbox workflow |
-| `SANDBOX_VITE_TIMERISE_WS` | Sandbox WebSocket endpoint | Sandbox workflow |
-| `SANDBOX_VITE_TIMERISE_TOOLS_API` | Sandbox Tools API endpoint | Sandbox workflow |
-| `FIREBASE_SERVICE_ACCOUNT_TIMERISE_SANDBOX` | Firebase service account JSON for sandbox | Sandbox workflow |
+| Secret Name                                 | Description                                  | Required For        |
+| ------------------------------------------- | -------------------------------------------- | ------------------- |
+| `PROD_VITE_TIMERISE_API_DOMAIN`             | Production API domain                        | Production workflow |
+| `FIREBASE_SERVICE_ACCOUNT_TIMERISE_PROD`    | Firebase service account JSON for production | Production workflow |
+| `SANDBOX_VITE_TIMERISE_API_DOMAIN`          | Sandbox API domain                           | Sandbox workflow    |
+| `FIREBASE_SERVICE_ACCOUNT_TIMERISE_SANDBOX` | Firebase service account JSON for sandbox    | Sandbox workflow    |
 
 ### How to Update Secrets
 
@@ -156,6 +158,7 @@ The workflows use multiple layers of caching to reduce build times:
 ### Retry Logic
 
 Network operations use `nick-fields/retry@v3` for reliability:
+
 - **Dependency installation:** 3 attempts, 30s wait, 10min timeout
 - **Firebase deployment:** 3 attempts, 30s wait, 10min timeout
 - **Health checks:** 5 attempts, 10s wait, 30s timeout
@@ -192,6 +195,7 @@ Production deployments are **only triggered automatically** when a pull request 
 **Cause:** Vite build failed but didn't exit with error code.
 
 **Solution:**
+
 - Check TypeScript compilation errors: `npm run check-types`
 - Check for missing environment variables
 - Review build logs for Vite errors
@@ -201,6 +205,7 @@ Production deployments are **only triggered automatically** when a pull request 
 **Cause:** Authentication issues or Firebase project misconfiguration.
 
 **Solution:**
+
 1. Verify the service account secret is correctly formatted JSON
 2. Check that the service account has necessary permissions:
    - Firebase Hosting Admin
@@ -213,6 +218,7 @@ Production deployments are **only triggered automatically** when a pull request 
 **Cause:** Deployment succeeded but the application isn't responding correctly.
 
 **Solution:**
+
 1. Check the health check URL is correct for your environment
 2. Verify the test service ID exists in your environment
 3. Check Firebase Hosting logs for runtime errors
@@ -223,6 +229,7 @@ Production deployments are **only triggered automatically** when a pull request 
 **Cause:** Cached dependencies don't match `package-lock.json`.
 
 **Solution:**
+
 1. Clear GitHub Actions cache:
    - Go to **Actions → Caches**
    - Delete relevant caches
@@ -245,6 +252,7 @@ Production deployments are **only triggered automatically** when a pull request 
 ## Deployment Timeline
 
 Typical deployment duration (with cache hits):
+
 - **Quality checks:** ~2-3 minutes (parallel)
 - **Build:** ~2-3 minutes
 - **Deploy:** ~1-2 minutes
