@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.5] - 2025-12-05
+
+### Changed
+
+- Simplified environment configuration to use single domain variable instead of separate API/WS/Tools URLs
+- Updated light theme background color from #F6F6F6 to #F5F5F7 for public booking pages
+- GitHub workflows now construct full URLs (HTTP/WebSocket) from domain in code
+
+### Added
+
+- Claude Code Review workflow for automated PR reviews
+- Claude PR Assistant workflow for development support
+
 ## [1.2.4] - 2025-12-02
 
 ### Added
