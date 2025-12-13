@@ -1,4 +1,15 @@
-export const isNetworkError = (error: any | undefined): boolean => {
+import { ErrorLike } from "@apollo/client/core";
+
+/**
+ * Extended error type that includes Apollo Client v4 runtime error properties.
+ * While the base ErrorLike type doesn't include these, they exist at runtime.
+ */
+interface ApolloQueryError extends ErrorLike {
+  networkError?: Error | null;
+  graphQLErrors?: readonly unknown[];
+}
+
+export const isNetworkError = (error: ApolloQueryError | undefined): boolean => {
   if (!error) return false;
 
   // Check for network errors
@@ -13,7 +24,7 @@ export const isNetworkError = (error: any | undefined): boolean => {
   return false;
 };
 
-export const isAbortError = (error: any | undefined): boolean => {
+export const isAbortError = (error: ApolloQueryError | undefined): boolean => {
   return Boolean(
     error?.networkError &&
     typeof error.networkError === "object" &&

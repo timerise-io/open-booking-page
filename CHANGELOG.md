@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.6] - 2025-12-13
+
+### Security
+
+- Updated React from 19.2.0 to 19.2.3 to fix CVE-2025-55182 (React2Shell), a critical RCE vulnerability in React Server Components
+
 ## [1.2.5] - 2025-12-05
 
 ### Changed
