@@ -11,7 +11,6 @@ export const GET_SERVICE = gql`
         theme
         defaultLocale
         localTimeZone
-        googleTagId
       }
       title
       description

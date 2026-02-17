@@ -8,7 +8,6 @@ export const service = {
     theme: "DARK" as const,
     defaultLocale: "en-PL",
     localTimeZone: "Europe/Warsaw",
-    googleTagId: null,
   },
   title: "event single",
   description: "",
