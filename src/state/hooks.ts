@@ -1,11 +1,10 @@
 import { useMemo } from "react";
 import { addDays, format as formatDate, isAfter } from "date-fns";
-import { format } from "date-fns-tz";
 import { getDateInTimezone } from "helpers/timeFormat";
+import { toApiDateTime } from "helpers/functions";
 import { Slot } from "models/slots";
 import { useBookingStore } from "./stores/bookingStore";
-import { useFilterStore } from "./stores/filterStore";
-import { SlotsFilters } from "./stores/filterStore";
+import { SlotsFilters, useFilterStore } from "./stores/filterStore";
 import { useProjectStore } from "./stores/projectStore";
 import { useUiStore } from "./stores/uiStore";
 
@@ -42,9 +41,7 @@ export const useSlotFilter = (): SlotsFilters => {
     const dateTimeFrom = getDateInTimezone(serviceMinDate);
     const newFetchDate = isAfter(now, dateTimeFrom) ? now : dateTimeFrom;
 
-    const fetchDate = format(newFetchDate, "yyyy-MM-dd'T'HH:mm:00'Z'", {
-      timeZone: "UTC",
-    });
+    const fetchDate = toApiDateTime(newFetchDate);
 
     return {
       firstDayDate: filters.firstDayDate,

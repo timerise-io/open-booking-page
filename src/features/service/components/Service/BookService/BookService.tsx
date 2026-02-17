@@ -4,19 +4,17 @@ import { Card } from "components/Card";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
-import { format } from "date-fns";
 import { useBookDateRange } from "features/service/hooks/useBookDateRange";
 import { useBookSlot } from "features/service/hooks/useBookSlot";
 import { Form, Formik } from "formik";
-import { getServiceConfigByType } from "helpers/functions";
+import { getServiceConfigByType, toApiDateTime } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import _ from "lodash";
 import { FormField, filterFormFields, filterHiddenFields } from "models/formFields";
 import { BOOKING_FORM_TYPES } from "models/service";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useBookingStore, useFilterStore, useProjectStore, useUiStore, useUploadStore } from "state/stores";
 import styled from "styled-components";
 import { IconInfoCircle } from "@tabler/icons-react";
@@ -107,7 +105,7 @@ const BookService = () => {
 
   const selectedSlot = slots.find((slot) => slot.slotId === selectedSlotsValue[0])!;
 
-  const now = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
+  const now = toApiDateTime(new Date());
 
   const formattedDate = selectedSlot
     ? convertSourceDateTimeToTargetDateTime({

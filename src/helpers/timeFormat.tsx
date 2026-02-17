@@ -2,18 +2,12 @@ import React from "react";
 import { Locale, parseISO } from "date-fns";
 import { formatInTimeZone, fromZonedTime, toZonedTime } from "date-fns-tz";
 import styled from "styled-components";
+import { stripTimezoneFromISO } from "helpers/functions";
 
-export const getDateInTimezone = (isoDate: string) => {
-  const dateToFormat = parseISO(isoDate.split("Z")[0]);
+export const getDateInTimezone = (isoDate: string): Date => parseISO(stripTimezoneFromISO(isoDate));
 
-  return dateToFormat;
-};
-
-export const formatInTimezone = (isoDate: string, dateFormat: string) => {
-  const dateToFormat = getDateInTimezone(isoDate);
-
-  return formatInTimeZone(dateToFormat, "UTC", dateFormat);
-};
+export const formatInTimezone = (isoDate: string, dateFormat: string): string =>
+  formatInTimeZone(getDateInTimezone(isoDate), "UTC", dateFormat);
 
 type ConvertSourceDateTimeToTargetDateTime = ({
   date,
@@ -36,7 +30,7 @@ export const convertSourceDateTimeToTargetDateTime: ConvertSourceDateTimeToTarge
   dateFormat,
   locale,
 }) => {
-  const sourceDate = new Date(date.slice(0, -5));
+  const sourceDate = new Date(stripTimezoneFromISO(date));
   const utcDate = fromZonedTime(sourceDate, sourceTimeZone);
   const targetDate = toZonedTime(utcDate, targetTimeZone);
 
@@ -72,7 +66,7 @@ const Wrapper = styled.span`
 
 export const convertSourceDateTimeToTargetDateTimeWithHoursSystem: ConvertSourceDateTimeToTargetDateTimeWithHoursSystem =
   ({ date, sourceTimeZone, targetTimeZone, locale, is12HoursSystem }) => {
-    const sourceDate = new Date(date.slice(0, -5));
+    const sourceDate = new Date(stripTimezoneFromISO(date));
     const utcDate = fromZonedTime(sourceDate, sourceTimeZone);
     const targetDate = toZonedTime(utcDate, targetTimeZone);
 
