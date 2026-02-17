@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { ReactNode } from "react";
 import { ContextSelect } from "components/ContextSelect";
 import { Typography } from "components/Typography";
@@ -6,7 +6,6 @@ import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
 import { SkeletonBox } from "components/layout/SkeletonBox";
-import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { Booking } from "models/booking";
 import { Service } from "models/service";
 import ReactMarkdown from "react-markdown";
@@ -110,8 +109,6 @@ const LocationDetailsRow: React.FC<LocationDetailsRowProps> = ({
   const hasBookingLocations = booking && booking?.locations?.length;
   const hasServiceLocations = location && serviceData?.serviceLocations?.length;
   const hasOneServiceLocation = serviceData?.serviceLocations?.length === 1;
-  const { sendEvent } = useContext(AnalyticsContext);
-
   if (hasBookingLocations) {
     return <DetailsRow name="Location" value={booking.locations[0].title} icon={<IconMapPin />} />;
   }
@@ -138,11 +135,6 @@ const LocationDetailsRow: React.FC<LocationDetailsRowProps> = ({
           options={locationsOptions}
           onChange={(value) => {
             setLocation(value as string);
-            sendEvent({
-              category: "navigation",
-              action: "Location Select",
-              label: "Change Location",
-            });
           }}
         />
       </StyledDetailsRowSelect>

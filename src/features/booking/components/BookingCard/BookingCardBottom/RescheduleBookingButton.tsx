@@ -1,7 +1,5 @@
-import { useContext } from "react";
 import { ContextButton } from "components/ContextButton";
 import { Typography } from "components/Typography";
-import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { getPath } from "helpers/functions";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { BOOKING_FORM_TYPES } from "models/service";
@@ -17,7 +15,6 @@ export const RescheduleBookingButton = () => {
   const service = useBookingStore((state) => state.service);
   const [searchParams] = useSearchParams();
   const urlSearchParams = Object.fromEntries(searchParams.entries());
-  const { sendEvent } = useContext(AnalyticsContext);
 
   if (bookingValue === undefined || service?.viewConfig?.displayType === BOOKING_FORM_TYPES.PREORDER) return null;
 
@@ -31,11 +28,6 @@ export const RescheduleBookingButton = () => {
           params: { id: bookingValue.bookingId },
         });
         navigate(queryString ? `${path}?${queryString}` : path);
-        sendEvent({
-          category: "navigation",
-          action: "Reschedule Booking Button",
-          label: t("reschedule"),
-        });
       }}
     >
       <Typography $typographyType="body" $align="center" as="span" $color="inherit" $weight="700">

@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Typography } from "components/Typography";
 import { Row } from "components/layout/Row";
-import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { useUiStore } from "state/stores";
 import styled, { css } from "styled-components";
 import { HOURS_SYSTEMS } from "./enums/HoursSystem.enum";
@@ -31,18 +30,10 @@ const HoursSystemButton = styled(Typography)<{ $isBold: boolean }>`
 export const HoursSystem = () => {
   const hoursSystem = useUiStore((state) => state.hoursSystem);
   const setHoursSystem = useUiStore((state) => state.setHoursSystem);
-  const { sendEvent } = useContext(AnalyticsContext);
-
   const handleHoursSystemChange = () => {
     const newHoursSystem = hoursSystem === HOURS_SYSTEMS.h12 ? HOURS_SYSTEMS.h24 : HOURS_SYSTEMS.h12;
     localStorage.setItem("HOURS_SYSTEM", newHoursSystem);
     setHoursSystem(newHoursSystem);
-    sendEvent({
-      category: "Hours System",
-      action: "Change Hours System",
-      label: "Change Hours System",
-      value: newHoursSystem === HOURS_SYSTEMS.h12 ? 12 : 24,
-    });
   };
 
   return (

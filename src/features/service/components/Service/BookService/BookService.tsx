@@ -1,11 +1,10 @@
-import React, { useCallback, useContext, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
 import { format } from "date-fns";
-import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { useBookDateRange } from "features/service/hooks/useBookDateRange";
 import { useBookSlot } from "features/service/hooks/useBookSlot";
 import { Form, Formik } from "formik";
@@ -102,8 +101,6 @@ const BookService = () => {
   const setSelectedSlots = useBookingStore((state) => state.setSelectedSlots);
   const slots = useBookingStore((state) => state.slots)!;
   const locations = useProjectStore((state) => state.location);
-  const { sendEvent } = useContext(AnalyticsContext);
-
   const isUploading = Object.values(uploadState).filter((item) => item.isLoading).length > 0;
 
   const dateFormat = is12HoursSystem ? "iiii dd MMM, h:mm a" : "iiii dd MMM, H:mm";
@@ -198,11 +195,6 @@ const BookService = () => {
           locations: locations ? [locations] : [],
         },
       }).then(() => setSelectedSlots([]));
-      sendEvent({
-        action: "book_slot",
-        category: "Book Service",
-        label: `book slot ${BOOKING_FORM_TYPES.DAYS}`,
-      });
     } else if (
       serviceType === BOOKING_FORM_TYPES.CALENDAR &&
       selectedDateRangeValue.dateTimeFrom !== null &&
@@ -222,11 +214,6 @@ const BookService = () => {
           locations: locations ? [locations] : [],
         },
       });
-      sendEvent({
-        action: "book_slot",
-        category: "Book Service",
-        label: `book slot ${BOOKING_FORM_TYPES.CALENDAR}`,
-      });
     } else if (
       (serviceType === BOOKING_FORM_TYPES.LIST || serviceType === BOOKING_FORM_TYPES.MULTILIST) &&
       selectedSlotsValue.length
@@ -244,11 +231,6 @@ const BookService = () => {
           locations: locations ? [locations] : [],
         },
       }).then(() => setSelectedSlots([]));
-      sendEvent({
-        action: "book_slot",
-        category: "Book Service",
-        label: `book slot ${BOOKING_FORM_TYPES.LIST}`,
-      });
     } else if (serviceType === BOOKING_FORM_TYPES.PREORDER) {
       bookDateRangeMutation({
         variables: {
@@ -263,11 +245,6 @@ const BookService = () => {
           locale: locale.code,
           locations: locations ? [locations] : [],
         },
-      });
-      sendEvent({
-        action: "book_slot",
-        category: "Book Service",
-        label: `book slot ${BOOKING_FORM_TYPES.PREORDER}`,
       });
     }
   };

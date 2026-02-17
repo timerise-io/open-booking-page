@@ -1,7 +1,5 @@
-import { useContext } from "react";
 import { ContextButton } from "components/ContextButton";
 import { Typography } from "components/Typography";
-import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { getPath } from "helpers/functions";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { useTranslation } from "react-i18next";
@@ -16,7 +14,6 @@ const BackToServiceButton = () => {
   const service = useBookingStore((state) => state.service);
   const [searchParams] = useSearchParams();
   const urlSearchParams = Object.fromEntries(searchParams.entries());
-  const { sendEvent } = useContext(AnalyticsContext);
 
   if (service === undefined) return null;
 
@@ -31,11 +28,6 @@ const BackToServiceButton = () => {
           params: { id: service.serviceId },
         });
         navigate(queryString ? `${path}?${queryString}` : path);
-        sendEvent({
-          category: "navigation",
-          action: "Back To Service Button",
-          label: t("go-back"),
-        });
       }}
     >
       <Typography $typographyType="body" $align="center" as="span" $color="inherit" $weight="700">
