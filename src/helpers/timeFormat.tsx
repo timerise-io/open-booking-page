@@ -1,55 +1,38 @@
 import React from "react";
 import { Locale, parseISO } from "date-fns";
-import { formatInTimeZone, fromZonedTime, toZonedTime } from "date-fns-tz";
+import { formatInTimeZone, toZonedTime } from "date-fns-tz";
 import styled from "styled-components";
 import { stripTimezoneFromISO } from "helpers/functions";
 
-export const getDateInTimezone = (isoDate: string): Date => parseISO(stripTimezoneFromISO(isoDate));
+export function getDateInTimezone(isoDate: string): Date {
+  return parseISO(stripTimezoneFromISO(isoDate));
+}
 
-export const formatInTimezone = (isoDate: string, dateFormat: string): string =>
-  formatInTimeZone(getDateInTimezone(isoDate), "UTC", dateFormat);
+export function formatInTimezone(isoDate: string, dateFormat: string): string {
+  return formatInTimeZone(getDateInTimezone(isoDate), "UTC", dateFormat);
+}
 
-type ConvertSourceDateTimeToTargetDateTime = ({
-  date,
-  sourceTimeZone,
-  targetTimeZone,
-  dateFormat,
-  locale,
-}: {
+interface ConvertDateTimeParams {
   date: string;
   sourceTimeZone: string;
   targetTimeZone: string;
-  dateFormat?: string;
   locale?: Locale;
-}) => string;
+}
 
-export const convertSourceDateTimeToTargetDateTime: ConvertSourceDateTimeToTargetDateTime = ({
+function toTargetDate(date: string, targetTimeZone: string): Date {
+  return toZonedTime(new Date(date), targetTimeZone);
+}
+
+export function convertSourceDateTimeToTargetDateTime({
   date,
-  sourceTimeZone,
   targetTimeZone,
   dateFormat,
   locale,
-}) => {
-  const sourceDate = new Date(stripTimezoneFromISO(date));
-  const utcDate = fromZonedTime(sourceDate, sourceTimeZone);
-  const targetDate = toZonedTime(utcDate, targetTimeZone);
+}: ConvertDateTimeParams & { dateFormat?: string }): string {
+  const targetDate = toTargetDate(date, targetTimeZone);
 
   return formatInTimeZone(targetDate, targetTimeZone, dateFormat ?? "H:mm", { locale });
-};
-
-type ConvertSourceDateTimeToTargetDateTimeWithHoursSystem = ({
-  date,
-  sourceTimeZone,
-  targetTimeZone,
-  locale,
-  is12HoursSystem,
-}: {
-  date: string;
-  sourceTimeZone: string;
-  targetTimeZone: string;
-  locale?: Locale;
-  is12HoursSystem?: boolean;
-}) => React.JSX.Element;
+}
 
 const Wrapper = styled.span`
   display: flex;
@@ -64,16 +47,18 @@ const Wrapper = styled.span`
   }
 `;
 
-export const convertSourceDateTimeToTargetDateTimeWithHoursSystem: ConvertSourceDateTimeToTargetDateTimeWithHoursSystem =
-  ({ date, sourceTimeZone, targetTimeZone, locale, is12HoursSystem }) => {
-    const sourceDate = new Date(stripTimezoneFromISO(date));
-    const utcDate = fromZonedTime(sourceDate, sourceTimeZone);
-    const targetDate = toZonedTime(utcDate, targetTimeZone);
+export function convertSourceDateTimeToTargetDateTimeWithHoursSystem({
+  date,
+  targetTimeZone,
+  locale,
+  is12HoursSystem,
+}: ConvertDateTimeParams & { is12HoursSystem?: boolean }): React.JSX.Element {
+  const targetDate = toTargetDate(date, targetTimeZone);
 
-    return (
-      <Wrapper>
-        {formatInTimeZone(targetDate, targetTimeZone, is12HoursSystem ? "h:mm" : "H:mm", { locale })}
-        {is12HoursSystem && <small>{formatInTimeZone(targetDate, targetTimeZone, "a", { locale })}</small>}
-      </Wrapper>
-    );
-  };
+  return (
+    <Wrapper>
+      {formatInTimeZone(targetDate, targetTimeZone, is12HoursSystem ? "h:mm" : "H:mm", { locale })}
+      {is12HoursSystem && <small>{formatInTimeZone(targetDate, targetTimeZone, "a", { locale })}</small>}
+    </Wrapper>
+  );
+}
