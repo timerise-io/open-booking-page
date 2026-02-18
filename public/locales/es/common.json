@@ -1,40 +1,40 @@
 {
-    "solution-name": "Timerise",
-    "footer": {
-        "copyright": "Timerise © 2025",
-        "terms-and-conditions": "Condiciones generales",
-        "privacy-policy": "Política de privacidad",
-        "powered-by": "potenciado por"
-    },
-    "validation": {
-        "required": "Requerido",
-        "min-length": "La longitud mínima es de {{length}} caracteres",
-        "email": "Formato incorrecto del correo electrónico",
-        "slots-quantity": "La cantidad de ranuras debe ser superior a 0",
-        "min-value": "El valor mínimo es {{minValue}}.",
-        "max-value": "El valor máximo es {{maxValue}}.",
-        "incorrect-format": "Formato incorrecto"
-    },
-    "loading-info": "Contar hacia atrás desde el infinito",
-    "theme": {
-        "light": "Modo luz",
-        "dark": "Modo oscuro"
-    },
-    "details": {
-        "duration": "Duración",
-        "payment": "Pago",
-        "location": "Ubicación",
-        "hosted-by": "Organizado por"
-    },
-    "select-date-and-time": "Seleccionar fecha y hora",
-    "time-zone": "Huso horario",
-    "language": "Idioma",
-    "no-time-slots-available": "No hay franjas horarias disponibles en este intervalo de fechas",
-    "show-more": "Ver más",
-    "show-less": "Mostrar menos",
-    "available": "disponible",
-    "timezone": "Zona horaria",
-    "format": "Formato",
-    "quantity-slots-available": "{{quantity}} espacios disponibles",
-    "no-event-slots-available": "No hay espacios disponibles para el evento"
+  "solution-name": "Timerise",
+  "footer": {
+    "copyright": "Timerise © 2026",
+    "terms-and-conditions": "Condiciones generales",
+    "privacy-policy": "Política de privacidad",
+    "powered-by": "potenciado por"
+  },
+  "validation": {
+    "required": "Requerido",
+    "min-length": "La longitud mínima es de {{length}} caracteres",
+    "email": "Formato incorrecto del correo electrónico",
+    "slots-quantity": "La cantidad de ranuras debe ser superior a 0",
+    "min-value": "El valor mínimo es {{minValue}}.",
+    "max-value": "El valor máximo es {{maxValue}}.",
+    "incorrect-format": "Formato incorrecto"
+  },
+  "loading-info": "Contar hacia atrás desde el infinito",
+  "theme": {
+    "light": "Modo luz",
+    "dark": "Modo oscuro"
+  },
+  "details": {
+    "duration": "Duración",
+    "payment": "Pago",
+    "location": "Ubicación",
+    "hosted-by": "Organizado por"
+  },
+  "select-date-and-time": "Seleccionar fecha y hora",
+  "time-zone": "Huso horario",
+  "language": "Idioma",
+  "no-time-slots-available": "No hay franjas horarias disponibles en este intervalo de fechas",
+  "show-more": "Ver más",
+  "show-less": "Mostrar menos",
+  "available": "disponible",
+  "timezone": "Zona horaria",
+  "format": "Formato",
+  "quantity-slots-available": "{{quantity}} espacios disponibles",
+  "no-event-slots-available": "No hay espacios disponibles para el evento"
 }
