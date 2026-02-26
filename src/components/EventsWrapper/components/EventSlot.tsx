@@ -1,9 +1,9 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { Typography } from "components/Typography";
 import { Column } from "components/layout/Column";
 import { Locale } from "date-fns";
 import { HOURS_SYSTEMS } from "features/service/components/Service/HoursSystem/enums/HoursSystem.enum";
-import { getDatesValue } from "helpers/functions";
+import { getDatesValue } from "helpers/functions/getDatesValue";
 import { Service } from "models/service";
 import { TimeSlotButtonType } from "models/theme";
 import { useTranslation } from "react-i18next";
@@ -68,45 +68,36 @@ interface Props {
   service: Service;
 }
 
-export const EventSlot: React.FC<Props> = ({
-  id,
-  dateTimeFrom,
-  dateTimeTo,
-  quantity,
-  handlers,
-  targetTimeZone,
-  sourceTimeZone,
-  locale,
-  service,
-}) => {
+export function EventSlot({ id, dateTimeFrom, dateTimeTo, quantity, handlers, targetTimeZone, sourceTimeZone, locale, service }: Props) {
   const selectedSlotsValue = useBookingStore((state) => state.selectedSlots);
   const hoursSystem = useUiStore((state) => state.hoursSystem);
-  const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
+  const is12HoursSystem = hoursSystem === HOURS_SYSTEMS.h12;
   const { t } = useTranslation();
 
-  const getEventSlotButtonState = (): TimeSlotButtonType => {
-    if (selectedSlotsValue.includes(id)) return "selected";
-    if (quantity > 0) return "available";
+  const isSelected = selectedSlotsValue.includes(id);
+  const isAvailable = quantity > 0;
 
+  function getEventSlotButtonState(): TimeSlotButtonType {
+    if (isSelected) return "selected";
+    if (isAvailable) return "available";
     return "unavailable";
-  };
+  }
 
-  const handleSlotClick = () => {
+  function handleSlotClick() {
     const hasMultipleSlots = service.viewConfig?.list?.multiSelect;
-    const isSlotSelected = selectedSlotsValue.includes(id);
 
     if (hasMultipleSlots) {
-      if (isSlotSelected) {
+      if (isSelected) {
         handlers.setSelectedSlots(selectedSlotsValue.filter((slotId: string) => slotId !== id));
       } else {
         handlers.setSelectedSlots([...selectedSlotsValue, id]);
       }
     } else {
-      handlers.setSelectedSlots(isSlotSelected ? [] : [id]);
+      handlers.setSelectedSlots(isSelected ? [] : [id]);
     }
-  };
+  }
 
-  const getDatesRow = useMemo(
+  const datesRow = useMemo(
     () =>
       getDatesValue({
         service,
@@ -129,26 +120,27 @@ export const EventSlot: React.FC<Props> = ({
     ],
   );
 
-  const showQuantity = useMemo(() => service?.viewConfig?.list?.quantity, [service]);
+  const showQuantity = service?.viewConfig?.list?.quantity;
+  const unavailableClassName = isAvailable ? "" : "unavailable-time-slot";
 
   return (
     <Column $mt={0.5} $mb={0.5} $w="100%">
-      <EventSlotButton $state={getEventSlotButtonState()} onClick={handleSlotClick} disabled={quantity === 0}>
+      <EventSlotButton $state={getEventSlotButtonState()} onClick={handleSlotClick} disabled={!isAvailable}>
         <Typography
           $typographyType="body"
           $weight="700"
           as="span"
-          className={quantity > 0 ? "" : "unavailable-time-slot"}
+          className={unavailableClassName}
           style={{ color: "inherit" }}
         >
-          {getDatesRow}
+          {datesRow}
         </Typography>
         {showQuantity && (
           <Typography
             $typographyType="body"
             $weight="500"
             as="span"
-            className={quantity > 0 ? "" : "unavailable-time-slot"}
+            className={unavailableClassName}
             style={{ color: "inherit" }}
           >
             {t("quantity-slots-available", { quantity })}
@@ -157,4 +149,4 @@ export const EventSlot: React.FC<Props> = ({
       </EventSlotButton>
     </Column>
   );
-};
+}

@@ -1,9 +1,8 @@
-import React, { useCallback, useContext, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
-import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { useRescheduleBooking } from "features/service/hooks/useRescheduleBooking";
 import { getPath, getServiceConfigByType } from "helpers/functions";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
@@ -51,8 +50,6 @@ const RescheduleService = () => {
   const { PAGES } = useIsEmbeddedPage();
   const [searchParams] = useSearchParams();
   const urlSearchParams = Object.fromEntries(searchParams.entries());
-  const { sendEvent } = useContext(AnalyticsContext);
-
   const serviceType = service?.viewConfig.displayType;
 
   const isSlotType = serviceType === BOOKING_FORM_TYPES.DAYS;
@@ -93,11 +90,6 @@ const RescheduleService = () => {
           slots: selectedSlotsValue,
         },
       });
-      sendEvent({
-        category: "reschedule_slot",
-        action: "Reschedule Service",
-        label: "Reschedule",
-      });
     } else if (isDateRangeType) {
       if (!selectedSlotsValue.length || bookingValue?.bookingId === undefined) return;
       rescheduleBookingMutation({
@@ -106,11 +98,6 @@ const RescheduleService = () => {
           slots: selectedSlotsValue,
         },
       });
-      sendEvent({
-        category: "reschedule_slot",
-        action: "Reschedule Service",
-        label: "Reschedule",
-      });
     } else if (isEventType) {
       if (!selectedSlotsValue.length || bookingValue?.bookingId === undefined) return;
       rescheduleBookingMutation({
@@ -118,11 +105,6 @@ const RescheduleService = () => {
           bookingId: bookingValue.bookingId,
           slots: selectedSlotsValue,
         },
-      });
-      sendEvent({
-        category: "reschedule_slot",
-        action: "Reschedule Service",
-        label: "Reschedule",
       });
     }
   };

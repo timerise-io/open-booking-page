@@ -1,23 +1,20 @@
-import React, { useCallback, useContext, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
-import { format } from "date-fns";
-import { AnalyticsContext } from "features/analytics/contexts/AnalyticsContext";
 import { useBookDateRange } from "features/service/hooks/useBookDateRange";
 import { useBookSlot } from "features/service/hooks/useBookSlot";
 import { Form, Formik } from "formik";
-import { getServiceConfigByType } from "helpers/functions";
+import { getServiceConfigByType, toApiDateTime } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
 import _ from "lodash";
 import { FormField, filterFormFields, filterHiddenFields } from "models/formFields";
 import { BOOKING_FORM_TYPES } from "models/service";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useBookingStore, useFilterStore, useProjectStore, useUiStore, useUploadStore } from "state/stores";
 import styled from "styled-components";
 import { IconInfoCircle } from "@tabler/icons-react";
@@ -102,15 +99,13 @@ const BookService = () => {
   const setSelectedSlots = useBookingStore((state) => state.setSelectedSlots);
   const slots = useBookingStore((state) => state.slots)!;
   const locations = useProjectStore((state) => state.location);
-  const { sendEvent } = useContext(AnalyticsContext);
-
   const isUploading = Object.values(uploadState).filter((item) => item.isLoading).length > 0;
 
   const dateFormat = is12HoursSystem ? "iiii dd MMM, h:mm a" : "iiii dd MMM, H:mm";
 
   const selectedSlot = slots.find((slot) => slot.slotId === selectedSlotsValue[0])!;
 
-  const now = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
+  const now = toApiDateTime(new Date());
 
   const formattedDate = selectedSlot
     ? convertSourceDateTimeToTargetDateTime({
@@ -198,11 +193,6 @@ const BookService = () => {
           locations: locations ? [locations] : [],
         },
       }).then(() => setSelectedSlots([]));
-      sendEvent({
-        action: "book_slot",
-        category: "Book Service",
-        label: `book slot ${BOOKING_FORM_TYPES.DAYS}`,
-      });
     } else if (
       serviceType === BOOKING_FORM_TYPES.CALENDAR &&
       selectedDateRangeValue.dateTimeFrom !== null &&
@@ -222,11 +212,6 @@ const BookService = () => {
           locations: locations ? [locations] : [],
         },
       });
-      sendEvent({
-        action: "book_slot",
-        category: "Book Service",
-        label: `book slot ${BOOKING_FORM_TYPES.CALENDAR}`,
-      });
     } else if (
       (serviceType === BOOKING_FORM_TYPES.LIST || serviceType === BOOKING_FORM_TYPES.MULTILIST) &&
       selectedSlotsValue.length
@@ -244,11 +229,6 @@ const BookService = () => {
           locations: locations ? [locations] : [],
         },
       }).then(() => setSelectedSlots([]));
-      sendEvent({
-        action: "book_slot",
-        category: "Book Service",
-        label: `book slot ${BOOKING_FORM_TYPES.LIST}`,
-      });
     } else if (serviceType === BOOKING_FORM_TYPES.PREORDER) {
       bookDateRangeMutation({
         variables: {
@@ -263,11 +243,6 @@ const BookService = () => {
           locale: locale.code,
           locations: locations ? [locations] : [],
         },
-      });
-      sendEvent({
-        action: "book_slot",
-        category: "Book Service",
-        label: `book slot ${BOOKING_FORM_TYPES.PREORDER}`,
       });
     }
   };

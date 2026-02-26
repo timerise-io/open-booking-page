@@ -1,9 +1,9 @@
-import React, { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { Typography } from "components/Typography";
 import { Column } from "components/layout/Column";
 import { Locale } from "date-fns";
 import { HOURS_SYSTEMS } from "features/service/components/Service/HoursSystem/enums/HoursSystem.enum";
-import { getDatesValue } from "helpers/functions";
+import { getDatesValue } from "helpers/functions/getDatesValue";
 import { Service } from "models/service";
 import { Slot } from "models/slots";
 import { TimeSlotButtonType } from "models/theme";
@@ -63,9 +63,9 @@ interface Props {
   slots: Slot[];
 }
 
-export const EventMultiSlot: React.FC<Props> = ({ targetTimeZone, sourceTimeZone, locale, service, slots }) => {
+export function EventMultiSlot({ targetTimeZone, sourceTimeZone, locale, service, slots }: Props) {
   const hoursSystem = useUiStore((state) => state.hoursSystem);
-  const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
+  const is12HoursSystem = hoursSystem === HOURS_SYSTEMS.h12;
   const { t } = useTranslation();
 
   const getDatesRow = useCallback(
@@ -83,13 +83,15 @@ export const EventMultiSlot: React.FC<Props> = ({ targetTimeZone, sourceTimeZone
     [targetTimeZone, sourceTimeZone, locale, service?.viewConfig?.list?.showTime, is12HoursSystem],
   );
 
-  const showQuantity = useMemo(() => service?.viewConfig?.multiList?.quantity, [service]);
+  const showQuantity = service?.viewConfig?.multiList?.quantity;
+  const firstSlot = slots[0];
 
   return (
     <Column $mt={0.5} $mb={0.5} $w="100%">
-      <EventSlotButton $state={"selected"}>
+      <EventSlotButton $state="selected">
         {slots.map((slot: Slot) => (
           <Typography
+            key={`${slot.dateTimeFrom}-${slot.dateTimeTo}`}
             $typographyType="body"
             $weight="500"
             as="span"
@@ -100,18 +102,18 @@ export const EventMultiSlot: React.FC<Props> = ({ targetTimeZone, sourceTimeZone
           </Typography>
         ))}
 
-        {showQuantity && (
+        {showQuantity && firstSlot && (
           <Typography
             $typographyType="body"
             $weight="500"
             as="span"
-            className={slots[0].quantity > 0 ? "" : "unavailable-time-slot"}
+            className={firstSlot.quantity > 0 ? "" : "unavailable-time-slot"}
             style={{ color: "inherit", marginTop: "8px" }}
           >
-            {t("quantity-slots-available", { quantity: slots[0].quantity })}
+            {t("quantity-slots-available", { quantity: firstSlot.quantity })}
           </Typography>
         )}
       </EventSlotButton>
     </Column>
   );
-};
+}

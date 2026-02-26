@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { LinkButton } from "components/LinkButton";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { HOURS_SYSTEMS } from "features/service/components/Service/HoursSystem/enums/HoursSystem.enum";
-import { getDatesValue } from "helpers/functions";
+import { getDatesValue } from "helpers/functions/getDatesValue";
 import { useLocale } from "helpers/hooks/useLocale";
 import { Booking } from "models/booking";
 import { useTranslation } from "react-i18next";
@@ -26,44 +26,37 @@ interface BookingCardTitleProps extends Pick<Booking, "paymentLink" | "dateTimeF
   showPayButton: boolean;
 }
 
-const BookingCardTitle = ({
+function BookingCardTitle({
   paymentLink,
   title,
   description,
   iconUrl,
   showDetails,
   showPayButton,
-}: BookingCardTitleProps) => {
+}: BookingCardTitleProps) {
   const locale = useLocale();
   const { t } = useTranslation(["booking"]);
   const timeZone = useUiStore((state) => state.timeZone);
   const service = useBookingStore((state) => state.service)!;
   const booking = useBookingStore((state) => state.booking);
   const hoursSystem = useUiStore((state) => state.hoursSystem);
-  const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
+  const is12HoursSystem = hoursSystem === HOURS_SYSTEMS.h12;
   const bookingPaymentStatus = booking?.paymentStatus;
   const { paymentStatus } = useParams<{ paymentStatus: string }>();
   const [searchParams] = useSearchParams();
   const searchPaymentStatus = searchParams.get("paymentStatus");
 
-  const redirectToPayment = () => {
-    if (
-      !paymentLink ||
-      searchPaymentStatus === "CANCELED" ||
-      paymentStatus === "CANCELED" ||
-      bookingPaymentStatus === "CANCELED"
-    )
-      return;
-
-    window.open(paymentLink, "_self")?.focus();
-  };
+  const isCanceled =
+    searchPaymentStatus === "CANCELED" || paymentStatus === "CANCELED" || bookingPaymentStatus === "CANCELED";
 
   useEffect(() => {
-    if (showPayButton && paymentLink) {
-      redirectToPayment();
+    if (showPayButton && paymentLink && !isCanceled) {
+      window.open(paymentLink, "_self")?.focus();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showPayButton, paymentLink]);
+
+  const slots = showDetails && booking?.slots?.length ? booking.slots : [];
 
   return (
     <>
@@ -75,25 +68,22 @@ const BookingCardTitle = ({
         {description}
       </Typography>
 
-      {showDetails &&
-        booking?.slots &&
-        booking?.slots.length > 0 &&
-        booking.slots.map((slot) => (
-          <StyledRow $jc="center" $gap="6px" key={`${slot.dateTimeFrom}-${slot.dateTimeTo}`}>
-            <IconCalendarEvent />
-            <Typography $typographyType="body" $align="center" $weight="700" $displayType="contents">
-              {`${getDatesValue({
-                service,
-                dateTimeFrom: slot.dateTimeFrom,
-                dateTimeTo: slot.dateTimeTo,
-                targetTimeZone: timeZone,
-                sourceTimeZone: service.project.localTimeZone,
-                locale,
-                is12HoursSystem,
-              })} (${timeZone.replace("_", " ")})`}
-            </Typography>
-          </StyledRow>
-        ))}
+      {slots.map((slot) => (
+        <StyledRow $jc="center" $gap="6px" key={`${slot.dateTimeFrom}-${slot.dateTimeTo}`}>
+          <IconCalendarEvent />
+          <Typography $typographyType="body" $align="center" $weight="700" $displayType="contents">
+            {`${getDatesValue({
+              service,
+              dateTimeFrom: slot.dateTimeFrom,
+              dateTimeTo: slot.dateTimeTo,
+              targetTimeZone: timeZone,
+              sourceTimeZone: service.project.localTimeZone,
+              locale,
+              is12HoursSystem,
+            })} (${timeZone.replace("_", " ")})`}
+          </Typography>
+        </StyledRow>
+      ))}
       {showPayButton && paymentLink && (
         <Box $mt={3.5}>
           <LinkButton href={paymentLink} target="_blank">
@@ -103,6 +93,6 @@ const BookingCardTitle = ({
       )}
     </>
   );
-};
+}
 
 export default BookingCardTitle;
