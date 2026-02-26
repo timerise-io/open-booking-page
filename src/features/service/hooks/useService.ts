@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { addDays } from "date-fns";
-import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { TIMERISE_LOGO_URL } from "helpers/constans";
 import { isNetworkError } from "helpers/functions";
@@ -8,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { LOADERS, useBookingStore, useErrorStore, useFilterStore, useUiStore } from "state/stores";
 import { useSlotFilter } from "state/stores";
 import { useQuery } from "@apollo/client/react";
+import packageJson from "../../../../package.json";
 import {
   ServiceQueryResult,
   ServiceQueryVariables,
@@ -43,19 +43,19 @@ export const useServiceSlotsState = (serviceId: string) => {
   } = useQuery<ServiceSlotsQueryResult, ServiceSlotsQueryVariables>(GET_SERVICE_SLOTS, {
     context: {
       headers: {
-        "x-api-client-name": "booking-page",
+        "x-api-client-name": "open-booking-page",
       },
-      version: VERSION.V1,
+      version: packageJson.version,
     },
     fetchPolicy: "network-only",
     nextFetchPolicy: "cache-first",
     variables: {
-      serviceId: serviceId,
+      serviceId,
       from: fetchFrom,
       to: fetchTo,
       locations,
     },
-    skip: isServiceLoaded === false,
+    skip: !isServiceLoaded,
   });
 
   useEffect(() => {
@@ -66,11 +66,11 @@ export const useServiceSlotsState = (serviceId: string) => {
   }, [triggerId]);
 
   useEffect(() => {
-    if (slotsData && slotsData.service) {
+    if (slotsData?.service) {
       const { slots } = slotsData.service;
       setAllSlots(slots);
       setServiceSlots(slots);
-      setServiceError(null); // Clear error on success
+      setServiceError(null);
     }
   }, [slotsData, setServiceSlots, setAllSlots, setServiceError]);
 
@@ -116,14 +116,14 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
       context: {
         headers: {
           ...(lang && { "Accept-Language": lang }),
-          "x-api-client-name": "booking-page",
+          "x-api-client-name": "open-booking-page",
         },
-        version: VERSION.V1,
+        version: packageJson.version,
       },
       fetchPolicy: "cache-and-network",
       nextFetchPolicy: "cache-first",
       variables: {
-        serviceId: serviceId,
+        serviceId,
       },
       skip: serviceId === "",
     },
@@ -136,7 +136,7 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
   const setSlotsFilter = useFilterStore((state) => state.setSlotsFilters);
 
   useEffect(() => {
-    if (data && data.service) {
+    if (data?.service) {
       const { service } = data;
 
       if (service.project.localTimeZone) {

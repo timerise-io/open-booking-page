@@ -1,4 +1,3 @@
-import { VERSION } from "enums";
 import { GraphQLFormattedError } from "graphql";
 import { createClient } from "graphql-ws";
 import { Reference } from "@apollo/client/cache";
@@ -93,10 +92,10 @@ const errorLink = new ErrorLink(({ error, operation }) => {
   }
 });
 
-const httpLink = new HttpLink({ uri: `https://${import.meta.env.VITE_TIMERISE_API_DOMAIN}/${VERSION.V1}` });
+const httpLink = new HttpLink({ uri: `https://${import.meta.env.VITE_TIMERISE_API_DOMAIN}/graphql` });
 
 const wsLink = new GraphQLWsLink(
-  createClient({ url: `wss://${import.meta.env.VITE_TIMERISE_API_DOMAIN}/${VERSION.V1}`, connectionParams: {} }),
+  createClient({ url: `wss://${import.meta.env.VITE_TIMERISE_API_DOMAIN}/graphql`, connectionParams: {} }),
 );
 
 const splitLink = ApolloLink.split(

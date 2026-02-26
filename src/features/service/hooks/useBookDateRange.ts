@@ -1,12 +1,14 @@
 import { useEffect } from "react";
-import { VERSION } from "enums";
+import { useLangParam } from "features/i18n/useLangParam";
 import { getPath } from "helpers/functions";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useBookingStore, useFilterStore } from "state/stores";
 import { useMutation } from "@apollo/client/react";
+import packageJson from "../../../../package.json";
 import { BookDateRangeMutationRespons, BookDateRangeMutationVariables } from "../api/mutations/models";
 import { BOOK_DATE_RANGE } from "../api/mutations/mutations";
+import { FORM_VALIDATION_ERRORS } from "./formErrors";
 
 export const useBookDateRange = () => {
   const filters = useFilterStore((state) => state.slotsFilters);
@@ -16,6 +18,7 @@ export const useBookDateRange = () => {
   const { PAGES } = useIsEmbeddedPage();
   const [searchParams] = useSearchParams();
   const urlSearchParams = Object.fromEntries(searchParams.entries());
+  const lang = useLangParam();
 
   const [bookDateRangeMutation, { data, loading, error }] = useMutation<
     BookDateRangeMutationRespons,
@@ -23,9 +26,10 @@ export const useBookDateRange = () => {
   >(BOOK_DATE_RANGE, {
     context: {
       headers: {
-        "x-api-client-name": "booking-page",
+        ...(lang && { "Accept-Language": lang }),
+        "x-api-client-name": "open-booking-page",
       },
-      version: VERSION.V1,
+      version: packageJson.version,
     },
   });
 
@@ -43,21 +47,8 @@ export const useBookDateRange = () => {
 
   useEffect(() => {
     if (error) {
-      const formErrors: string[] = [
-        "booking-already-exists",
-        "phone-number-is-not-valid",
-        "phone-number-is-not-possible",
-        "phone-number-is-too-short",
-        "phone-number-is-null",
-        "phone-number-in-not-allowed",
-        "phone-number-is-blocked",
-        "email-address-is-not-valid",
-        "email-address-in-not-allowed",
-        "email-address-is-blocked",
-        "code-is-not-allowed",
-        "promo-code-is-not-valid",
-      ];
-      if (!formErrors.includes(error?.message || "unknown-booking-create-error")) {
+      const errorMessage = error.message ?? "unknown-booking-create-error";
+      if (!FORM_VALIDATION_ERRORS.includes(errorMessage)) {
         setFilters({ ...filters, triggerId: new Date().getTime() });
         setSelectedSlot("");
       }
