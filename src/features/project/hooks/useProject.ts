@@ -1,24 +1,25 @@
 import { useEffect } from "react";
-import { VERSION } from "enums";
 import { useIsBrandedPageFlag } from "helpers/hooks/useIsBrandedPageFlag";
 import { Project } from "models/project";
 import { LOADERS, useProjectStore, useUiStore } from "state/stores";
 import { useQuery } from "@apollo/client/react";
+import packageJson from "../../../../package.json";
 import { ProjectVariables } from "../api/queries/models";
 import { GET_PROJECT } from "../api/queries/queries";
 
-export const useProjectState = (projectId: string) => {
+export const useProjectState = (projectId: string, lang: string | null) => {
   const isBrandedPage = useIsBrandedPageFlag();
   const { loading, data } = useQuery<{ project: Project }, ProjectVariables>(GET_PROJECT, {
     fetchPolicy: "cache-first",
     context: {
       headers: {
-        "x-api-client-name": "booking-page",
+        ...(lang && { "Accept-Language": lang }),
+        "x-api-client-name": "open-booking-page",
       },
-      version: VERSION.V1,
+      version: packageJson.version,
     },
     variables: {
-      projectId: projectId ?? "",
+      projectId,
     },
     skip: !projectId || !isBrandedPage,
   });
@@ -27,9 +28,8 @@ export const useProjectState = (projectId: string) => {
   const setLoader = useUiStore((state) => state.setLoader);
 
   useEffect(() => {
-    if (data) {
-      const { project } = data;
-      setProject({ ...project });
+    if (data?.project) {
+      setProject(data.project);
     }
   }, [data, setProject]);
 

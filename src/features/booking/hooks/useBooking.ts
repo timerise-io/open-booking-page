@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { VERSION } from "enums";
 import { useLangParam } from "features/i18n/useLangParam";
 import { useProjectState } from "features/project/hooks/useProject";
 import { useServiceSlotsState, useServiceState } from "features/service/hooks/useService";
@@ -7,10 +6,11 @@ import { isNetworkError } from "helpers/functions";
 import { useParams } from "react-router-dom";
 import { LOADERS, useBookingStore, useErrorStore, useUiStore } from "state/stores";
 import { useQuery } from "@apollo/client/react";
+import packageJson from "../../../../package.json";
 import { BookingQueryResult, BookingQueryVariables } from "../api/queries/models";
 import { GET_BOOKING } from "../api/queries/queries";
 
-export const useBookingState = (bookingId: string) => {
+export const useBookingState = (bookingId: string, lang: string | null) => {
   const setBooking = useBookingStore((state) => state.setBooking);
   const setServiceLoader = useUiStore((state) => state.setLoader);
   const setBookingError = useErrorStore((state) => state.setBookingError);
@@ -23,9 +23,10 @@ export const useBookingState = (bookingId: string) => {
       pollInterval: 10000,
       context: {
         headers: {
-          "x-api-client-name": "booking-page",
+          ...(lang && { "Accept-Language": lang }),
+          "x-api-client-name": "open-booking-page",
         },
-        version: VERSION.V1,
+        version: packageJson.version,
       },
       variables: {
         bookingId,
@@ -34,10 +35,9 @@ export const useBookingState = (bookingId: string) => {
   );
 
   useEffect(() => {
-    if (data && data.booking) {
-      const { booking } = data;
-      setBooking({ ...booking });
-      setBookingError(null); // Clear error on success
+    if (data?.booking) {
+      setBooking(data.booking);
+      setBookingError(null);
     }
   }, [data, setBooking, setBookingError]);
 
@@ -60,10 +60,10 @@ export const useBookingState = (bookingId: string) => {
 export const useBooking = () => {
   const { id } = useParams<{ id: string }>();
   const lang = useLangParam();
-  useBookingState(id!);
+  useBookingState(id!, lang);
   const bookingValue = useBookingStore((state) => state.booking);
   const serviceValue = useBookingStore((state) => state.service);
   useServiceState(bookingValue?.service.serviceId ?? "", lang);
   useServiceSlotsState(serviceValue?.serviceId ?? "");
-  useProjectState(serviceValue?.project.projectId ?? "");
+  useProjectState(serviceValue?.project.projectId ?? "", lang);
 };

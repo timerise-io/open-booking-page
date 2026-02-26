@@ -1,17 +1,20 @@
-import { VERSION } from "enums";
+import { useLangParam } from "features/i18n/useLangParam";
 import { useParams } from "react-router-dom";
 import { useMutation } from "@apollo/client/react";
+import packageJson from "../../../../package.json";
 import { CancelBookingMutationResult, CancelBookingMutationVariables } from "../api/mutations/models";
 import { CANCEL_BOOKING } from "../api/mutations/mutations";
 
 export const useDeleteBooking = () => {
   const { id } = useParams<{ id: string }>();
-  const [bookSlotMutation] = useMutation<CancelBookingMutationResult, CancelBookingMutationVariables>(CANCEL_BOOKING, {
+  const lang = useLangParam();
+  const [cancelBookingMutation] = useMutation<CancelBookingMutationResult, CancelBookingMutationVariables>(CANCEL_BOOKING, {
     context: {
       headers: {
-        "x-api-client-name": "booking-page",
+        ...(lang && { "Accept-Language": lang }),
+        "x-api-client-name": "open-booking-page",
       },
-      version: VERSION.V1,
+      version: packageJson.version,
     },
     update: (cache, { data }) => {
       if (data?.bookingDelete && id) {
@@ -32,7 +35,7 @@ export const useDeleteBooking = () => {
     },
   });
 
-  const deleteBooking = () => id && bookSlotMutation({ variables: { bookingId: id } });
+  const deleteBooking = () => id && cancelBookingMutation({ variables: { bookingId: id } });
 
   return deleteBooking;
 };

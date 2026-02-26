@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.7] - 2026-02-26
+
+### Fixed
+
+- Add `Accept-Language` headers and fix language references in API hooks
+- Fix UTC slot time parsing in `timeFormat` helpers
+- Standardize API DateTime handling for consistent timezone behavior
+
+### Changed
+
+- Simplify event slot components and fix circular import issues
+- Replace `any` with proper error types in `errorHelpers`
+- Remove `googleTagId` from service model (Google Analytics integration removed)
+- Update copyright year to 2026 across all locales
+- Synced README.md tech stack versions with installed package versions (React 19.2.4, Vite 7.3.1, Apollo Client 4.1.4, Zustand 5.0.11, styled-components 6.3.9, React Router 7.13.0, i18next 25.8.10)
+
+### Removed
+
+- Removed `react-ga4` dependency (Google Analytics no longer tracked)
+
+### Documentation
+
+- Sync documentation with codebase state
+- Migrate Claude commands to skills
+- Update Claude Code Review and PR Assistant GitHub workflows
+
 ## [1.2.6] - 2025-12-13
 
 ### Security
