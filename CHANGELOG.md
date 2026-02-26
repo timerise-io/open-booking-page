@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Synced README.md tech stack versions with installed package versions (React 19.2.4, Vite 7.3.1, Apollo Client 4.1.4, Zustand 5.0.11, styled-components 6.3.9, React Router 7.13.0, i18next 25.8.10)
+
 ## [1.2.6] - 2025-12-13
 
 ### Security

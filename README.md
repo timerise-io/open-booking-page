@@ -14,14 +14,14 @@ Adjust the appearance and content of the booking pages to your brand and service
 
 ## Tech Stack
 
-- **React** 19.2.0
+- **React** 19.2.4
 - **TypeScript** 5.9.3
-- **Vite** 7.2.4
-- **Apollo Client** 4.0.9 (GraphQL)
-- **Zustand** 5.0.9 (state management)
-- **styled-components** 6.1.19
-- **React Router** 7.9.6
-- **i18next** 25.6.3 (internationalization)
+- **Vite** 7.3.1
+- **Apollo Client** 4.1.4 (GraphQL)
+- **Zustand** 5.0.11 (state management)
+- **styled-components** 6.3.9
+- **React Router** 7.13.0
+- **i18next** 25.8.10 (internationalization)
 - **Formik** 2.4.9 + **Yup** 1.7.1 (forms)
 
 ## Prerequisites
