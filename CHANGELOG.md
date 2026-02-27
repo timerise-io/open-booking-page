@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.8] - 2026-02-27
+
+### Changed
+
+- Self-host all static assets (logos, icons, placeholders) in `/public` instead of loading from `cdn.timerise.io`
+- Remove Google Analytics/GTM tracking script from `index.html`
+
 ## [1.2.7] - 2026-02-26
 
 ### Fixed
