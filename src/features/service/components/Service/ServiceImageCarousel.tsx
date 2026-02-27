@@ -13,11 +13,7 @@ const ServiceImageCarousel = () => {
 
   const images = [
     ...(serviceData.images.length === 0
-      ? [
-          themeMode === "light"
-            ? "https://cdn.timerise.io/booking-page/placeholder-light.jpg"
-            : "https://cdn.timerise.io/booking-page/placeholder-dark.jpg",
-        ]
+      ? [themeMode === "light" ? "/placeholder-light.jpg" : "/placeholder-dark.jpg"]
       : serviceData.images),
   ];
 

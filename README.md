@@ -10,7 +10,7 @@ We are pleased to provide our booking page in open-source. We hope it will be us
 
 Adjust the appearance and content of the booking pages to your brand and services.
 
-![image](https://cdn.timerise.io/landing-page/section-make-it-yours.png)
+![image](/section-make-it-yours.png)
 
 ## Tech Stack
 
@@ -133,4 +133,4 @@ feature/
 
 # See how Timerise works
 
-[![Vimeo](https://cdn.timerise.io/landing-page/video-placeholder.png?w=2048)](https://vimeo.com/703918323)
+[![Vimeo](/video-placeholder.png)](https://vimeo.com/703918323)
