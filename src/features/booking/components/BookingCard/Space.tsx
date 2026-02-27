@@ -66,7 +66,7 @@ const Space = ({ space }: SpaceProps) => {
       )}
       <Row $mb={0.75}>
         <ProviderButton href={space.url} target="_blank">
-          <ProviderLogo src={`https://cdn.timerise.io/admin/${space.provider}.png`} alt={`${space.provider} logo`} />
+          <ProviderLogo src={`/${space.provider}.png`} alt={`${space.provider} logo`} />
           {space.title || SPACE_PROVIDERS_NAMES[space.provider]}
         </ProviderButton>
         <CardButton

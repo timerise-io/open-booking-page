@@ -1,6 +1,6 @@
 import { SPACE_PROVIDER } from "models/booking";
 
-export const TIMERISE_LOGO_URL = "https://cdn.timerise.io/booking-page/favicon.png";
+export const TIMERISE_LOGO_URL = "/favicon.png";
 
 export const TIMERISE_HEADER_TITLE = "Timerise";
 
