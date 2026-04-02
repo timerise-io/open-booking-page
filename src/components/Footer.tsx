@@ -32,7 +32,6 @@ const VerticalLine = styled.div`
 const TimeRiseLogo = styled.img`
   margin-left: 10px;
   height: 10px;
-  margin-bottom: 5px;
 `;
 
 export const FooterLinkWrapper = styled.div`
@@ -80,14 +79,8 @@ const StyledButton = styled.button`
   }}
 `;
 
-const StyledLink = styled.a`
-  height: 10px;
-`;
+const StyledLink = styled.a``;
 
-const footerLogo: Record<"light" | "dark", string> = {
-  dark: "/timerise-logo-invert.png",
-  light: "/timerise-logo.png",
-};
 
 const ErrorFooterWrapper = styled.div`
   margin-bottom: 12px;
@@ -139,12 +132,12 @@ const Footer = () => {
           {t(`theme.${themeType === "dark" ? "light" : "dark"}`)}
         </StyledButton>
       </Row>
-      <Row $ai="flex-start" style={{ marginTop: "8px" }}>
+      <Row $ai="center" style={{ marginTop: "8px" }}>
         <Typography $typographyType="label" as="div" $color="darkGrey">
           {t("footer.powered-by")}
         </Typography>
         <StyledLink href="https://timerise.io/" target="_blank">
-          <TimeRiseLogo src={footerLogo[themeType]} alt="timerise logo" data-cy="time-rise-footer-logo" />
+          <TimeRiseLogo src="/timerise-logo.png" alt="timerise logo" data-cy="time-rise-footer-logo" />
         </StyledLink>
       </Row>
     </Wrapper>

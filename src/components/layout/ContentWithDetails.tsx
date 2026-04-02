@@ -55,7 +55,8 @@ export const SliderWrapper = styled.div`
   background-color: transparent;
 
   ${({ theme }) => theme.mediaBelow(theme.breakpoints.sm)} {
-    border-radius: 0;
+    min-width: unset;
+    margin: 0 20px;
   }
 
   & > .image-carousel {

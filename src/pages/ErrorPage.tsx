@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "components/Button";
 import styled from "styled-components";
 
@@ -9,6 +8,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 15px;
+
+  ${({ theme }) => theme.mediaBelow(theme.breakpoints.sm)} {
+    margin-top: 60px;
+  }
 `;
 
 const StyledH1 = styled.h1`
@@ -19,6 +22,11 @@ const StyledH1 = styled.h1`
   line-height: 145px;
   text-align: center;
   display: contents;
+
+  ${({ theme }) => theme.mediaBelow(theme.breakpoints.sm)} {
+    font-size: 72px;
+    line-height: 88px;
+  }
 `;
 
 const StyledH2 = styled.h2`
@@ -48,17 +56,17 @@ const StyledButton = styled(Button)`
   max-width: 108px;
 `;
 
-const ErrorPage = () => {
+function ErrorPage() {
   return (
     <Wrapper data-cy="error-page">
       <div>
         <StyledH1>404</StyledH1>
       </div>
       <div>
-        <StyledH2>Oh no... there’s nothing here! 😱</StyledH2>
+        <StyledH2>Oh no... there’s nothing here!</StyledH2>
       </div>
       <StyledInfo>
-        Don’t worry, it’s just an error. Sometimes it happens, but don't get discouraged. Try again with a different
+        Don’t worry, it’s just an error. Sometimes it happens, but don’t get discouraged. Try again with a different
         address or...
       </StyledInfo>
       <StyledButton
@@ -71,6 +79,6 @@ const ErrorPage = () => {
       </StyledButton>
     </Wrapper>
   );
-};
+}
 
 export default ErrorPage;
