@@ -13,13 +13,13 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 8px;
-  margin-top: 12px;
+  margin-top: 14px;
 `;
 
 const PaginationButton = styled(ContextButton)`
   padding: 0;
-  height: 36px;
-  width: 36px;
+  height: 28px;
+  width: 28px;
   display: grid;
   border: none;
 
@@ -54,8 +54,8 @@ const ServiceCalendarActionRow = () => {
   const firstDay = new Date(serviceFilters.firstDayDate);
   const lastDay = addDays(firstDay, serviceFilters.pageSize - 1);
   const dateRangeLabel = isSameMonth(firstDay, lastDay)
-    ? `${format(firstDay, "d")}–${format(lastDay, "d MMM")}`
-    : `${format(firstDay, "d MMM")}–${format(lastDay, "d MMM")}`;
+    ? `${format(firstDay, "d")}–${format(lastDay, "d MMMM")}`
+    : `${format(firstDay, "d MMMM")}–${format(lastDay, "d MMMM")}`;
 
   const pageEnd = addDays(new Date(serviceFilters.firstDayDate), serviceFilters.pageSize);
 

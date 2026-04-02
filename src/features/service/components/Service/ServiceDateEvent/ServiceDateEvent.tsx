@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useBookingStore } from "state/stores";
 import styled from "styled-components";
 import { HoursSystem } from "../HoursSystem";
-import TimezoneInfo from "../TimezoneInfo";
+import TimeZoneSelect from "../TimeZoneSelect";
 
 const WrapperCard = styled(Card)`
   position: relative;
@@ -42,14 +42,14 @@ export const ServiceDateEvent = () => {
   };
 
   return (
-    <WrapperCard $padding="20px">
+    <WrapperCard $padding="14px 16px">
       <Column $ai="flex-start">
-        <TimezoneStyledRow $mb={2.5} $w="100%">
+        <TimezoneStyledRow $mb={1.5} $w="100%">
           <Typography $typographyType="h3" as="h3" $displayType="contents">
             {t(`date-and-time`)}
           </Typography>
           <TimezoneHourSystemStyledContainer>
-            <TimezoneInfo />
+            <TimeZoneSelect />
             <HoursSystem />
           </TimezoneHourSystemStyledContainer>
         </TimezoneStyledRow>

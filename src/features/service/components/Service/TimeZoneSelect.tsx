@@ -23,6 +23,7 @@ const TimeZoneSelect = () => {
     <SelectWrapper>
       <Select
         onChange={(value) => {
+          localStorage.setItem("TIMEZONE", value);
           setTimeZone(value);
         }}
         defaultValue={timeZone}

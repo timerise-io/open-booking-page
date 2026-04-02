@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
@@ -11,9 +11,9 @@ import { HOURS_SYSTEMS } from "../../HoursSystem/enums/HoursSystem.enum";
 import TimeSlot from "./TimeSlot";
 
 const ServiceCalendarDayWrapper = styled(Column)`
-  min-width: 56px;
+  min-width: 52px;
   flex: 1;
-  margin: 0 8px;
+  margin: 0 5px;
 `;
 
 const DateTypography = styled(Typography)`
@@ -30,33 +30,27 @@ const ServiceCalendarDay: React.FC<ServiceCalendarDayProps> = ({ day }) => {
   const dayPart = day.split("T")[0];
   const pattern = useSlotsDayPattern();
   const hoursSystem = useUiStore((state) => state.hoursSystem);
-  const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
+  const is12HoursSystem = hoursSystem === HOURS_SYSTEMS.h12;
 
   return (
     <ServiceCalendarDayWrapper>
-      <Box $mb={1.5}>
+      <Box $mb={0.5}>
         <Typography $typographyType="body" $weight="bold" as="div" $align="center">
-          {formatInTimeZone(day, "UTC", "iii", {
-            locale: locale,
-          }).replace(/[.]$/, "")}
+          {formatInTimeZone(day, "UTC", "iii", { locale }).replace(/[.]$/, "")}
         </Typography>
         <DateTypography className="date-text" $typographyType="body" as="div" $align="center">
-          {formatInTimeZone(day, "UTC", "dd MMM", {
-            locale: locale,
-          })}
+          {formatInTimeZone(day, "UTC", "dd MMM", { locale })}
         </DateTypography>
       </Box>
 
-      {pattern.map((item) => {
-        return (
-          <TimeSlot
-            key={`${dayPart}-${item.key}`}
-            dateFrom={`${dayPart}T${item.from}`}
-            dateTo={`${dayPart}T${item.to}`}
-            is12HoursSystem={is12HoursSystem}
-          />
-        );
-      })}
+      {pattern.map((item) => (
+        <TimeSlot
+          key={`${dayPart}-${item.key}`}
+          dateFrom={`${dayPart}T${item.from}`}
+          dateTo={`${dayPart}T${item.to}`}
+          is12HoursSystem={is12HoursSystem}
+        />
+      ))}
     </ServiceCalendarDayWrapper>
   );
 };

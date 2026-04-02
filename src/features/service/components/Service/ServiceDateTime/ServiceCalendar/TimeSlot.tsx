@@ -24,7 +24,7 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px 0;
+  padding: 9px 0;
 
   ${({ theme, $state }) => {
     const colorSchema = theme.colorSchemas.timeSlotButton[$state];
@@ -59,10 +59,10 @@ interface DummySlotProps {
 }
 
 const dummyTimeSlotHeight: Record<string, string> = {
-  "true-true": "79px",
-  "false-true": "57px",
-  "true-false": "66px",
-  "false-false": "40px",
+  "true-true": "77px",
+  "false-true": "55px",
+  "true-false": "64px",
+  "false-false": "38px",
 };
 
 const DummySlotWrapper = styled.div<DummySlotProps>`

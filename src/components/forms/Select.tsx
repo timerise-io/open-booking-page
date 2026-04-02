@@ -4,7 +4,7 @@ import { IconChevronDown } from "@tabler/icons-react";
 
 const SelectBase = styled.select`
   margin: 0;
-  padding: 6px 52px 6px 12px;
+  padding: 3px 44px 3px 10px;
   outline: none;
   appearance: none;
   position: relative;
@@ -34,7 +34,7 @@ const WrapperDiv = styled.div`
     width: 15px;
     height: 15px;
     position: absolute;
-    top: 10px;
+    top: 5px;
     right: 9px;
     size: 10px;
     z-index: 99;
