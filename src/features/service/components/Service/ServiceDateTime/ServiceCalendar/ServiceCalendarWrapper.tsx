@@ -11,7 +11,7 @@ import styled from "styled-components";
 import ServiceCalendarDay from "./ServiceCalendarDay";
 
 const DaysRow = styled(Row)`
-  margin-top: 20px;
+  margin-top: 18px;
   width: 100%;
   overflow: hidden;
   justify-content: center;
@@ -46,9 +46,9 @@ const ServiceCalendarWrapper = () => {
   return (
     <Wrapper>
       <DaysRow ref={observe}>
-        {daysToRender.map((day) => {
-          return <ServiceCalendarDay key={day} day={day} />;
-        })}
+        {daysToRender.map((day) => (
+          <ServiceCalendarDay key={day} day={day} />
+        ))}
       </DaysRow>
       {noTimeSlots && <InfoBox>{t("no-time-slots-available")}</InfoBox>}
     </Wrapper>

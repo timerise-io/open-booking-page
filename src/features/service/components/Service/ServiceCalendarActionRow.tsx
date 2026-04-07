@@ -1,6 +1,7 @@
 import { ContextButton } from "components/ContextButton";
+import { Typography } from "components/Typography";
 import { Row } from "components/layout/Row";
-import { addMonths } from "date-fns";
+import { addMonths, format, isSameMonth } from "date-fns";
 import { addDays, addMinutes, isAfter, isBefore, isSameDay, set } from "date-fns";
 import { useBookingStore, useFilterStore } from "state/stores";
 import styled, { css } from "styled-components";
@@ -12,13 +13,13 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 8px;
-  margin-top: 12px;
+  margin-top: 14px;
 `;
 
 const PaginationButton = styled(ContextButton)`
   padding: 0;
-  height: 36px;
-  width: 36px;
+  height: 28px;
+  width: 28px;
   display: grid;
   border: none;
 
@@ -49,6 +50,12 @@ const ServiceCalendarActionRow = () => {
   if (service === undefined) {
     return Loader;
   }
+
+  const firstDay = new Date(serviceFilters.firstDayDate);
+  const lastDay = addDays(firstDay, serviceFilters.pageSize - 1);
+  const dateRangeLabel = isSameMonth(firstDay, lastDay)
+    ? `${format(firstDay, "d")}–${format(lastDay, "d MMMM")}`
+    : `${format(firstDay, "d MMMM")}–${format(lastDay, "d MMMM")}`;
 
   const pageEnd = addDays(new Date(serviceFilters.firstDayDate), serviceFilters.pageSize);
 
@@ -121,6 +128,9 @@ const ServiceCalendarActionRow = () => {
           <IconChevronLeft />
         </PaginationButton>
       </Row>
+      <Typography $typographyType="body" $weight="700" as="span">
+        {dateRangeLabel}
+      </Typography>
       <Row $gap="8px">
         <PaginationButton $colorType="primary" onClick={handleNextClick} disabled={isNextDisabled}>
           <IconChevronRight />

@@ -27,6 +27,11 @@ const getHoursSystem = () => {
   return hasLocalStorageValue ?? (uses24HourTime ? HOURS_SYSTEMS.h24 : HOURS_SYSTEMS.h12);
 };
 
+const getTimeZone = () =>
+  localStorage.getItem("TIMEZONE") ??
+  Intl.DateTimeFormat().resolvedOptions().timeZone ??
+  "Europe/London";
+
 interface UserPreference {
   theme?: "light" | "dark";
 }
@@ -52,7 +57,7 @@ export const useUiStore = create<UiState>((set, get) => ({
   hoursSystem: getHoursSystem(),
   lang: "en",
   loaders: {}, // In Recoil it was atomFamily default true. We might need to handle default true logic.
-  timeZone: "Europe/London",
+  timeZone: getTimeZone(),
   userPreference: {},
 
   setHoursSystem: (hoursSystem) => set({ hoursSystem }),

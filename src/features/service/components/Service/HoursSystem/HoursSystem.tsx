@@ -9,7 +9,7 @@ const Wrapper = styled(Row)`
   gap: 4px;
   border-radius: 4px;
   cursor: pointer;
-  padding: 3px 6px;
+  padding: 2px 6px;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.primaryLight};

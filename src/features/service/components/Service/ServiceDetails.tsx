@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import { ContextSelect } from "components/ContextSelect";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
@@ -11,7 +10,7 @@ import { Service } from "models/service";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import { useBookingStore, useProjectStore } from "state/stores";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { IconCreditCard, IconMapPin, IconUser } from "@tabler/icons-react";
 
 const StyledMD = styled.div`
@@ -19,15 +18,10 @@ const StyledMD = styled.div`
     font-size: 0.8125rem;
     line-height: 1.25rem;
 
-    ${({ theme }) => {
-      const color = theme.colors.primary;
-      return css`
-        a,
-        a:visited {
-          color: ${color};
-        }
-      `;
-    }}
+    a,
+    a:visited {
+      color: ${({ theme }) => theme.colors.primary};
+    }
   }
 `;
 
@@ -106,7 +100,7 @@ const LocationDetailsRow: React.FC<LocationDetailsRowProps> = ({
   setLocation,
   locationsOptions,
 }) => {
-  const hasBookingLocations = booking && booking?.locations?.length;
+  const hasBookingLocations = booking && booking.locations?.length;
   const hasServiceLocations = location && serviceData?.serviceLocations?.length;
   const hasOneServiceLocation = serviceData?.serviceLocations?.length === 1;
   if (hasBookingLocations) {
@@ -130,7 +124,7 @@ const LocationDetailsRow: React.FC<LocationDetailsRowProps> = ({
           <IconMapPin />
         </IconWrapper>
         <StyledContextSelect
-          label={""}
+          label=""
           value={location}
           options={locationsOptions}
           onChange={(value) => {
@@ -191,17 +185,13 @@ const ServiceDetails = () => {
 
   return (
     <>
-      {title}
-      {description}
+      <Box $mt={1.5}>{title}</Box>
+      <Box $mt={0.25}>{description}</Box>
       <Column $ai="flex-start">
         {serviceData && serviceData.price > 0 && (
           <DetailsRow
             name="Payment"
-            value={
-              serviceData === undefined
-                ? null
-                : `${serviceData.price === 0 ? "Free" : `${serviceData.price.toFixed(2)} ${serviceData.currency}`}`
-            }
+            value={`${serviceData.price.toFixed(2)} ${serviceData.currency}`}
             icon={<IconCreditCard />}
           />
         )}
@@ -212,10 +202,10 @@ const ServiceDetails = () => {
           setLocation={setLocation}
           locationsOptions={locationsOptions}
         />
-        {serviceData?.hostedBy && serviceData?.hostedBy !== "-" && (
+        {serviceData?.hostedBy && serviceData.hostedBy !== "-" && (
           <DetailsRow
             name="Hosted by"
-            value={serviceData === undefined ? null : serviceData.hostedBy}
+            value={serviceData.hostedBy}
             icon={<IconUser />}
           />
         )}

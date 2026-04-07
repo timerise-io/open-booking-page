@@ -4,6 +4,7 @@ import { Card } from "components/Card";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
+import { Row } from "components/layout/Row";
 import { useBookDateRange } from "features/service/hooks/useBookDateRange";
 import { useBookSlot } from "features/service/hooks/useBookSlot";
 import { Form, Formik } from "formik";
@@ -16,12 +17,40 @@ import { BOOKING_FORM_TYPES } from "models/service";
 import { useTranslation } from "react-i18next";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useBookingStore, useFilterStore, useProjectStore, useUiStore, useUploadStore } from "state/stores";
-import styled from "styled-components";
-import { IconInfoCircle } from "@tabler/icons-react";
+import styled, { keyframes } from "styled-components";
+import { IconCalendar, IconInfoCircle, IconLoader2 } from "@tabler/icons-react";
 import { BookingServiceFormContent } from "../BookingServiceFormContent/BookingServiceFormContent";
 import { HOURS_SYSTEMS } from "../HoursSystem/enums/HoursSystem.enum";
 import { getSubmitButtonText } from "./helpers";
 import { generateValidationSchema } from "./validators";
+
+const spinKeyframe = keyframes`
+  to { transform: rotate(360deg); }
+`;
+
+const SpinnerIcon = styled(IconLoader2)`
+  animation: ${spinKeyframe} 0.8s linear infinite;
+`;
+
+const SpinnerWrapper = styled.span`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SelectedDateChip = styled(Row)`
+  display: inline-flex;
+  align-self: flex-start;
+  gap: 6px;
+  padding: 5px 10px;
+  margin-bottom: ${({ theme }) => `calc(2 * ${theme.spacing})`};
+  background: ${({ theme }) => theme.colors.primaryLight};
+  border-radius: ${({ theme }) => theme.borderRadius};
+`;
 
 const StyledWarning = styled.div`
   margin: 15px 0 20px 0;
@@ -101,6 +130,8 @@ const BookService = () => {
   const locations = useProjectStore((state) => state.location);
   const isUploading = Object.values(uploadState).filter((item) => item.isLoading).length > 0;
 
+  const isLoading = loading || loadingDateRange;
+
   const dateFormat = is12HoursSystem ? "iiii dd MMM, h:mm a" : "iiii dd MMM, H:mm";
 
   const selectedSlot = slots.find((slot) => slot.slotId === selectedSlotsValue[0])!;
@@ -116,6 +147,41 @@ const BookService = () => {
         locale,
       })
     : "";
+
+  const formattedRangeFrom = selectedDateRangeValue.dateTimeFrom
+    ? convertSourceDateTimeToTargetDateTime({
+        date: selectedDateRangeValue.dateTimeFrom,
+        targetTimeZone: timeZone,
+        sourceTimeZone: service.project.localTimeZone,
+        dateFormat: "d MMM",
+        locale,
+      })
+    : null;
+
+  const formattedRangeTo = selectedDateRangeValue.dateTimeTo
+    ? convertSourceDateTimeToTargetDateTime({
+        date: selectedDateRangeValue.dateTimeTo,
+        targetTimeZone: timeZone,
+        sourceTimeZone: service.project.localTimeZone,
+        dateFormat: "d MMM",
+        locale,
+      })
+    : null;
+
+  const chipLabel = (() => {
+    if (serviceType === BOOKING_FORM_TYPES.CALENDAR && formattedRangeFrom && formattedRangeTo) {
+      return `${formattedRangeFrom} – ${formattedRangeTo}`;
+    }
+    if (
+      (serviceType === BOOKING_FORM_TYPES.DAYS ||
+        serviceType === BOOKING_FORM_TYPES.LIST ||
+        serviceType === BOOKING_FORM_TYPES.MULTILIST) &&
+      formattedDate
+    ) {
+      return formattedDate;
+    }
+    return null;
+  })();
 
   const checkDisableButton = useCallback(() => {
     const disabledForSlots = !selectedSlotsValue.length || loading || isUploading;
@@ -252,6 +318,14 @@ const BookService = () => {
   return (
     <Box $mt={serviceType === BOOKING_FORM_TYPES.PREORDER ? 0 : 1.125}>
       <WrapperCard>
+        {chipLabel && (
+          <SelectedDateChip $ai="center">
+            <IconCalendar size={13} />
+            <Typography $typographyType="label" $weight="700" as="span">
+              {chipLabel}
+            </Typography>
+          </SelectedDateChip>
+        )}
         {formFields && formFields.length > 0 && (
           <Box $mb={2.5}>
             <Typography $typographyType="h3" as="h3" $displayType="contents">
@@ -278,14 +352,27 @@ const BookService = () => {
                     </Typography>
                   </StyledWarning>
                 )}
-                <Button type="submit" $buttonType="primary" disabled={checkDisableButton()} data-cy="book-now-button">
-                  {getSubmitButtonText({
-                    selectedSlotValue: formattedDate,
-                    selectedSlotsValue,
-                    t,
-                    serviceConfig,
-                    service,
-                  })}
+                <Button
+                  type="submit"
+                  $buttonType="primary"
+                  disabled={checkDisableButton()}
+                  data-cy="book-now-button"
+                  style={{ position: "relative" }}
+                >
+                  <span style={{ opacity: isLoading ? 0 : 1 }}>
+                    {getSubmitButtonText({
+                      selectedSlotValue: formattedDate,
+                      selectedSlotsValue,
+                      t,
+                      serviceConfig,
+                      service,
+                    })}
+                  </span>
+                  {isLoading && (
+                    <SpinnerWrapper>
+                      <SpinnerIcon size={16} />
+                    </SpinnerWrapper>
+                  )}
                 </Button>
               </Column>
             </Form>

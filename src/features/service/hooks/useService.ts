@@ -139,8 +139,7 @@ export const useServiceState = (serviceId: string, lang: string | null) => {
     if (data?.service) {
       const { service } = data;
 
-      if (service.project.localTimeZone) {
-        //setTimeZone(service.project.localTimeZone);
+      if (service.project.localTimeZone && !localStorage.getItem("TIMEZONE")) {
         setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
       }
 

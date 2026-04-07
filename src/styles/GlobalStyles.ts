@@ -8,8 +8,10 @@ const GlobalStyles = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
+    font-size: 16px;
+    scroll-behavior: smooth;
     color: ${({ theme }) => theme.colors.dark};
-    background-color: ${(props) => props.theme.colorSchemas.background.secondary.color};
+    background-color: ${({ theme }) => theme.colorSchemas.background.secondary.color};
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
         "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
         sans-serif;

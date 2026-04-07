@@ -10,7 +10,7 @@ import { useSlotsDayPattern } from "state/stores";
 import styled, { css } from "styled-components";
 import { HoursSystem } from "../HoursSystem";
 import ServiceCalendarActionRow from "../ServiceCalendarActionRow";
-import TimezoneInfo from "../TimezoneInfo";
+import TimeZoneSelect from "../TimeZoneSelect";
 import ServiceCalendar from "./ServiceCalendar/ServiceCalendar";
 
 const WrapperCard = styled(Card)<{ $fullHeight: boolean } & CardProps>`
@@ -75,14 +75,14 @@ const ServiceDateTime = () => {
   }, [numberOfSlotsPerDay]);
 
   return (
-    <WrapperCard $padding="20px 12px" $fullHeight={isFullHeight}>
+    <WrapperCard $padding="14px 12px" $fullHeight={isFullHeight}>
       <Column $ai="flex-start">
-        <TimezoneStyledRow $mb={2.5} $ml={1} $mr={1} $w="100%" $pr={2}>
+        <TimezoneStyledRow $mb={1.5} $ml={1} $mr={1} $w="100%" $pr={2}>
           <Typography $typographyType="h3" as="h3" $displayType="contents">
             {t(`select-date-and-time`)}
           </Typography>
           <TimezoneHourSystemStyledContainer>
-            <TimezoneInfo />
+            <TimeZoneSelect />
             <HoursSystem />
           </TimezoneHourSystemStyledContainer>
         </TimezoneStyledRow>

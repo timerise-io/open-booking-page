@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const ContentWithDetails = styled.div`
   display: flex;
-  gap: ${({ theme }) => `calc(${theme.spacing} * 2.5)`};
+  gap: ${({ theme }) => `calc(${theme.spacing} * 1.5)`};
   width: 100%;
 
   ${Column} > & {
@@ -22,7 +22,7 @@ export const DetailsSection = styled.section`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: ${({ theme }) => `calc(${theme.spacing} * 2.5)`};
+  gap: ${({ theme }) => `calc(${theme.spacing} * 1.5)`};
 
   ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
     width: 100%;
@@ -55,7 +55,8 @@ export const SliderWrapper = styled.div`
   background-color: transparent;
 
   ${({ theme }) => theme.mediaBelow(theme.breakpoints.sm)} {
-    border-radius: 0;
+    min-width: unset;
+    margin: 0 20px;
   }
 
   & > .image-carousel {

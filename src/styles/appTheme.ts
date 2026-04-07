@@ -1,47 +1,83 @@
 import { DefaultTheme } from "styled-components";
 
-const ERROR = "#EA4335";
+const ERROR = "#C5221F";
 const DARK = "#333333";
 const LIGHT_GREY = "#F6F6F6";
-const MAIN_GREY = "#E7E7E7";
-const DARK_GRAY = "#999999";
-const SUCCESS = "#34A853";
+const GREY = "#E7E7E7";
+const DARK_GREY = "#6B6B6B";
+const SUCCESS = "#1E7E34";
 const WHITE = "#FFFFFF";
 const WARNING = "#FE852F";
-const SECONDARY_DARK = "#E7E7E7";
-const PRIMARY_LIGHT_GRAY = "#F2F2F2";
+const PRIMARY_LIGHT_GREY = "#F2F2F2";
 const PAGE_BACKGROUND = "#F5F5F7";
 
-const appTheme: DefaultTheme = {
-  themeType: "light",
-
-  borderRadius: "4px",
-
+const sharedTheme = {
+  borderRadius: "6px",
   spacing: "0.5rem",
+  boxShadow: "none",
 
-  boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.08)",
+  breakpoints: {
+    sm: 540,
+    md: 720,
+    lg: 1200,
+  },
+
+  typography: {
+    h1: {
+      size: "1.125rem",
+      weight: "700",
+      lineHeight: "1.375rem",
+    },
+    h2: {
+      size: "1rem",
+      weight: "700",
+      lineHeight: "1.25rem",
+    },
+    h3: {
+      size: "0.875rem",
+      weight: "700",
+      lineHeight: "1.125rem",
+    },
+    body: {
+      size: "0.8125rem",
+      weight: "400",
+      lineHeight: "1.25rem",
+    },
+    label: {
+      size: "0.6875rem",
+      weight: "400",
+      lineHeight: "0.875rem",
+    },
+  },
+
+  mediaBelow: (breakpoint: number) => `@media (max-width: ${breakpoint}px)`,
+} as const;
+
+const appTheme: DefaultTheme = {
+  ...sharedTheme,
+  themeType: "light",
 
   colors: {
     error: ERROR,
     dark: DARK,
     lightGrey: LIGHT_GREY,
-    mainGrey: MAIN_GREY,
-    darkGrey: DARK_GRAY,
+    mainGrey: GREY,
+    darkGrey: DARK_GREY,
     success: SUCCESS,
     white: WHITE,
     warning: WARNING,
-    primary: "#333333",
-    primaryLight: PRIMARY_LIGHT_GRAY,
+    primary: DARK,
+    primaryLight: PRIMARY_LIGHT_GREY,
   },
 
   colorSchemas: {
     separator: "#e5e5e5",
     contextButton: {
-      disabledText: DARK_GRAY,
+      disabledText: DARK_GREY,
     },
     button: {
       primary: {
-        background: "#333333",
+        background: DARK,
         backgroundActive: "#1a1a1a",
         backgroundDisabled: "#808080",
         text: WHITE,
@@ -49,7 +85,7 @@ const appTheme: DefaultTheme = {
       secondary: {
         background: "unset",
         backgroundActive: "unset",
-        backgroundDisabled: SECONDARY_DARK,
+        backgroundDisabled: GREY,
         text: DARK,
         border: "1px solid #D9D9D9",
       },
@@ -62,16 +98,16 @@ const appTheme: DefaultTheme = {
       text: {
         background: "unset",
         backgroundActive: "unset",
-        backgroundDisabled: SECONDARY_DARK,
+        backgroundDisabled: GREY,
         text: DARK,
         border: "none",
       },
     },
     iconButton: {
       primary: {
-        color: "#333333",
+        color: DARK,
         colorActive: "#141414",
-        colorDisabled: DARK_GRAY,
+        colorDisabled: DARK_GREY,
       },
     },
     background: {
@@ -85,15 +121,15 @@ const appTheme: DefaultTheme = {
     input: {
       background: WHITE,
       border: "#D9D9D9",
-      borderHover: DARK_GRAY,
+      borderHover: DARK_GREY,
     },
     timeSlotButton: {
       available: {
-        background: PRIMARY_LIGHT_GRAY,
+        background: PRIMARY_LIGHT_GREY,
         backgroundActive: WHITE,
         backgroundHover: "#E5E5E5",
         border: "transparent",
-        borderActive: DARK_GRAY,
+        borderActive: DARK_GREY,
         text: DARK,
       },
       unavailable: {
@@ -102,77 +138,36 @@ const appTheme: DefaultTheme = {
         backgroundHover: "unset",
         border: "transparent",
         borderActive: "transparent",
-        text: DARK_GRAY,
+        text: DARK_GREY,
       },
       selected: {
         background: "#E5E5E5",
-        backgroundActive: PRIMARY_LIGHT_GRAY,
+        backgroundActive: PRIMARY_LIGHT_GREY,
         backgroundHover: "#E5E5E5",
-        border: "#333333",
-        borderActive: "#333333",
+        border: DARK,
+        borderActive: DARK,
         text: DARK,
       },
     },
     fileUpload: {
-      backgroundColor: PRIMARY_LIGHT_GRAY,
+      backgroundColor: PRIMARY_LIGHT_GREY,
     },
   },
-
-  breakpoints: {
-    sm: 540,
-    md: 720,
-    lg: 1200,
-  },
-
-  typography: {
-    h1: {
-      size: "1.25rem",
-      weight: "700",
-      lineHeight: "1.5rem",
-    },
-    h2: {
-      size: "1.125rem",
-      weight: "700",
-      lineHeight: "1.625rem",
-    },
-    h3: {
-      size: "0.9375rem",
-      weight: "700",
-      lineHeight: "1.125rem",
-    },
-    body: {
-      size: "0.8125rem",
-      weight: "400",
-      lineHeight: "1.25rem",
-    },
-    label: {
-      size: "0.6875rem",
-      weight: "400",
-      lineHeight: "0.8125rem",
-    },
-  },
-
-  mediaBelow: (breakpoint: number) => `@media (max-width: ${breakpoint}px)`,
 };
 
-const lightTheme = { ...appTheme };
+const lightTheme = appTheme;
 
 const darkTheme: DefaultTheme = {
+  ...sharedTheme,
   themeType: "dark",
 
-  borderRadius: "4px",
-
-  spacing: "0.5rem",
-
-  boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.08)",
-
   colors: {
-    error: ERROR,
+    error: "#EA4335",
     dark: "#D9D9D9",
     lightGrey: LIGHT_GREY,
-    mainGrey: MAIN_GREY,
-    darkGrey: DARK_GRAY,
-    success: SUCCESS,
+    mainGrey: GREY,
+    darkGrey: "#999999",
+    success: "#34A853",
     white: DARK,
     warning: WARNING,
     primary: "#D9D9D9",
@@ -180,7 +175,7 @@ const darkTheme: DefaultTheme = {
   },
 
   colorSchemas: {
-    separator: "#333333",
+    separator: DARK,
     contextButton: {
       disabledText: "#535353",
     },
@@ -188,14 +183,14 @@ const darkTheme: DefaultTheme = {
       primary: {
         background: "#EAEAEA",
         backgroundActive: "#FAFAFA",
-        backgroundDisabled: "#333333",
-        text: "#333333",
+        backgroundDisabled: DARK,
+        text: DARK,
         textDisabled: "#808080",
       },
       secondary: {
         background: "unset",
         backgroundActive: "unset",
-        backgroundDisabled: SECONDARY_DARK,
+        backgroundDisabled: GREY,
         text: WHITE,
         border: "1px solid #474747",
       },
@@ -208,7 +203,7 @@ const darkTheme: DefaultTheme = {
       text: {
         background: "unset",
         backgroundActive: "unset",
-        backgroundDisabled: SECONDARY_DARK,
+        backgroundDisabled: GREY,
         text: WHITE,
         border: "none",
       },
@@ -217,7 +212,7 @@ const darkTheme: DefaultTheme = {
       primary: {
         color: "#D9D9D9",
         colorActive: "#EAEAEA",
-        colorDisabled: DARK_GRAY,
+        colorDisabled: DARK_GREY,
       },
     },
     background: {
@@ -263,42 +258,6 @@ const darkTheme: DefaultTheme = {
       backgroundColor: "#1F1F1F",
     },
   },
-
-  breakpoints: {
-    sm: 540,
-    md: 720,
-    lg: 1200,
-  },
-
-  typography: {
-    h1: {
-      size: "1.25rem",
-      weight: "700",
-      lineHeight: "1.5rem",
-    },
-    h2: {
-      size: "1.125rem",
-      weight: "700",
-      lineHeight: "1.625rem",
-    },
-    h3: {
-      size: "0.9375rem",
-      weight: "700",
-      lineHeight: "1.125rem",
-    },
-    body: {
-      size: "0.8125rem",
-      weight: "400",
-      lineHeight: "1.25rem",
-    },
-    label: {
-      size: "0.6875rem",
-      weight: "400",
-      lineHeight: "0.8125rem",
-    },
-  },
-
-  mediaBelow: (breakpoint: number) => `@media (max-width: ${breakpoint}px)`,
 };
 
 export { appTheme, lightTheme, darkTheme };

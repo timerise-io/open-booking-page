@@ -11,7 +11,6 @@ export const Button = styled.button<ButtonProps>`
   text-align: center;
   cursor: pointer;
   font-weight: 700;
-  box-shadow: rgba(0, 0, 0, 0.28) 0px 1px 2px;
   ${({ theme, $buttonType, disabled }) => {
     const colors = theme.colorSchemas.button[$buttonType];
     const textColor = disabled ? (colors.textDisabled ?? colors.text) : colors.text;
@@ -23,13 +22,18 @@ export const Button = styled.button<ButtonProps>`
       color: ${textColor};
       border-radius: ${theme.borderRadius};
       font-size: ${theme.typography.body.size};
-      padding: calc(1.25 * ${theme.spacing}) calc(1.5 * ${theme.spacing});
+      padding: calc(1.75 * ${theme.spacing}) calc(2 * ${theme.spacing});
       border: ${border};
+      transition: background-color 150ms ease;
 
       &:hover,
       &:focus {
         background-color: ${disabled ? colors.backgroundDisabled : colors.backgroundActive};
-        box-shadow: rgb(0 0 0 / 28%) 0px 1px 2px;
+      }
+
+      &:not(:disabled):focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
       }
     `;
   }}

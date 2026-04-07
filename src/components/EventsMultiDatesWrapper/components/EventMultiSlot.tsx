@@ -29,8 +29,9 @@ const EventSlotButton = styled.button<EventSlotButtonProps>`
       color: ${colorSchema.text};
       cursor: normal;
       border: 1px solid ${colorSchema.border};
-      border-radius: ${({ theme }) => theme.borderRadius};
+      border-radius: ${theme.borderRadius};
       background-color: ${colorSchema.background};
+      transition: background-color 150ms ease, border-color 150ms ease;
     `;
   }}
 
