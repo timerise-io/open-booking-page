@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Typography } from "components/Typography";
 import { Box } from "components/layout/Box";
 import { Column } from "components/layout/Column";
@@ -23,7 +23,7 @@ const DeleteBooking = () => {
   const service = useBookingStore((state) => state.service)!;
   const timeZone = useUiStore((state) => state.timeZone);
   const hoursSystem = useUiStore((state) => state.hoursSystem);
-  const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
+  const is12HoursSystem = hoursSystem === HOURS_SYSTEMS.h12;
 
   return (
     <Column $ai="flex-start">
@@ -49,7 +49,6 @@ const DeleteBooking = () => {
               dateTimeFrom: booking.dateTimeFrom,
               dateTimeTo: booking.dateTimeTo,
               targetTimeZone: timeZone,
-              sourceTimeZone: service.project.localTimeZone,
               locale,
               is12HoursSystem,
             })}

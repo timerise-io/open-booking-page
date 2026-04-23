@@ -66,7 +66,6 @@ interface Props {
     setSelectedSlots: (slotIds: string[]) => void;
   };
   targetTimeZone: string;
-  sourceTimeZone: string;
   locale: Locale;
   service: Service;
 }
@@ -78,7 +77,6 @@ export function EventSlot({
   quantity,
   handlers,
   targetTimeZone,
-  sourceTimeZone,
   locale,
   service,
 }: Props) {
@@ -117,20 +115,11 @@ export function EventSlot({
         dateTimeFrom,
         dateTimeTo,
         targetTimeZone,
-        sourceTimeZone,
         locale,
         is12HoursSystem,
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      dateTimeFrom,
-      dateTimeTo,
-      targetTimeZone,
-      sourceTimeZone,
-      locale,
-      service?.viewConfig?.list?.showTime,
-      is12HoursSystem,
-    ],
+    [dateTimeFrom, dateTimeTo, targetTimeZone, locale, service?.viewConfig?.list?.showTime, is12HoursSystem],
   );
 
   const showQuantity = service?.viewConfig?.list?.quantity;

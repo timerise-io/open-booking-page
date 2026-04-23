@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { Typography } from "components/Typography";
@@ -124,7 +124,7 @@ const BookService = () => {
   const uploadState = useUploadStore((state) => state.uploadAttachments);
   const timeZone = useUiStore((state) => state.timeZone);
   const hoursSystem = useUiStore((state) => state.hoursSystem);
-  const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
+  const is12HoursSystem = hoursSystem === HOURS_SYSTEMS.h12;
   const setSelectedSlots = useBookingStore((state) => state.setSelectedSlots);
   const slots = useBookingStore((state) => state.slots)!;
   const locations = useProjectStore((state) => state.location);
@@ -142,7 +142,6 @@ const BookService = () => {
     ? convertSourceDateTimeToTargetDateTime({
         date: selectedSlot.dateTimeFrom,
         targetTimeZone: timeZone,
-        sourceTimeZone: service.project.localTimeZone,
         dateFormat,
         locale,
       })
@@ -152,7 +151,6 @@ const BookService = () => {
     ? convertSourceDateTimeToTargetDateTime({
         date: selectedDateRangeValue.dateTimeFrom,
         targetTimeZone: timeZone,
-        sourceTimeZone: service.project.localTimeZone,
         dateFormat: "d MMM",
         locale,
       })
@@ -162,26 +160,26 @@ const BookService = () => {
     ? convertSourceDateTimeToTargetDateTime({
         date: selectedDateRangeValue.dateTimeTo,
         targetTimeZone: timeZone,
-        sourceTimeZone: service.project.localTimeZone,
         dateFormat: "d MMM",
         locale,
       })
     : null;
 
-  const chipLabel = (() => {
-    if (serviceType === BOOKING_FORM_TYPES.CALENDAR && formattedRangeFrom && formattedRangeTo) {
-      return `${formattedRangeFrom} – ${formattedRangeTo}`;
+  function getChipLabel(): string | null {
+    switch (serviceType) {
+      case BOOKING_FORM_TYPES.CALENDAR:
+        if (formattedRangeFrom && formattedRangeTo) return `${formattedRangeFrom} – ${formattedRangeTo}`;
+        return null;
+      case BOOKING_FORM_TYPES.DAYS:
+      case BOOKING_FORM_TYPES.LIST:
+      case BOOKING_FORM_TYPES.MULTILIST:
+        return formattedDate || null;
+      default:
+        return null;
     }
-    if (
-      (serviceType === BOOKING_FORM_TYPES.DAYS ||
-        serviceType === BOOKING_FORM_TYPES.LIST ||
-        serviceType === BOOKING_FORM_TYPES.MULTILIST) &&
-      formattedDate
-    ) {
-      return formattedDate;
-    }
-    return null;
-  })();
+  }
+
+  const chipLabel = getChipLabel();
 
   const checkDisableButton = useCallback(() => {
     const disabledForSlots = !selectedSlotsValue.length || loading || isUploading;
