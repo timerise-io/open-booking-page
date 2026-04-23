@@ -31,7 +31,7 @@ const VerticalLine = styled.div`
 
 const TimeRiseLogo = styled.img`
   margin-left: 10px;
-  height: 10px;
+  height: 12px;
 `;
 
 export const FooterLinkWrapper = styled.div`
@@ -104,10 +104,9 @@ const Footer = () => {
   const { isEmbeddedPage } = useIsEmbeddedPage();
 
   if (isEmbeddedPage) return null;
+  if (location.pathname === "/") return <ErrorFooter />;
 
-  if (location.pathname === "/") {
-    return <ErrorFooter />;
-  }
+  const nextTheme = themeType === "dark" ? "light" : "dark";
 
   return (
     <Wrapper $mb={1.5} $mt={5} $jc="space-between">
@@ -121,14 +120,8 @@ const Footer = () => {
           {t("footer.copyright")}
         </Typography>
         <VerticalLine />
-        <StyledButton
-          onClick={() =>
-            setUserPreference({
-              theme: themeType === "dark" ? "light" : "dark",
-            })
-          }
-        >
-          {t(`theme.${themeType === "dark" ? "light" : "dark"}`)}
+        <StyledButton onClick={() => setUserPreference({ theme: nextTheme })}>
+          {t(`theme.${nextTheme}`)}
         </StyledButton>
       </Row>
       <Row $ai="center" style={{ marginTop: "8px" }}>
