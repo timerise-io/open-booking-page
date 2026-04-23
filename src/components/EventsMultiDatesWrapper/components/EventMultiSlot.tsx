@@ -31,7 +31,9 @@ const EventSlotButton = styled.button<EventSlotButtonProps>`
       border: 1px solid ${colorSchema.border};
       border-radius: ${theme.borderRadius};
       background-color: ${colorSchema.background};
-      transition: background-color 150ms ease, border-color 150ms ease;
+      transition:
+        background-color 150ms ease,
+        border-color 150ms ease;
     `;
   }}
 
@@ -85,12 +87,13 @@ export function EventMultiSlot({ targetTimeZone, sourceTimeZone, locale, service
   );
 
   const showQuantity = service?.viewConfig?.multiList?.quantity;
-  const firstSlot = slots[0];
+  const sortedSlots = [...slots].sort((a, b) => a.dateTimeFrom.localeCompare(b.dateTimeFrom));
+  const firstSlot = sortedSlots[0];
 
   return (
     <Column $mt={0.5} $mb={0.5} $w="100%">
       <EventSlotButton $state="selected">
-        {slots.map((slot: Slot) => (
+        {sortedSlots.map((slot: Slot) => (
           <Typography
             key={`${slot.dateTimeFrom}-${slot.dateTimeTo}`}
             $typographyType="body"

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Sort event slots chronologically in LIST and MULTILIST display types (previously rendered in API-returned order)
+
 ## [1.2.8] - 2026-02-27
 
 ### Changed

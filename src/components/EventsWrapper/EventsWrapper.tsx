@@ -46,7 +46,8 @@ export const EventsWrapper: React.FC<Props> = ({ handlers, additionalData }) => 
 
   return (
     <>
-      {additionalData.slots
+      {[...additionalData.slots]
+        .sort((a, b) => a.dateTimeFrom.localeCompare(b.dateTimeFrom))
         .filter((slot: Slot) => slot.quantity > 0)
         .map((slot: Slot) => (
           <EventSlot
