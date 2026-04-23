@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { Typography } from "components/Typography";
@@ -57,7 +57,7 @@ const RescheduleService = () => {
   const isEventType = serviceType === BOOKING_FORM_TYPES.LIST || serviceType === BOOKING_FORM_TYPES.MULTILIST;
 
   const hoursSystem = useUiStore((state) => state.hoursSystem);
-  const is12HoursSystem = useMemo(() => hoursSystem === HOURS_SYSTEMS.h12, [hoursSystem]);
+  const is12HoursSystem = hoursSystem === HOURS_SYSTEMS.h12;
   const dateFormat = is12HoursSystem ? "iiii dd MMM, h:mm a" : "iiii dd MMM, H:mm";
 
   const selectedSlot = slots.find((slot) => slot.slotId === selectedSlotsValue[0])!;
@@ -65,7 +65,6 @@ const RescheduleService = () => {
     ? convertSourceDateTimeToTargetDateTime({
         date: selectedSlot.dateTimeFrom,
         targetTimeZone: timeZone,
-        sourceTimeZone: service.project.localTimeZone,
         dateFormat,
         locale,
       })
@@ -76,37 +75,20 @@ const RescheduleService = () => {
     convertSourceDateTimeToTargetDateTime({
       date: bookingValue.dateTimeFrom,
       targetTimeZone: timeZone,
-      sourceTimeZone: service.project.localTimeZone,
       dateFormat,
       locale,
     });
 
   const handleSubmit = () => {
-    if (isSlotType) {
-      if (!selectedSlotsValue.length || bookingValue?.bookingId === undefined) return;
-      rescheduleBookingMutation({
-        variables: {
-          bookingId: bookingValue.bookingId,
-          slots: selectedSlotsValue,
-        },
-      });
-    } else if (isDateRangeType) {
-      if (!selectedSlotsValue.length || bookingValue?.bookingId === undefined) return;
-      rescheduleBookingMutation({
-        variables: {
-          bookingId: bookingValue.bookingId,
-          slots: selectedSlotsValue,
-        },
-      });
-    } else if (isEventType) {
-      if (!selectedSlotsValue.length || bookingValue?.bookingId === undefined) return;
-      rescheduleBookingMutation({
-        variables: {
-          bookingId: bookingValue.bookingId,
-          slots: selectedSlotsValue,
-        },
-      });
-    }
+    if (!isSlotType && !isDateRangeType && !isEventType) return;
+    if (!selectedSlotsValue.length || bookingValue?.bookingId === undefined) return;
+
+    rescheduleBookingMutation({
+      variables: {
+        bookingId: bookingValue.bookingId,
+        slots: selectedSlotsValue,
+      },
+    });
   };
 
   const checkDisableButton = useCallback(() => {

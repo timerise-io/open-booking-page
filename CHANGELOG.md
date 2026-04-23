@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Sort event slots chronologically in LIST and MULTILIST display types (previously rendered in API-returned order)
+- Fix ~2h timezone shift in booking widget caused by double-applied target offset in `convertSourceDateTimeToTargetDateTime` (visible when display timezone ≠ browser timezone)
+
+### Changed
+
+- Drop dead `sourceTimeZone` parameter from time-format helpers and all call sites (API returns real UTC; only target timezone is needed)
+- Simplify display-type dispatch in `getDatesValue`, chip-label logic in `BookService`, and `handleSubmit` in `RescheduleService`
 
 ## [1.2.8] - 2026-02-27
 

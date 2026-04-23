@@ -77,7 +77,6 @@ function BookingCardTitle({
               dateTimeFrom: slot.dateTimeFrom,
               dateTimeTo: slot.dateTimeTo,
               targetTimeZone: timeZone,
-              sourceTimeZone: service.project.localTimeZone,
               locale,
               is12HoursSystem,
             })} (${timeZone.replace("_", " ")})`}

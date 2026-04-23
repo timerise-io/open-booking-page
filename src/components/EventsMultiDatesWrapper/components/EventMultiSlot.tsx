@@ -60,13 +60,12 @@ const EventSlotButton = styled.button<EventSlotButtonProps>`
 
 interface Props {
   targetTimeZone: string;
-  sourceTimeZone: string;
   locale: Locale;
   service: Service;
   slots: Slot[];
 }
 
-export function EventMultiSlot({ targetTimeZone, sourceTimeZone, locale, service, slots }: Props) {
+export function EventMultiSlot({ targetTimeZone, locale, service, slots }: Props) {
   const hoursSystem = useUiStore((state) => state.hoursSystem);
   const is12HoursSystem = hoursSystem === HOURS_SYSTEMS.h12;
   const { t } = useTranslation();
@@ -78,12 +77,11 @@ export function EventMultiSlot({ targetTimeZone, sourceTimeZone, locale, service
         dateTimeFrom,
         dateTimeTo,
         targetTimeZone,
-        sourceTimeZone,
         locale,
         is12HoursSystem,
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [targetTimeZone, sourceTimeZone, locale, service?.viewConfig?.list?.showTime, is12HoursSystem],
+    [targetTimeZone, locale, service?.viewConfig?.list?.showTime, is12HoursSystem],
   );
 
   const showQuantity = service?.viewConfig?.multiList?.quantity;

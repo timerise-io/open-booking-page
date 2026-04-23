@@ -4,7 +4,7 @@ import { useLocale } from "helpers/hooks/useLocale";
 import { Service } from "models/service";
 import { Slot } from "models/slots";
 import { useTranslation } from "react-i18next";
-import { useBookingStore, useUiStore } from "state/stores";
+import { useUiStore } from "state/stores";
 import styled from "styled-components";
 import { EventMultiSlot } from "./components";
 
@@ -26,7 +26,6 @@ interface Props {
 export const EventsMultiDatesWrapper: React.FC<Props> = ({ handlers, additionalData }) => {
   const { t } = useTranslation();
   const timeZone = useUiStore((state) => state.timeZone);
-  const service = useBookingStore((state) => state.service)!;
   const locale = useLocale();
 
   useEffect(() => {
@@ -45,7 +44,6 @@ export const EventsMultiDatesWrapper: React.FC<Props> = ({ handlers, additionalD
   return (
     <EventMultiSlot
       targetTimeZone={timeZone}
-      sourceTimeZone={service.project.localTimeZone}
       locale={locale}
       service={additionalData.service}
       slots={additionalData.slots}

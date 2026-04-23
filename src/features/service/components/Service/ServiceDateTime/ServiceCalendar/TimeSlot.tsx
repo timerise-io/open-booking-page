@@ -3,7 +3,6 @@ import { Typography } from "components/Typography";
 import { Column } from "components/layout/Column";
 import { useSlotsViewConfiguration } from "features/service/hooks/useSlotsViewConfiguration";
 import { convertSourceDateTimeToTargetDateTimeWithHoursSystem } from "helpers/timeFormat";
-import { Service } from "models/service";
 import { Slot } from "models/slots";
 import { TimeSlotButtonType } from "models/theme";
 import { useTimeSlotByDate } from "state/hooks";
@@ -137,22 +136,17 @@ interface SlotContentProps {
   date: string;
   timeZone: string;
   is12HoursSystem: boolean;
-  service: Service;
   showDuration: boolean;
   showQuantity: boolean;
 }
 
-function SlotContent({ slot, date, timeZone, is12HoursSystem, service, showDuration, showQuantity }: SlotContentProps) {
-  const sourceTimeZone = service.project.localTimeZone;
-  if (!sourceTimeZone) return null;
-
+function SlotContent({ slot, date, timeZone, is12HoursSystem, showDuration, showQuantity }: SlotContentProps) {
   const unavailableClassName = slot.quantity > 0 ? "" : "unavailable-time-slot";
 
   const formatTime = (targetDate: string) =>
     convertSourceDateTimeToTargetDateTimeWithHoursSystem({
       date: targetDate,
       targetTimeZone: timeZone,
-      sourceTimeZone,
       is12HoursSystem,
     });
 
@@ -241,7 +235,6 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, is12HoursSystem }
             date={dateFrom}
             timeZone={timeZone}
             is12HoursSystem={is12HoursSystem}
-            service={service}
             showDuration={showDuration}
             showQuantity={showQuantity}
           />
