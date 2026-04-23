@@ -35,7 +35,9 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
       border-radius: ${theme.borderRadius};
       background-color: ${colorSchema.background} !important;
       border: 1px solid ${colorSchema.border};
-      transition: background-color 150ms ease, border-color 150ms ease;
+      transition:
+        background-color 150ms ease,
+        border-color 150ms ease;
     `;
   }}
 

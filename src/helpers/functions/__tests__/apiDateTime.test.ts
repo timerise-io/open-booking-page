@@ -1,4 +1,4 @@
-import { toApiDateTime, stripTimezoneFromISO } from "../apiDateTime";
+import { stripTimezoneFromISO, toApiDateTime } from "../apiDateTime";
 
 describe("toApiDateTime", () => {
   it("formats a Date as UTC ISO 8601 without milliseconds", () => {

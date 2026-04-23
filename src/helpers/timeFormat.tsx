@@ -1,8 +1,8 @@
 import React from "react";
 import { Locale, parseISO } from "date-fns";
 import { formatInTimeZone, toZonedTime } from "date-fns-tz";
-import styled from "styled-components";
 import { stripTimezoneFromISO } from "helpers/functions";
+import styled from "styled-components";
 
 export function getDateInTimezone(isoDate: string): Date {
   return parseISO(stripTimezoneFromISO(isoDate));

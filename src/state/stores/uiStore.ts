@@ -28,9 +28,7 @@ const getHoursSystem = () => {
 };
 
 const getTimeZone = () =>
-  localStorage.getItem("TIMEZONE") ??
-  Intl.DateTimeFormat().resolvedOptions().timeZone ??
-  "Europe/London";
+  localStorage.getItem("TIMEZONE") ?? Intl.DateTimeFormat().resolvedOptions().timeZone ?? "Europe/London";
 
 interface UserPreference {
   theme?: "light" | "dark";

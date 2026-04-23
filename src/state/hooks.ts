@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { addDays, format as formatDate, isAfter } from "date-fns";
-import { getDateInTimezone } from "helpers/timeFormat";
 import { toApiDateTime } from "helpers/functions";
+import { getDateInTimezone } from "helpers/timeFormat";
 import { Slot } from "models/slots";
 import { useBookingStore } from "./stores/bookingStore";
 import { SlotsFilters, useFilterStore } from "./stores/filterStore";

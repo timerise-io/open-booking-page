@@ -81,7 +81,6 @@ const StyledButton = styled.button`
 
 const StyledLink = styled.a``;
 
-
 const ErrorFooterWrapper = styled.div`
   margin-bottom: 12px;
 `;

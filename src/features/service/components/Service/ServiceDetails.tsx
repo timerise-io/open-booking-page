@@ -203,11 +203,7 @@ const ServiceDetails = () => {
           locationsOptions={locationsOptions}
         />
         {serviceData?.hostedBy && serviceData.hostedBy !== "-" && (
-          <DetailsRow
-            name="Hosted by"
-            value={serviceData.hostedBy}
-            icon={<IconUser />}
-          />
+          <DetailsRow name="Hosted by" value={serviceData.hostedBy} icon={<IconUser />} />
         )}
       </Column>
     </>

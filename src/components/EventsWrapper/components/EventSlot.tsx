@@ -30,7 +30,9 @@ const EventSlotButton = styled.button<EventSlotButtonProps>`
       border: 1px solid ${colorSchema.border};
       border-radius: ${theme.borderRadius};
       background-color: ${colorSchema.background};
-      transition: background-color 150ms ease, border-color 150ms ease;
+      transition:
+        background-color 150ms ease,
+        border-color 150ms ease;
     `;
   }}
 
@@ -69,7 +71,17 @@ interface Props {
   service: Service;
 }
 
-export function EventSlot({ id, dateTimeFrom, dateTimeTo, quantity, handlers, targetTimeZone, sourceTimeZone, locale, service }: Props) {
+export function EventSlot({
+  id,
+  dateTimeFrom,
+  dateTimeTo,
+  quantity,
+  handlers,
+  targetTimeZone,
+  sourceTimeZone,
+  locale,
+  service,
+}: Props) {
   const selectedSlotsValue = useBookingStore((state) => state.selectedSlots);
   const hoursSystem = useUiStore((state) => state.hoursSystem);
   const is12HoursSystem = hoursSystem === HOURS_SYSTEMS.h12;
