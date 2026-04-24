@@ -133,6 +133,7 @@ const BookService = () => {
   const isLoading = loading || loadingDateRange;
 
   const dateFormat = is12HoursSystem ? "iiii dd MMM, h:mm a" : "iiii dd MMM, H:mm";
+  const sourceTimeZone = service.project.localTimeZone;
 
   const selectedSlot = slots.find((slot) => slot.slotId === selectedSlotsValue[0])!;
 
@@ -141,6 +142,7 @@ const BookService = () => {
   const formattedDate = selectedSlot
     ? convertSourceDateTimeToTargetDateTime({
         date: selectedSlot.dateTimeFrom,
+        sourceTimeZone,
         targetTimeZone: timeZone,
         dateFormat,
         locale,
@@ -150,6 +152,7 @@ const BookService = () => {
   const formattedRangeFrom = selectedDateRangeValue.dateTimeFrom
     ? convertSourceDateTimeToTargetDateTime({
         date: selectedDateRangeValue.dateTimeFrom,
+        sourceTimeZone,
         targetTimeZone: timeZone,
         dateFormat: "d MMM",
         locale,
@@ -159,6 +162,7 @@ const BookService = () => {
   const formattedRangeTo = selectedDateRangeValue.dateTimeTo
     ? convertSourceDateTimeToTargetDateTime({
         date: selectedDateRangeValue.dateTimeTo,
+        sourceTimeZone,
         targetTimeZone: timeZone,
         dateFormat: "d MMM",
         locale,
