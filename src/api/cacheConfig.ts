@@ -1,6 +1,6 @@
 import { InMemoryCache } from "@apollo/client/core";
 
-const CACHE_VERSION = "v1";
+const CACHE_VERSION = "v2";
 const CACHE_KEY = `apollo-cache-${CACHE_VERSION}`;
 const PERSISTABLE_TYPES = ["Service", "Project"];
 

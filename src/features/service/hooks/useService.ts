@@ -48,7 +48,7 @@ export const useServiceSlotsState = (serviceId: string) => {
       version: packageJson.version,
     },
     fetchPolicy: "network-only",
-    nextFetchPolicy: "cache-first",
+    nextFetchPolicy: "cache-and-network",
     variables: {
       serviceId,
       from: fetchFrom,

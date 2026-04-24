@@ -11,11 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Sort event slots chronologically in LIST and MULTILIST display types (previously rendered in API-returned order)
 - Fix ~2h timezone shift in booking widget caused by double-applied target offset in `convertSourceDateTimeToTargetDateTime` (visible when display timezone ≠ browser timezone)
+- Bust persisted Apollo localStorage cache (`CACHE_VERSION` v1 → v2) so existing users do not keep displaying pre-fix timezone-shifted slot times served from a stale 24h-TTL cache
 
 ### Changed
 
 - Drop dead `sourceTimeZone` parameter from time-format helpers and all call sites (API returns real UTC; only target timezone is needed)
 - Simplify display-type dispatch in `getDatesValue`, chip-label logic in `BookService`, and `handleSubmit` in `RescheduleService`
+- Soften `nextFetchPolicy` for `GET_SERVICE_SLOTS` to `cache-and-network` so slot data re-validates against the backend on every re-query instead of silently serving stale cached entries
 
 ## [1.2.8] - 2026-02-27
 
