@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.10] - 2026-04-24
+
 ### Fixed
 
 - Correctly interpret the Timerise API `DateTime` scalar as wall-clock time in `service.project.localTimeZone` with a literal `Z` suffix (the GraphQL schema description claims UTC but the backend returns wall-time). Restore the `stripTimezoneFromISO → fromZonedTime(sourceTimeZone) → formatInTimeZone(targetTimeZone)` pipeline that was mistakenly removed in 1.2.9. Fixes the persistent ~2h shift between the admin panel and the booking page that reappeared after the 1.2.9 release.
