@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.12] - 2026-04-25
+
 ### Fixed
 
 - Revert the 1.2.10–1.2.11 reintroduction of `sourceTimeZone` on time-format helpers. Empirical inspection of a live API response (`dateTimeFrom: "...T08:00:00.000Z"` alongside `dateTimeISOFrom: "...T10:00:00+02:00"` for a Warsaw-tz service) confirmed that the Timerise `DateTime` scalar *is* real UTC, matching the schema description. The 1.2.10 "wall-time-labeled-Z" interpretation was wrong and produced a -2h display shift on the booking page. Restore the single `formatInTimeZone(new Date(date), targetTimeZone)` pipeline from 095c42f. Cache bust (v1 → v2) and the `cache-and-network` slot policy from 1.2.9 are unchanged.
