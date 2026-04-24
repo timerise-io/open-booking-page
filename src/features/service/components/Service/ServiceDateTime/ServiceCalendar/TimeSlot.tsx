@@ -134,28 +134,18 @@ const WrapperWithDuration = styled.div`
 interface SlotContentProps {
   slot: Slot;
   date: string;
-  sourceTimeZone: string;
   timeZone: string;
   is12HoursSystem: boolean;
   showDuration: boolean;
   showQuantity: boolean;
 }
 
-function SlotContent({
-  slot,
-  date,
-  sourceTimeZone,
-  timeZone,
-  is12HoursSystem,
-  showDuration,
-  showQuantity,
-}: SlotContentProps) {
+function SlotContent({ slot, date, timeZone, is12HoursSystem, showDuration, showQuantity }: SlotContentProps) {
   const unavailableClassName = slot.quantity > 0 ? "" : "unavailable-time-slot";
 
   const formatTime = (targetDate: string) =>
     convertSourceDateTimeToTargetDateTimeWithHoursSystem({
       date: targetDate,
-      sourceTimeZone,
       targetTimeZone: timeZone,
       is12HoursSystem,
     });
@@ -243,7 +233,6 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ dateFrom, dateTo, is12HoursSystem }
           <SlotContent
             slot={slot}
             date={dateFrom}
-            sourceTimeZone={service.project.localTimeZone}
             timeZone={timeZone}
             is12HoursSystem={is12HoursSystem}
             showDuration={showDuration}

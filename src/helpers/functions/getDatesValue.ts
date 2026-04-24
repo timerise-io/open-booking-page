@@ -18,25 +18,20 @@ type GetDatesValue = ({
   is12HoursSystem: boolean;
 }) => string;
 
-const getDaysDatesValue: GetDatesValue = ({ service, dateTimeFrom, targetTimeZone, locale, is12HoursSystem }) => {
+const getDaysDatesValue: GetDatesValue = ({ dateTimeFrom, targetTimeZone, locale, is12HoursSystem }) => {
   const dateFormat = is12HoursSystem ? "iiii dd MMM yyyy, h:mm a" : "iiii dd MMM yyyy, H:mm";
-  const sourceTimeZone = service.project.localTimeZone;
 
   return convertSourceDateTimeToTargetDateTime({
     date: dateTimeFrom,
-    sourceTimeZone,
     targetTimeZone,
     dateFormat,
     locale,
   });
 };
 
-const getCalendarDatesValue: GetDatesValue = ({ service, dateTimeFrom, dateTimeTo, targetTimeZone, locale }) => {
-  const sourceTimeZone = service.project.localTimeZone;
-
+const getCalendarDatesValue: GetDatesValue = ({ dateTimeFrom, dateTimeTo, targetTimeZone, locale }) => {
   const dateFromWithTimezone = convertSourceDateTimeToTargetDateTime({
     date: dateTimeFrom,
-    sourceTimeZone,
     targetTimeZone,
     dateFormat: "iii dd MMM yyyy",
     locale,
@@ -44,7 +39,6 @@ const getCalendarDatesValue: GetDatesValue = ({ service, dateTimeFrom, dateTimeT
 
   const dateToWithTimezone = convertSourceDateTimeToTargetDateTime({
     date: dateTimeTo,
-    sourceTimeZone,
     targetTimeZone,
     dateFormat: "iii dd MMM yyyy",
     locale,
@@ -67,11 +61,9 @@ const getEventDatesValue: GetDatesValue = ({
 }) => {
   const showTime = service?.viewConfig?.list?.showTime;
   const hourFormat = is12HoursSystem ? "h:mm a" : "H:mm";
-  const sourceTimeZone = service.project.localTimeZone;
 
   const dateFromWithTimezone = convertSourceDateTimeToTargetDateTime({
     date: dateTimeFrom,
-    sourceTimeZone,
     targetTimeZone,
     dateFormat: "iii dd MMM yyyy",
     locale,
@@ -79,7 +71,6 @@ const getEventDatesValue: GetDatesValue = ({
 
   const dateToWithTimezone = convertSourceDateTimeToTargetDateTime({
     date: dateTimeTo,
-    sourceTimeZone,
     targetTimeZone,
     dateFormat: "iii dd MMM yyyy",
     locale,
@@ -87,7 +78,6 @@ const getEventDatesValue: GetDatesValue = ({
 
   const timeFromWithTimezone = convertSourceDateTimeToTargetDateTime({
     date: dateTimeFrom,
-    sourceTimeZone,
     targetTimeZone,
     dateFormat: hourFormat,
     locale,
@@ -95,7 +85,6 @@ const getEventDatesValue: GetDatesValue = ({
 
   const timeToWithTimezone = convertSourceDateTimeToTargetDateTime({
     date: dateTimeTo,
-    sourceTimeZone,
     targetTimeZone,
     dateFormat: hourFormat,
     locale,
