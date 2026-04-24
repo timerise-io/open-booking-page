@@ -59,13 +59,12 @@ const RescheduleService = () => {
   const hoursSystem = useUiStore((state) => state.hoursSystem);
   const is12HoursSystem = hoursSystem === HOURS_SYSTEMS.h12;
   const dateFormat = is12HoursSystem ? "iiii dd MMM, h:mm a" : "iiii dd MMM, H:mm";
-  const sourceTimeZone = service.project.localTimeZone;
 
   const selectedSlot = slots.find((slot) => slot.slotId === selectedSlotsValue[0])!;
   const formattedDateTo = selectedSlotsValue?.length
     ? convertSourceDateTimeToTargetDateTime({
         date: selectedSlot.dateTimeFrom,
-        sourceTimeZone,
+        sourceTimeZone: service.project.localTimeZone,
         targetTimeZone: timeZone,
         dateFormat,
         locale,
@@ -76,7 +75,7 @@ const RescheduleService = () => {
     bookingValue &&
     convertSourceDateTimeToTargetDateTime({
       date: bookingValue.dateTimeFrom,
-      sourceTimeZone,
+      sourceTimeZone: service.project.localTimeZone,
       targetTimeZone: timeZone,
       dateFormat,
       locale,
