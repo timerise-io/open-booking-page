@@ -64,7 +64,6 @@ const RescheduleService = () => {
   const formattedDateTo = selectedSlotsValue?.length
     ? convertSourceDateTimeToTargetDateTime({
         date: selectedSlot.dateTimeFrom,
-        sourceTimeZone: service.project.localTimeZone,
         targetTimeZone: timeZone,
         dateFormat,
         locale,
@@ -75,7 +74,6 @@ const RescheduleService = () => {
     bookingValue &&
     convertSourceDateTimeToTargetDateTime({
       date: bookingValue.dateTimeFrom,
-      sourceTimeZone: service.project.localTimeZone,
       targetTimeZone: timeZone,
       dateFormat,
       locale,

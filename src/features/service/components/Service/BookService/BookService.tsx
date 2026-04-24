@@ -141,7 +141,6 @@ const BookService = () => {
   const formattedDate = selectedSlot
     ? convertSourceDateTimeToTargetDateTime({
         date: selectedSlot.dateTimeFrom,
-        sourceTimeZone: service.project.localTimeZone,
         targetTimeZone: timeZone,
         dateFormat,
         locale,
@@ -151,7 +150,6 @@ const BookService = () => {
   const formattedRangeFrom = selectedDateRangeValue.dateTimeFrom
     ? convertSourceDateTimeToTargetDateTime({
         date: selectedDateRangeValue.dateTimeFrom,
-        sourceTimeZone: service.project.localTimeZone,
         targetTimeZone: timeZone,
         dateFormat: "d MMM",
         locale,
@@ -161,7 +159,6 @@ const BookService = () => {
   const formattedRangeTo = selectedDateRangeValue.dateTimeTo
     ? convertSourceDateTimeToTargetDateTime({
         date: selectedDateRangeValue.dateTimeTo,
-        sourceTimeZone: service.project.localTimeZone,
         targetTimeZone: timeZone,
         dateFormat: "d MMM",
         locale,
