@@ -7,15 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.10] - 2026-04-24
+
+### Fixed
+
+- Correctly interpret the Timerise API `DateTime` scalar as wall-clock time in `service.project.localTimeZone` with a literal `Z` suffix (the GraphQL schema description claims UTC but the backend returns wall-time). Restore the `stripTimezoneFromISO → fromZonedTime(sourceTimeZone) → formatInTimeZone(targetTimeZone)` pipeline that was mistakenly removed in 1.2.9. Fixes the persistent ~2h shift between the admin panel and the booking page that reappeared after the 1.2.9 release.
+
+### Changed
+
+- Reintroduce the `sourceTimeZone` parameter on `convertSourceDateTimeToTargetDateTime` / `...WithHoursSystem` helpers. `getDatesValue` now reads `sourceTimeZone` from `service.project.localTimeZone` internally, so most call sites (`EventSlot`, `EventMultiSlot`, `BookingCardTitle`, `DeleteBooking`) require no prop changes. Direct helper callers (`BookService`, `RescheduleService`, `TimeSlot`) pass `service.project.localTimeZone` explicitly.
+
+## [1.2.9] - 2026-04-24
+
 ### Fixed
 
 - Sort event slots chronologically in LIST and MULTILIST display types (previously rendered in API-returned order)
 - Fix ~2h timezone shift in booking widget caused by double-applied target offset in `convertSourceDateTimeToTargetDateTime` (visible when display timezone ≠ browser timezone)
+- Bust persisted Apollo localStorage cache (`CACHE_VERSION` v1 → v2) so existing users do not keep displaying pre-fix timezone-shifted slot times served from a stale 24h-TTL cache
 
 ### Changed
 
 - Drop dead `sourceTimeZone` parameter from time-format helpers and all call sites (API returns real UTC; only target timezone is needed)
 - Simplify display-type dispatch in `getDatesValue`, chip-label logic in `BookService`, and `handleSubmit` in `RescheduleService`
+- Soften `nextFetchPolicy` for `GET_SERVICE_SLOTS` to `cache-and-network` so slot data re-validates against the backend on every re-query instead of silently serving stale cached entries
 
 ## [1.2.8] - 2026-02-27
 
