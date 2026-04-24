@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.11] - 2026-04-24
+
+### Fixed
+
+- Booking page crashed on initial render after 1.2.10 with `Cannot read properties of undefined (reading 'project')`. A code-simplifier pass in 1.2.10 hoisted `service.project.localTimeZone` to the top of `BookService` and `RescheduleService`, which crashed when `service` was undefined on first render (before Apollo fetched the service). Restore the pre-hoist inline pattern that only evaluates `service.project.localTimeZone` inside ternary branches already guarded by `selectedSlot` / `bookingValue` / `selectedDateRangeValue`.
+
 ## [1.2.10] - 2026-04-24
 
 ### Fixed
