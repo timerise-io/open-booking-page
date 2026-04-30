@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- White screen on calendar (date range) view after clicking the date input. `DateRangeWrapper`'s custom `DayContent` was registered as react-day-picker v9's `DayButton` but used the v8 prop signature `{ date: Date }`; the `as never` cast hid the mismatch. After mount, react-day-picker passed `{ day: CalendarDay; modifiers; ...buttonProps }`, so `props.date` was `undefined` and `format(undefined, "d")` threw `RangeError: Invalid time value`. Rewrite `DayContent` to destructure `{ day, modifiers, ...buttonProps }: DayButtonProps`, render a real `<button>` with forwarded props (preserving range selection, focus, accessibility, and `rdp-day_button` styling), and drop the `as never` cast.
+
 ## [1.2.12] - 2026-04-25
 
 ### Fixed

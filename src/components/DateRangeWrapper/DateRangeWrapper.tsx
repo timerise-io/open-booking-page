@@ -4,7 +4,7 @@ import { useMedia } from "helpers/hooks";
 import { parse } from "iso8601-duration";
 import { Service } from "models/service";
 import { Slot } from "models/slots";
-import { DateRange, DayPicker } from "react-day-picker";
+import { DateRange, DayButtonProps, DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
@@ -149,21 +149,16 @@ export const DateRangeWrapper: React.FC<Props> = ({
     setIsOpen(false);
   };
 
-  const DayContent = (props: { date: Date }) => {
-    const { date } = props;
-    let quantity: number | undefined;
-    additionalData.slots.some((slot) => {
-      const slotDate = new Date(slot.dateTimeFrom);
-      const isSame = isSameDay(slotDate, date);
-      if (isSame) quantity = slot.quantity;
-      return isSame;
-    });
+  const DayContent = ({ day, modifiers: _modifiers, ...buttonProps }: DayButtonProps) => {
+    const slot = additionalData.slots.find((s) => isSameDay(new Date(s.dateTimeFrom), day.date));
 
     return (
-      <StyledDay>
-        {format(date, "d")}
-        {hasQuantity && <span>{`${t(`avl`)} ${quantity ?? 0}`}</span>}
-      </StyledDay>
+      <button {...buttonProps}>
+        <StyledDay>
+          {format(day.date, "d")}
+          {hasQuantity && <span>{`${t(`avl`)} ${slot?.quantity ?? 0}`}</span>}
+        </StyledDay>
+      </button>
     );
   };
 
@@ -209,7 +204,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
             numberOfMonths={isMobile ? 1 : numberOfMonths}
             disabled={isDayDisabled}
             components={{
-              DayButton: DayContent as never,
+              DayButton: DayContent,
             }}
             footer={
               <DateRangeFooter
