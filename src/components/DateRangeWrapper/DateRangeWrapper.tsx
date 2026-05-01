@@ -21,6 +21,8 @@ const StyledWrapper = styled.div`
   .rdp-root {
     --rdp-accent-color: ${({ theme }) => theme.colors.primary};
     --rdp-accent-background-color: ${({ theme }) => theme.colorSchemas.background.secondary.color};
+    --rdp-range_start-color: ${({ theme }) => theme.colorSchemas.button.primary.text};
+    --rdp-range_end-color: ${({ theme }) => theme.colorSchemas.button.primary.text};
     --rdp-day-width: 36px;
     --rdp-day-height: 36px;
     --rdp-day_button-width: 34px;

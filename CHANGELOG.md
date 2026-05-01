@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Range start/end day numbers were unreadable in dark mode — v9 hardcodes `--rdp-range_start-color: white` and uses it for both range_start and range_end day text, but with a light primary accent in dark mode the white-on-light digits disappeared. Override both vars to `theme.colorSchemas.button.primary.text` so the digit color tracks the same light/dark contrast token as primary buttons.
 - White screen on calendar (date range) view after clicking the date input. `DateRangeWrapper`'s custom `DayContent` was registered as react-day-picker v9's `DayButton` but used the v8 prop signature `{ date: Date }`; the `as never` cast hid the mismatch. After mount, react-day-picker passed `{ day: CalendarDay; modifiers; ...buttonProps }`, so `props.date` was `undefined` and `format(undefined, "d")` threw `RangeError: Invalid time value`. Rewrite `DayContent` to destructure `{ day, modifiers, ...buttonProps }: DayButtonProps`, render a real `<button>` with forwarded props (preserving range selection, focus, accessibility, and `rdp-day_button` styling), and drop the `as never` cast.
 
 ### Changed
