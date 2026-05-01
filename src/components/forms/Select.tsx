@@ -34,7 +34,7 @@ const WrapperDiv = styled.div`
     width: 15px;
     height: 15px;
     position: absolute;
-    top: 5px;
+    top: 7px;
     right: 9px;
     size: 10px;
     z-index: 99;

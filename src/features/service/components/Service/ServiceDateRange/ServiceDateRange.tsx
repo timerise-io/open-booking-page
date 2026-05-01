@@ -11,6 +11,8 @@ import TimeZoneSelect from "../TimeZoneSelect";
 
 const WrapperCard = styled(Card)`
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
 
   ${({ theme }) => theme.mediaBelow(theme.breakpoints.sm)} {
     margin-left: 20px;
@@ -36,9 +38,9 @@ export const ServiceDateRange = () => {
   };
 
   return (
-    <WrapperCard $padding="14px 16px">
-      <Column $ai="flex-start">
-        <TimezoneStyledRow $mb={1.5} $mr={1} $w="100%" $pr={2}>
+    <WrapperCard>
+      <Column $ai="flex-start" $w="100%">
+        <TimezoneStyledRow $mb={1.5} $w="100%">
           <Typography $typographyType="h3" as="h3" $displayType="contents">
             {t(`select-dates`)}
           </Typography>
@@ -48,8 +50,7 @@ export const ServiceDateRange = () => {
         <DateRangeWrapper
           id={"ServiceDateRange"}
           handlers={handlers}
-          startDatePlaceholderText={t(`select-date`)}
-          endDatePlaceholderText={t(`select-date`)}
+          placeholder={t(`select-date`)}
           additionalData={{ service, slots }}
         />
       </Column>
