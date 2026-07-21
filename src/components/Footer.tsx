@@ -81,6 +81,11 @@ const StyledButton = styled.button`
 
 const StyledLink = styled.a``;
 
+const timeriseLogo: Record<"light" | "dark", string> = {
+  dark: "/timerise-logo-invert.png",
+  light: "/timerise-logo.png",
+};
+
 const ErrorFooterWrapper = styled.div`
   margin-bottom: 12px;
 `;
@@ -129,7 +134,7 @@ const Footer = () => {
           {t("footer.powered-by")}
         </Typography>
         <StyledLink href="https://timerise.io/" target="_blank">
-          <TimeRiseLogo src="/timerise-logo.png" alt="timerise logo" data-cy="time-rise-footer-logo" />
+          <TimeRiseLogo src={timeriseLogo[themeType]} alt="timerise logo" data-cy="time-rise-footer-logo" />
         </StyledLink>
       </Row>
     </Wrapper>
