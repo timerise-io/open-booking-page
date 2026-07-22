@@ -7,18 +7,9 @@ import styled, { css } from "styled-components";
 
 const StyledCalendarFooter = styled(Column)<{ hasDuration: boolean } & ColumnProps>`
   flex-direction: row;
-
-  ${({ hasDuration }) => {
-    return css`
-      justify-content: ${hasDuration ? "space-between" : "flex-end"};
-    `;
-  }}
+  justify-content: ${({ hasDuration }) => (hasDuration ? "space-between" : "flex-end")};
   gap: 8px;
-  ${({ theme }) => {
-    return css`
-      background-color: ${theme.colorSchemas.background.primary.color};
-    `;
-  }}
+  background-color: ${({ theme }) => theme.colorSchemas.background.primary.color};
 
   ${({ theme }) => theme.mediaBelow(theme.breakpoints.lg)} {
     flex-direction: column;
@@ -37,20 +28,20 @@ const StyledButtons = styled.div`
   }
 `;
 
-const StyledDiscardButton = styled(Button)`
+const compactButton = css`
   width: auto;
   box-shadow: none;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+`;
 
-  ${({ theme }) => {
-    return css`
-      background: ${theme.colorSchemas.background.primary.color};
-    `;
-  }}
+const StyledDiscardButton = styled(Button)`
+  ${compactButton}
+  background: ${({ theme }) => theme.colorSchemas.background.primary.color};
 `;
 
 const StyledDoneButton = styled(Button)`
-  width: auto;
-  box-shadow: none;
+  ${compactButton}
 `;
 
 interface Props {
@@ -73,17 +64,12 @@ export const DateRangeFooter: React.FC<Props> = ({
   const { t } = useTranslation(["booking"]);
 
   return (
-    <StyledCalendarFooter $ai="center" $w="100%" $p={2.5} hasDuration={Boolean(duration && rangeSelect)}>
+    <StyledCalendarFooter $ai="center" $w="100%" $p={1} hasDuration={Boolean(duration && rangeSelect)}>
       <Typography $typographyType="body" $displayType="contents">
         {duration && rangeSelect && t("select-date-range-up-to", { duration })}
       </Typography>
       <StyledButtons>
-        <StyledDiscardButton
-          type="submit"
-          $buttonType="secondary"
-          data-cy="111"
-          onClick={() => handleDiscardCalendar()}
-        >
+        <StyledDiscardButton type="submit" $buttonType="secondary" data-cy="111" onClick={handleDiscardCalendar}>
           {t(`discard`)}
         </StyledDiscardButton>
         <StyledDoneButton
@@ -91,7 +77,7 @@ export const DateRangeFooter: React.FC<Props> = ({
           $buttonType="primary"
           data-cy="222"
           disabled={!dateTimeFrom || !dateTimeTo}
-          onClick={() => handleCloseCalendar()}
+          onClick={handleCloseCalendar}
         >
           {t(`done`)}
         </StyledDoneButton>

@@ -14,6 +14,12 @@ const Wrapper = styled(Row)`
   &:hover {
     background-color: ${({ theme }) => theme.colors.primaryLight};
   }
+
+  ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
+    min-height: 44px;
+    align-items: center;
+    padding: 2px 8px;
+  }
 `;
 
 const HoursSystemButton = styled(Typography)<{ $isBold: boolean }>`

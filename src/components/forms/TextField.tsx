@@ -29,6 +29,12 @@ const StyledTextArea = styled.textarea`
     &:focus {
       border-color: ${theme.colors.primary};
     }
+
+    ${theme.mediaBelow(theme.breakpoints.md)} {
+      /* >=16px prevents iOS Safari auto-zoom on focus */
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
   `}
 `;
 

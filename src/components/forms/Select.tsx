@@ -11,18 +11,23 @@ const SelectBase = styled.select`
   z-index: 99;
   background-color: unset;
   font-size: 13px;
-  line-height: 15.73px;
   ${({ theme }) => css`
     border-radius: ${theme.borderRadius};
     border: 1px solid ${theme.colorSchemas.input.border};
     color: ${theme.colors.dark};
-    size: ${theme.typography.body.size};
-    weight: ${theme.typography.body.weight};
     line-height: ${theme.typography.body.lineHeight};
 
     &:hover {
       border: 1px solid ${theme.colorSchemas.input.borderHover};
       cursor: pointer;
+    }
+
+    ${theme.mediaBelow(theme.breakpoints.md)} {
+      /* >=16px prevents iOS Safari auto-zoom on focus; min-height keeps a 44px touch target */
+      font-size: 1rem;
+      line-height: 1.25rem;
+      min-height: 44px;
+      padding: 10px 44px 10px 10px;
     }
   `}
 `;
@@ -34,10 +39,14 @@ const WrapperDiv = styled.div`
     width: 15px;
     height: 15px;
     position: absolute;
-    top: 5px;
+    top: 7px;
     right: 9px;
-    size: 10px;
     z-index: 99;
+
+    ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 
   &:after {

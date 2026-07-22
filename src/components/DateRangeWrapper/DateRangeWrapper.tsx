@@ -1,54 +1,94 @@
-import React, { useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { format, isSameDay } from "date-fns";
 import { useMedia } from "helpers/hooks";
+import useOnClickOutside from "helpers/hooks/useOnClickOutside";
 import { parse } from "iso8601-duration";
 import { Service } from "models/service";
 import { Slot } from "models/slots";
-import { DateRange, DayPicker } from "react-day-picker";
+import { DateRange, DayButtonProps, DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
+import { IconCalendar } from "@tabler/icons-react";
 import { DateRangeFooter } from "./components";
+
+const DATE_FORMAT = "MMM dd, y";
 
 const StyledWrapper = styled.div`
   position: relative;
   width: 100%;
 
-  .rdp {
-    --rdp-cell-size: 40px;
+  .rdp-root {
     --rdp-accent-color: ${({ theme }) => theme.colors.primary};
-    --rdp-background-color: ${({ theme }) => theme.colorSchemas.background.primary.color};
+    --rdp-accent-background-color: ${({ theme }) => theme.colorSchemas.background.secondary.color};
+    --rdp-range_start-color: ${({ theme }) => theme.colorSchemas.button.primary.text};
+    --rdp-range_end-color: ${({ theme }) => theme.colorSchemas.button.primary.text};
+    --rdp-day-width: 36px;
+    --rdp-day-height: 36px;
+    --rdp-day_button-width: 34px;
+    --rdp-day_button-height: 34px;
+    --rdp-nav_button-width: 1.5rem;
+    --rdp-nav_button-height: 1.5rem;
+    --rdp-nav-height: 2rem;
+    --rdp-weekday-padding: 0.5rem 0;
+    width: 100%;
     margin: 0;
+    font-size: 0.875rem;
+
+    ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
+      /* 44px touch targets for day cells and month nav */
+      --rdp-day-width: 44px;
+      --rdp-day-height: 44px;
+      --rdp-day_button-width: 42px;
+      --rdp-day_button-height: 42px;
+      --rdp-nav_button-width: 2.75rem;
+      --rdp-nav_button-height: 2.75rem;
+      --rdp-nav-height: 2.75rem;
+    }
   }
 
   .rdp-month {
     background-color: ${({ theme }) => theme.colorSchemas.background.primary.color};
   }
 
-  .rdp-day_selected {
-    background-color: var(--rdp-accent-color);
-    color: white;
+  .rdp-months {
+    width: 100%;
+    max-width: none;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    gap: 1rem;
   }
 
-  .rdp-day_today {
-    font-weight: bold;
+  .rdp-month_caption {
+    margin-bottom: 0.5rem;
   }
 
-  .DateInput {
-    all: unset;
-    flex: 1;
-    width: unset;
-    min-width: 210px;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
+  .rdp-selected {
+    font-size: inherit;
+  }
+
+  .DateInput_wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .DateInput_icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: ${({ theme }) => theme.colors.dark};
+    opacity: 0.6;
   }
 
   .DateInput_input {
     all: unset;
+    box-sizing: border-box;
     border-width: 1px;
     border-style: solid;
-    width: auto;
+    width: 100%;
+    cursor: pointer;
     &::placeholder {
       color: #666;
     }
@@ -57,23 +97,34 @@ const StyledWrapper = styled.div`
       border-color: ${theme.colorSchemas.input.border};
       border-radius: ${theme.borderRadius};
       font-size: ${theme.typography.body.size};
-      padding: calc(1.125 * ${theme.spacing}) calc(1.375 * ${theme.spacing});
+      padding: calc(1.25 * ${theme.spacing}) calc(1.375 * ${theme.spacing}) calc(1.25 * ${theme.spacing}) 36px;
 
       &:hover,
       &:focus {
         border-color: ${theme.colors.primary};
       }
+
+      ${theme.mediaBelow(theme.breakpoints.md)} {
+        /* >=16px prevents iOS Safari auto-zoom on focus */
+        font-size: 1rem;
+        padding: calc(1.5 * ${theme.spacing}) calc(1.375 * ${theme.spacing}) calc(1.5 * ${theme.spacing}) 36px;
+      }
     `}
   }
+`;
 
-  .DateRangePickerInput {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    align-items: stretch;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
+const DropdownPanel = styled.div`
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 999;
+  padding: 20px 8px 8px;
+  box-sizing: border-box;
+  background-color: ${({ theme }) => theme.colorSchemas.background.primary.color};
+  border: 1px solid ${({ theme }) => theme.colorSchemas.input.border};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
 `;
 
 const StyledDay = styled.div`
@@ -93,16 +144,7 @@ const StyledDay = styled.div`
 
 interface Props {
   numberOfMonths?: number;
-  startDatePlaceholderText: string;
-  endDatePlaceholderText: string;
-  hideKeyboardShortcutsPanel?: boolean;
-  monthFormat?: string;
-  displayFormat?: string;
-  weekDayFormat?: string;
-  verticalSpacing?: number;
-  daySize?: number;
-  transitionDuration?: number;
-  regular?: boolean;
+  placeholder: string;
   id: string;
   handlers: {
     setSelectedDateRange: (range: { dateTimeFrom: string | null; dateTimeTo: string | null }) => void;
@@ -113,17 +155,16 @@ interface Props {
   };
 }
 
-export const DateRangeWrapper: React.FC<Props> = ({
-  numberOfMonths = 2,
-  startDatePlaceholderText,
-  endDatePlaceholderText,
-  handlers,
-  additionalData,
-}) => {
+export const DateRangeWrapper: React.FC<Props> = ({ numberOfMonths = 2, placeholder, handlers, additionalData }) => {
   const { t } = useTranslation(["booking"]);
   const isMobile = useMedia("(max-width: 1200px)");
   const [range, setRange] = useState<DateRange | undefined>();
   const [isOpen, setIsOpen] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  useOnClickOutside(
+    wrapperRef,
+    useCallback(() => setIsOpen(false), []),
+  );
 
   const duration = additionalData.service.viewConfig.calendar.maxRange
     ? parse(additionalData.service.viewConfig.calendar.maxRange).days
@@ -149,21 +190,16 @@ export const DateRangeWrapper: React.FC<Props> = ({
     setIsOpen(false);
   };
 
-  const DayContent = (props: { date: Date }) => {
-    const { date } = props;
-    let quantity: number | undefined;
-    additionalData.slots.some((slot) => {
-      const slotDate = new Date(slot.dateTimeFrom);
-      const isSame = isSameDay(slotDate, date);
-      if (isSame) quantity = slot.quantity;
-      return isSame;
-    });
+  const DayContent = ({ day, modifiers: _modifiers, ...buttonProps }: DayButtonProps) => {
+    const slot = additionalData.slots.find((s) => isSameDay(new Date(s.dateTimeFrom), day.date));
 
     return (
-      <StyledDay>
-        {format(date, "d")}
-        {hasQuantity && <span>{`${t(`avl`)} ${quantity ?? 0}`}</span>}
-      </StyledDay>
+      <button {...buttonProps}>
+        <StyledDay>
+          {format(day.date, "d")}
+          {hasQuantity && <span>{`${t(`avl`)} ${slot?.quantity ?? 0}`}</span>}
+        </StyledDay>
+      </button>
     );
   };
 
@@ -177,39 +213,40 @@ export const DateRangeWrapper: React.FC<Props> = ({
     return !hasSlot;
   };
 
+  const displayValue = (() => {
+    if (range?.from && range?.to) {
+      return `${format(range.from, DATE_FORMAT)} - ${format(range.to, DATE_FORMAT)}`;
+    }
+    if (range?.from) {
+      return `${format(range.from, DATE_FORMAT)} - `;
+    }
+    return "";
+  })();
+
   return (
-    <StyledWrapper>
-      <div className="DateRangePickerInput">
-        <div className="DateInput" onClick={() => setIsOpen(true)}>
-          <label>{t("start-date")}</label>
-          <input
-            className="DateInput_input"
-            placeholder={startDatePlaceholderText}
-            value={range?.from ? format(range.from, "dd-MM-yyyy") : ""}
-            readOnly
-          />
-        </div>
-        <div className="DateInput" onClick={() => setIsOpen(true)}>
-          <label>{t("end-date")}</label>
-          <input
-            className="DateInput_input"
-            placeholder={endDatePlaceholderText}
-            value={range?.to ? format(range.to, "dd-MM-yyyy") : ""}
-            readOnly
-          />
-        </div>
+    <StyledWrapper ref={wrapperRef}>
+      <div className="DateInput_wrapper">
+        <IconCalendar size={16} className="DateInput_icon" />
+        <input
+          className="DateInput_input"
+          placeholder={placeholder}
+          value={displayValue}
+          onClick={() => setIsOpen(true)}
+          readOnly
+        />
       </div>
 
       {isOpen && (
-        <div>
+        <DropdownPanel>
           <DayPicker
             mode="range"
+            navLayout="around"
             selected={range}
             onSelect={handleSelect}
             numberOfMonths={isMobile ? 1 : numberOfMonths}
             disabled={isDayDisabled}
             components={{
-              DayButton: DayContent as never,
+              DayButton: DayContent,
             }}
             footer={
               <DateRangeFooter
@@ -222,7 +259,7 @@ export const DateRangeWrapper: React.FC<Props> = ({
               />
             }
           />
-        </div>
+        </DropdownPanel>
       )}
     </StyledWrapper>
   );

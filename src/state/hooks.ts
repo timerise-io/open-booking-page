@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { addDays, format as formatDate, isAfter } from "date-fns";
 import { toApiDateTime } from "helpers/functions";
+import { useMedia } from "helpers/hooks";
 import { getDateInTimezone } from "helpers/timeFormat";
 import { Slot } from "models/slots";
 import { useBookingStore } from "./stores/bookingStore";
@@ -9,14 +10,20 @@ import { useProjectStore } from "./stores/projectStore";
 import { useUiStore } from "./stores/uiStore";
 
 /**
- * Hook for theme selector (depends on service from bookingStore and userPreference from uiStore)
+ * Hook for theme selector.
+ * Precedence: user's manual toggle > project-configured theme > OS color scheme.
  */
 export const useTheme = (): "light" | "dark" => {
   const service = useBookingStore((state) => state.service);
   const userPreference = useUiStore((state) => state.userPreference);
+  const systemPrefersDark = useMedia("(prefers-color-scheme: dark)");
 
-  const projectTheme: "light" | "dark" = service?.project.theme === "DARK" ? "dark" : "light";
-  return userPreference.theme ?? projectTheme ?? "light";
+  if (userPreference.theme) return userPreference.theme;
+
+  const projectTheme = service?.project.theme;
+  if (projectTheme) return projectTheme === "DARK" ? "dark" : "light";
+
+  return systemPrefersDark ? "dark" : "light";
 };
 
 /**

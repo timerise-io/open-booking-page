@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useEffect, useRef } from "react";
 import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { Typography } from "components/Typography";
@@ -7,7 +7,7 @@ import { Column } from "components/layout/Column";
 import { Row } from "components/layout/Row";
 import { useBookDateRange } from "features/service/hooks/useBookDateRange";
 import { useBookSlot } from "features/service/hooks/useBookSlot";
-import { Form, Formik } from "formik";
+import { Form, Formik, useFormikContext } from "formik";
 import { getServiceConfigByType, toApiDateTime } from "helpers/functions";
 import { useLocale } from "helpers/hooks/useLocale";
 import { convertSourceDateTimeToTargetDateTime } from "helpers/timeFormat";
@@ -73,6 +73,42 @@ const WrapperCard = styled(Card)`
     margin-right: 20px;
   }
 `;
+
+const SubmitSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
+    /* keep the CTA visible while the form scrolls; offsets cancel out the card's 20px padding */
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    margin: 0 -20px -20px;
+    padding: 8px 20px 12px;
+    background-color: ${({ theme }) => theme.colorSchemas.background.primary.color};
+  }
+`;
+
+/** After a failed submit, scrolls to and focuses the first invalid field. */
+const ScrollToFirstError = () => {
+  const { submitCount, isValid, errors } = useFormikContext<Record<string, unknown>>();
+  const lastHandledSubmit = useRef(submitCount);
+
+  useEffect(() => {
+    if (submitCount === lastHandledSubmit.current || isValid) return;
+    lastHandledSubmit.current = submitCount;
+
+    const fields = Array.from(document.querySelectorAll<HTMLElement>("input[name], textarea[name], select[name]"));
+    const firstInvalid = fields.find((el) => (el.getAttribute("name") ?? "") in errors);
+    if (firstInvalid) {
+      firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+      firstInvalid.focus({ preventScroll: true });
+    }
+  }, [submitCount, isValid, errors]);
+
+  return null;
+};
 
 const getInitialValues = (formFields: Array<FormField>, searchParams: URLSearchParams) => {
   const customFormFields = filterFormFields(formFields, false);
@@ -147,23 +183,13 @@ const BookService = () => {
       })
     : "";
 
-  const formattedRangeFrom = selectedDateRangeValue.dateTimeFrom
-    ? convertSourceDateTimeToTargetDateTime({
-        date: selectedDateRangeValue.dateTimeFrom,
-        targetTimeZone: timeZone,
-        dateFormat: "d MMM",
-        locale,
-      })
-    : null;
+  const formatRangeDate = (date: string | null) =>
+    date
+      ? convertSourceDateTimeToTargetDateTime({ date, targetTimeZone: timeZone, dateFormat: "d MMM", locale })
+      : null;
 
-  const formattedRangeTo = selectedDateRangeValue.dateTimeTo
-    ? convertSourceDateTimeToTargetDateTime({
-        date: selectedDateRangeValue.dateTimeTo,
-        targetTimeZone: timeZone,
-        dateFormat: "d MMM",
-        locale,
-      })
-    : null;
+  const formattedRangeFrom = formatRangeDate(selectedDateRangeValue.dateTimeFrom);
+  const formattedRangeTo = formatRangeDate(selectedDateRangeValue.dateTimeTo);
 
   function getChipLabel(): string | null {
     switch (serviceType) {
@@ -181,29 +207,22 @@ const BookService = () => {
 
   const chipLabel = getChipLabel();
 
-  const checkDisableButton = useCallback(() => {
-    const disabledForSlots = !selectedSlotsValue.length || loading || isUploading;
-    const disabledForDateRange =
-      selectedDateRangeValue.dateTimeFrom === null ||
-      selectedDateRangeValue.dateTimeTo === null ||
-      loadingDateRange ||
-      isUploading;
-    const isSlotType = serviceType === BOOKING_FORM_TYPES.DAYS;
-    const isDateRangeType = serviceType === BOOKING_FORM_TYPES.CALENDAR;
-    const isEventType = serviceType === BOOKING_FORM_TYPES.LIST || serviceType === BOOKING_FORM_TYPES.MULTILIST;
+  const missingSelection = (() => {
+    switch (serviceType) {
+      case BOOKING_FORM_TYPES.CALENDAR:
+        return selectedDateRangeValue.dateTimeFrom === null || selectedDateRangeValue.dateTimeTo === null;
+      case BOOKING_FORM_TYPES.DAYS:
+      case BOOKING_FORM_TYPES.LIST:
+      case BOOKING_FORM_TYPES.MULTILIST:
+        return !selectedSlotsValue.length;
+      default:
+        // PREORDER needs no selection
+        return false;
+    }
+  })();
 
-    return (
-      (isSlotType && disabledForSlots) || (isDateRangeType && disabledForDateRange) || (isEventType && disabledForSlots)
-    );
-  }, [
-    loading,
-    isUploading,
-    selectedDateRangeValue.dateTimeFrom,
-    selectedDateRangeValue.dateTimeTo,
-    loadingDateRange,
-    serviceType,
-    selectedSlotsValue,
-  ]);
+  const requiresSelection = serviceType !== BOOKING_FORM_TYPES.PREORDER;
+  const isSubmitDisabled = requiresSelection && (missingSelection || isLoading || isUploading);
 
   const handleSubmit = (value: Record<string, unknown>) => {
     const fullName = _.find(formFields, { fieldType: "SYSTEM_FULL_NAME" });
@@ -243,19 +262,25 @@ const BookService = () => {
       ...urlSearchParams,
     });
 
-    if (serviceType === BOOKING_FORM_TYPES.DAYS && selectedSlotsValue.length) {
+    const commonVariables = {
+      serviceId: id!,
+      formFields: json,
+      timeZone: timeZone,
+      ...(service?.paymentProviders.length && {
+        paymentProvider: service.paymentProviders[0],
+      }),
+      locale: locale.code,
+      locations: locations ? [locations] : [],
+    };
+
+    const isSlotBasedType =
+      serviceType === BOOKING_FORM_TYPES.DAYS ||
+      serviceType === BOOKING_FORM_TYPES.LIST ||
+      serviceType === BOOKING_FORM_TYPES.MULTILIST;
+
+    if (isSlotBasedType && selectedSlotsValue.length) {
       bookSlotMutation({
-        variables: {
-          serviceId: id!,
-          slots: selectedSlotsValue,
-          formFields: json,
-          timeZone: timeZone,
-          ...(service?.paymentProviders.length && {
-            paymentProvider: service.paymentProviders[0],
-          }),
-          locale: locale.code,
-          locations: locations ? [locations] : [],
-        },
+        variables: { ...commonVariables, slots: selectedSlotsValue },
       }).then(() => setSelectedSlots([]));
     } else if (
       serviceType === BOOKING_FORM_TYPES.CALENDAR &&
@@ -264,49 +289,14 @@ const BookService = () => {
     ) {
       bookDateRangeMutation({
         variables: {
-          serviceId: id!,
-          formFields: json,
-          timeZone: timeZone,
-          dateTimeFrom: selectedDateRangeValue.dateTimeFrom!,
-          dateTimeTo: selectedDateRangeValue.dateTimeTo!,
-          ...(service?.paymentProviders.length && {
-            paymentProvider: service.paymentProviders[0],
-          }),
-          locale: locale.code,
-          locations: locations ? [locations] : [],
+          ...commonVariables,
+          dateTimeFrom: selectedDateRangeValue.dateTimeFrom,
+          dateTimeTo: selectedDateRangeValue.dateTimeTo,
         },
       });
-    } else if (
-      (serviceType === BOOKING_FORM_TYPES.LIST || serviceType === BOOKING_FORM_TYPES.MULTILIST) &&
-      selectedSlotsValue.length
-    ) {
-      bookSlotMutation({
-        variables: {
-          serviceId: id!,
-          slots: selectedSlotsValue,
-          formFields: json,
-          timeZone: timeZone,
-          ...(service?.paymentProviders.length && {
-            paymentProvider: service.paymentProviders[0],
-          }),
-          locale: locale.code,
-          locations: locations ? [locations] : [],
-        },
-      }).then(() => setSelectedSlots([]));
     } else if (serviceType === BOOKING_FORM_TYPES.PREORDER) {
       bookDateRangeMutation({
-        variables: {
-          serviceId: id!,
-          formFields: json,
-          timeZone: timeZone,
-          dateTimeFrom: now,
-          dateTimeTo: now,
-          ...(service?.paymentProviders.length && {
-            paymentProvider: service.paymentProviders[0],
-          }),
-          locale: locale.code,
-          locations: locations ? [locations] : [],
-        },
+        variables: { ...commonVariables, dateTimeFrom: now, dateTimeTo: now },
       });
     }
   };
@@ -338,6 +328,7 @@ const BookService = () => {
         >
           {() => (
             <Form>
+              <ScrollToFirstError />
               <Column $ai="stretch">
                 <BookingServiceFormContent />
                 {(showWarning || error || errorDateRange) && (
@@ -350,28 +341,37 @@ const BookService = () => {
                     </Typography>
                   </StyledWarning>
                 )}
-                <Button
-                  type="submit"
-                  $buttonType="primary"
-                  disabled={checkDisableButton()}
-                  data-cy="book-now-button"
-                  style={{ position: "relative" }}
-                >
-                  <span style={{ opacity: isLoading ? 0 : 1 }}>
-                    {getSubmitButtonText({
-                      selectedSlotValue: formattedDate,
-                      selectedSlotsValue,
-                      t,
-                      serviceConfig,
-                      service,
-                    })}
-                  </span>
-                  {isLoading && (
-                    <SpinnerWrapper>
-                      <SpinnerIcon size={16} />
-                    </SpinnerWrapper>
+                <SubmitSection>
+                  <Button
+                    type="submit"
+                    $buttonType="primary"
+                    disabled={isSubmitDisabled}
+                    data-cy="book-now-button"
+                    style={{ position: "relative" }}
+                  >
+                    <span style={{ opacity: isLoading ? 0 : 1 }}>
+                      {getSubmitButtonText({
+                        selectedSlotValue: formattedDate,
+                        selectedSlotsValue,
+                        t,
+                        serviceConfig,
+                        service,
+                      })}
+                    </span>
+                    {isLoading && (
+                      <SpinnerWrapper>
+                        <SpinnerIcon size={16} />
+                      </SpinnerWrapper>
+                    )}
+                  </Button>
+                  {missingSelection && (
+                    <Box $mt={1}>
+                      <Typography $typographyType="label" $color="darkGrey" $align="center" as="span">
+                        {t(serviceType === BOOKING_FORM_TYPES.CALENDAR ? "select-range-hint" : "select-slot-hint")}
+                      </Typography>
+                    </Box>
                   )}
-                </Button>
+                </SubmitSection>
               </Column>
             </Form>
           )}

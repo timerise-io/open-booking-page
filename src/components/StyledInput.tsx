@@ -24,6 +24,12 @@ const StyledInput = styled.input`
       outline: 2px solid ${theme.colors.primary};
       outline-offset: 1px;
     }
+
+    ${theme.mediaBelow(theme.breakpoints.md)} {
+      /* >=16px prevents iOS Safari auto-zoom on focus */
+      font-size: 1rem;
+      padding: calc(1.5 * ${theme.spacing}) calc(1.375 * ${theme.spacing});
+    }
   `}
 `;
 
