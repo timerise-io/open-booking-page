@@ -1,34 +1,36 @@
 import { ErrorLike } from "@apollo/client/core";
+import { CombinedGraphQLErrors, CombinedProtocolErrors } from "@apollo/client/errors";
 
 /**
- * Extended error type that includes Apollo Client v4 runtime error properties.
- * While the base ErrorLike type doesn't include these, they exist at runtime.
+ * Extended error type covering the legacy Apollo Client v3 error shape.
+ * In v4 the raw link error (e.g. a fetch TypeError) is delivered directly,
+ * but persisted/cached errors may still carry a nested networkError.
  */
 interface ApolloQueryError extends ErrorLike {
   networkError?: Error | null;
-  graphQLErrors?: readonly unknown[];
 }
 
-export const isNetworkError = (error: ApolloQueryError | undefined): boolean => {
-  if (!error) return false;
-
-  // Check for network errors
-  if (error.networkError) {
-    // Ignore AbortError (intentional cancellation during navigation/unmount)
-    if ("name" in error.networkError && error.networkError.name === "AbortError") {
-      return false;
-    }
-    return true;
-  }
-
-  return false;
-};
-
 export const isAbortError = (error: ApolloQueryError | undefined): boolean => {
+  if (!error) return false;
+  if (error.name === "AbortError") return true;
+
   return Boolean(
-    error?.networkError &&
+    error.networkError &&
     typeof error.networkError === "object" &&
     "name" in error.networkError &&
     error.networkError.name === "AbortError",
   );
+};
+
+export const isNetworkError = (error: ApolloQueryError | undefined): boolean => {
+  if (!error) return false;
+
+  // Ignore AbortError (intentional cancellation during navigation/unmount)
+  if (isAbortError(error)) return false;
+
+  // GraphQL execution / subscription protocol errors come from the server,
+  // so the connection itself works — everything else is a transport failure
+  if (CombinedGraphQLErrors.is(error) || CombinedProtocolErrors.is(error)) return false;
+
+  return true;
 };

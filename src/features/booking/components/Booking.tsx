@@ -1,5 +1,5 @@
 import React from "react";
-import { BookingNotFound } from "components/errors";
+import { ErrorScreen } from "components/errors";
 import { ContentSection, ContentWithDetails, DetailsSection } from "components/layout/ContentWithDetails";
 import { useIsEmbeddedPage } from "helpers/hooks/useIsEmbeddedPage";
 import { useErrorStore } from "state/stores";
@@ -18,13 +18,7 @@ const Booking = () => {
 
   // Show error if present
   if (bookingError) {
-    return (
-      <ContentWithDetails>
-        <ContentSection>
-          <BookingNotFound error={bookingError} />
-        </ContentSection>
-      </ContentWithDetails>
-    );
+    return <ErrorScreen error={bookingError} notFound="booking" />;
   }
 
   return (
