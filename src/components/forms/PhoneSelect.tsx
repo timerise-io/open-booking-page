@@ -76,6 +76,10 @@ const ChooseCountryButton = styled(OpenListButton)`
   display: flex;
   align-items: center;
 
+  ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
+    min-height: 44px;
+  }
+
   &:hover {
     background-color: ${({ theme }) => theme.colorSchemas.background.primary.color};
   }

@@ -37,6 +37,10 @@ const TimeSlotButton = styled.button<TimeSlotButtonProps>`
       transition:
         background-color 150ms ease,
         border-color 150ms ease;
+
+      ${theme.mediaBelow(theme.breakpoints.md)} {
+        min-height: 44px;
+      }
     `;
   }}
 
@@ -79,6 +83,11 @@ const DummySlotWrapper = styled.div<DummySlotProps>`
     return css`
       color: ${colorSchema.text};
       height: ${dummyTimeSlotHeight[`${$showDuration}-${$showQuantity}`] ?? "38px"};
+
+      ${theme.mediaBelow(theme.breakpoints.md)} {
+        /* keep rows aligned with the 44px TimeSlotButton */
+        min-height: 44px;
+      }
     `;
   }}
 `;
@@ -158,7 +167,7 @@ function SlotContent({ slot, date, timeZone, is12HoursSystem, showDuration, show
         as="span"
         $align="center"
         className={unavailableClassName}
-        color="inherit"
+        $color="inherit"
       >
         {formatTime(date)}
       </Typography>
@@ -183,7 +192,7 @@ function SlotContent({ slot, date, timeZone, is12HoursSystem, showDuration, show
         as="span"
         $align="center"
         className={unavailableClassName}
-        color="inherit"
+        $color="inherit"
       >
         {timeDisplay}
       </DurationText>

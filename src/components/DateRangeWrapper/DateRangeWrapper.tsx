@@ -34,6 +34,17 @@ const StyledWrapper = styled.div`
     width: 100%;
     margin: 0;
     font-size: 0.875rem;
+
+    ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
+      /* 44px touch targets for day cells and month nav */
+      --rdp-day-width: 44px;
+      --rdp-day-height: 44px;
+      --rdp-day_button-width: 42px;
+      --rdp-day_button-height: 42px;
+      --rdp-nav_button-width: 2.75rem;
+      --rdp-nav_button-height: 2.75rem;
+      --rdp-nav-height: 2.75rem;
+    }
   }
 
   .rdp-month {
@@ -92,6 +103,12 @@ const StyledWrapper = styled.div`
       &:focus {
         border-color: ${theme.colors.primary};
       }
+
+      ${theme.mediaBelow(theme.breakpoints.md)} {
+        /* >=16px prevents iOS Safari auto-zoom on focus */
+        font-size: 1rem;
+        padding: calc(1.5 * ${theme.spacing}) calc(1.375 * ${theme.spacing}) calc(1.5 * ${theme.spacing}) 36px;
+      }
     `}
   }
 `;
@@ -138,12 +155,7 @@ interface Props {
   };
 }
 
-export const DateRangeWrapper: React.FC<Props> = ({
-  numberOfMonths = 2,
-  placeholder,
-  handlers,
-  additionalData,
-}) => {
+export const DateRangeWrapper: React.FC<Props> = ({ numberOfMonths = 2, placeholder, handlers, additionalData }) => {
   const { t } = useTranslation(["booking"]);
   const isMobile = useMedia("(max-width: 1200px)");
   const [range, setRange] = useState<DateRange | undefined>();
