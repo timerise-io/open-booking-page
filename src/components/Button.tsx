@@ -15,7 +15,8 @@ export const Button = styled.button<ButtonProps>`
     const colors = theme.colorSchemas.button[$buttonType];
     const textColor = disabled ? (colors.textDisabled ?? colors.text) : colors.text;
 
-    const border = colors.border ?? "unset";
+    // Transparent instead of none so bordered and borderless variants share the same height
+    const border = colors.border ?? "1px solid transparent";
 
     return css`
       background-color: ${disabled ? colors.backgroundDisabled : colors.background};

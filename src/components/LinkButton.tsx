@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
-export const LinkButton = styled.a`
+/** Shared look of the secondary card action buttons (LinkButton / CardButton). */
+export const cardButtonStyles = css`
   all: unset;
   white-space: nowrap;
   margin: 5px;
@@ -22,6 +23,16 @@ export const LinkButton = styled.a`
       &:hover {
         border: 1px solid #999999;
       }
+
+      ${theme.mediaBelow(theme.breakpoints.md)} {
+        /* match the 44px ContextButton height on mobile */
+        line-height: 1.25rem;
+        padding: 11px 12px;
+      }
     `;
   }}
+`;
+
+export const LinkButton = styled.a`
+  ${cardButtonStyles}
 `;
