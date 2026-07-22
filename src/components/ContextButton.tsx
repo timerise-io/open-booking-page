@@ -19,6 +19,10 @@ export const ContextButton = styled.button<{ $colorType: "primary" | "danger" }>
       }
 
       cursor: ${disabled ? "unset" : "pointer"};
+
+      ${theme.mediaBelow(theme.breakpoints.md)} {
+        padding: 11px 12px;
+      }
     `;
   }}
 `;

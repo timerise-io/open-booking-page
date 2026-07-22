@@ -14,6 +14,10 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 0 8px;
   margin-top: 14px;
+
+  ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
+    padding: 0;
+  }
 `;
 
 const PaginationButton = styled(ContextButton)`
@@ -22,6 +26,11 @@ const PaginationButton = styled(ContextButton)`
   width: 28px;
   display: grid;
   border: none;
+
+  ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
+    height: 44px;
+    width: 44px;
+  }
 
   &:hover {
     border: none;

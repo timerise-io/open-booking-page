@@ -1,4 +1,4 @@
-import { ServiceNotFound } from "components/errors";
+import { ErrorScreen } from "components/errors";
 import {
   ContentSection,
   ContentWithDetails,
@@ -26,13 +26,7 @@ const Service = () => {
 
   // Show error if present
   if (serviceError) {
-    return (
-      <ContentWithDetails>
-        <ContentSection>
-          <ServiceNotFound error={serviceError} />
-        </ContentSection>
-      </ContentWithDetails>
-    );
+    return <ErrorScreen error={serviceError} notFound="service" />;
   }
 
   return (

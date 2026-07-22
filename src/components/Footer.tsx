@@ -64,6 +64,17 @@ const StyledButton = styled.button`
   white-space: nowrap;
   margin-top: 8px;
 
+  ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
+    /* extend the touch target to ~44px without shifting the footer layout */
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -15px -8px;
+    }
+  }
+
   ${({ theme }) => {
     const typographyTheme = theme.typography.label;
     return css`
@@ -125,9 +136,7 @@ const Footer = () => {
           {t("footer.copyright")}
         </Typography>
         <VerticalLine />
-        <StyledButton onClick={() => setUserPreference({ theme: nextTheme })}>
-          {t(`theme.${nextTheme}`)}
-        </StyledButton>
+        <StyledButton onClick={() => setUserPreference({ theme: nextTheme })}>{t(`theme.${nextTheme}`)}</StyledButton>
       </Row>
       <Row $ai="center" style={{ marginTop: "8px" }}>
         <Typography $typographyType="label" as="div" $color="darkGrey">
