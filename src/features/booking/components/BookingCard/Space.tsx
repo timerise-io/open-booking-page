@@ -28,6 +28,11 @@ const ProviderButton = styled(LinkButton)`
   display: flex;
   align-items: center;
   gap: 4px;
+
+  ${({ theme }) => theme.mediaBelow(theme.breakpoints.md)} {
+    box-sizing: border-box;
+    min-height: 44px;
+  }
 `;
 
 const ProviderLogo = styled.img`
